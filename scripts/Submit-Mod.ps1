@@ -35,11 +35,11 @@ $modId = $Matches[1]
 $relativeFilePath = "mods/$FileName"
 
 # Convert mod-id to nice title (e.g., "desktop-icons-toggle" -> "Desktop Icons Toggle")
-$modTitle = ($modId -replace '-', ' ' -replace '_', ' ').Split(' ') | ForEach-Object { 
+$modTitle = (($modId -replace '-', ' ' -replace '_', ' ').Split(' ') | ForEach-Object { 
     if ($_.Length -gt 0) {
         $_.Substring(0,1).ToUpper() + $_.Substring(1).ToLower() 
     }
-} | Where-Object { $_ } | Join-String -Separator ' '
+} | Where-Object { $_ }) -join ' '
 
 $branchName = "add-$modId"
 $commitMessage = "Add: $modTitle"
