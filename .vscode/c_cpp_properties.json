@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "Win64",
+            "compilerPath": "C:/Program Files/Windhawk/Compiler/bin/clang++.exe",
+            "intelliSenseMode": "windows-clang-x64",
+            "cStandard": "c17",
+            "cppStandard": "c++23"
+        }
+    ],
+    "version": 4
+}

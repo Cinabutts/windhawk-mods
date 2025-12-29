@@ -1,0 +1,38 @@
+# This configuration is built from the compiler's own diagnostic output.
+# It explicitly provides all necessary system include paths.
+
+CompileFlags:
+  # Add these flags to every file clangd analyzes.
+  Add:
+    # --- Target and Standard ---
+    - -target
+    - x86_64-w64-mingw32
+    - -x
+    - c++
+    - -std=c++23
+
+    # --- Explicit System Include Paths (from diagnostic command) ---
+    - -isystem
+    - "C:/Program Files/Windhawk/Compiler/include/c++/v1"
+    - -isystem
+    - "C:/Program Files/Windhawk/Compiler/lib/clang/20/include"
+    - -isystem
+    - "C:/Program Files/Windhawk/Compiler/include"
+
+    # --- Defines and other flags from compile-flags.txt ---
+    - -DUNICODE
+    - -D_UNICODE
+    - -DWINVER=0x0A00
+    - -D_WIN32_WINNT=0x0A00
+    - -D_WIN32_IE=0x0A00
+    - -DNTDDI_VERSION=0x0A000008
+    - -D__USE_MINGW_ANSI_STDIO=0
+    - -DWH_MOD
+    - -DWH_EDITING
+    - -include
+    - windhawk_api.h
+    - -Wall
+    - -Wextra
+    - -Wno-unused-parameter
+    - -Wno-missing-field-initializers
+    - -Wno-cast-function-type-mismatch
