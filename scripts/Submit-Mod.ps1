@@ -95,10 +95,28 @@ if ($confirm -ne "yes" -and $confirm -ne "y" -and $confirm -ne "Y" -and $confirm
 # Check for pending changes in Testing branch
 $pendingChanges = git status --porcelain
 if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
-    Write-Host "Aborted: Testing has pending changes. Please commit or stash them, then rerun." -ForegroundColor Yellow
-    Write-Host "`nPending changes:" -ForegroundColor Yellow
-    Write-Host $pendingChanges
-    exit 0
+    $changedFiles = $pendingChanges -split "`n" | ForEach-Object { $_.Substring(3) }
+    
+    # Check for mod files (.wh.cpp)
+    $modChanges = $changedFiles | Where-Object { $_ -match '\.wh\.cpp$' }
+    if ($modChanges) {
+        Write-Host "Aborted: You have pending changes to mod files (.wh.cpp). Please commit or stash them first." -ForegroundColor Red
+        Write-Host "`nPending mod changes:" -ForegroundColor Yellow
+        $modChanges | ForEach-Object { Write-Host "  $_" }
+        exit 1
+    }
+
+    # Check for other files (excluding template)
+    $otherChanges = $changedFiles | Where-Object { $_ -notmatch '\.wh\.cpp$' -and $_ -notmatch 'Testing/Commit-Template.txt' }
+    if ($otherChanges) {
+        Write-Host "Warning: You have pending changes to non-mod files:" -ForegroundColor Yellow
+        $otherChanges | ForEach-Object { Write-Host "  $_" }
+        $continue = Read-Host "Do you want to continue anyway? (y/n)"
+        if ($continue -ne "y" -and $continue -ne "Y" -and $continue -ne "yes" -and $continue -ne "YES") {
+            Write-Host "Aborted." -ForegroundColor Yellow
+            exit 0
+        }
+    }
 }
 
 # Check current branch
