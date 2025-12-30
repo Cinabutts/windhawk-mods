@@ -1,13 +1,13 @@
 # Submit Mod - Prepares a single mod for PR submission
 # This script will:
-#   1. Create a clean submission branch from upstream/main
-#   2. Copy ONLY your mod file to this branch
+#   1. Create or update a submission branch
+#   2. Handle both new mods and updates
 #   3. Commit with proper message format
 #   4. Push to your fork for PR creation
 # 
 # Your main branch stays clean (synced with upstream)
 # Your Testing branch is unchanged
-# A new feature branch is created with just this one mod
+# A feature branch is created/updated with your mod
 #
 # You must be in the Testing branch when running this task.
 
@@ -22,8 +22,24 @@ param(
 $ErrorActionPreference = "Stop"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-# Holds changelog info for updates (null for new mods)
-$changelogResult = $null
+# Helper function to extract version from mod file
+function Get-ModVersion {
+    param([string]$FilePath)
+    
+    $content = Get-Content $FilePath -Raw
+    if ($content -match '@version\s+(\d+\.\d+\.\d+)') {
+        return $Matches[1]
+    }
+    return $null
+}
+
+# Helper function to center text
+function Get-CenteredText {
+    param([string]$Text, [int]$Width = 80)
+    
+    $padding = [Math]::Max(0, ($Width - $Text.Length) / 2)
+    return (' ' * $padding) + $Text
+}
 
 # Validate it's a .wh.cpp file
 if ($FileName -notmatch '^(.+)\.wh\.cpp$') {
@@ -41,31 +57,47 @@ $modTitle = (($modId -replace '-', ' ' -replace '_', ' ').Split(' ') | ForEach-O
     }
 } | Where-Object { $_ }) -join ' '
 
-$branchName = "add-$modId"
-$commitMessage = "Add: $modTitle"
+$branchName = $modId
+
+# Get current version from Testing branch
+$currentVersion = Get-ModVersion $FilePath
+if (-not $currentVersion) {
+    Write-Host "Error: Could not detect version from mod file" -ForegroundColor Red
+    exit 1
+}
 
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "MOD SUBMISSION WORKFLOW" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "`nThis task will:" -ForegroundColor Yellow
 Write-Host "  1. Update your main branch from upstream/main" -ForegroundColor White
-Write-Host "  2. Create submission branch: '$branchName'" -ForegroundColor White
-Write-Host "  3. Copy ONLY this mod file to the branch" -ForegroundColor White
-Write-Host "  4. Commit: '$commitMessage'" -ForegroundColor White
-Write-Host "  5. Push to your fork" -ForegroundColor White
+Write-Host "  2. Create/update submission branch: '$branchName'" -ForegroundColor White
+Write-Host "  3. Copy your mod file to the branch" -ForegroundColor White
+Write-Host "  4. Ask for commit title and description" -ForegroundColor White
+Write-Host "  5. Commit and push to your fork" -ForegroundColor White
 Write-Host "  6. Return you to Testing branch" -ForegroundColor White
 Write-Host "`nResult:" -ForegroundColor Yellow
 Write-Host "  - Your main branch: UNCHANGED (clean, synced with upstream)" -ForegroundColor Green
-Write-Host "  - Your Testing branch: UNCHANGED (still has all your mods)" -ForegroundColor Green
-Write-Host "  - New branch created: '$branchName' (ready for PR)" -ForegroundColor Green
+Write-Host "  - Your Testing branch: UNCHANGED (still has all your work)" -ForegroundColor Green
+Write-Host "  - Branch created/updated: '$branchName' (ready for PR)" -ForegroundColor Green
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "Mod: $modTitle" -ForegroundColor White
 Write-Host "File: $relativeFilePath" -ForegroundColor White
+Write-Host "Version: $currentVersion" -ForegroundColor White
 Write-Host "========================================`n" -ForegroundColor Cyan
 
 $confirm = Read-Host "Ready to proceed? (type 'yes' to continue)"
-if ($confirm -ne "yes") {
+if ($confirm -ne "yes" -and $confirm -ne "y" -and $confirm -ne "Y" -and $confirm -ne "YES") {
     Write-Host "Aborted." -ForegroundColor Yellow
+    exit 0
+}
+
+# Check for pending changes in Testing branch
+$pendingChanges = git status --porcelain
+if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
+    Write-Host "Aborted: Testing has pending changes. Please commit or stash them, then rerun." -ForegroundColor Yellow
+    Write-Host "`nPending changes:" -ForegroundColor Yellow
+    Write-Host $pendingChanges
     exit 0
 }
 
@@ -85,36 +117,122 @@ if (-not (Test-Path $relativeFilePath)) {
     exit 1
 }
 
-Write-Host "[1/7] File validated in Testing branch" -ForegroundColor Green
+Write-Host "File validated in Testing branch" -ForegroundColor Green
 
-# Prepare changelog (only when the mod already exists in upstream/main)
-Write-Host "Preparing changelog (if this is an update)..." -ForegroundColor Yellow
-try {
-    $changelogResult = & (Join-Path $scriptDir "Create-Changelog.ps1") -FilePath $relativeFilePath -FileName $FileName -ModTitle $modTitle -OutputDir "Testing"
-} catch {
-    Write-Host "Error: Changelog generation failed: $_" -ForegroundColor Red
-    exit 1
-}
+# Check if branch exists (locally or remotely)
+$branchExists = $false
+$previousVersion = $null
 
-if ($changelogResult -and $changelogResult.IsNew) {
-    Write-Host "Changelog skipped: new mod (no upstream version)." -ForegroundColor Yellow
-} elseif ($changelogResult -and $changelogResult.Summary) {
-    Write-Host "Changelog prepared for commit body." -ForegroundColor Green
+$localBranch = git branch --list $branchName
+$remoteBranch = git ls-remote --heads origin $branchName 2>$null
+
+if ($localBranch -or $remoteBranch) {
+    $branchExists = $true
+    Write-Host "`nBranch '$branchName' already exists - this is an UPDATE" -ForegroundColor Yellow
+    
+    # Try to get previous version from the branch
+    $currentBranchBackup = git branch --show-current
+    
+    # Fetch latest from origin if remote branch exists
+    if ($remoteBranch) {
+        git fetch origin $branchName 2>&1 | Out-Null
+    }
+    
+    # Checkout or create local tracking branch
+    if ($localBranch) {
+        git checkout $branchName 2>&1 | Out-Null
+    } else {
+        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
+    }
+    
+    if (Test-Path $relativeFilePath) {
+        $previousVersion = Get-ModVersion $relativeFilePath
+    }
+    
+    # Go back to Testing
+    git checkout Testing 2>&1 | Out-Null
+    
+    if ($previousVersion) {
+        Write-Host "Detected version change: $previousVersion → $currentVersion" -ForegroundColor Cyan
+    }
 } else {
-    Write-Host "Changelog: no summary produced (unexpected)." -ForegroundColor Yellow
+    Write-Host "`nBranch '$branchName' does not exist - this is a NEW MOD" -ForegroundColor Green
 }
 
-# Switch to main
-Write-Host "[2/7] Switching to main branch..." -ForegroundColor Yellow
+
+# Determine commit title
+$autoTitle = ""
+if ($branchExists -and $previousVersion) {
+    $autoTitle = "Update: $modTitle $previousVersion - $currentVersion"
+    Write-Host "`nAuto-detected mod update from $previousVersion → $currentVersion`n" -ForegroundColor Cyan
+} else {
+    $autoTitle = "Add: $modTitle"
+    Write-Host "`nThis is your first mod submission`n" -ForegroundColor Cyan
+}
+
+# Ask for custom title or use auto-generated
+Write-Host "Would you like to use a custom commit Title?    -    Or use auto-generated title? (y/n)" -ForegroundColor Yellow
+if ($branchExists) {
+    Write-Host (Get-CenteredText "Working title:") -ForegroundColor White
+} else {
+    Write-Host (Get-CenteredText "Auto-generated title:") -ForegroundColor White
+}
+Write-Host (Get-CenteredText "`"$autoTitle`"") -ForegroundColor Green
+$useCustomTitle = Read-Host
+
+$commitTitle = ""
+if ($useCustomTitle -eq 'y' -or $useCustomTitle -eq 'Y' -or $useCustomTitle -eq 'yes' -or $useCustomTitle -eq 'YES') {
+    Write-Host "`nEnter custom commit title:" -ForegroundColor Yellow
+    $commitTitle = Read-Host
+    if ([string]::IsNullOrWhiteSpace($commitTitle)) {
+        Write-Host "Using auto-generated title (empty input)" -ForegroundColor Yellow
+        $commitTitle = $autoTitle
+    }
+} else {
+    $commitTitle = $autoTitle
+}
+
+# Ask for commit description
+Write-Host "" -ForegroundColor White
+if ($branchExists) {
+    Write-Host "Please enter changelog (aka commit description)    -    Or press Enter and no commit Desc will be added. (Not advised!)" -ForegroundColor Yellow
+} else {
+    Write-Host "This is your first mod, Would you like to add a commit Desc?    -    Otherwise it will just be posted as:" -ForegroundColor Yellow
+    Write-Host "Title: $commitTitle" -ForegroundColor White
+    Write-Host "Desc:" -ForegroundColor White
+    Write-Host "--------------------------------------------------------------------" -ForegroundColor DarkGray
+    Write-Host "Enter commit description (or press Enter to skip):" -ForegroundColor Yellow
+}
+
+$commitDescription = Read-Host
+
+Write-Host "`n========================================" -ForegroundColor Cyan
+Write-Host "COMMIT PREVIEW" -ForegroundColor Cyan
+Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "Title: $commitTitle" -ForegroundColor White
+if ([string]::IsNullOrWhiteSpace($commitDescription)) {
+    Write-Host "Desc: (none)" -ForegroundColor DarkGray
+} else {
+    Write-Host "Desc:" -ForegroundColor White
+    Write-Host $commitDescription -ForegroundColor White
+}
+Write-Host "========================================`n" -ForegroundColor Cyan
+
+$confirm = Read-Host "Ready to proceed with commit and push? (type 'yes' to continue)"
+if ($confirm -ne "yes" -and $confirm -ne "y" -and $confirm -ne "Y" -and $confirm -ne "YES") {
+    Write-Host "Aborted." -ForegroundColor Yellow
+    exit 0
+}
+
+# Switch to main and update
+Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 git checkout main 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to checkout main" -ForegroundColor Red
+    git checkout Testing 2>&1 | Out-Null
     exit 1
 }
-Write-Host "[2/7] Switched to main" -ForegroundColor Green
 
-# Pull latest from upstream
-Write-Host "[3/7] Pulling latest from upstream/main..." -ForegroundColor Yellow
 git pull upstream main 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to pull from upstream/main" -ForegroundColor Red
@@ -123,52 +241,70 @@ if ($LASTEXITCODE -ne 0) {
     git checkout Testing 2>&1 | Out-Null
     exit 1
 }
-Write-Host "[3/7] Main branch updated" -ForegroundColor Green
+Write-Host "[1/6] Main branch updated" -ForegroundColor Green
 
-# Check if branch already exists
-$existingBranch = git branch --list $branchName
-if ($existingBranch) {
-    Write-Host "Warning: Branch '$branchName' already exists" -ForegroundColor Yellow
-    $response = Read-Host "Delete and recreate? (y/n)"
-    if ($response -eq 'y') {
-        git branch -D $branchName 2>&1 | Out-Null
-        Write-Host "Deleted existing branch" -ForegroundColor Yellow
+# Create or checkout branch
+if ($branchExists) {
+    Write-Host "[2/6] Checking out existing branch: $branchName" -ForegroundColor Yellow
+    
+    # Fetch latest if remote exists
+    if ($remoteBranch) {
+        git fetch origin $branchName 2>&1 | Out-Null
+    }
+    
+    # Checkout branch
+    if ($localBranch) {
+        git checkout $branchName 2>&1 | Out-Null
     } else {
-        Write-Host "Aborted. Delete the branch manually first." -ForegroundColor Red
+        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
+    }
+    
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Failed to checkout branch" -ForegroundColor Red
         git checkout Testing 2>&1 | Out-Null
         exit 1
     }
+    Write-Host "[2/6] Checked out branch (adding new commit)" -ForegroundColor Green
+} else {
+    Write-Host "[2/6] Creating new branch: $branchName" -ForegroundColor Yellow
+    git checkout -b $branchName 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Failed to create branch" -ForegroundColor Red
+        git checkout Testing 2>&1 | Out-Null
+        exit 1
+    }
+    Write-Host "[2/6] Branch created" -ForegroundColor Green
 }
 
-# Create submission branch
-Write-Host "[4/7] Creating branch: $branchName" -ForegroundColor Yellow
-git checkout -b $branchName 2>&1 | Out-Null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Error: Failed to create branch" -ForegroundColor Red
-    git checkout Testing 2>&1 | Out-Null
-    exit 1
+# Check for workspace file and copy if needed
+Write-Host "[3/6] Checking workspace file..." -ForegroundColor Yellow
+$workspaceFile = "windhawk-mods.code-workspace"
+if (-not (Test-Path $workspaceFile)) {
+    Write-Host "Workspace file not found, copying from Testing..." -ForegroundColor Yellow
+    git show Testing:$workspaceFile > $workspaceFile 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Workspace file copied (local only, not committed)" -ForegroundColor Green
+    } else {
+        Write-Host "Warning: Could not copy workspace file" -ForegroundColor Yellow
+    }
 }
-Write-Host "[4/7] Branch created (now in $branchName)" -ForegroundColor Green
+Write-Host "[3/6] Workspace check complete" -ForegroundColor Green
 
 # Copy mod file from Testing
-Write-Host "[5/7] Copying mod from Testing branch..." -ForegroundColor Yellow
+Write-Host "[4/6] Copying mod from Testing branch..." -ForegroundColor Yellow
 git checkout Testing -- $relativeFilePath 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to checkout file from Testing" -ForegroundColor Red
-    git checkout main 2>&1 | Out-Null
-    git branch -D $branchName 2>&1 | Out-Null
     git checkout Testing 2>&1 | Out-Null
     exit 1
 }
-Write-Host "[5/7] Mod file copied" -ForegroundColor Green
+Write-Host "[4/6] Mod file copied" -ForegroundColor Green
 
-# Stage the file
-Write-Host "[6/7] Staging file..." -ForegroundColor Yellow
+# Stage and commit
+Write-Host "[5/6] Staging and committing..." -ForegroundColor Yellow
 git add $relativeFilePath 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to stage file" -ForegroundColor Red
-    git checkout main 2>&1 | Out-Null
-    git branch -D $branchName 2>&1 | Out-Null
     git checkout Testing 2>&1 | Out-Null
     exit 1
 }
@@ -179,53 +315,54 @@ git diff --cached --stat
 Write-Host ""
 
 # Commit
-$commitArgs = @("-m", $commitMessage)
-if ($changelogResult -and -not $changelogResult.IsNew -and $changelogResult.Summary) {
-    $commitArgs += @("-m", $changelogResult.Summary)
+$commitArgs = @("-m", $commitTitle)
+if (-not [string]::IsNullOrWhiteSpace($commitDescription)) {
+    $commitArgs += @("-m", $commitDescription)
 }
 
 git commit @commitArgs 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to commit" -ForegroundColor Red
-    git checkout main 2>&1 | Out-Null
-    git branch -D $branchName 2>&1 | Out-Null
     git checkout Testing 2>&1 | Out-Null
     exit 1
 }
-Write-Host "[6/7] Changes committed" -ForegroundColor Green
-
-# Final confirmation before pushing
-$readyToPush = Read-Host "Are you sure you're ready to submit this mod? Type 'yes' to push"
-if ($readyToPush -ne "yes") {
-    Write-Host "Push skipped. Branch '$branchName' contains the committed changes." -ForegroundColor Yellow
-    Write-Host "You can push later with: git push -u origin $branchName" -ForegroundColor Yellow
-    Write-Host "Currently on branch '$branchName'. Switch back to Testing when ready: git checkout Testing" -ForegroundColor Yellow
-    exit 0
-}
+Write-Host "[5/6] Changes committed" -ForegroundColor Green
 
 # Push
-Write-Host "[7/7] Pushing to origin/$branchName..." -ForegroundColor Yellow
-git push -u origin $branchName 2>&1 | Out-Null
+Write-Host "[6/6] Pushing to origin/$branchName..." -ForegroundColor Yellow
+if ($branchExists) {
+    git push origin $branchName 2>&1 | Out-Null
+} else {
+    git push -u origin $branchName 2>&1 | Out-Null
+}
+
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to push to origin" -ForegroundColor Red
-    Write-Host "Branch created locally but not pushed." -ForegroundColor Yellow
+    Write-Host "Branch created/updated locally but not pushed." -ForegroundColor Yellow
     git checkout Testing 2>&1 | Out-Null
     exit 1
 }
-Write-Host "[7/7] Pushed to GitHub" -ForegroundColor Green
+Write-Host "[6/6] Pushed to GitHub" -ForegroundColor Green
 
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "SUCCESS! Ready for PR" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Branch: $branchName" -ForegroundColor White
-Write-Host "Commit: $commitMessage" -ForegroundColor White
-if ($changelogResult -and -not $changelogResult.IsNew -and $changelogResult.ChangelogPath) {
-    Write-Host "Changelog saved (not committed): $($changelogResult.ChangelogPath)" -ForegroundColor White
+Write-Host "Commit: $commitTitle" -ForegroundColor White
+if ($branchExists) {
+    Write-Host "Type: UPDATE (new commit added to existing branch)" -ForegroundColor Yellow
+} else {
+    Write-Host "Type: NEW MOD" -ForegroundColor Green
 }
 Write-Host "`nNext steps:" -ForegroundColor Yellow
-Write-Host "1. Go to GitHub: https://github.com/YOUR-USERNAME/windhawk-mods" -ForegroundColor White
-Write-Host "2. Create Pull Request from '$branchName' to 'ramensoftware:main'" -ForegroundColor White
-Write-Host "3. Wait for review" -ForegroundColor White
+if ($branchExists) {
+    Write-Host "- Your existing PR will be automatically updated with this commit" -ForegroundColor White
+    Write-Host "- Review the changes on GitHub" -ForegroundColor White
+} else {
+    Write-Host "1. Go to GitHub and create Pull Request" -ForegroundColor White
+    Write-Host "   From: YOUR-FORK/$branchName" -ForegroundColor White
+    Write-Host "   To: ramensoftware/windhawk-mods:main" -ForegroundColor White
+}
 Write-Host "========================================`n" -ForegroundColor Cyan
 
 # Return to Testing branch
