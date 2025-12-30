@@ -171,7 +171,7 @@ if ($branchExists -and $previousVersion) {
 }
 
 # Ask for custom title or use auto-generated
-Write-Host "Would you like to use a custom commit Title?    -    Or use auto-generated title? (y/n)" -ForegroundColor Yellow
+Write-Host "Would you like to enter a custom commit Title? (y=custom, n=auto-generated)" -ForegroundColor Yellow
 if ($branchExists) {
     Write-Host (Get-CenteredText "Working title:") -ForegroundColor White
 } else {
@@ -192,19 +192,28 @@ if ($useCustomTitle -eq 'y' -or $useCustomTitle -eq 'Y' -or $useCustomTitle -eq 
     $commitTitle = $autoTitle
 }
 
-# Ask for commit description
+# Ask for commit description via template file
 Write-Host "" -ForegroundColor White
+$templatePath = Join-Path "Testing" "Commit-Template.txt"
+if (-not (Test-Path "Testing")) {
+    New-Item -ItemType Directory -Path "Testing" | Out-Null
+}
+Set-Content -Path $templatePath -Value "" -Encoding UTF8
+
 if ($branchExists) {
-    Write-Host "Please enter changelog (aka commit description)    -    Or press Enter and no commit Desc will be added. (Not advised!)" -ForegroundColor Yellow
+    Write-Host "Please edit Testing/Commit-Template.txt with your changelog (commit description)." -ForegroundColor Yellow
+    Write-Host "Save the file, then press Enter here to continue. (Leave empty to skip, not advised.)" -ForegroundColor Yellow
 } else {
-    Write-Host "This is your first mod, Would you like to add a commit Desc?    -    Otherwise it will just be posted as:" -ForegroundColor Yellow
+    Write-Host "This is your first mod. Edit Testing/Commit-Template.txt with a commit description or leave it blank." -ForegroundColor Yellow
     Write-Host "Title: $commitTitle" -ForegroundColor White
-    Write-Host "Desc:" -ForegroundColor White
-    Write-Host "--------------------------------------------------------------------" -ForegroundColor DarkGray
-    Write-Host "Enter commit description (or press Enter to skip):" -ForegroundColor Yellow
+    Write-Host "Desc: (contents of Commit-Template.txt)" -ForegroundColor White
 }
 
-$commitDescription = Read-Host
+Read-Host | Out-Null
+$commitDescription = ""
+if (Test-Path $templatePath) {
+    $commitDescription = Get-Content -Path $templatePath -Raw -ErrorAction SilentlyContinue
+}
 
 Write-Host "`n========================================" -ForegroundColor Cyan
 Write-Host "COMMIT PREVIEW" -ForegroundColor Cyan
@@ -368,3 +377,9 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 # Return to Testing branch
 git checkout Testing 2>&1 | Out-Null
 Write-Host "Returned to Testing branch" -ForegroundColor Green
+
+# Clear commit template file after completion
+$templatePath = Join-Path "Testing" "Commit-Template.txt"
+if (Test-Path $templatePath) {
+    Set-Content -Path $templatePath -Value "" -Encoding UTF8 -ErrorAction SilentlyContinue
+}
