@@ -619,11 +619,11 @@ if ($hasStashedChanges) {
 }
 
 # Clear commit template file after completion
-Write-Debug-Step "Clearing Commit-Desc file..."
+Write-Debug-Step "Deleting Commit-Desc file..."
 $templatePath = "Commit-Desc"
 if (Test-Path $templatePath) {
-    Set-Content -Path $templatePath -Value "" -Encoding UTF8 -ErrorAction SilentlyContinue
-    Write-Debug-Step "Commit-Desc cleared"
+    Remove-Item -Path $templatePath -Force -ErrorAction SilentlyContinue
+    Write-Debug-Step "Commit-Desc deleted"
 }
 
 Write-Debug-Phase "Phase 6 complete"
