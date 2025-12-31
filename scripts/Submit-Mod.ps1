@@ -144,17 +144,17 @@ if ($localBranch -or $remoteBranch) {
     # Fetch latest from origin if remote branch exists
     if ($remoteBranch) {
         Write-Debug-Step "Fetching latest from origin/$branchName..."
-        git fetch origin $branchName 2>&1 | Out-Null
+        git fetch origin $branchName > $null 2>&1
         Write-Debug-Step "Fetch complete"
     }
     
     # Checkout or create local tracking branch
     if ($localBranch) {
         Write-Debug-Step "Checking out existing local branch..."
-        git checkout $branchName 2>&1 | Out-Null
+        git checkout $branchName > $null 2>&1
     } else {
         Write-Debug-Step "Creating tracking branch from origin/$branchName..."
-        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
+        git checkout -b $branchName origin/$branchName > $null 2>&1
     }
     Write-Debug-Step "Branch checkout complete"
     
@@ -168,7 +168,7 @@ if ($localBranch -or $remoteBranch) {
     
     # Go back to Testing
     Write-Debug-Step "Returning to Testing branch..."
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null 2>&1
     Write-Debug-Step "Back on Testing branch"
     
     # Now extract current version for updates
@@ -256,7 +256,7 @@ if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
         }
         
         Write-Debug-Step "User chose to continue - executing git stash..."
-        git stash 2>&1 | Out-Null
+        git stash > $null 2>&1
         if ($LASTEXITCODE -ne 0) {
             Write-Host "Error: Failed to stash changes" -ForegroundColor Red
             exit 1
@@ -367,7 +367,7 @@ if ($confirm -ne "yes" -and $confirm -ne "y" -and $confirm -ne "Y" -and $confirm
     Write-Debug-Step "User aborted at final confirmation"
     if ($hasStashedChanges) {
         Write-Debug-Step "Restoring stashed changes before abort..."
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
         Write-Host "Stashed changes restored." -ForegroundColor Green
         Write-Debug-Step "Stashed changes restored"
     }
@@ -391,27 +391,37 @@ Write-Debug-Phase "Starting Phase 5: Git operations"
 # [1] Switch to main and update
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
-git checkout main 2>&1 | Out-Null
+git checkout main > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to checkout main branch" -ForegroundColor Red
     Write-Debug-Step "[1/6] Failed to checkout main"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
 
 Write-Debug-Step "[1/6] Pulling from upstream/main..."
-git pull upstream main 2>&1 | Out-Null
+git pull upstream main > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to pull from upstream/main" -ForegroundColor Red
     Write-Host "Make sure upstream remote is configured:" -ForegroundColor Yellow
     Write-Host "  git remote add upstream https://github.com/ramensoftware/windhawk-mods.git" -ForegroundColor Yellow
     Write-Debug-Step "[1/6] Failed to pull from upstream"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
@@ -426,24 +436,29 @@ if ($branchExists) {
     # Fetch latest if remote exists
     if ($remoteBranch) {
         Write-Debug-Step "[2/6] Fetching latest from origin/$branchName..."
-        git fetch origin $branchName 2>&1 | Out-Null
+        git fetch origin $branchName > $null 2>&1
     }
     
     # Checkout branch
     if ($localBranch) {
         Write-Debug-Step "[2/6] Checking out local branch..."
-        git checkout $branchName 2>&1 | Out-Null
+        git checkout $branchName > $null 2>&1
     } else {
         Write-Debug-Step "[2/6] Creating tracking branch from remote..."
-        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
+        git checkout -b $branchName origin/$branchName > $null 2>&1
     }
     
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error: Failed to checkout branch '$branchName'" -ForegroundColor Red
         Write-Debug-Step "[2/6] Failed to checkout branch"
-        git checkout Testing 2>&1 | Out-Null
+        # Cleanup Commit-Desc
+        if (Test-Path "Commit-Desc") {
+            Remove-Item "Commit-Desc" -Force
+            Write-Debug-Step "Commit-Desc cleaned up after error"
+        }
+        git checkout Testing > $null 2>&1
         if ($hasStashedChanges) {
-            git stash pop 2>&1 | Out-Null
+            git stash pop > $null 2>&1
         }
         exit 1
     }
@@ -452,13 +467,18 @@ if ($branchExists) {
 } else {
     Write-Host "[2/6] Creating new branch: $branchName" -ForegroundColor Yellow
     Write-Debug-Step "[2/6] Mode: NEW MOD - creating new branch from main"
-    git checkout -b $branchName 2>&1 | Out-Null
+    git checkout -b $branchName > $null 2>&1
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error: Failed to create branch '$branchName'" -ForegroundColor Red
         Write-Debug-Step "[2/6] Failed to create branch"
-        git checkout Testing 2>&1 | Out-Null
+        # Cleanup Commit-Desc
+        if (Test-Path "Commit-Desc") {
+            Remove-Item "Commit-Desc" -Force
+            Write-Debug-Step "Commit-Desc cleaned up after error"
+        }
+        git checkout Testing > $null 2>&1
         if ($hasStashedChanges) {
-            git stash pop 2>&1 | Out-Null
+            git stash pop > $null 2>&1
         }
         exit 1
     }
@@ -489,14 +509,19 @@ Write-Host "[3/6] Workspace check complete" -ForegroundColor Green
 # [4] Copy mod file from Testing
 Write-Host "[4/6] Copying mod from Testing branch..." -ForegroundColor Yellow
 Write-Debug-Step "[4/6] Copying mod file: $relativeFilePath from Testing branch"
-git checkout Testing -- $relativeFilePath 2>&1 | Out-Null
+git checkout Testing -- $relativeFilePath > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to copy mod file from Testing branch" -ForegroundColor Red
     Write-Host "File: $relativeFilePath" -ForegroundColor Yellow
     Write-Debug-Step "[4/6] Failed to copy mod file"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
@@ -506,13 +531,18 @@ Write-Debug-Step "[4/6] Mod file successfully copied to PR branch"
 # [5] Stage and commit
 Write-Host "[5/6] Staging and committing..." -ForegroundColor Yellow
 Write-Debug-Step "[5/6] Staging mod file..."
-git add $relativeFilePath 2>&1 | Out-Null
+git add $relativeFilePath > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to stage mod file" -ForegroundColor Red
     Write-Debug-Step "[5/6] Failed to stage file"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
@@ -529,13 +559,18 @@ if (-not [string]::IsNullOrWhiteSpace($commitDescription)) {
     $commitArgs += @("-m", $commitDescription)
 }
 
-git commit @commitArgs 2>&1 | Out-Null
+git commit @commitArgs > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to create commit" -ForegroundColor Red
     Write-Debug-Step "[5/6] Failed to commit changes"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
@@ -546,18 +581,23 @@ Write-Debug-Step "[5/6] Commit created successfully"
 Write-Host "[6/6] Pushing to origin/$branchName..." -ForegroundColor Yellow
 Write-Debug-Step "[6/6] Pushing to origin..."
 if ($branchExists) {
-    git push origin $branchName 2>&1 | Out-Null
+    git push origin $branchName > $null 2>&1
 } else {
-    git push -u origin $branchName 2>&1 | Out-Null
+    git push -u origin $branchName > $null 2>&1
 }
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to push to origin" -ForegroundColor Red
     Write-Host "Branch created/updated locally but not pushed." -ForegroundColor Yellow
     Write-Debug-Step "[6/6] Failed to push to origin"
-    git checkout Testing 2>&1 | Out-Null
+    # Cleanup Commit-Desc
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing > $null 2>&1
     if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
+        git stash pop > $null 2>&1
     }
     exit 1
 }
@@ -596,7 +636,7 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 
 # Return to Testing branch
 Write-Debug-Step "Returning to Testing branch..."
-git checkout Testing 2>&1 | Out-Null
+git checkout Testing > $null 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Warning: Could not return to Testing branch" -ForegroundColor Yellow
     Write-Debug-Step "Failed to checkout Testing branch"
@@ -608,7 +648,7 @@ if ($LASTEXITCODE -ne 0) {
 # Restore stashed changes if any
 if ($hasStashedChanges) {
     Write-Debug-Step "Restoring stashed changes..."
-    git stash pop 2>&1 | Out-Null
+    git stash pop > $null 2>&1
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Stashed changes restored." -ForegroundColor Green
         Write-Debug-Step "Stashed changes successfully restored"
