@@ -19,7 +19,7 @@ param(
     [string]$FileName,
     
     [Parameter(Mandatory=$false)]
-    [int]$Debug = 0  # 0=off, 1=phase level, 2=every step
+    [int]$DebugLevel = 0  # 0=off, 1=phase level, 2=every step
 )
 
 $ErrorActionPreference = "Stop"
@@ -28,7 +28,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 # DEBUG: Helper function for phase-level debug messages (Debug level 1+)
 function Write-Debug-Phase {
     param([string]$Message)
-    if ($Debug -ge 1) {
+    if ($DebugLevel -ge 1) {
         Write-Host "[DEBUG-PHASE] $Message" -ForegroundColor Gray
     }
 }
@@ -36,7 +36,7 @@ function Write-Debug-Phase {
 # DEBUG: Helper function for step-level debug messages (Debug level 2 only)
 function Write-Debug-Step {
     param([string]$Message)
-    if ($Debug -eq 2) {
+    if ($DebugLevel -eq 2) {
         Write-Host "[DEBUG-STEP] $Message" -ForegroundColor DarkGray
     }
 }
