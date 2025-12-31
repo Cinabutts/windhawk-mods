@@ -222,7 +222,8 @@ Write-Host "File validated in Testing branch" -ForegroundColor Green
 # Check for pending changes in Testing branch
 Write-Debug-Step "Running git status to check for uncommitted changes..."
 $pendingChanges = git status --porcelain
-Write-Debug-Step "Git status result: $($pendingChanges ? 'Changes found' : 'No changes')"
+$statusMessage = if ($pendingChanges) { "Changes found" } else { "No changes" }
+Write-Debug-Step "Git status result: $statusMessage"
 $hasStashedChanges = $false
 
 if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
