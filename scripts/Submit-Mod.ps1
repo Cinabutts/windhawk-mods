@@ -388,6 +388,12 @@ Write-Debug-Phase "Phase 4 complete"
 
 Write-Debug-Phase "Starting Phase 5: Git operations"
 
+# Remove Commit-Desc now to avoid post-checkout sync hook conflicts
+if (Test-Path "Commit-Desc") {
+    Remove-Item "Commit-Desc" -Force -ErrorAction SilentlyContinue
+    Write-Debug-Step "Commit-Desc removed before branch switch"
+}
+
 # [1] Switch to main and update
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
