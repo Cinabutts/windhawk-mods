@@ -159,15 +159,11 @@ if ($localBranch -or $remoteBranch) {
     # Fetch latest from origin if remote branch exists
     if ($remoteBranch) {
         Write-Debug-Step "Fetching latest from origin/$branchName..."
-        # Temp fix EAP for fetch
-        $eap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
         git fetch origin $branchName 2>&1 | Out-Null
-        $ErrorActionPreference = $eap
         Write-Debug-Step "Fetch complete"
     }
     
     # Checkout or create local tracking branch
-    $eap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     if ($localBranch) {
         Write-Debug-Step "Checking out existing local branch..."
         git checkout $branchName 2>&1 | Out-Null
@@ -175,7 +171,6 @@ if ($localBranch -or $remoteBranch) {
         Write-Debug-Step "Creating tracking branch from origin/$branchName..."
         git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
     }
-    $ErrorActionPreference = $eap
     Write-Debug-Step "Branch checkout complete"
     
     if (Test-Path $relativeFilePath) {
@@ -188,9 +183,7 @@ if ($localBranch -or $remoteBranch) {
     
     # Go back to Testing
     Write-Debug-Step "Returning to Testing branch..."
-    $eap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     git checkout Testing 2>&1 | Out-Null
-    $ErrorActionPreference = $eap
     Write-Debug-Step "Back on Testing branch"
     
     # Now extract current version for updates
@@ -278,13 +271,8 @@ if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
         }
         
         Write-Debug-Step "User chose to continue - executing git stash..."
-        # Fix stash with EAP toggle
-        $eap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
         git stash 2>&1 | Out-Null
-        $res = $LASTEXITCODE
-        $ErrorActionPreference = $eap
-        
-        if ($res -ne 0) {
+        if ($LASTEXITCODE -ne 0) {
             Write-Host "Error: Failed to stash changes" -ForegroundColor Red
             exit 1
         }
@@ -394,9 +382,7 @@ if ($confirm -ne "yes" -and $confirm -ne "y" -and $confirm -ne "Y" -and $confirm
     Write-Debug-Step "User aborted at final confirmation"
     if ($hasStashedChanges) {
         Write-Debug-Step "Restoring stashed changes before abort..."
-        $eap = $ErrorActionPreference; $ErrorActionPreference = "Continue"
         git stash pop 2>&1 | Out-Null
-        $ErrorActionPreference = $eap
         Write-Host "Stashed changes restored." -ForegroundColor Green
         Write-Debug-Step "Stashed changes restored"
     }
@@ -417,10 +403,10 @@ Write-Debug-Phase "Phase 4 complete"
 
 Write-Debug-Phase "Starting Phase 5: Git operations"
 
-# Remove Commit-Desc now to avoid post-checkout sync hook conflicts
+# Remove Commit-Desc now (Since you removed it from exclude, the hook won't care)
 if (Test-Path "Commit-Desc") {
     Remove-Item "Commit-Desc" -Force -ErrorAction SilentlyContinue
-    Start-Sleep -Milliseconds 200 # FIX: Added sleep to release file lock for git hook
+    Start-Sleep -Milliseconds 200 # Safety for file locks
     Write-Debug-Step "Commit-Desc removed before branch switch"
 }
 
@@ -428,65 +414,44 @@ if (Test-Path "Commit-Desc") {
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
 
-# FIX: Temporarily allow errors so we can capture output
-$savedEAP = $ErrorActionPreference
-$ErrorActionPreference = "Continue"
-
-# CAPTURE output instead of Out-Null to see why it fails
-$gitOutput = git checkout main 2>&1
-$gitCheckoutExit = $LASTEXITCODE
-
-$ErrorActionPreference = $savedEAP
-
-if ($gitCheckoutExit -ne 0) {
+# We use 2>&1 | Out-Null to silence the "Switched to branch" status message
+# that Git prints to stderr. This prevents PowerShell from crashing.
+git checkout main 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to checkout main branch" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) {
-        $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
-    } else {
-        Write-Host "  (No output captured)" -ForegroundColor Red
-    }
     Write-Debug-Step "[1/6] Failed to checkout main"
     
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    git checkout Testing 2>&1 | Out-Null 
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
 
 Write-Debug-Step "[1/6] Pulling from upstream/main..."
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-$gitOutput = git pull upstream main 2>&1
-$gitPullExit = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
-
-if ($gitPullExit -ne 0) {
+git pull upstream main 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to pull from upstream/main" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) {
-        $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
-    }
     Write-Host "Make sure upstream remote is configured:" -ForegroundColor Yellow
     Write-Host "  git remote add upstream https://github.com/ramensoftware/windhawk-mods.git" -ForegroundColor Yellow
     Write-Debug-Step "[1/6] Failed to pull from upstream"
-
+    
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
-
 Write-Host "[1/6] Main branch updated" -ForegroundColor Green
 Write-Debug-Step "[1/6] Main branch successfully updated from upstream"
 
@@ -498,34 +463,30 @@ if ($branchExists) {
     # Fetch latest if remote exists
     if ($remoteBranch) {
         Write-Debug-Step "[2/6] Fetching latest from origin/$branchName..."
-        $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
         git fetch origin $branchName 2>&1 | Out-Null
-        $ErrorActionPreference = $savedEAP
     }
     
     # Checkout branch
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     if ($localBranch) {
         Write-Debug-Step "[2/6] Checking out local branch..."
-        $gitOutput = git checkout $branchName 2>&1
+        git checkout $branchName 2>&1 | Out-Null
     } else {
         Write-Debug-Step "[2/6] Creating tracking branch from remote..."
-        $gitOutput = git checkout -b $branchName origin/$branchName 2>&1
+        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
     }
-    $res = $LASTEXITCODE
-    $ErrorActionPreference = $savedEAP
     
-    if ($res -ne 0) {
+    if ($LASTEXITCODE -ne 0) {
         Write-Host "Error: Failed to checkout branch '$branchName'" -ForegroundColor Red
-        Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-        if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-        
+        Write-Debug-Step "[2/6] Failed to checkout branch"
         # Cleanup Commit-Desc
-        if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-        $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-        git checkout Testing > $null
-        if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-        $ErrorActionPreference = $savedEAP
+        if (Test-Path "Commit-Desc") {
+            Remove-Item "Commit-Desc" -Force
+            Write-Debug-Step "Commit-Desc cleaned up after error"
+        }
+        git checkout Testing 2>&1 | Out-Null
+        if ($hasStashedChanges) {
+            git stash pop 2>&1 | Out-Null
+        }
         exit 1
     }
     Write-Host "[2/6] Checked out branch (adding new commit)" -ForegroundColor Green
@@ -533,23 +494,19 @@ if ($branchExists) {
 } else {
     Write-Host "[2/6] Creating new branch: $branchName" -ForegroundColor Yellow
     Write-Debug-Step "[2/6] Mode: NEW MOD - creating new branch from main"
-    
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    $gitOutput = git checkout -b $branchName 2>&1
-    $res = $LASTEXITCODE
-    $ErrorActionPreference = $savedEAP
-    
-    if ($res -ne 0) {
+    git checkout -b $branchName 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
         Write-Host "Error: Failed to create branch '$branchName'" -ForegroundColor Red
-        Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-        if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-        
+        Write-Debug-Step "[2/6] Failed to create branch"
         # Cleanup Commit-Desc
-        if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-        $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-        git checkout Testing > $null
-        if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-        $ErrorActionPreference = $savedEAP
+        if (Test-Path "Commit-Desc") {
+            Remove-Item "Commit-Desc" -Force
+            Write-Debug-Step "Commit-Desc cleaned up after error"
+        }
+        git checkout Testing 2>&1 | Out-Null
+        if ($hasStashedChanges) {
+            git stash pop 2>&1 | Out-Null
+        }
         exit 1
     }
     Write-Host "[2/6] Branch created" -ForegroundColor Green
@@ -560,11 +517,9 @@ if ($branchExists) {
 Write-Host "[3/6] Refreshing workspace file from Testing..." -ForegroundColor Yellow
 Write-Debug-Step "[3/6] Copying workspace file from Testing branch (local only)"
 $workspaceFile = "windhawk-mods.code-workspace"
-
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
+# Capture output, but silence stderr to prevent crash
 $workspaceCopyOutput = git show Testing:$workspaceFile 2>&1
 $workspaceCopyExit = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
 
 if ($workspaceCopyExit -eq 0) {
     $workspaceCopyOutput | Set-Content -Path $workspaceFile -Encoding UTF8
@@ -582,23 +537,20 @@ Write-Host "[3/6] Workspace check complete" -ForegroundColor Green
 # [4] Copy mod file from Testing
 Write-Host "[4/6] Copying mod from Testing branch..." -ForegroundColor Yellow
 Write-Debug-Step "[4/6] Copying mod file: $relativeFilePath from Testing branch"
-
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-$gitOutput = git checkout Testing -- $relativeFilePath 2>&1
-$res = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
-
-if ($res -ne 0) {
+git checkout Testing -- $relativeFilePath 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to copy mod file from Testing branch" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-    
+    Write-Host "File: $relativeFilePath" -ForegroundColor Yellow
+    Write-Debug-Step "[4/6] Failed to copy mod file"
     # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
 Write-Host "[4/6] Mod file copied" -ForegroundColor Green
@@ -607,23 +559,19 @@ Write-Debug-Step "[4/6] Mod file successfully copied to PR branch"
 # [5] Stage and commit
 Write-Host "[5/6] Staging and committing..." -ForegroundColor Yellow
 Write-Debug-Step "[5/6] Staging mod file..."
-
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-$gitOutput = git add $relativeFilePath 2>&1
-$res = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
-
-if ($res -ne 0) {
+git add $relativeFilePath 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to stage mod file" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-    
+    Write-Debug-Step "[5/6] Failed to stage file"
     # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
 
@@ -639,22 +587,19 @@ if (-not [string]::IsNullOrWhiteSpace($commitDescription)) {
     $commitArgs += @("-m", $commitDescription)
 }
 
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-$gitOutput = git commit @commitArgs 2>&1
-$res = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
-
-if ($res -ne 0) {
+git commit @commitArgs 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to create commit" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-    
+    Write-Debug-Step "[5/6] Failed to commit changes"
     # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
 Write-Host "[5/6] Changes committed" -ForegroundColor Green
@@ -663,27 +608,25 @@ Write-Debug-Step "[5/6] Commit created successfully"
 # [6] Push
 Write-Host "[6/6] Pushing to origin/$branchName..." -ForegroundColor Yellow
 Write-Debug-Step "[6/6] Pushing to origin..."
-
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
 if ($branchExists) {
-    $gitOutput = git push origin $branchName 2>&1
+    git push origin $branchName 2>&1 | Out-Null
 } else {
-    $gitOutput = git push -u origin $branchName 2>&1
+    git push -u origin $branchName 2>&1 | Out-Null
 }
-$res = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
 
-if ($res -ne 0) {
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to push to origin" -ForegroundColor Red
-    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
-    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
-    
+    Write-Host "Branch created/updated locally but not pushed." -ForegroundColor Yellow
+    Write-Debug-Step "[6/6] Failed to push to origin"
     # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout Testing > $null
-    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
-    $ErrorActionPreference = $savedEAP
+    if (Test-Path "Commit-Desc") {
+        Remove-Item "Commit-Desc" -Force
+        Write-Debug-Step "Commit-Desc cleaned up after error"
+    }
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) {
+        git stash pop 2>&1 | Out-Null
+    }
     exit 1
 }
 Write-Host "[6/6] Pushed to GitHub" -ForegroundColor Green
@@ -721,13 +664,8 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 
 # Return to Testing branch
 Write-Debug-Step "Returning to Testing branch..."
-
-$savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
 git checkout Testing 2>&1 | Out-Null
-$res = $LASTEXITCODE
-$ErrorActionPreference = $savedEAP
-
-if ($res -ne 0) {
+if ($LASTEXITCODE -ne 0) {
     Write-Host "Warning: Could not return to Testing branch" -ForegroundColor Yellow
     Write-Debug-Step "Failed to checkout Testing branch"
 } else {
@@ -738,13 +676,8 @@ if ($res -ne 0) {
 # Restore stashed changes if any
 if ($hasStashedChanges) {
     Write-Debug-Step "Restoring stashed changes..."
-    
-    $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     git stash pop 2>&1 | Out-Null
-    $res = $LASTEXITCODE
-    $ErrorActionPreference = $savedEAP
-    
-    if ($res -eq 0) {
+    if ($LASTEXITCODE -eq 0) {
         Write-Host "Stashed changes restored." -ForegroundColor Green
         Write-Debug-Step "Stashed changes successfully restored"
     } else {
