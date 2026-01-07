@@ -22,6 +22,8 @@ param(
     [int]$DebugLevel = 2  # 0=off, 1=phase level, 2=every step
 )
 
+# CRITICAL FIX: Stops PowerShell 7 from treating Git status messages as fatal errors
+$PSNativeCommandUseErrorActionPreference = $false
 $ErrorActionPreference = "Stop"
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -403,10 +405,9 @@ Write-Debug-Phase "Phase 4 complete"
 
 Write-Debug-Phase "Starting Phase 5: Git operations"
 
-# Remove Commit-Desc now (Since you removed it from exclude, the hook won't care)
+# Clean up Commit-Desc before we start (assuming you fixed the exclude file)
 if (Test-Path "Commit-Desc") {
     Remove-Item "Commit-Desc" -Force -ErrorAction SilentlyContinue
-    Start-Sleep -Milliseconds 200 # Safety for file locks
     Write-Debug-Step "Commit-Desc removed before branch switch"
 }
 
@@ -414,22 +415,14 @@ if (Test-Path "Commit-Desc") {
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
 
-# We use 2>&1 | Out-Null to silence the "Switched to branch" status message
-# that Git prints to stderr. This prevents PowerShell from crashing.
 git checkout main 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to checkout main branch" -ForegroundColor Red
     Write-Debug-Step "[1/6] Failed to checkout main"
     
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
-    git checkout Testing 2>&1 | Out-Null 
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    # Attempt to return to Testing
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 
@@ -440,16 +433,9 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Make sure upstream remote is configured:" -ForegroundColor Yellow
     Write-Host "  git remote add upstream https://github.com/ramensoftware/windhawk-mods.git" -ForegroundColor Yellow
     Write-Debug-Step "[1/6] Failed to pull from upstream"
-    
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
+
     git checkout Testing 2>&1 | Out-Null
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 Write-Host "[1/6] Main branch updated" -ForegroundColor Green
@@ -460,13 +446,11 @@ if ($branchExists) {
     Write-Host "[2/6] Checking out existing branch: $branchName" -ForegroundColor Yellow
     Write-Debug-Step "[2/6] Mode: UPDATE - checking out existing branch"
     
-    # Fetch latest if remote exists
     if ($remoteBranch) {
         Write-Debug-Step "[2/6] Fetching latest from origin/$branchName..."
         git fetch origin $branchName 2>&1 | Out-Null
     }
     
-    # Checkout branch
     if ($localBranch) {
         Write-Debug-Step "[2/6] Checking out local branch..."
         git checkout $branchName 2>&1 | Out-Null
@@ -474,62 +458,36 @@ if ($branchExists) {
         Write-Debug-Step "[2/6] Creating tracking branch from remote..."
         git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
     }
-    
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "Error: Failed to checkout branch '$branchName'" -ForegroundColor Red
-        Write-Debug-Step "[2/6] Failed to checkout branch"
-        # Cleanup Commit-Desc
-        if (Test-Path "Commit-Desc") {
-            Remove-Item "Commit-Desc" -Force
-            Write-Debug-Step "Commit-Desc cleaned up after error"
-        }
-        git checkout Testing 2>&1 | Out-Null
-        if ($hasStashedChanges) {
-            git stash pop 2>&1 | Out-Null
-        }
-        exit 1
-    }
-    Write-Host "[2/6] Checked out branch (adding new commit)" -ForegroundColor Green
-    Write-Debug-Step "[2/6] Successfully checked out $branchName"
 } else {
     Write-Host "[2/6] Creating new branch: $branchName" -ForegroundColor Yellow
     Write-Debug-Step "[2/6] Mode: NEW MOD - creating new branch from main"
     git checkout -b $branchName 2>&1 | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "Error: Failed to create branch '$branchName'" -ForegroundColor Red
-        Write-Debug-Step "[2/6] Failed to create branch"
-        # Cleanup Commit-Desc
-        if (Test-Path "Commit-Desc") {
-            Remove-Item "Commit-Desc" -Force
-            Write-Debug-Step "Commit-Desc cleaned up after error"
-        }
-        git checkout Testing 2>&1 | Out-Null
-        if ($hasStashedChanges) {
-            git stash pop 2>&1 | Out-Null
-        }
-        exit 1
-    }
-    Write-Host "[2/6] Branch created" -ForegroundColor Green
-    Write-Debug-Step "[2/6] Successfully created new branch $branchName"
 }
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Error: Failed to switch to branch '$branchName'" -ForegroundColor Red
+    Write-Debug-Step "[2/6] Failed to checkout/create branch"
+    git checkout Testing 2>&1 | Out-Null
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
+    exit 1
+}
+Write-Host "[2/6] Checked out branch" -ForegroundColor Green
+Write-Debug-Step "[2/6] Successfully checked out $branchName"
 
 # [3] Refresh workspace file from Testing (local only)
 Write-Host "[3/6] Refreshing workspace file from Testing..." -ForegroundColor Yellow
 Write-Debug-Step "[3/6] Copying workspace file from Testing branch (local only)"
 $workspaceFile = "windhawk-mods.code-workspace"
-# Capture output, but silence stderr to prevent crash
-$workspaceCopyOutput = git show Testing:$workspaceFile 2>&1
-$workspaceCopyExit = $LASTEXITCODE
 
-if ($workspaceCopyExit -eq 0) {
+# We use 2>&1 to silence text, but we need to capture stdout for the content.
+# Since NativeCommandUseErrorActionPreference is false, this is safe now.
+$workspaceCopyOutput = git show Testing:$workspaceFile 2>&1
+if ($LASTEXITCODE -eq 0) {
     $workspaceCopyOutput | Set-Content -Path $workspaceFile -Encoding UTF8
     Write-Host "[3/6] Workspace file refreshed (local only, not committed)" -ForegroundColor Green
     Write-Debug-Step "[3/6] Workspace file copied successfully"
 } else {
     Write-Host "Warning: Could not copy workspace file from Testing" -ForegroundColor Yellow
-    if ($workspaceCopyOutput) {
-        Write-Host $workspaceCopyOutput -ForegroundColor DarkGray
-    }
     Write-Debug-Step "[3/6] Warning: Failed to copy workspace file from Testing"
 }
 Write-Host "[3/6] Workspace check complete" -ForegroundColor Green
@@ -542,15 +500,8 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to copy mod file from Testing branch" -ForegroundColor Red
     Write-Host "File: $relativeFilePath" -ForegroundColor Yellow
     Write-Debug-Step "[4/6] Failed to copy mod file"
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
     git checkout Testing 2>&1 | Out-Null
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 Write-Host "[4/6] Mod file copied" -ForegroundColor Green
@@ -563,15 +514,8 @@ git add $relativeFilePath 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to stage mod file" -ForegroundColor Red
     Write-Debug-Step "[5/6] Failed to stage file"
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
     git checkout Testing 2>&1 | Out-Null
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 
@@ -591,15 +535,8 @@ git commit @commitArgs 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to create commit" -ForegroundColor Red
     Write-Debug-Step "[5/6] Failed to commit changes"
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
     git checkout Testing 2>&1 | Out-Null
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 Write-Host "[5/6] Changes committed" -ForegroundColor Green
@@ -618,15 +555,8 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Error: Failed to push to origin" -ForegroundColor Red
     Write-Host "Branch created/updated locally but not pushed." -ForegroundColor Yellow
     Write-Debug-Step "[6/6] Failed to push to origin"
-    # Cleanup Commit-Desc
-    if (Test-Path "Commit-Desc") {
-        Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
-    }
     git checkout Testing 2>&1 | Out-Null
-    if ($hasStashedChanges) {
-        git stash pop 2>&1 | Out-Null
-    }
+    if ($hasStashedChanges) { git stash pop 2>&1 | Out-Null }
     exit 1
 }
 Write-Host "[6/6] Pushed to GitHub" -ForegroundColor Green
@@ -687,12 +617,9 @@ if ($hasStashedChanges) {
     }
 }
 
-# Clear commit template file after completion
-Write-Debug-Step "Deleting Commit-Desc file..."
-$templatePath = "Commit-Desc"
-if (Test-Path $templatePath) {
-    Remove-Item -Path $templatePath -Force -ErrorAction SilentlyContinue
-    Write-Debug-Step "Commit-Desc deleted"
+# Final cleanup
+if (Test-Path "Commit-Desc") {
+    Remove-Item "Commit-Desc" -Force -ErrorAction SilentlyContinue
 }
 
 Write-Debug-Phase "Phase 6 complete"
