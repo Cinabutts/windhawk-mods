@@ -155,16 +155,16 @@ if ($localBranch -or $remoteBranch) {
     
     if ($remoteBranch) {
         Write-Debug-Step "Fetching latest from origin/$branchName..."
-        git fetch origin $branchName 2>&1 
+        git fetch origin $branchName  
         Write-Debug-Step "Fetch complete"
     }
     
     if ($localBranch) {
         Write-Debug-Step "Checking out existing local branch..."
-        git checkout $branchName 2>&1
+        git checkout $branchName 
     } else {
         Write-Debug-Step "Creating tracking branch from origin/$branchName..."
-        git checkout -b $branchName origin/$branchName 2>&1
+        git checkout -b $branchName origin/$branchName 
     }
     Write-Debug-Step "Branch checkout complete"
     
@@ -175,7 +175,7 @@ if ($localBranch -or $remoteBranch) {
     }
     
     Write-Debug-Step "Returning to Testing branch..."
-    git checkout Testing 2>&1
+    git checkout Testing 
     Write-Debug-Step "Back on Testing branch"
     
     Write-Debug-Step "Extracting current version from Testing branch..."
@@ -229,7 +229,7 @@ if (-not [string]::IsNullOrWhiteSpace($pendingChanges)) {
         if ($continue -ne "y") { exit 0 }
         
         Write-Debug-Step "Stashing changes..."
-        git stash 2>&1
+        git stash 
         if ($LASTEXITCODE -ne 0) { exit 1 }
         $hasStashedChanges = $true
         Write-Host "Changes stashed." -ForegroundColor Green
@@ -284,7 +284,7 @@ Write-Host "Desc: $commitDescription" -ForegroundColor White
 $confirm = Read-Host "Ready to commit and push? (yes/y)"
 if ($confirm -ne "yes" -and $confirm -ne "y") {
     Write-Host "Aborted." -ForegroundColor Yellow
-    if ($hasStashedChanges) { git stash pop 2>&1 }
+    if ($hasStashedChanges) { git stash pop  }
     exit 0
 }
 
@@ -317,10 +317,10 @@ try {
     # [1] Switch to main and update
     Write-Host "[1/6] Updating main branch..." -ForegroundColor Yellow
     
-    git checkout main 2>&1
+    git checkout main 
     if ($LASTEXITCODE -ne 0) { throw "Failed to checkout main" }
 
-    git pull upstream main 2>&1
+    git pull upstream main 
     if ($LASTEXITCODE -ne 0) { throw "Failed to pull from upstream" }
     
     Write-Host "[1/6] Main branch updated" -ForegroundColor Green
@@ -328,16 +328,16 @@ try {
     # [2] Create or checkout PR branch
     if ($branchExists) {
         Write-Host "[2/6] Checking out existing branch: $branchName" -ForegroundColor Yellow
-        if ($remoteBranch) { git fetch origin $branchName 2>&1 }
+        if ($remoteBranch) { git fetch origin $branchName  }
         
         if ($localBranch) {
-            git checkout $branchName 2>&1
+            git checkout $branchName 
         } else {
-            git checkout -b $branchName origin/$branchName 2>&1
+            git checkout -b $branchName origin/$branchName 
         }
     } else {
         Write-Host "[2/6] Creating new branch: $branchName" -ForegroundColor Yellow
-        git checkout -b $branchName 2>&1
+        git checkout -b $branchName 
     }
 
     if ($LASTEXITCODE -ne 0) { throw "Failed to switch to branch $branchName" }
@@ -346,7 +346,7 @@ try {
     # [3] Refresh workspace file
     Write-Host "[3/6] Refreshing workspace file..." -ForegroundColor Yellow
     $workspaceFile = "windhawk-mods.code-workspace"
-    $workspaceContent = git show Testing:$workspaceFile 2>&1
+    $workspaceContent = git show Testing:$workspaceFile 
     if ($LASTEXITCODE -eq 0) {
         $workspaceContent | Set-Content -Path $workspaceFile -Encoding UTF8
         Write-Host "[3/6] Workspace file refreshed" -ForegroundColor Green
@@ -354,29 +354,29 @@ try {
 
     # [4] Copy mod file from Testing
     Write-Host "[4/6] Copying mod from Testing branch..." -ForegroundColor Yellow
-    git checkout Testing -- $relativeFilePath 2>&1
+    git checkout Testing -- $relativeFilePath 
     if ($LASTEXITCODE -ne 0) { throw "Failed to copy mod file" }
     Write-Host "[4/6] Mod file copied" -ForegroundColor Green
 
     # [5] Stage and commit
     Write-Host "[5/6] Staging and committing..." -ForegroundColor Yellow
-    git add $relativeFilePath 2>&1
+    git add $relativeFilePath 
 
     $commitArgs = @("-m", $commitTitle)
     if (-not [string]::IsNullOrWhiteSpace($commitDescription)) {
         $commitArgs += @("-m", $commitDescription)
     }
 
-    git commit @commitArgs 2>&1
+    git commit @commitArgs 
     if ($LASTEXITCODE -ne 0) { throw "Failed to commit" }
     Write-Host "[5/6] Changes committed" -ForegroundColor Green
 
     # [6] Push
     Write-Host "[6/6] Pushing to origin/$branchName..." -ForegroundColor Yellow
     if ($branchExists) {
-        git push origin $branchName 2>&1
+        git push origin $branchName 
     } else {
-        git push -u origin $branchName 2>&1
+        git push -u origin $branchName 
     }
 
     if ($LASTEXITCODE -ne 0) { throw "Failed to push" }
@@ -387,8 +387,8 @@ try {
     
     # Attempt recovery
     Write-Host "Attempting to return to Testing branch..." -ForegroundColor Yellow
-    git checkout Testing 2>&1
-    if ($hasStashedChanges) { git stash pop 2>&1 }
+    git checkout Testing 
+    if ($hasStashedChanges) { git stash pop  }
     
     exit 1
 } finally {
@@ -407,7 +407,7 @@ try {
 Write-Host "`nSUCCESS! Ready for PR" -ForegroundColor Green
 
 # Return to Testing
-git checkout Testing 2>&1
+git checkout Testing 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Warning: Could not return to Testing branch" -ForegroundColor Yellow
 } else {
@@ -416,7 +416,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # Restore stashed changes
 if ($hasStashedChanges) {
-    git stash pop 2>&1
+    git stash pop 
     Write-Host "Stashed changes restored." -ForegroundColor Green
 }
 
