@@ -391,10 +391,15 @@ Write-Debug-Phase "Starting Phase 5: Git operations"
 # [1] Switch to main and update
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
-git checkout main 2>&1 | Out-Null
-if ($LASTEXITCODE -ne 0) {
+$gitCheckoutOutput = git checkout main 2>&1
+$gitCheckoutExit = $LASTEXITCODE
+if ($gitCheckoutExit -ne 0) {
     Write-Host "Error: Failed to checkout main branch" -ForegroundColor Red
     Write-Debug-Step "[1/6] Failed to checkout main"
+    if ($gitCheckoutOutput) {
+        Write-Host "git checkout output:" -ForegroundColor Yellow
+        Write-Host $gitCheckoutOutput -ForegroundColor DarkGray
+    }
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
@@ -408,12 +413,17 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Debug-Step "[1/6] Pulling from upstream/main..."
-git pull upstream main 2>&1 | Out-Null
-if ($LASTEXITCODE -ne 0) {
+$gitPullOutput = git pull upstream main 2>&1
+$gitPullExit = $LASTEXITCODE
+if ($gitPullExit -ne 0) {
     Write-Host "Error: Failed to pull from upstream/main" -ForegroundColor Red
     Write-Host "Make sure upstream remote is configured:" -ForegroundColor Yellow
     Write-Host "  git remote add upstream https://github.com/ramensoftware/windhawk-mods.git" -ForegroundColor Yellow
     Write-Debug-Step "[1/6] Failed to pull from upstream"
+    if ($gitPullOutput) {
+        Write-Host "git pull output:" -ForegroundColor Yellow
+        Write-Host $gitPullOutput -ForegroundColor DarkGray
+    }
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
