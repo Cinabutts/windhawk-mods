@@ -496,23 +496,22 @@ if ($branchExists) {
     Write-Debug-Step "[2/6] Successfully created new branch $branchName"
 }
 
-# [3] Check for workspace file and copy if needed
-Write-Host "[3/6] Checking workspace file..." -ForegroundColor Yellow
-Write-Debug-Step "[3/6] Checking for workspace file..."
+# [3] Refresh workspace file from Testing (local only)
+Write-Host "[3/6] Refreshing workspace file from Testing..." -ForegroundColor Yellow
+Write-Debug-Step "[3/6] Copying workspace file from Testing branch (local only)"
 $workspaceFile = "windhawk-mods.code-workspace"
-if (-not (Test-Path $workspaceFile)) {
-    Write-Host "Workspace file not found, copying from Testing..." -ForegroundColor Yellow
-    Write-Debug-Step "[3/6] Workspace file missing - copying from Testing branch"
-    git show Testing:$workspaceFile > $workspaceFile 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Workspace file copied (local only, not committed)" -ForegroundColor Green
-        Write-Debug-Step "[3/6] Workspace file copied successfully"
-    } else {
-        Write-Host "Warning: Could not copy workspace file" -ForegroundColor Yellow
-        Write-Debug-Step "[3/6] Warning: Failed to copy workspace file from Testing"
-    }
+$workspaceCopyOutput = git show Testing:$workspaceFile 2>&1
+$workspaceCopyExit = $LASTEXITCODE
+if ($workspaceCopyExit -eq 0) {
+    $workspaceCopyOutput | Set-Content -Path $workspaceFile -Encoding UTF8
+    Write-Host "[3/6] Workspace file refreshed (local only, not committed)" -ForegroundColor Green
+    Write-Debug-Step "[3/6] Workspace file copied successfully"
 } else {
-    Write-Debug-Step "[3/6] Workspace file already exists"
+    Write-Host "Warning: Could not copy workspace file from Testing" -ForegroundColor Yellow
+    if ($workspaceCopyOutput) {
+        Write-Host $workspaceCopyOutput -ForegroundColor DarkGray
+    }
+    Write-Debug-Step "[3/6] Warning: Failed to copy workspace file from Testing"
 }
 Write-Host "[3/6] Workspace check complete" -ForegroundColor Green
 
