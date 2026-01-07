@@ -428,21 +428,29 @@ if (Test-Path "Commit-Desc") {
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
 
-# FIX: Wrapped in ErrorActionPreference toggle to handle git status messages
+# FIX: Temporarily allow errors so we can capture output
 $savedEAP = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
-git checkout main 2>&1 | Out-Null
+
+# CAPTURE output instead of Out-Null to see why it fails
+$gitOutput = git checkout main 2>&1
 $gitCheckoutExit = $LASTEXITCODE
+
 $ErrorActionPreference = $savedEAP
 
 if ($gitCheckoutExit -ne 0) {
     Write-Host "Error: Failed to checkout main branch" -ForegroundColor Red
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) {
+        $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
+    } else {
+        Write-Host "  (No output captured)" -ForegroundColor Red
+    }
     Write-Debug-Step "[1/6] Failed to checkout main"
     
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
     }
     
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -454,12 +462,16 @@ if ($gitCheckoutExit -ne 0) {
 
 Write-Debug-Step "[1/6] Pulling from upstream/main..."
 $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-git pull upstream main 2>&1 | Out-Null
+$gitOutput = git pull upstream main 2>&1
 $gitPullExit = $LASTEXITCODE
 $ErrorActionPreference = $savedEAP
 
 if ($gitPullExit -ne 0) {
     Write-Host "Error: Failed to pull from upstream/main" -ForegroundColor Red
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) {
+        $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red }
+    }
     Write-Host "Make sure upstream remote is configured:" -ForegroundColor Yellow
     Write-Host "  git remote add upstream https://github.com/ramensoftware/windhawk-mods.git" -ForegroundColor Yellow
     Write-Debug-Step "[1/6] Failed to pull from upstream"
@@ -467,7 +479,6 @@ if ($gitPullExit -ne 0) {
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
-        Write-Debug-Step "Commit-Desc cleaned up after error"
     }
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     git checkout Testing > $null
@@ -496,17 +507,19 @@ if ($branchExists) {
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     if ($localBranch) {
         Write-Debug-Step "[2/6] Checking out local branch..."
-        git checkout $branchName 2>&1 | Out-Null
+        $gitOutput = git checkout $branchName 2>&1
     } else {
         Write-Debug-Step "[2/6] Creating tracking branch from remote..."
-        git checkout -b $branchName origin/$branchName 2>&1 | Out-Null
+        $gitOutput = git checkout -b $branchName origin/$branchName 2>&1
     }
     $res = $LASTEXITCODE
     $ErrorActionPreference = $savedEAP
     
     if ($res -ne 0) {
         Write-Host "Error: Failed to checkout branch '$branchName'" -ForegroundColor Red
-        Write-Debug-Step "[2/6] Failed to checkout branch"
+        Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+        if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+        
         # Cleanup Commit-Desc
         if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
         $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -522,13 +535,15 @@ if ($branchExists) {
     Write-Debug-Step "[2/6] Mode: NEW MOD - creating new branch from main"
     
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-    git checkout -b $branchName 2>&1 | Out-Null
+    $gitOutput = git checkout -b $branchName 2>&1
     $res = $LASTEXITCODE
     $ErrorActionPreference = $savedEAP
     
     if ($res -ne 0) {
         Write-Host "Error: Failed to create branch '$branchName'" -ForegroundColor Red
-        Write-Debug-Step "[2/6] Failed to create branch"
+        Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+        if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+        
         # Cleanup Commit-Desc
         if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
         $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -569,14 +584,15 @@ Write-Host "[4/6] Copying mod from Testing branch..." -ForegroundColor Yellow
 Write-Debug-Step "[4/6] Copying mod file: $relativeFilePath from Testing branch"
 
 $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-git checkout Testing -- $relativeFilePath 2>&1 | Out-Null
+$gitOutput = git checkout Testing -- $relativeFilePath 2>&1
 $res = $LASTEXITCODE
 $ErrorActionPreference = $savedEAP
 
 if ($res -ne 0) {
     Write-Host "Error: Failed to copy mod file from Testing branch" -ForegroundColor Red
-    Write-Host "File: $relativeFilePath" -ForegroundColor Yellow
-    Write-Debug-Step "[4/6] Failed to copy mod file"
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+    
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -593,13 +609,15 @@ Write-Host "[5/6] Staging and committing..." -ForegroundColor Yellow
 Write-Debug-Step "[5/6] Staging mod file..."
 
 $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-git add $relativeFilePath 2>&1 | Out-Null
+$gitOutput = git add $relativeFilePath 2>&1
 $res = $LASTEXITCODE
 $ErrorActionPreference = $savedEAP
 
 if ($res -ne 0) {
     Write-Host "Error: Failed to stage mod file" -ForegroundColor Red
-    Write-Debug-Step "[5/6] Failed to stage file"
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+    
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -622,13 +640,15 @@ if (-not [string]::IsNullOrWhiteSpace($commitDescription)) {
 }
 
 $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
-git commit @commitArgs 2>&1 | Out-Null
+$gitOutput = git commit @commitArgs 2>&1
 $res = $LASTEXITCODE
 $ErrorActionPreference = $savedEAP
 
 if ($res -ne 0) {
     Write-Host "Error: Failed to create commit" -ForegroundColor Red
-    Write-Debug-Step "[5/6] Failed to commit changes"
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+    
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
@@ -646,17 +666,18 @@ Write-Debug-Step "[6/6] Pushing to origin..."
 
 $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
 if ($branchExists) {
-    git push origin $branchName 2>&1 | Out-Null
+    $gitOutput = git push origin $branchName 2>&1
 } else {
-    git push -u origin $branchName 2>&1 | Out-Null
+    $gitOutput = git push -u origin $branchName 2>&1
 }
 $res = $LASTEXITCODE
 $ErrorActionPreference = $savedEAP
 
 if ($res -ne 0) {
     Write-Host "Error: Failed to push to origin" -ForegroundColor Red
-    Write-Host "Branch created/updated locally but not pushed." -ForegroundColor Yellow
-    Write-Debug-Step "[6/6] Failed to push to origin"
+    Write-Host "GIT ERROR DETAILS:" -ForegroundColor Red
+    if ($gitOutput) { $gitOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Red } }
+    
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") { Remove-Item "Commit-Desc" -Force }
     $savedEAP = $ErrorActionPreference; $ErrorActionPreference = "Continue"
