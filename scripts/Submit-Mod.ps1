@@ -168,7 +168,7 @@ if ($localBranch -or $remoteBranch) {
     
     # Go back to Testing
     Write-Debug-Step "Returning to Testing branch..."
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     Write-Debug-Step "Back on Testing branch"
     
     # Now extract current version for updates
@@ -414,7 +414,7 @@ if ($gitCheckoutExit -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -439,7 +439,7 @@ if ($gitPullExit -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -477,7 +477,7 @@ if ($branchExists) {
             Remove-Item "Commit-Desc" -Force
             Write-Debug-Step "Commit-Desc cleaned up after error"
         }
-        git checkout Testing 2>&1 | Out-Null
+        git checkout Testing > $null
         if ($hasStashedChanges) {
             git stash pop 2>&1 | Out-Null
         }
@@ -497,7 +497,7 @@ if ($branchExists) {
             Remove-Item "Commit-Desc" -Force
             Write-Debug-Step "Commit-Desc cleaned up after error"
         }
-        git checkout Testing 2>&1 | Out-Null
+        git checkout Testing > $null
         if ($hasStashedChanges) {
             git stash pop 2>&1 | Out-Null
         }
@@ -539,7 +539,7 @@ if ($LASTEXITCODE -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -560,7 +560,7 @@ if ($LASTEXITCODE -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -588,7 +588,7 @@ if ($LASTEXITCODE -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -615,7 +615,7 @@ if ($LASTEXITCODE -ne 0) {
         Remove-Item "Commit-Desc" -Force
         Write-Debug-Step "Commit-Desc cleaned up after error"
     }
-    git checkout Testing 2>&1 | Out-Null
+    git checkout Testing > $null
     if ($hasStashedChanges) {
         git stash pop 2>&1 | Out-Null
     }
@@ -656,7 +656,7 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 
 # Return to Testing branch
 Write-Debug-Step "Returning to Testing branch..."
-git checkout Testing 2>&1 | Out-Null
+git checkout Testing > $null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Warning: Could not return to Testing branch" -ForegroundColor Yellow
     Write-Debug-Step "Failed to checkout Testing branch"
