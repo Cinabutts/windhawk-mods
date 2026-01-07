@@ -19,7 +19,7 @@ param(
     [string]$FileName,
     
     [Parameter(Mandatory=$false)]
-    [int]$DebugLevel = 0  # 0=off, 1=phase level, 2=every step
+    [int]$DebugLevel = 2  # 0=off, 1=phase level, 2=every step
 )
 
 $ErrorActionPreference = "Stop"
