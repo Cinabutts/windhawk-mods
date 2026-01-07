@@ -391,6 +391,8 @@ Write-Debug-Phase "Starting Phase 5: Git operations"
 # [1] Switch to main and update
 Write-Host "[1/6] Updating main branch from upstream..." -ForegroundColor Yellow
 Write-Debug-Step "[1/6] Checking out main branch..."
+$savedEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"  # allow git stderr without stopping
 $gitCheckoutOutput = git checkout main 2>&1
 $gitCheckoutExit = $LASTEXITCODE
 if ($gitCheckoutExit -ne 0) {
@@ -400,6 +402,7 @@ if ($gitCheckoutExit -ne 0) {
         Write-Host "git checkout output:" -ForegroundColor Yellow
         Write-Host $gitCheckoutOutput -ForegroundColor DarkGray
     }
+    $ErrorActionPreference = $savedEAP
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
@@ -424,6 +427,7 @@ if ($gitPullExit -ne 0) {
         Write-Host "git pull output:" -ForegroundColor Yellow
         Write-Host $gitPullOutput -ForegroundColor DarkGray
     }
+    $ErrorActionPreference = $savedEAP
     # Cleanup Commit-Desc
     if (Test-Path "Commit-Desc") {
         Remove-Item "Commit-Desc" -Force
@@ -435,6 +439,7 @@ if ($gitPullExit -ne 0) {
     }
     exit 1
 }
+$ErrorActionPreference = $savedEAP
 Write-Host "[1/6] Main branch updated" -ForegroundColor Green
 Write-Debug-Step "[1/6] Main branch successfully updated from upstream"
 
