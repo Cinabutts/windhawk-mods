@@ -7,7 +7,7 @@
 // @github          https://github.com/Cinabutts
 // @include         explorer.exe
 // @architecture    x86-64
-// @compilerOptions -luser32 -lkernel32 -lshell32 -lcomctl32 --optimize=0 --debug
+// @compilerOptions -luser32 -lkernel32 -lshell32 -lcomctl32
 // ==/WindhawkMod==
 
 // ==WindhawkModReadme==
