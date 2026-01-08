@@ -83,8 +83,6 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 #include <gdiplus.h>
 #include <shcore.h> 
 #include <string>
-#include <vector>
-#include <atomic>
 #include <thread>
 #include <mutex>
 #include <cstdio>
