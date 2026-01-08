@@ -26,8 +26,19 @@
 		"tasks": [
 			{
 				"label": "Deploy Mod Source",
-				"type": "shell",
-				"command": "if ('${fileExtname}' -ne '.cpp' -or '${fileBasename}' -notlike '*.wh.cpp') { Write-Host 'Error: Not a .wh.cpp file' -ForegroundColor Red; exit 1 }; $modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $dest = ('C:/ProgramData/Windhawk/ModsSource/local@' + $modId + '.wh.cpp'); Copy-Item -Path '${file}' -Destination $dest -Force; Write-Host ('Deployed: ' + $dest) -ForegroundColor Green",
+				"type": "process",
+				"command": "powershell",
+				"args": [
+					"-NoProfile",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"if ('${fileExtname}' -ne '.cpp' -or '${fileBasename}' -notlike '*.wh.cpp') { Write-Host 'Error: Not a .wh.cpp file' -ForegroundColor Red; exit 1 }; $modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $dest = ('C:/ProgramData/Windhawk/ModsSource/local@' + $modId + '.wh.cpp'); Copy-Item -Path '${file}' -Destination $dest -Force; Write-Host ('Deployed: ' + $dest) -ForegroundColor Green",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
+				],
 				"presentation": {
 					"reveal": "always",
 					"panel": "shared"
@@ -36,8 +47,19 @@
 			},
 			{
 				"label": "Delete Local Mod",
-				"type": "shell",
-				"command": "if ('${fileExtname}' -ne '.cpp' -or '${fileBasename}' -notlike '*.wh.cpp') { Write-Host 'Error: Not a .wh.cpp file' -ForegroundColor Red; exit 1 }; $modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $localModId = ('local@' + $modId); $srcPath = ('C:/ProgramData/Windhawk/ModsSource/' + $localModId + '.wh.cpp'); $regPath = ('HKLM:\\SOFTWARE\\Windhawk\\Engine\\Mods\\' + $localModId); Write-Host ('Removing: ' + $localModId); if (Test-Path $srcPath) { Remove-Item $srcPath -Force; Write-Host ('Deleted source: ' + $srcPath) } else { Write-Host ('Source not found: ' + $srcPath) }; if (Test-Path $regPath) { Remove-Item $regPath -Recurse -Force; Write-Host ('Deleted registry: ' + $regPath) } else { Write-Host ('Registry not found: ' + $regPath) }; Write-Host 'Done.' -ForegroundColor Green",
+				"type": "process",
+				"command": "powershell",
+				"args": [
+					"-NoProfile",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"if ('${fileExtname}' -ne '.cpp' -or '${fileBasename}' -notlike '*.wh.cpp') { Write-Host 'Error: Not a .wh.cpp file' -ForegroundColor Red; exit 1 }; $modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $localModId = ('local@' + $modId); $srcPath = ('C:/ProgramData/Windhawk/ModsSource/' + $localModId + '.wh.cpp'); $regPath = ('HKLM:\\SOFTWARE\\Windhawk\\Engine\\Mods\\' + $localModId); Write-Host ('Removing: ' + $localModId); if (Test-Path $srcPath) { Remove-Item $srcPath -Force; Write-Host ('Deleted source: ' + $srcPath) } else { Write-Host ('Source not found: ' + $srcPath) }; if (Test-Path $regPath) { Remove-Item $regPath -Recurse -Force; Write-Host ('Deleted registry: ' + $regPath) } else { Write-Host ('Registry not found: ' + $regPath) }; Write-Host 'Done.' -ForegroundColor Green",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
+				],
 				"presentation": {
 					"reveal": "always",
 					"panel": "shared"
@@ -46,8 +68,19 @@
 			},
 			{
 				"label": "Restart Windhawk UI",
-				"type": "shell",
-				"command": "$uiProcs = Get-Process -Name 'VSCodium' -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*Windhawk*' }; if ($uiProcs) { Write-Host 'Restarting Windhawk UI...'; $uiProcs | Stop-Process -Force; Start-Sleep -Seconds 1 } else { Write-Host 'Opening Windhawk UI...' }; Start-Process 'C:/Program Files/Windhawk/windhawk.exe' -ArgumentList '--settings'",
+				"type": "process",
+				"command": "powershell",
+				"args": [
+					"-NoProfile",
+					"-ExecutionPolicy",
+					"Bypass",
+					"-File",
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"$uiProcs = Get-Process -Name 'VSCodium' -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*Windhawk*' }; if ($uiProcs) { Write-Host 'Restarting Windhawk UI...'; $uiProcs | Stop-Process -Force; Start-Sleep -Seconds 1 } else { Write-Host 'Opening Windhawk UI...' }; Start-Process 'C:/Program Files/Windhawk/windhawk.exe' -ArgumentList '--settings'",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
+				],
 				"presentation": {
 					"reveal": "always",
 					"panel": "shared"
@@ -56,17 +89,18 @@
 			},
 			{
 				"label": "Auto-Compile Mod (AHK)",
-				"type": "shell",
+				"type": "process",
 				"command": "powershell",
 				"args": [
+					"-NoProfile",
 					"-ExecutionPolicy",
 					"Bypass",
 					"-File",
-					"${workspaceFolder}/scripts/Invoke-AutoCompileMod.ps1",
-					"-FileName",
-					"${fileBasename}",
-					"-ModName",
-					"${fileBasenameNoExtension}"
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"& \"${workspaceFolder}/scripts/Invoke-AutoCompileMod.ps1\" -FileName \"${fileBasename}\" -ModName \"${fileBasenameNoExtension}\"",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
 				],
 				"presentation": {
 					"reveal": "always",
@@ -103,17 +137,18 @@
 			},
 			{
 				"label": "Test Auto-Compile AHK",
-				"type": "shell",
+				"type": "process",
 				"command": "powershell",
 				"args": [
+					"-NoProfile",
 					"-ExecutionPolicy",
 					"Bypass",
 					"-File",
-					"${workspaceFolder}/scripts/Invoke-AutoCompileMod.ps1",
-					"-FileName",
-					"${fileBasename}",
-					"-ModName",
-					"${fileBasenameNoExtension}"
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"& \"${workspaceFolder}/scripts/Invoke-AutoCompileMod.ps1\" -FileName \"${fileBasename}\" -ModName \"${fileBasenameNoExtension}\"",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
 				],
 				"presentation": {
 					"reveal": "always",
@@ -123,17 +158,18 @@
 			},
 			{
 				"label": "Submit Mod",
-				"type": "shell",
+				"type": "process",
 				"command": "powershell",
 				"args": [
+					"-NoProfile",
 					"-ExecutionPolicy",
 					"Bypass",
 					"-File",
-					"${workspaceFolder}/scripts/Submit-Mod.ps1",
-					"-FilePath",
-					"${file}",
-					"-FileName",
-					"${fileBasename}"
+					"${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+					"-Command",
+					"& \"${workspaceFolder}/scripts/Submit-Mod.ps1\" -FilePath \"${file}\" -FileName \"${fileBasename}\"",
+					"-WorkingDirectory",
+					"${workspaceFolder}"
 				],
 				"presentation": {
 					"reveal": "always",
