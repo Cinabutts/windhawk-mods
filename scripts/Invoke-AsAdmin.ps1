@@ -16,18 +16,18 @@ function Test-IsAdmin {
 }
 
 if (-not (Test-IsAdmin)) {
-    # Relaunch elevated with the same parameters
+    # Relaunch elevated with the same parameters and wait for completion
     $escapedCommand = $Command.Replace('`', '``').Replace('"', '\"')
     $escapedWd = $WorkingDirectory.Replace('`', '``').Replace('"', '\"')
 
-    Start-Process -FilePath "powershell.exe" -Verb RunAs -ArgumentList @(
+    $process = Start-Process -FilePath "powershell.exe" -Verb RunAs -ArgumentList @(
         "-NoProfile",
         "-ExecutionPolicy", "Bypass",
         "-File", "`"$PSCommandPath`"",
         "-Command", "`"$escapedCommand`"",
         "-WorkingDirectory", "`"$escapedWd`""
-    ) | Out-Null
-    exit 0
+    ) -Wait -PassThru
+    exit ($process.ExitCode)
 }
 
 # Already elevated

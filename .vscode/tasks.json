@@ -3,22 +3,55 @@
     "tasks": [
         {
             "label": "Deploy Mod Source",
-            "type": "shell",
-            "command": "$modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $dest = ('C:/ProgramData/Windhawk/ModsSource/local@' + $modId + '.wh.cpp'); Copy-Item -Path '${file}' -Destination $dest -Force; Write-Host ('Deployed to: ' + $dest)",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+                "-Command",
+                "$modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $dest = ('C:/ProgramData/Windhawk/ModsSource/local@' + $modId + '.wh.cpp'); Copy-Item -Path '${file}' -Destination $dest -Force; Write-Host ('Deployed to: ' + $dest)",
+                "-WorkingDirectory",
+                "${workspaceFolder}"
+            ],
             "presentation": { "reveal": "always", "panel": "shared" },
             "problemMatcher": []
         },
         {
             "label": "Delete Local Mod",
-            "type": "shell",
-            "command": "$modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $localModId = ('local@' + $modId); $srcPath = ('C:/ProgramData/Windhawk/ModsSource/' + $localModId + '.wh.cpp'); $regPath = ('HKLM:\\SOFTWARE\\Windhawk\\Engine\\Mods\\' + $localModId); Write-Host ('Removing mod: ' + $localModId); if (Test-Path $srcPath) { Remove-Item $srcPath -Force; Write-Host ('Deleted source: ' + $srcPath) } else { Write-Host ('Source not found: ' + $srcPath) }; if (Test-Path $regPath) { Remove-Item $regPath -Recurse -Force; Write-Host ('Deleted registry: ' + $regPath) } else { Write-Host ('Registry key not found: ' + $regPath) }; Write-Host 'Done.'",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+                "-Command",
+                "$modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $localModId = ('local@' + $modId); $srcPath = ('C:/ProgramData/Windhawk/ModsSource/' + $localModId + '.wh.cpp'); $regPath = ('HKLM:\\SOFTWARE\\Windhawk\\Engine\\Mods\\' + $localModId); Write-Host ('Removing mod: ' + $localModId); if (Test-Path $srcPath) { Remove-Item $srcPath -Force; Write-Host ('Deleted source: ' + $srcPath) } else { Write-Host ('Source not found: ' + $srcPath) }; if (Test-Path $regPath) { Remove-Item $regPath -Recurse -Force; Write-Host ('Deleted registry: ' + $regPath) } else { Write-Host ('Registry key not found: ' + $regPath) }; Write-Host 'Done.'",
+                "-WorkingDirectory",
+                "${workspaceFolder}"
+            ],
             "presentation": { "reveal": "always", "panel": "shared" },
             "problemMatcher": []
         },
         {
             "label": "Restart Windhawk UI",
-            "type": "shell",
-            "command": "$uiProcs = Get-Process -Name 'VSCodium' -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*Windhawk*' }; if ($uiProcs) { Write-Host 'Closing Windhawk UI...'; $uiProcs | Stop-Process -Force; Start-Sleep -Seconds 1 }; Write-Host 'Opening Windhawk UI...'; Start-Process 'C:/Program Files/Windhawk/windhawk.exe' -ArgumentList '--settings'",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/scripts/Invoke-AsAdmin.ps1",
+                "-Command",
+                "$uiProcs = Get-Process -Name 'VSCodium' -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*Windhawk*' }; if ($uiProcs) { Write-Host 'Closing Windhawk UI...'; $uiProcs | Stop-Process -Force; Start-Sleep -Seconds 1 }; Write-Host 'Opening Windhawk UI...'; Start-Process 'C:/Program Files/Windhawk/windhawk.exe' -ArgumentList '--settings'",
+                "-WorkingDirectory",
+                "${workspaceFolder}"
+            ],
             "presentation": { "reveal": "always", "panel": "shared" },
             "problemMatcher": []
         },
