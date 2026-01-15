@@ -1,17 +1,17 @@
 // ==WindhawkMod==
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
-// @description     A native-style music ticker with media controls.
-// @version         4.6.3
+// @description     A native-style music ticker with media controls and custom Action Triggers.
+// @version         4.7.1
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
-// @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi
+// @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi -lcomctl32 -loleaut32 -lversion -lpropsys
 // ==/WindhawkMod==
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.6.3)
+# Taskbar Music Lounge (v4.7.1)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
@@ -19,20 +19,54 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 * **Universal Support:** Works with any media player via GSMTC.
 * **Album Art:** Displays current track cover art.
 * **Native Look:** Uses Windows 11 hardware-accelerated rounding and acrylic blur.
-* **Controls:** Play/Pause, Next, Previous.
-* **Volume:** Scroll over widget to adjust volume.
+* **Auto Theme** Automatically sets Background/Text color to match System Light/Dark mode.
 * **--------------------------------- Cinabutts Enhancements: ---------------------------------**
-* **True High-DPI Support:** Automatically scales UI elements to look perfect on 4K/1440p monitors.
+* **High-DPI Support:** Automatically scales UI elements to look perfect on 4K/1440p monitors.
 * **Smart Game Detection:** Automatically hides when playing Fullscreen games.
 * **Whitelist:** Keep the widget visible in specific Fullscreen apps (e.g., Firefox).
 * **Slide Animations:** Smoothly slides out AND back in when entering/exiting games.
 * **Smart Docking:** Sits unobtrusively at the screen edge on boot/shutdown or if Explorer crashes.
-* **Advanced Background Control:** Manually override Background RGB - Toggle Auto/Invert themes, etc.
-* **Click to switch:** Clicking the empty space or track text switches focus to the current music source application.
+* **Fully Customizable:** Override Background/Text RGB - Invert Light/Dark mode
+
+----
+
+&nbsp;
+
+## 🔧 Mouse Action Engine:
+Trigger custom Actions via Mouse Clicks + optional Modifiers.
+
+Available `Mouse Triggers`:
+- Left Click
+- Right Click
+- Double Click
+- Scroll Up
+- Scroll Down
+
+Available `Actions`:
+- Switch to Audible Window
+- Volume Controls(Up/Down & Mute)
+- Media Controls(Prev/Next/Play/Pause)
+- Send Keystrokes (macro)
+- Open App / Run File
+- Show Desktop
+- Open Task Manager
+
+&nbsp;
+
+### 🚧 Volume Note: You **MUST** Left Click the widget first to focus it before scrolling.
+**Tip:** Avoid assigning "Left Click" as a trigger if you use volume scrolling, as it will prevent the widget from gaining focus.
+
+----
+
+&nbsp;
 
 ## ⚠️ Requirements
 * **Disable Widgets:** Taskbar Settings -> Widgets -> Off.
 * **Windows 11:** Required for rounded corners.
+
+&nbsp;
+
+🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
 */
 // ==/WindhawkModReadme==
 
@@ -50,7 +84,7 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
   $name: Y Offset
 - AutoTheme: true
   $name: Auto Theme
-  $description: ✓ Enabled | B/W  Text & Icons based on System Light/Dark mode. ✕ Disabled | Use Custom theme below ↓
+  $description: ✓ Enabled | B/W Text & Icons based on System Light/Dark mode. ✕ Disabled | Use Custom theme below ↓
 - InvertTheme: false
   $name: Invert System Light/Dark (Background)
   $description: ✓ Enabled | Dark Background. ✕ Disabled | Light Background. (Auto Theme must be OFF)
@@ -58,29 +92,79 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
   $name: Manual Background Color Override (R, G, B)
   $description: Set to 0,0,0 to not override. Enter RGB values separated by commas (e.g; "102, 255, 255"). Alpha controlled below ↓
 - BgOpacity: 0
-  $name: Acrylic Tint Opacity (0-255).
+  $name: Acrylic Tint Opacity (0-255)
   $description: Keep 0 for pure glass. Controls Alpha for Manual Background Color.
 - TextColor: "255, 255, 255"
   $name: Manual Text Color (R, G, B, [A])
   $description: Enter RGB or RGBA values separated by commas (e.g; "102, 255, 255" or "255, 0, 0, 128")
 - IdleTimeout: 0
-  $name: Auto-hide when paused (Seconds). Set 0 to disable.
-  $description: Automatically hide the widget when music is paused for the specified number of seconds.
+  $name: Auto-hide when paused (Seconds)
+  $description: Automatically hide the widget when music is paused for the specified number of seconds. Set 0 to disable.
 - EnableSlide: true
   $name: Enable Slide Animations
-  $description: ✓ Enabled | the widget slides down/up for games. ✕ Disabled | Instantly hides.
+  $description: ✓ Enabled | The widget slides down/up for games. ✕ Disabled | Instantly hides.
 - EnableGameDetection: true
   $name: Enable Game Detection
   $description: ✓ Enabled | Widget hides on game detection. ✕ Disabled | The widget will NEVER hide for games. (overrides all below ↓)
-- EnableAppSwitch: true
-  $name: Click Background to Open App
-  $description: Clicking the empty space/text switches to the music source app.
 - FullscreenCheckInterval: 2
   $name: Fullscreen Check Interval (Seconds)
   $description: How often to check for borderless games.
 - IgnoredApps: firefox.exe;chrome.exe;msedge.exe;vlc.exe
   $name: Fullscreen Whitelist
   $description: Semicolon-separated list of executables to IGNORE (keep widget visible).
+- TriggerActionOptions:
+  - - MouseTrigger: Double
+      $name: Mouse Trigger
+      $description: The mouse button or wheel action to detect on the empty space.
+      $options:
+      - Left: Left Click
+      - Right: Right Click
+      - Middle: Middle Click
+      - Double: Double Click
+      - ScrollUp: Scroll Up
+      - ScrollDown: Scroll Down
+    - KeyboardTriggers: [none]
+      $name: Required Modifiers
+      $description: Hold these keys while clicking. Select 'None' if no modifiers are needed.
+      $options:
+      - none: None
+      - lctrl: Left Ctrl
+      - rctrl: Right Ctrl
+      - lshift: Left Shift
+      - rshift: Right Shift
+      - lalt: Left Alt
+      - ralt: Right Alt
+      - win: Win Key
+    - Action: ACTION_ACTIVATE_SOURCE_APP
+      $name: Action
+      $description: The command to execute.
+      $options:
+      - ACTION_ACTIVATE_SOURCE_APP: Switch to Audible Window
+      - ACTION_VOLUME_UP: Volume Up
+      - ACTION_VOLUME_DOWN: Volume Down
+      - ACTION_START_PROCESS: Open App / Run File
+      - ACTION_SEND_KEYPRESS: Send Keystrokes (Macro)
+      - ACTION_MUTE: Toggle Mute
+      - ACTION_MEDIA_PLAY_PAUSE: Media Play/Pause
+      - ACTION_MEDIA_NEXT: Media Next Track
+      - ACTION_MEDIA_PREV: Media Prev Track
+      - ACTION_SHOW_DESKTOP: Show Desktop
+      - ACTION_TASK_MANAGER: Open Task Manager
+    - AdditionalArgs: ""
+      $name: Arguments
+      $description: >-
+        For 'Open App': Path to exe or URL (e.g. calc.exe).
+        For 'Send Keystrokes': Key combo (e.g. Ctrl+C).
+  - - MouseTrigger: ScrollUp
+    - KeyboardTriggers: [none]
+    - Action: ACTION_VOLUME_UP
+    - AdditionalArgs: ""
+  - - MouseTrigger: ScrollDown
+    - KeyboardTriggers: [none]
+    - Action: ACTION_VOLUME_DOWN
+    - AdditionalArgs: ""
+  $name: Custom Mouse Actions
+  $description: Configure what happens when you click the widget background.
 */
 // ==/WindhawkModSettings==
 
@@ -89,12 +173,30 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 #include <dwmapi.h>
 #include <gdiplus.h>
 #include <shcore.h> 
+#include <propsys.h>
+#include <propkey.h>
 #include <string>
 #include <thread>
 #include <mutex>
 #include <cstdio>
 #include <psapi.h>
 #include <shobjidl.h>
+#include <windhawk_utils.h>
+#include <sstream>
+
+// Action Engine Includes
+#include <commctrl.h>
+#include <endpointvolume.h>
+#include <mmdeviceapi.h>
+#include <windef.h>
+#include <winerror.h>
+#include <winuser.h>
+#include <algorithm>
+#include <cwctype>
+#include <functional>
+#include <string_view>
+#include <unordered_map>
+#include <vector>
 
 // WinRT
 #include <winrt/Windows.Foundation.h>
@@ -151,7 +253,6 @@ struct ModSettings {
     int idleTimeout = 0;
     bool enableSlide = true;
     bool enableGameDetect = true;
-    bool enableAppSwitch = true;
     wstring ignoredApps;
 } g_Settings;
 
@@ -186,6 +287,347 @@ int g_ScrollOffset = 0;
 int g_TextWidth = 0;
 bool g_IsScrolling = false;
 int g_ScrollWait = 60;
+
+// --- ACTION ENGINE LIBRARY ---
+
+using winrt::com_ptr;
+
+namespace stringtools {
+    std::wstring trim(const std::wstring& s) {
+        auto wsfront = std::find_if_not(s.begin(), s.end(), [](int c) { return std::iswspace(c); });
+        auto wsback = std::find_if_not(s.rbegin(), s.rend(), [](int c) { return std::iswspace(c); }).base();
+        return (wsback <= wsfront) ? std::wstring() : std::wstring(wsfront, wsback);
+    }
+    std::vector<std::wstring> split(const std::wstring& s, wchar_t delimiter) {
+        std::vector<std::wstring> tokens;
+        std::wstring token;
+        std::wstringstream tokenStream(s);
+        while (std::getline(tokenStream, token, delimiter)) {
+            tokens.push_back(trim(token));
+        }
+        return tokens;
+    }
+    std::wstring toLower(const std::wstring& s) {
+        std::wstring result = s;
+        std::transform(result.begin(), result.end(), result.begin(), ::towlower);
+        return result;
+    }
+}
+
+class AudioCOMAPI {
+ public:
+    AudioCOMAPI() : m_isInitialized(false), m_isCOMInitialized(false), m_pDeviceEnumerator(nullptr) {}
+    bool Init() {
+        if (!m_isCOMInitialized) {
+            if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED))) m_isCOMInitialized = true;
+            else return false;
+        }
+        if (!m_isInitialized && m_isCOMInitialized) {
+            const GUID XIID_IMMDeviceEnumerator = {0xA95664D2, 0x9614, 0x4F35, {0xA7, 0x46, 0xDE, 0x8D, 0xB6, 0x36, 0x17, 0xE6}};
+            const GUID XIID_MMDeviceEnumerator = {0xBCDE0395, 0xE52F, 0x467C, {0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E}};
+            if (FAILED(CoCreateInstance(XIID_MMDeviceEnumerator, NULL, CLSCTX_INPROC_SERVER, XIID_IMMDeviceEnumerator, m_pDeviceEnumerator.put_void())) || !m_pDeviceEnumerator) return false;
+            m_isInitialized = true;
+        }
+        return m_isInitialized;
+    }
+    void Uninit() {
+        if (m_isInitialized) { m_pDeviceEnumerator = nullptr; m_isInitialized = false; }
+        if (m_isCOMInitialized) { CoUninitialize(); m_isCOMInitialized = false; }
+    }
+    bool IsInitialized() { return m_isInitialized; }
+    const com_ptr<IMMDeviceEnumerator> GetDeviceEnumerator() { return m_pDeviceEnumerator; }
+ private:
+    bool m_isInitialized;
+    bool m_isCOMInitialized;
+    com_ptr<IMMDeviceEnumerator> m_pDeviceEnumerator;
+};
+static AudioCOMAPI g_audioCOM;
+
+enum KeyModifier {
+    KEY_MODIFIER_LCTRL = 0, KEY_MODIFIER_RCTRL, KEY_MODIFIER_LALT, KEY_MODIFIER_RALT,
+    KEY_MODIFIER_LSHIFT, KEY_MODIFIER_RSHIFT, KEY_MODIFIER_LWIN, KEY_MODIFIER_INVALID
+};
+
+void SetBit(uint32_t &value, uint32_t bit) { value |= (1U << bit); }
+
+static uint32_t GetKeyModifiersState() {
+    BYTE keyState[256] = {0};
+    if (!GetKeyboardState(keyState)) return 0U;
+    uint32_t currentKeyModifiersState = 0U;
+    if (keyState[VK_LCONTROL] & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LCTRL);
+    if (keyState[VK_LSHIFT]   & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LSHIFT);
+    if (keyState[VK_LMENU]    & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LALT);
+    if (keyState[VK_LWIN]     & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LWIN);
+    if (keyState[VK_RCONTROL] & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_RCTRL);
+    if (keyState[VK_RSHIFT]   & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_RSHIFT);
+    if (keyState[VK_RMENU]    & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_RALT);
+    return currentKeyModifiersState;
+}
+
+KeyModifier GetKeyModifierFromName(const std::wstring &keyName) {
+    if (keyName == L"lctrl") return KEY_MODIFIER_LCTRL;
+    if (keyName == L"rctrl") return KEY_MODIFIER_RCTRL;
+    if (keyName == L"lshift") return KEY_MODIFIER_LSHIFT;
+    if (keyName == L"rshift") return KEY_MODIFIER_RSHIFT;
+    if (keyName == L"lalt") return KEY_MODIFIER_LALT;
+    if (keyName == L"ralt") return KEY_MODIFIER_RALT;
+    if (keyName == L"win") return KEY_MODIFIER_LWIN;
+    return KEY_MODIFIER_INVALID;
+}
+
+bool FromStringHotKey(std::wstring_view hotkeyString, UINT* modifiersOut, UINT* vkOut) {
+    static const std::unordered_map<std::wstring_view, UINT> modifiersMap = {
+        {L"ALT", MOD_ALT}, {L"CTRL", MOD_CONTROL}, {L"SHIFT", MOD_SHIFT}, {L"WIN", MOD_WIN},
+    };
+    static const std::unordered_map<std::wstring_view, UINT> vkMap = {
+        {L"A", 0x41}, {L"B", 0x42}, {L"C", 0x43}, {L"D", 0x44}, {L"E", 0x45}, {L"F", 0x46}, {L"G", 0x47}, {L"H", 0x48},
+        {L"I", 0x49}, {L"J", 0x4A}, {L"K", 0x4B}, {L"L", 0x4C}, {L"M", 0x4D}, {L"N", 0x4E}, {L"O", 0x4F}, {L"P", 0x50},
+        {L"Q", 0x51}, {L"R", 0x52}, {L"S", 0x53}, {L"T", 0x54}, {L"U", 0x55}, {L"V", 0x56}, {L"W", 0x57}, {L"X", 0x58},
+        {L"Y", 0x59}, {L"Z", 0x5A}, {L"0", 0x30}, {L"1", 0x31}, {L"2", 0x32}, {L"3", 0x33}, {L"4", 0x34}, {L"5", 0x35},
+        {L"6", 0x36}, {L"7", 0x37}, {L"8", 0x38}, {L"9", 0x39}, {L"F1", 0x70}, {L"F2", 0x71}, {L"F3", 0x72}, {L"F4", 0x73},
+        {L"F5", 0x74}, {L"F6", 0x75}, {L"F7", 0x76}, {L"F8", 0x77}, {L"F9", 0x78}, {L"F10", 0x79}, {L"F11", 0x7A}, {L"F12", 0x7B},
+        {L"BACKSPACE", 0x08}, {L"TAB", 0x09}, {L"ENTER", 0x0D}, {L"RETURN", 0x0D}, {L"PAUSE", 0x13}, {L"CAPSLOCK", 0x14},
+        {L"ESCAPE", 0x1B}, {L"ESC", 0x1B}, {L"SPACE", 0x20}, {L"SPACEBAR", 0x20}, {L"PAGEUP", 0x21}, {L"PAGEDOWN", 0x22},
+        {L"END", 0x23}, {L"HOME", 0x24}, {L"LEFT", 0x25}, {L"UP", 0x26}, {L"RIGHT", 0x27}, {L"DOWN", 0x28}, {L"INSERT", 0x2D}, {L"DELETE", 0x2E},
+        {L"VOLUMEMUTE", 0xAD}, {L"VOLUMEDOWN", 0xAE}, {L"VOLUMEUP", 0xAF}, {L"MEDIANEXT", 0xB0}, {L"MEDIAPREV", 0xB1}, 
+        {L"MEDIASTOP", 0xB2}, {L"MEDIAPLAYPAUSE", 0xB3}
+    };
+    UINT vk = 0;
+    std::wstring partStr(hotkeyString);
+    std::transform(partStr.begin(), partStr.end(), partStr.begin(), ::toupper);
+    if (auto it = modifiersMap.find(partStr); it != modifiersMap.end()) { *modifiersOut = it->second; *vkOut = 0; return true; }
+    if (auto it = vkMap.find(partStr); it != vkMap.end()) { vk = it->second; } 
+    else { try { vk = std::stoi(partStr, 0, 0); } catch(...) {} }
+    *modifiersOut = 0; *vkOut = vk;
+    return (vk != 0);
+}
+
+static const int kMaxKeypressRetryCount = 50; 
+static const UINT kKeypressRetryIntervalMs = 10;
+static std::vector<int> g_pendingKeypressKeys;
+static int g_pendingKeypressRetryCount = 0;
+static UINT_PTR g_keypressTimerId = 0;
+
+bool AreModifierKeysPressed() {
+    return (GetAsyncKeyState(VK_CONTROL) & 0x8000) || (GetAsyncKeyState(VK_MENU) & 0x8000) || 
+           (GetAsyncKeyState(VK_SHIFT) & 0x8000) || (GetAsyncKeyState(VK_LWIN) & 0x8000) || (GetAsyncKeyState(VK_RWIN) & 0x8000);
+}
+
+void SendKeypressInternal(const std::vector<int>& keys) {
+    if (keys.empty()) return;
+    const int NUM_KEYS = static_cast<int>(keys.size());
+    std::unique_ptr<INPUT[]> input(new INPUT[NUM_KEYS * 2]);
+    for (int i = 0; i < NUM_KEYS; i++) {
+        input[i].type = INPUT_KEYBOARD; input[i].ki.wVk = static_cast<WORD>(keys[i]); input[i].ki.dwFlags = 0;
+    }
+    for (int i = 0; i < NUM_KEYS; i++) {
+        input[NUM_KEYS + i].type = INPUT_KEYBOARD; input[NUM_KEYS + i].ki.wVk = static_cast<WORD>(keys[i]);
+        input[NUM_KEYS + i].ki.dwFlags = KEYEVENTF_KEYUP;
+    }
+    SendInput(NUM_KEYS * 2, input.get(), sizeof(input[0]));
+}
+
+void CALLBACK KeypressRetryTimerProc(HWND, UINT, UINT_PTR timerId, DWORD) {
+    if (!AreModifierKeysPressed()) {
+        KillTimer(nullptr, timerId); g_keypressTimerId = 0;
+        SendKeypressInternal(g_pendingKeypressKeys); g_pendingKeypressKeys.clear();
+    } else if (++g_pendingKeypressRetryCount >= kMaxKeypressRetryCount) {
+        KillTimer(nullptr, timerId); g_keypressTimerId = 0;
+        SendKeypressInternal(g_pendingKeypressKeys); g_pendingKeypressKeys.clear();
+    }
+}
+
+void SendKeypress(const std::vector<int>& keys) {
+    if (keys.empty()) return;
+    if (g_keypressTimerId) { KillTimer(nullptr, g_keypressTimerId); g_keypressTimerId = 0; }
+    if (AreModifierKeysPressed()) {
+        g_pendingKeypressKeys = keys; g_pendingKeypressRetryCount = 0;
+        g_keypressTimerId = SetTimer(nullptr, 0, kKeypressRetryIntervalMs, KeypressRetryTimerProc);
+        return;
+    }
+    SendKeypressInternal(keys);
+}
+
+void StartProcess(std::wstring command) {
+    if (command.empty()) return;
+    std::thread([command](){
+        std::wstring cmd = command;
+        auto args = stringtools::split(cmd, L';');
+        std::wstring verb = L"open";
+        if (!args.empty() && stringtools::toLower(args[0]) == L"uac") { verb = L"runas"; cmd = cmd.substr(4); }
+        std::wstring executable = cmd, parameters;
+        if (cmd.size() > 0 && (cmd[0] == L'"' || cmd[0] == L'\'')) {
+            size_t close = cmd.find(cmd[0], 1);
+            if (close != std::wstring::npos) { executable = cmd.substr(1, close - 1); if (cmd.length() > close + 1) parameters = cmd.substr(close + 1); }
+        } else {
+            auto parts = stringtools::split(cmd, L' ');
+            if (parts.size() > 1) { executable = parts[0]; parameters = cmd.substr(executable.length()); }
+        }
+        SHELLEXECUTEINFO sei = {sizeof(sei)};
+        sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI; sei.lpVerb = verb.c_str(); sei.lpFile = executable.c_str();
+        sei.lpParameters = parameters.empty() ? nullptr : parameters.c_str(); sei.nShow = SW_SHOWNORMAL;
+        ShellExecuteEx(&sei);
+    }).detach();
+}
+
+BOOL IsAudioMuted(com_ptr<IMMDeviceEnumerator> pDeviceEnumerator) {
+    const GUID XIID_IAudioEndpointVolume = { 0x5CDF2C82, 0x841E, 0x4546, {0x97, 0x22, 0x0C, 0xF7, 0x40, 0x78, 0x22, 0x9A} };
+    BOOL isMuted = FALSE;
+    com_ptr<IMMDevice> defaultAudioDevice;
+    if (SUCCEEDED(pDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, defaultAudioDevice.put()))) {
+        com_ptr<IAudioEndpointVolume> endpointVolume;
+        if (SUCCEEDED(defaultAudioDevice->Activate(XIID_IAudioEndpointVolume, CLSCTX_INPROC_SERVER, NULL, endpointVolume.put_void()))) {
+            endpointVolume->GetMute(&isMuted);
+        }
+    }
+    return isMuted;
+}
+
+void ToggleVolMuted() {
+    if (!g_audioCOM.IsInitialized()) { if (!g_audioCOM.Init()) return; }
+    auto pDeviceEnumerator = g_audioCOM.GetDeviceEnumerator(); if (!pDeviceEnumerator) return;
+    const GUID XIID_IAudioEndpointVolume = { 0x5CDF2C82, 0x841E, 0x4546, {0x97, 0x22, 0x0C, 0xF7, 0x40, 0x78, 0x22, 0x9A} };
+    const BOOL isMuted = IsAudioMuted(pDeviceEnumerator);
+    com_ptr<IMMDeviceCollection> pDeviceCollection;
+    if (FAILED(pDeviceEnumerator->EnumAudioEndpoints(eRender, DEVICE_STATE_ACTIVE, pDeviceCollection.put()))) return;
+    UINT deviceCount = 0; if (FAILED(pDeviceCollection->GetCount(&deviceCount))) return;
+    for (UINT i = 0; i < deviceCount; i++) {
+        com_ptr<IMMDevice> pDevice;
+        if (SUCCEEDED(pDeviceCollection->Item(i, pDevice.put()))) {
+            com_ptr<IAudioEndpointVolume> endpointVolume;
+            if (SUCCEEDED(pDevice->Activate(XIID_IAudioEndpointVolume, CLSCTX_INPROC_SERVER, NULL, endpointVolume.put_void()))) {
+                endpointVolume->SetMute(!isMuted, NULL);
+            }
+        }
+    }
+}
+
+// Helper: get AUMID from a window
+std::wstring GetWindowAUMID(HWND hwnd) {
+    IPropertyStore* pps = nullptr;
+    if (FAILED(SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps)))) return L"";
+    
+    PROPVARIANT var;
+    PropVariantInit(&var);
+    std::wstring aumid;
+
+    // Local PROPERTYKEY for AppUserModelID to avoid linking issues with PKEY_AppUserModel_ID
+    static const PROPERTYKEY kPKEY_AppUserModel_ID = { { 0x9F4C2855, 0x9F79, 0x4B39, { 0xA8, 0xD0, 0xE1, 0xD4, 0x2D, 0xE1, 0xD5, 0xF3 } }, 5 };
+    
+    if (SUCCEEDED(pps->GetValue(kPKEY_AppUserModel_ID, &var)) && var.vt == VT_LPWSTR && var.pwszVal) {
+        aumid = var.pwszVal;
+    }
+    
+    PropVariantClear(&var);
+    pps->Release();
+    return aumid;
+}
+
+struct WinSearchData {
+    std::wstring targetAUMID;
+    HWND foundHwnd;
+};
+
+BOOL CALLBACK FindMusicWindowEnum(HWND hwnd, LPARAM lParam) {
+    WinSearchData* search = (WinSearchData*)lParam;
+    
+    // Skip invisible windows
+    if (!IsWindowVisible(hwnd)) return TRUE;
+    
+    // Skip windows that have owners (we want top-level apps)
+    if (GetWindow(hwnd, GW_OWNER) != NULL) return TRUE;
+
+    // Check if this window belongs to the Music Source
+    std::wstring winId = GetWindowAUMID(hwnd);
+    if (!winId.empty() && winId == search->targetAUMID) {
+        // Found it!
+        search->foundHwnd = hwnd;
+        return FALSE; // Stop searching
+    }
+    return TRUE;
+}
+
+// Reworked ActivateSourceApp: hunt for an existing window for the AUMID, focus/restore it; fallback to ShellExecute
+void ActivateSourceApp() {
+    std::wstring targetId;
+    {
+        lock_guard<mutex> guard(g_MediaState.lock);
+        targetId = g_MediaState.sourceId;
+    }
+    
+    if (targetId.empty()) return;
+
+    // Phase 1: Try to find the existing window
+    WinSearchData search = { targetId, NULL };
+    EnumWindows(FindMusicWindowEnum, (LPARAM)&search);
+
+    if (search.foundHwnd) {
+        // Window found! Restore and Focus.
+        if (IsIconic(search.foundHwnd)) {
+            ShowWindow(search.foundHwnd, SW_RESTORE);
+        }
+        SetForegroundWindow(search.foundHwnd);
+    } else {
+        // Phase 2: Window not found (maybe minimized to tray), fallback to Shell Activation
+        std::wstring cmd = L"shell:AppsFolder\\" + targetId;
+        ShellExecute(NULL, L"open", cmd.c_str(), NULL, NULL, SW_SHOWNORMAL);
+    }
+}
+
+struct ConfiguredTrigger {
+    std::wstring mouseTriggerName;
+    uint32_t expectedModifiers;
+    std::function<void()> action;
+};
+
+std::vector<ConfiguredTrigger> g_triggers;
+
+std::function<void()> ParseAction(const std::wstring& actionName, const std::wstring& args) {
+    if (actionName == L"ACTION_SHOW_DESKTOP") return [](){ HWND hShell = FindWindow(L"Shell_TrayWnd", NULL); SendMessage(hShell, WM_COMMAND, 407, 0); };
+    if (actionName == L"ACTION_MUTE") return [](){ ToggleVolMuted(); };
+    if (actionName == L"ACTION_TASK_MANAGER") return [](){ ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); };
+    if (actionName == L"ACTION_ACTIVATE_SOURCE_APP") return [](){ ActivateSourceApp(); };
+    if (actionName == L"ACTION_VOLUME_UP") return [](){ SendKeypress({VK_VOLUME_UP}); };
+    if (actionName == L"ACTION_VOLUME_DOWN") return [](){ SendKeypress({VK_VOLUME_DOWN}); };
+    if (actionName == L"ACTION_START_PROCESS") return [args](){ StartProcess(args); };
+    if (actionName == L"ACTION_SEND_KEYPRESS") {
+        std::vector<int> keys; 
+        std::vector<std::wstring> parts;
+        if (args.find(L';') != std::wstring::npos) parts = stringtools::split(args, L';');
+        else parts = stringtools::split(args, L'+');
+        
+        for(auto& part : parts) {
+            UINT mod, vk;
+            if(FromStringHotKey(part, &mod, &vk)) {
+                if(mod & MOD_CONTROL) keys.push_back(VK_CONTROL); if(mod & MOD_SHIFT) keys.push_back(VK_SHIFT);
+                if(mod & MOD_ALT) keys.push_back(VK_MENU); if(mod & MOD_WIN) keys.push_back(VK_LWIN);
+                if (vk) keys.push_back(vk);
+            }
+        }
+        return [keys](){ SendKeypress(keys); };
+    }
+    if (actionName == L"ACTION_MEDIA_PLAY_PAUSE") return [](){ SendKeypress({VK_MEDIA_PLAY_PAUSE}); };
+    if (actionName == L"ACTION_MEDIA_NEXT") return [](){ SendKeypress({VK_MEDIA_NEXT_TRACK}); };
+    if (actionName == L"ACTION_MEDIA_PREV") return [](){ SendKeypress({VK_MEDIA_PREV_TRACK}); };
+    return [](){};
+}
+
+bool OnMouseClick(const std::wstring& detectedTriggerName) {
+    uint32_t currentMods = GetKeyModifiersState();
+    bool handled = false;
+    for(const auto& t : g_triggers) {
+        if (t.mouseTriggerName == detectedTriggerName) {
+            if (t.expectedModifiers == currentMods) {
+                if (t.action) {
+                    t.action();
+                    Wh_Log(L"[MusicLounge] Trigger Executed: %s", detectedTriggerName.c_str());
+                    handled = true;
+                }
+            }
+        }
+    }
+    return handled;
+}
 
 // --- Helper: Whitelist Check ---
 bool IsAppIgnored(HWND hFg) {
@@ -377,7 +819,6 @@ void LoadSettings() {
     g_Settings.invertTheme = Wh_GetIntSetting(L"InvertTheme") != 0;
     g_Settings.bgOpacity = Wh_GetIntSetting(L"BgOpacity");
 
-    // Text Color (RGB/RGBA) -> GDI uses ARGB
     PCWSTR textColorStr = Wh_GetStringSetting(L"TextColor");
     if (textColorStr) {
         int r = 255, g = 255, b = 255, a = 255;
@@ -395,18 +836,14 @@ void LoadSettings() {
         g_Settings.manualTextColor = 0xFFFFFFFF;
     }
 
-    // Bg Color (RGB Only) -> DWM uses ABGR (Swap R/B)
     PCWSTR bgColorStr = Wh_GetStringSetting(L"BgColor");
     if (bgColorStr) {
         int r = 0, g = 0, b = 0, a = 0;
         int count = swscanf_s(bgColorStr, L"%d,%d,%d,%d", &r, &g, &b, &a);
-        
         if(r>255) r=255; if(g>255) g=255; if(b>255) b=255;
         if(r<0) r=0; if(g<0) g=0; if(b<0) b=0;
 
         if (count >= 3 && !(r==0 && g==0 && b==0)) {
-            // FIX: SWAP RED AND BLUE for DWM API
-            // BGR Format: 0x00BBGGRR
             g_Settings.manualBgColorRGB = ((DWORD)b << 16) | ((DWORD)g << 8) | (DWORD)r;
         } else {
             g_Settings.manualBgColorRGB = 0; 
@@ -422,13 +859,11 @@ void LoadSettings() {
     g_Settings.idleTimeout = Wh_GetIntSetting(L"IdleTimeout");
     if (g_Settings.idleTimeout < 0) g_Settings.idleTimeout = 0;
 
-    // reset idle counters on settings load
     g_IdleSecondsCounter = 0;
     g_IsHiddenByIdle = false;
 
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     g_Settings.enableGameDetect = Wh_GetIntSetting(L"EnableGameDetection") != 0;
-    g_Settings.enableAppSwitch = Wh_GetIntSetting(L"EnableAppSwitch") != 0;
 
     PCWSTR apps = Wh_GetStringSetting(L"IgnoredApps");
     if (apps) {
@@ -442,6 +877,29 @@ void LoadSettings() {
     if (g_Settings.bgOpacity > 255) g_Settings.bgOpacity = 255;
     if (g_Settings.width < 100) g_Settings.width = 300;
     if (g_Settings.height < 24) g_Settings.height = 48;
+
+    // --- Load Action Engine Triggers ---
+    using WindhawkUtils::StringSetting;
+    g_triggers.clear();
+    for (int i = 0; i < 50; i++) {
+        auto mouseTriggerStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].MouseTrigger", i).get());
+        uint32_t mods = 0;
+        for (int j = 0; j < 8; j++) {
+            auto modStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].KeyboardTriggers[%d]", i, j).get());
+            if (modStr.empty()) break;
+            if (modStr == L"none") continue;
+            KeyModifier km = GetKeyModifierFromName(modStr);
+            if (km != KEY_MODIFIER_INVALID) SetBit(mods, km);
+        }
+        auto actionStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].Action", i).get());
+        auto argsStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].AdditionalArgs", i).get());
+        if (mouseTriggerStr.empty() || actionStr.empty()) continue;
+        ConfiguredTrigger ct;
+        ct.mouseTriggerName = mouseTriggerStr;
+        ct.expectedModifiers = mods;
+        ct.action = ParseAction(actionStr, argsStr);
+        g_triggers.push_back(ct);
+    }
 }
 
 // --- WinRT / GSMTC ---
@@ -519,187 +977,6 @@ void SendMediaCommand(int cmd) {
     } catch (...) {}
 }
 
-// --- ACTIVATION LOGIC ---
-
-#include <mmdeviceapi.h>
-#include <audiopolicy.h>
-#include <tlhelp32.h>
-
-// Manually define GUIDs for Audio & Activation
-const CLSID CLSID_MMDeviceEnumerator = { 0xBCDE0395, 0xE52F, 0x467C, { 0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E } };
-const IID IID_IMMDeviceEnumerator    = { 0xA95664D2, 0x9614, 0x4F35, { 0xA7, 0x46, 0xDE, 0x8D, 0xB6, 0x36, 0x17, 0xE6 } };
-const IID IID_IAudioSessionManager2  = { 0x77AA99A0, 0x1BD6, 0x484F, { 0x8B, 0xC7, 0x2C, 0x65, 0x4C, 0x9A, 0x9B, 0x6F } };
-const GUID CLSID_ApplicationActivationManager = { 0x4ce576fa, 0x83dc, 0x4f88, { 0x95, 0x1c, 0x9d, 0x07, 0x82, 0xb4, 0xa3, 0x19 } };
-const IID IID_IApplicationActivationManager   = { 0x2e941141, 0x7f97, 0x4756, { 0xba, 0x1d, 0x9d, 0xec, 0xde, 0x89, 0x4a, 0x3d } };
-
-// 1. Audio Session Hunter (WASAPI)
-// Returns the Process ID (PID) of the app currently playing sound.
-DWORD GetAudioPlayingPID() {
-    DWORD targetPid = 0;
-    IMMDeviceEnumerator* pEnumerator = NULL;
-    IMMDevice* pDevice = NULL;
-    IAudioSessionManager2* pSessionManager = NULL;
-    IAudioSessionEnumerator* pSessionEnum = NULL;
-
-    HRESULT hr = CoCreateInstance(CLSID_MMDeviceEnumerator, NULL, CLSCTX_ALL, IID_IMMDeviceEnumerator, (void**)&pEnumerator);
-    if (FAILED(hr)) return 0;
-
-    hr = pEnumerator->GetDefaultAudioEndpoint(eRender, eMultimedia, &pDevice);
-    if (SUCCEEDED(hr)) {
-        hr = pDevice->Activate(IID_IAudioSessionManager2, CLSCTX_ALL, NULL, (void**)&pSessionManager);
-        if (SUCCEEDED(hr)) {
-            hr = pSessionManager->GetSessionEnumerator(&pSessionEnum);
-            if (SUCCEEDED(hr)) {
-                int count = 0;
-                pSessionEnum->GetCount(&count);
-                for (int i = 0; i < count; i++) {
-                    IAudioSessionControl* pSessionCtrl = NULL;
-                    IAudioSessionControl2* pSessionCtrl2 = NULL;
-                    if (SUCCEEDED(pSessionEnum->GetSession(i, &pSessionCtrl))) {
-                        if (SUCCEEDED(pSessionCtrl->QueryInterface(__uuidof(IAudioSessionControl2), (void**)&pSessionCtrl2))) {
-                            AudioSessionState state;
-                            if (SUCCEEDED(pSessionCtrl->GetState(&state)) && state == AudioSessionStateActive) {
-                                // Found a session making noise!
-                                pSessionCtrl2->GetProcessId(&targetPid);
-                                // If pid is 0, it's system sounds, ignore.
-                                if (targetPid != 0) {
-                                    pSessionCtrl2->Release();
-                                    pSessionCtrl->Release();
-                                    break; 
-                                }
-                            }
-                            pSessionCtrl2->Release();
-                        }
-                        pSessionCtrl->Release();
-                    }
-                }
-                pSessionEnum->Release();
-            }
-            pSessionManager->Release();
-        }
-        pDevice->Release();
-    }
-    pEnumerator->Release();
-    return targetPid;
-}
-
-// 2. Helper: Get Exe Name from PID
-wstring GetProcessName(DWORD pid) {
-    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    if (hSnapshot == INVALID_HANDLE_VALUE) return L"";
-    
-    PROCESSENTRY32W pe32;
-    pe32.dwSize = sizeof(PROCESSENTRY32W);
-    wstring name = L"";
-    
-    if (Process32FirstW(hSnapshot, &pe32)) {
-        do {
-            if (pe32.th32ProcessID == pid) {
-                name = pe32.szExeFile;
-                break;
-            }
-        } while (Process32NextW(hSnapshot, &pe32));
-    }
-    CloseHandle(hSnapshot);
-    return name;
-}
-
-// 3. Window Finder
-HWND g_FoundSourceWnd = NULL;
-wstring g_TargetExeName = L"";
-DWORD g_TargetPID = 0;
-
-BOOL CALLBACK EnumSourceWindowsProc(HWND hwnd, LPARAM lParam) {
-    if (!IsWindowVisible(hwnd)) return TRUE;
-    
-    // Check PID Match First (Most Accurate)
-    DWORD pid = 0;
-    GetWindowThreadProcessId(hwnd, &pid);
-    
-    // Check if this window belongs to the target PID
-    // OR if it belongs to the same executable name (Browser multi-process handling)
-    bool match = (pid == g_TargetPID);
-    
-    if (!match && !g_TargetExeName.empty()) {
-        HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-        if (hProcess) {
-            WCHAR path[MAX_PATH];
-            DWORD size = MAX_PATH;
-            if (QueryFullProcessImageNameW(hProcess, 0, path, &size)) {
-                wstring exeName = wstring(path).substr(wstring(path).find_last_of(L"\\") + 1);
-                if (_wcsicmp(exeName.c_str(), g_TargetExeName.c_str()) == 0) {
-                    match = true;
-                }
-            }
-            CloseHandle(hProcess);
-        }
-    }
-
-    if (match) {
-        // Must be a main window (no owner, has title)
-        if (GetWindow(hwnd, GW_OWNER) == NULL && GetWindowTextLength(hwnd) > 0) {
-            WCHAR clsName[256];
-            GetClassNameW(hwnd, clsName, 256);
-            if (wcscmp(clsName, L"Shell_TrayWnd") != 0 && wcscmp(clsName, L"Progman") != 0) {
-                g_FoundSourceWnd = hwnd;
-                return FALSE; // Stop found
-            }
-        }
-    }
-    return TRUE;
-}
-
-// 4. Fallback: Modern App Activation
-bool ActivateModernApp(LPCWSTR aumid) {
-    if (!aumid || !*aumid) return false;
-    IApplicationActivationManager* pActivator = nullptr;
-    HRESULT hr = CoCreateInstance(CLSID_ApplicationActivationManager, nullptr, CLSCTX_LOCAL_SERVER, IID_IApplicationActivationManager, (void**)&pActivator);
-    if (SUCCEEDED(hr)) {
-        DWORD pid = 0;
-        hr = pActivator->ActivateApplication(aumid, nullptr, AO_NONE, &pid);
-        pActivator->Release();
-        return SUCCEEDED(hr);
-    }
-    return false;
-}
-
-bool ActivateViaShell(LPCWSTR aumid) {
-    wstring cmd = L"shell:AppsFolder\\";
-    cmd += aumid;
-    return ((INT_PTR)ShellExecuteW(NULL, NULL, cmd.c_str(), NULL, NULL, SW_SHOWNORMAL) > 32);
-}
-
-void ActivateMediaSource(wstring sourceId) {
-    Wh_Log(L"[MusicLounge] Clicked. SourceID: %s", sourceId.c_str());
-
-    // STRATEGY A: AUDIO SESSION HUNTER (The "Nuclear Option")
-    // Ask Windows: "What PID is making noise right now?"
-    DWORD audioPid = GetAudioPlayingPID();
-    
-    if (audioPid != 0) {
-        Wh_Log(L"[MusicLounge] Found Active Audio PID: %d", audioPid);
-        g_TargetPID = audioPid;
-        g_TargetExeName = GetProcessName(audioPid);
-        g_FoundSourceWnd = NULL;
-        
-        EnumWindows(EnumSourceWindowsProc, 0);
-        
-        if (g_FoundSourceWnd) {
-             Wh_Log(L"[MusicLounge] Found Window for Audio Process!");
-             if (IsIconic(g_FoundSourceWnd)) ShowWindow(g_FoundSourceWnd, SW_RESTORE);
-             SetForegroundWindow(g_FoundSourceWnd);
-             return;
-        }
-    }
-
-    // STRATEGY B: Fallback to ID (If audio is paused or undetectable)
-    Wh_Log(L"[MusicLounge] No Audio Process found. Using ID Fallback.");
-    
-    // Try Modern/Shell Activation
-    if (ActivateModernApp(sourceId.c_str())) return;
-    ActivateViaShell(sourceId.c_str());
-}
-
 // --- Visuals ---
 bool IsSystemLightMode() {
     DWORD value = 0; DWORD size = sizeof(value);
@@ -723,20 +1000,14 @@ void UpdateAppearance(HWND hwnd) {
         auto SetComp = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
         if (SetComp) {
             DWORD tint = 0; 
-
-            // LOGIC:
             if (g_Settings.manualBgColorRGB != 0) {
-                // Manual Background Color is Active: Use its RGB + BgOpacity for Alpha
                 tint = ((DWORD)g_Settings.bgOpacity << 24) | g_Settings.manualBgColorRGB;
             } else if (g_Settings.autoTheme) {
-                // Auto Theme is Active: Use system light/dark
                 tint = IsSystemLightMode() ? 0x40FFFFFF : 0x40000000; 
             } else {
-                // Auto Theme is OFF, Manual BgColor is OFF: Use InvertTheme + BgOpacity
                 DWORD baseColor = g_Settings.invertTheme ? 0x000000 : 0xFFFFFF; 
                 tint = ((DWORD)g_Settings.bgOpacity << 24) | baseColor;
             }
-            
             ACCENT_POLICY policy = { ACCENT_ENABLE_ACRYLICBLURBEHIND, 0, tint, 0 };
             WINDOWCOMPOSITIONATTRIBDATA data = { WCA_ACCENT_POLICY, &policy, sizeof(ACCENT_POLICY) };
             SetComp(hwnd, &data);
@@ -749,8 +1020,6 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     graphics.SetSmoothingMode(SmoothingModeAntiAlias);
     graphics.SetTextRenderingHint(TextRenderingHintAntiAlias);
     graphics.Clear(Color(0, 0, 0, 0)); 
-
-    // APPLY DPI SCALING
     graphics.ScaleTransform(g_ScaleFactor, g_ScaleFactor);
 
     Color mainColor{GetCurrentTextColor()};
@@ -765,7 +1034,6 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
         state.isPlaying = g_MediaState.isPlaying;
     }
 
-    // USE LOGICAL DIMENSIONS
     int logicalH = g_Settings.height;
     int logicalW = g_Settings.width;
 
@@ -872,16 +1140,12 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case WM_TIMER:
             if (wParam == IDT_POLL_MEDIA) {
-                // Refresh media state first
                 UpdateMediaInfo();
-
-                // Idle / paused hide logic
                 bool isPlaying = false;
                 {
                     lock_guard<mutex> guard(g_MediaState.lock);
                     isPlaying = g_MediaState.isPlaying;
                 }
-
                 if (g_Settings.idleTimeout > 0) {
                     if (isPlaying) {
                         g_IdleSecondsCounter = 0;
@@ -896,8 +1160,6 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     g_IsHiddenByIdle = false;
                     g_IdleSecondsCounter = 0;
                 }
-
-                // Apply positioning and animation (respects both game detection and idle timeout)
                 SyncPositionWithTaskbar();
                 InvalidateRect(hwnd, NULL, FALSE);
             }
@@ -919,7 +1181,6 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 int targetY = rcTb.top + ((rcTb.bottom - rcTb.top) / 2) - (scaledH / 2) + scaledOffY;
                 
                 if (g_AnimState == 1) { // Hide
-                    // Continue hiding if either game is detected OR idle timeout active
                     if (!g_IsGameDetected && !g_IsHiddenByIdle) { g_AnimState = 2; return 0; }
                     g_CurrentAnimY += 8;
                     if (g_CurrentAnimY > screenH) {
@@ -932,7 +1193,6 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 }
                 else if (g_AnimState == 2) { // Show
-                    // Resume hiding if game detected OR idle timeout active again
                     if (g_IsGameDetected || g_IsHiddenByIdle) { g_AnimState = 1; return 0; }
                     g_CurrentAnimY -= 8;
                     if (g_CurrentAnimY <= targetY) {
@@ -949,11 +1209,8 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
             return 0;
         case WM_MOUSEMOVE: {
-            // UNSCALE INPUT COORDINATES
             int x = (int)(LOWORD(lParam) / g_ScaleFactor);
             int y = (int)(HIWORD(lParam) / g_ScaleFactor);
-            
-            // USE LOGICAL HEIGHT
             int logicalH = g_Settings.height;
             int artSize = logicalH - 12;
             int startControlX = 6 + artSize + 12;
@@ -973,26 +1230,45 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             if (g_HoverState > 0) {
                 SendMediaCommand(g_HoverState);
             } else {
-                if (g_Settings.enableAppSwitch) {
-                    int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-                    int artSize = g_Settings.height - 12;
-                    int artRightEdge = 6 + artSize + 5;
-
-                    if (x > artRightEdge) {
-                        wstring targetId;
-                        {
-                            lock_guard<mutex> guard(g_MediaState.lock);
-                            targetId = g_MediaState.sourceId;
-                        }
-                        ActivateMediaSource(targetId);
-                    }
+                int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+                int artSize = g_Settings.height - 12;
+                int artRightEdge = 6 + artSize + 5;
+                if (x > artRightEdge) {
+                    OnMouseClick(L"Left");
                 }
             }
             return 0;
+        case WM_RBUTTONUP: {
+            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+            int artSize = g_Settings.height - 12;
+            int artRightEdge = 6 + artSize + 5;
+            if (x > artRightEdge) { OnMouseClick(L"Right"); }
+            return 0;
+        }
+        case WM_MBUTTONUP: {
+            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+            int artSize = g_Settings.height - 12;
+            int artRightEdge = 6 + artSize + 5;
+            if (x > artRightEdge) { OnMouseClick(L"Middle"); }
+            return 0;
+        }
+        case WM_LBUTTONDBLCLK: {
+            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+            int artSize = g_Settings.height - 12;
+            int artRightEdge = 6 + artSize + 5;
+            if (x > artRightEdge) { OnMouseClick(L"Double"); }
+            return 0;
+        }
         case WM_MOUSEWHEEL: {
             short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-            keybd_event(zDelta > 0 ? VK_VOLUME_UP : VK_VOLUME_DOWN, 0, 0, 0);
-            keybd_event(zDelta > 0 ? VK_VOLUME_UP : VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, 0);
+            bool handled = false;
+            if (zDelta > 0) handled = OnMouseClick(L"ScrollUp");
+            else handled = OnMouseClick(L"ScrollDown");
+            
+            if (!handled) {
+                // Fallback to System Volume Control
+                SendMessage(hwnd, WM_APPCOMMAND, 0, zDelta > 0 ? APPCOMMAND_VOLUME_UP << 16 : APPCOMMAND_VOLUME_DOWN << 16);
+            }
             return 0;
         }
         case WM_PAINT: {
@@ -1014,14 +1290,13 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 void MediaThread() {
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-
-    // Revert to MTA to prevent UpdateMediaInfo from deadlocking/crashing
     winrt::init_apartment();
     GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR gdiplusToken;
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
     WNDCLASS wc = {0};
+    wc.style = CS_DBLCLKS;
     wc.lpfnWndProc = MediaWndProc;
     wc.hInstance = GetModuleHandle(NULL);
     wc.lpszClassName = TEXT("WindhawkMusicLounge_GSMTC");
@@ -1039,7 +1314,6 @@ void MediaThread() {
 
     SetLayeredWindowAttributes(g_hMediaWindow, 0, 255, LWA_ALPHA);
 
-    // Initial State: PARKED (2px visible at bottom)
     UpdateScaleFactor();
     int screenH = GetSystemMetrics(SM_CYSCREEN);
     int scaledW = (int)(g_Settings.width * g_ScaleFactor);
@@ -1047,7 +1321,6 @@ void MediaThread() {
     SetWindowPos(g_hMediaWindow, HWND_TOPMOST, 0, screenH - 2, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
     g_AnimState = 3; // Parked
 
-    // Setup Visibility Hook
     g_hVisibilityHook = SetWinEventHook(EVENT_OBJECT_LOCATIONCHANGE, EVENT_OBJECT_LOCATIONCHANGE, NULL, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT);
 
     MSG msg;
@@ -1062,14 +1335,18 @@ void MediaThread() {
 std::thread* g_pMediaThread = nullptr;
 
 BOOL WhTool_ModInit() {
-    SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge");
-    LoadSettings(); 
+    SetCurrentProcessExplicitAppUserModelID(L"taskbar-mouse-actions");
+    LoadSettings();
+    g_audioCOM.Init();
     g_Running = true;
     g_pMediaThread = new std::thread(MediaThread);
     return TRUE;
 }
 
 void WhTool_ModUninit() {
+    g_audioCOM.Uninit();
+    g_triggers.clear();
+
     g_Running = false;
     if (g_hMediaWindow) SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
     if (g_pMediaThread) {
