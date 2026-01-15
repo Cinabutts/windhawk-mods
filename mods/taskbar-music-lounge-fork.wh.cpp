@@ -2,8 +2,8 @@
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
 // @description     A native-style music ticker with media controls.
-// @version         4.6.2
-// @author          Hashah2311
+// @version         4.6.3
+// @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
 // @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi
@@ -11,7 +11,7 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.6.2)
+# Taskbar Music Lounge (v4.6.3)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
@@ -63,6 +63,9 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 - TextColor: "255, 255, 255"
   $name: Manual Text Color (R, G, B, [A])
   $description: Enter RGB or RGBA values separated by commas (e.g; "102, 255, 255" or "255, 0, 0, 128")
+- IdleTimeout: 0
+  $name: Auto-hide when paused (Seconds). Set 0 to disable.
+  $description: Automatically hide the widget when music is paused for the specified number of seconds.
 - EnableSlide: true
   $name: Enable Slide Animations
   $description: ✓ Enabled | the widget slides down/up for games. ✕ Disabled | Instantly hides.
@@ -145,6 +148,7 @@ struct ModSettings {
     DWORD manualBgColorRGB = 0; // Stores BGR for DWM
     int bgOpacity = 0;
     int fsInterval = 2;
+    int idleTimeout = 0;
     bool enableSlide = true;
     bool enableGameDetect = true;
     bool enableAppSwitch = true;
@@ -165,6 +169,8 @@ int g_FsCheckTick = 0;
 int g_AnimState = 0; // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Parked
 int g_CurrentAnimY = 0;
 bool g_ShutdownMode = false;
+int g_IdleSecondsCounter = 0;
+bool g_IsHiddenByIdle = false;
 
 struct MediaState {
     wstring title = L"Waiting for media...";
@@ -299,7 +305,7 @@ void SyncPositionWithTaskbar() {
         BOOL isTaskbarVisible = IsWindowVisible(g_hTaskbar);
         
         // CASE: Hide
-        if (!isTaskbarVisible || g_IsGameDetected) {
+        if (!isTaskbarVisible || g_IsGameDetected || g_IsHiddenByIdle) {
             if (g_AnimState != 1 && g_AnimState != 3) {
                 if (g_Settings.enableSlide) {
                     RECT rcMe; GetWindowRect(g_hMediaWindow, &rcMe);
@@ -412,6 +418,13 @@ void LoadSettings() {
     
     g_Settings.fsInterval = Wh_GetIntSetting(L"FullscreenCheckInterval");
     if (g_Settings.fsInterval < 1) g_Settings.fsInterval = 1;
+
+    g_Settings.idleTimeout = Wh_GetIntSetting(L"IdleTimeout");
+    if (g_Settings.idleTimeout < 0) g_Settings.idleTimeout = 0;
+
+    // reset idle counters on settings load
+    g_IdleSecondsCounter = 0;
+    g_IsHiddenByIdle = false;
 
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     g_Settings.enableGameDetect = Wh_GetIntSetting(L"EnableGameDetection") != 0;
@@ -859,8 +872,33 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case WM_TIMER:
             if (wParam == IDT_POLL_MEDIA) {
-                SyncPositionWithTaskbar(); 
+                // Refresh media state first
                 UpdateMediaInfo();
+
+                // Idle / paused hide logic
+                bool isPlaying = false;
+                {
+                    lock_guard<mutex> guard(g_MediaState.lock);
+                    isPlaying = g_MediaState.isPlaying;
+                }
+
+                if (g_Settings.idleTimeout > 0) {
+                    if (isPlaying) {
+                        g_IdleSecondsCounter = 0;
+                        g_IsHiddenByIdle = false;
+                    } else {
+                        g_IdleSecondsCounter++;
+                        if (g_IdleSecondsCounter >= g_Settings.idleTimeout) {
+                            g_IsHiddenByIdle = true;
+                        }
+                    }
+                } else {
+                    g_IsHiddenByIdle = false;
+                    g_IdleSecondsCounter = 0;
+                }
+
+                // Apply positioning and animation (respects both game detection and idle timeout)
+                SyncPositionWithTaskbar();
                 InvalidateRect(hwnd, NULL, FALSE);
             }
             else if (wParam == IDT_TEXT_ANIM) {
@@ -881,7 +919,8 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 int targetY = rcTb.top + ((rcTb.bottom - rcTb.top) / 2) - (scaledH / 2) + scaledOffY;
                 
                 if (g_AnimState == 1) { // Hide
-                    if (!g_IsGameDetected) { g_AnimState = 2; return 0; }
+                    // Continue hiding if either game is detected OR idle timeout active
+                    if (!g_IsGameDetected && !g_IsHiddenByIdle) { g_AnimState = 2; return 0; }
                     g_CurrentAnimY += 8;
                     if (g_CurrentAnimY > screenH) {
                         ShowWindow(hwnd, SW_HIDE);
@@ -893,7 +932,8 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 }
                 else if (g_AnimState == 2) { // Show
-                    if (g_IsGameDetected) { g_AnimState = 1; return 0; }
+                    // Resume hiding if game detected OR idle timeout active again
+                    if (g_IsGameDetected || g_IsHiddenByIdle) { g_AnimState = 1; return 0; }
                     g_CurrentAnimY -= 8;
                     if (g_CurrentAnimY <= targetY) {
                         g_CurrentAnimY = targetY;
