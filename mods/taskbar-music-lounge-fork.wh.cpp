@@ -68,6 +68,9 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 - EnableGameDetection: true
   $name: Enable Game Detection
   $description: ✓ Enabled | Widget hides on game detection. ✕ Disabled | The widget will NEVER hide for games. (overrides all below ↓)
+- EnableAppSwitch: true
+  $name: Click Background to Open App
+  $description: Clicking the empty space/text switches to the music source app.
 - FullscreenCheckInterval: 2
   $name: Fullscreen Check Interval (Seconds)
   $description: How often to check for borderless games.
@@ -143,6 +146,7 @@ struct ModSettings {
     int fsInterval = 2;
     bool enableSlide = true;
     bool enableGameDetect = true;
+    bool enableAppSwitch = true;
     wstring ignoredApps;
 } g_Settings;
 
@@ -167,6 +171,7 @@ struct MediaState {
     bool isPlaying = false;
     bool hasMedia = false;
     Bitmap* albumArt = nullptr;
+    wstring sourceId = L"";
     mutex lock;
 } g_MediaState;
 
@@ -409,6 +414,7 @@ void LoadSettings() {
 
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     g_Settings.enableGameDetect = Wh_GetIntSetting(L"EnableGameDetection") != 0;
+    g_Settings.enableAppSwitch = Wh_GetIntSetting(L"EnableAppSwitch") != 0;
 
     PCWSTR apps = Wh_GetStringSetting(L"IgnoredApps");
     if (apps) {
@@ -452,6 +458,13 @@ void UpdateMediaInfo() {
             auto info = session.GetPlaybackInfo();
 
             lock_guard<mutex> guard(g_MediaState.lock);
+            
+            wstring newId = session.SourceAppUserModelId().c_str();
+            if (newId != g_MediaState.sourceId) {
+                Wh_Log(L"[MusicLounge] New Source: %s", newId.c_str());
+                g_MediaState.sourceId = newId;
+            }
+            
             wstring newTitle = props.Title().c_str();
             if (newTitle != g_MediaState.title || g_MediaState.albumArt == nullptr) {
                 if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
@@ -470,11 +483,13 @@ void UpdateMediaInfo() {
             g_MediaState.hasMedia = false;
             g_MediaState.title = L"No Media";
             g_MediaState.artist = L"";
+            g_MediaState.sourceId = L"";
             if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
         }
     } catch (...) {
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
+        g_MediaState.sourceId = L"";
     }
 }
 
@@ -488,6 +503,187 @@ void SendMediaCommand(int cmd) {
             else if (cmd == 3) session.TrySkipNextAsync();
         }
     } catch (...) {}
+}
+
+// --- ACTIVATION LOGIC ---
+
+#include <mmdeviceapi.h>
+#include <audiopolicy.h>
+#include <tlhelp32.h>
+
+// Manually define GUIDs for Audio & Activation
+const CLSID CLSID_MMDeviceEnumerator = { 0xBCDE0395, 0xE52F, 0x467C, { 0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E } };
+const IID IID_IMMDeviceEnumerator    = { 0xA95664D2, 0x9614, 0x4F35, { 0xA7, 0x46, 0xDE, 0x8D, 0xB6, 0x36, 0x17, 0xE6 } };
+const IID IID_IAudioSessionManager2  = { 0x77AA99A0, 0x1BD6, 0x484F, { 0x8B, 0xC7, 0x2C, 0x65, 0x4C, 0x9A, 0x9B, 0x6F } };
+const GUID CLSID_ApplicationActivationManager = { 0x4ce576fa, 0x83dc, 0x4f88, { 0x95, 0x1c, 0x9d, 0x07, 0x82, 0xb4, 0xa3, 0x19 } };
+const IID IID_IApplicationActivationManager   = { 0x2e941141, 0x7f97, 0x4756, { 0xba, 0x1d, 0x9d, 0xec, 0xde, 0x89, 0x4a, 0x3d } };
+
+// 1. Audio Session Hunter (WASAPI)
+// Returns the Process ID (PID) of the app currently playing sound.
+DWORD GetAudioPlayingPID() {
+    DWORD targetPid = 0;
+    IMMDeviceEnumerator* pEnumerator = NULL;
+    IMMDevice* pDevice = NULL;
+    IAudioSessionManager2* pSessionManager = NULL;
+    IAudioSessionEnumerator* pSessionEnum = NULL;
+
+    HRESULT hr = CoCreateInstance(CLSID_MMDeviceEnumerator, NULL, CLSCTX_ALL, IID_IMMDeviceEnumerator, (void**)&pEnumerator);
+    if (FAILED(hr)) return 0;
+
+    hr = pEnumerator->GetDefaultAudioEndpoint(eRender, eMultimedia, &pDevice);
+    if (SUCCEEDED(hr)) {
+        hr = pDevice->Activate(IID_IAudioSessionManager2, CLSCTX_ALL, NULL, (void**)&pSessionManager);
+        if (SUCCEEDED(hr)) {
+            hr = pSessionManager->GetSessionEnumerator(&pSessionEnum);
+            if (SUCCEEDED(hr)) {
+                int count = 0;
+                pSessionEnum->GetCount(&count);
+                for (int i = 0; i < count; i++) {
+                    IAudioSessionControl* pSessionCtrl = NULL;
+                    IAudioSessionControl2* pSessionCtrl2 = NULL;
+                    if (SUCCEEDED(pSessionEnum->GetSession(i, &pSessionCtrl))) {
+                        if (SUCCEEDED(pSessionCtrl->QueryInterface(__uuidof(IAudioSessionControl2), (void**)&pSessionCtrl2))) {
+                            AudioSessionState state;
+                            if (SUCCEEDED(pSessionCtrl->GetState(&state)) && state == AudioSessionStateActive) {
+                                // Found a session making noise!
+                                pSessionCtrl2->GetProcessId(&targetPid);
+                                // If pid is 0, it's system sounds, ignore.
+                                if (targetPid != 0) {
+                                    pSessionCtrl2->Release();
+                                    pSessionCtrl->Release();
+                                    break; 
+                                }
+                            }
+                            pSessionCtrl2->Release();
+                        }
+                        pSessionCtrl->Release();
+                    }
+                }
+                pSessionEnum->Release();
+            }
+            pSessionManager->Release();
+        }
+        pDevice->Release();
+    }
+    pEnumerator->Release();
+    return targetPid;
+}
+
+// 2. Helper: Get Exe Name from PID
+wstring GetProcessName(DWORD pid) {
+    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hSnapshot == INVALID_HANDLE_VALUE) return L"";
+    
+    PROCESSENTRY32W pe32;
+    pe32.dwSize = sizeof(PROCESSENTRY32W);
+    wstring name = L"";
+    
+    if (Process32FirstW(hSnapshot, &pe32)) {
+        do {
+            if (pe32.th32ProcessID == pid) {
+                name = pe32.szExeFile;
+                break;
+            }
+        } while (Process32NextW(hSnapshot, &pe32));
+    }
+    CloseHandle(hSnapshot);
+    return name;
+}
+
+// 3. Window Finder
+HWND g_FoundSourceWnd = NULL;
+wstring g_TargetExeName = L"";
+DWORD g_TargetPID = 0;
+
+BOOL CALLBACK EnumSourceWindowsProc(HWND hwnd, LPARAM lParam) {
+    if (!IsWindowVisible(hwnd)) return TRUE;
+    
+    // Check PID Match First (Most Accurate)
+    DWORD pid = 0;
+    GetWindowThreadProcessId(hwnd, &pid);
+    
+    // Check if this window belongs to the target PID
+    // OR if it belongs to the same executable name (Browser multi-process handling)
+    bool match = (pid == g_TargetPID);
+    
+    if (!match && !g_TargetExeName.empty()) {
+        HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+        if (hProcess) {
+            WCHAR path[MAX_PATH];
+            DWORD size = MAX_PATH;
+            if (QueryFullProcessImageNameW(hProcess, 0, path, &size)) {
+                wstring exeName = wstring(path).substr(wstring(path).find_last_of(L"\\") + 1);
+                if (_wcsicmp(exeName.c_str(), g_TargetExeName.c_str()) == 0) {
+                    match = true;
+                }
+            }
+            CloseHandle(hProcess);
+        }
+    }
+
+    if (match) {
+        // Must be a main window (no owner, has title)
+        if (GetWindow(hwnd, GW_OWNER) == NULL && GetWindowTextLength(hwnd) > 0) {
+            WCHAR clsName[256];
+            GetClassNameW(hwnd, clsName, 256);
+            if (wcscmp(clsName, L"Shell_TrayWnd") != 0 && wcscmp(clsName, L"Progman") != 0) {
+                g_FoundSourceWnd = hwnd;
+                return FALSE; // Stop found
+            }
+        }
+    }
+    return TRUE;
+}
+
+// 4. Fallback: Modern App Activation
+bool ActivateModernApp(LPCWSTR aumid) {
+    if (!aumid || !*aumid) return false;
+    IApplicationActivationManager* pActivator = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_ApplicationActivationManager, nullptr, CLSCTX_LOCAL_SERVER, IID_IApplicationActivationManager, (void**)&pActivator);
+    if (SUCCEEDED(hr)) {
+        DWORD pid = 0;
+        hr = pActivator->ActivateApplication(aumid, nullptr, AO_NONE, &pid);
+        pActivator->Release();
+        return SUCCEEDED(hr);
+    }
+    return false;
+}
+
+bool ActivateViaShell(LPCWSTR aumid) {
+    wstring cmd = L"shell:AppsFolder\\";
+    cmd += aumid;
+    return ((INT_PTR)ShellExecuteW(NULL, NULL, cmd.c_str(), NULL, NULL, SW_SHOWNORMAL) > 32);
+}
+
+void ActivateMediaSource(wstring sourceId) {
+    Wh_Log(L"[MusicLounge] Clicked. SourceID: %s", sourceId.c_str());
+
+    // STRATEGY A: AUDIO SESSION HUNTER (The "Nuclear Option")
+    // Ask Windows: "What PID is making noise right now?"
+    DWORD audioPid = GetAudioPlayingPID();
+    
+    if (audioPid != 0) {
+        Wh_Log(L"[MusicLounge] Found Active Audio PID: %d", audioPid);
+        g_TargetPID = audioPid;
+        g_TargetExeName = GetProcessName(audioPid);
+        g_FoundSourceWnd = NULL;
+        
+        EnumWindows(EnumSourceWindowsProc, 0);
+        
+        if (g_FoundSourceWnd) {
+             Wh_Log(L"[MusicLounge] Found Window for Audio Process!");
+             if (IsIconic(g_FoundSourceWnd)) ShowWindow(g_FoundSourceWnd, SW_RESTORE);
+             SetForegroundWindow(g_FoundSourceWnd);
+             return;
+        }
+    }
+
+    // STRATEGY B: Fallback to ID (If audio is paused or undetectable)
+    Wh_Log(L"[MusicLounge] No Audio Process found. Using ID Fallback.");
+    
+    // Try Modern/Shell Activation
+    if (ActivateModernApp(sourceId.c_str())) return;
+    ActivateViaShell(sourceId.c_str());
 }
 
 // --- Visuals ---
@@ -648,6 +844,18 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             g_ShutdownMode = true;
             ForceParkedState();
             return TRUE;
+        case WM_SETCURSOR: {
+            POINT pt; GetCursorPos(&pt);
+            ScreenToClient(hwnd, &pt);
+            int x = (int)(pt.x / g_ScaleFactor);
+            int artRightEdge = 6 + (g_Settings.height - 12) + 5;
+            if (x < artRightEdge) {
+                SetCursor(LoadCursor(NULL, IDC_ARROW));
+            } else {
+                SetCursor(LoadCursor(NULL, IDC_HAND));
+            }
+            return TRUE;
+        }
         case WM_TIMER:
             if (wParam == IDT_POLL_MEDIA) {
                 SyncPositionWithTaskbar(); 
@@ -720,7 +928,26 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
         case WM_MOUSELEAVE: g_HoverState = 0; InvalidateRect(hwnd, NULL, FALSE); break;
-        case WM_LBUTTONUP: if (g_HoverState > 0) SendMediaCommand(g_HoverState); return 0;
+        case WM_LBUTTONUP:
+            if (g_HoverState > 0) {
+                SendMediaCommand(g_HoverState);
+            } else {
+                if (g_Settings.enableAppSwitch) {
+                    int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+                    int artSize = g_Settings.height - 12;
+                    int artRightEdge = 6 + artSize + 5;
+
+                    if (x > artRightEdge) {
+                        wstring targetId;
+                        {
+                            lock_guard<mutex> guard(g_MediaState.lock);
+                            targetId = g_MediaState.sourceId;
+                        }
+                        ActivateMediaSource(targetId);
+                    }
+                }
+            }
+            return 0;
         case WM_MOUSEWHEEL: {
             short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
             keybd_event(zDelta > 0 ? VK_VOLUME_UP : VK_VOLUME_DOWN, 0, 0, 0);
@@ -747,6 +974,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void MediaThread() {
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
+    // Revert to MTA to prevent UpdateMediaInfo from deadlocking/crashing
     winrt::init_apartment();
     GdiplusStartupInput gdiplusStartupInput;
     ULONG_PTR gdiplusToken;
