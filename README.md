@@ -4,7 +4,9 @@
 
 ----
 
-This branch contains tasks to:
+This branch is my Windhawk Testing playground
+
+It contains the following tasks:
 
 - Submit Mod
 
