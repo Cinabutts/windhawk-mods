@@ -28,6 +28,7 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 * **Slide Animations:** Smoothly slides out AND back in when entering/exiting games.
 * **Smart Docking:** Sits unobtrusively at the screen edge on boot/shutdown or if Explorer crashes.
 * **Advanced Background Control:** Manually override Background RGB - Toggle Auto/Invert themes, etc.
+* **Click to switch:** Clicking the empty space or track text switches focus to the current music source application.
 
 ## ⚠️ Requirements
 * **Disable Widgets:** Taskbar Settings -> Widgets -> Off.
