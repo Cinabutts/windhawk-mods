@@ -2,7 +2,7 @@
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
 // @description     A native-style music ticker with media controls and custom Action Triggers.
-// @version         4.7.1
+// @version         4.7.2
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
@@ -11,7 +11,7 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.7.1)
+# Taskbar Music Lounge (v4.7.2)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
@@ -72,11 +72,11 @@ Available `Actions`:
 
 // ==WindhawkModSettings==
 /*
-- PanelWidth: 300
+- PanelWidth: 400
   $name: Panel Width
 - PanelHeight: 35
   $name: Panel Height
-- FontSize: 11
+- FontSize: 13
   $name: Font Size
 - OffsetX: 140
   $name: X Offset
@@ -84,10 +84,16 @@ Available `Actions`:
   $name: Y Offset
 - AutoTheme: true
   $name: Auto Theme
-  $description: ✓ Enabled | B/W Text & Icons based on System Light/Dark mode. ✕ Disabled | Use Custom theme below ↓
+  $description: >-
+    ✓ System | B/W Text & Icons based on System Light/Dark mode.
+    
+    ✕ Custom | Use Custom theme below ↓
 - InvertTheme: false
   $name: Invert System Light/Dark (Background)
-  $description: ✓ Enabled | Dark Background. ✕ Disabled | Light Background. (Auto Theme must be OFF)
+  $description: >-
+    ✓  Enabled | Dark Background.
+    
+    ✕ Disabled | Light Background. (Auto Theme must be OFF)
 - BgColor: "0, 0, 0"
   $name: Manual Background Color Override (R, G, B)
   $description: Set to 0,0,0 to not override. Enter RGB values separated by commas (e.g; "102, 255, 255"). Alpha controlled below ↓
@@ -100,12 +106,21 @@ Available `Actions`:
 - IdleTimeout: 0
   $name: Auto-hide when paused (Seconds)
   $description: Automatically hide the widget when music is paused for the specified number of seconds. Set 0 to disable.
+- EnableTextScroll: true
+  $name: Enable Text Scroll
+  $description: Allow the text to scroll if the text is cut off.
 - EnableSlide: true
   $name: Enable Slide Animations
-  $description: ✓ Enabled | The widget slides down/up for games. ✕ Disabled | Instantly hides.
+  $description: >-
+    ✓ Smooth | Widget slides smoothly in/out place.
+    
+    ✕ Static | Widget snaps in/out instantly.
 - EnableGameDetection: true
   $name: Enable Game Detection
-  $description: ✓ Enabled | Widget hides on game detection. ✕ Disabled | The widget will NEVER hide for games. (overrides all below ↓)
+  $description: >-
+    ✓ Detect | Widget hides on game detection.
+    
+    ✕ Ignore | The widget will NEVER hide for games. (overrides all below ↓)
 - FullscreenCheckInterval: 2
   $name: Fullscreen Check Interval (Seconds)
   $description: How often to check for borderless games.
@@ -239,9 +254,9 @@ enum ZBID { ZBID_IMMERSIVE_NOTIFICATION = 4 };
 
 // --- Configurable State ---
 struct ModSettings {
-    int width = 300;
+    int width = 400;
     int height = 35;
-    int fontSize = 11;
+    int fontSize = 13;
     int offsetX = 140;
     int offsetY = 0;
     bool autoTheme = true;
@@ -251,6 +266,7 @@ struct ModSettings {
     int bgOpacity = 0;
     int fsInterval = 2;
     int idleTimeout = 0;
+    bool EnableTextScroll = true;
     bool enableSlide = true;
     bool enableGameDetect = true;
     wstring ignoredApps;
@@ -582,8 +598,203 @@ struct ConfiguredTrigger {
 
 std::vector<ConfiguredTrigger> g_triggers;
 
+// --- Additional Actions: Taskbar & Desktop Helpers ---
+
+// Simple Key-Based Actions
+void SendCtrlAltTabKeypress() {
+    Wh_Log(L"Sending Ctrl+Alt+Tab");
+    SendKeypress({VK_LCONTROL, VK_LMENU, VK_TAB});
+}
+
+void SendWinTabKeypress() {
+    Wh_Log(L"Sending Win+Tab");
+    SendKeypress({VK_LWIN, VK_TAB});
+}
+
+void OpenStartMenu() {
+    Wh_Log(L"Sending Win keypress for Start menu");
+    SendKeypress({VK_LWIN});
+}
+
+// Taskbar Auto-Hide
+bool GetTaskbarAutohideState() {
+    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    if (hTaskbar != NULL) {
+        APPBARDATA msgData{};
+        msgData.cbSize = sizeof(msgData);
+        msgData.hWnd = hTaskbar;
+        LPARAM state = SHAppBarMessage(ABM_GETSTATE, &msgData);
+        return (state & ABS_AUTOHIDE) != 0;
+    }
+    return false;
+}
+
+void SetTaskbarAutohide(bool enabled) {
+    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    if (hTaskbar != NULL) {
+        APPBARDATA msgData{};
+        msgData.cbSize = sizeof(msgData);
+        msgData.hWnd = hTaskbar;
+        msgData.lParam = enabled ? ABS_AUTOHIDE : ABS_ALWAYSONTOP;
+        SHAppBarMessage(ABM_SETSTATE, &msgData);
+    }
+}
+
+void ToggleTaskbarAutohide() {
+    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    if (hTaskbar != NULL) {
+        const bool isEnabled = GetTaskbarAutohideState();
+        Wh_Log(L"Setting taskbar autohide to %s", isEnabled ? L"disabled" : L"enabled");
+        SetTaskbarAutohide(!isEnabled);
+    } else {
+        Wh_Log(L"Failed to toggle taskbar autohide - taskbar not found");
+    }
+}
+
+// Show Desktop & Hide Icons
+void ShowDesktopViaTaskbar() {
+    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    if (hTaskbar) {
+        Wh_Log(L"Sending ShowDesktop message");
+        SendMessage(hTaskbar, WM_COMMAND, MAKELONG(407, 0), 0);
+    } else {
+        Wh_Log(L"Failed to show desktop - taskbar not found");
+    }
+}
+
+HWND FindDesktopShellView() {
+    HWND hParentWnd = FindWindow(L"Progman", NULL);
+    if (!hParentWnd) return NULL;
+    HWND hChildWnd = FindWindowEx(hParentWnd, NULL, L"SHELLDLL_DefView", NULL);
+    if (hChildWnd) return hChildWnd;
+    HWND hWorker = NULL;
+    while ((hWorker = FindWindowEx(NULL, hWorker, L"WorkerW", NULL)) != NULL) {
+        HWND hDef = FindWindowEx(hWorker, NULL, L"SHELLDLL_DefView", NULL);
+        if (hDef) return hDef;
+    }
+    return NULL;
+}
+
+void ToggleDesktopIcons() {
+    HWND hDesktopWnd = FindDesktopShellView();
+    if (hDesktopWnd != NULL) {
+        Wh_Log(L"Toggling desktop icons");
+        PostMessage(hDesktopWnd, WM_COMMAND, 0x7402, 0);
+    } else {
+        Wh_Log(L"Failed to find desktop window");
+    }
+}
+
+// Taskbar Alignment (Windows 11)
+DWORD GetTaskbarAlignment() {
+    HKEY hKey = NULL;
+    DWORD dwValue = 1; // Default to center
+    DWORD dwBufferSize = sizeof(DWORD);
+
+    if (RegOpenKeyEx(HKEY_CURRENT_USER,
+                     TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
+                     0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS) {
+        RegQueryValueEx(hKey, TEXT("TaskbarAl"), NULL, NULL, (LPBYTE)&dwValue, &dwBufferSize);
+        RegCloseKey(hKey);
+    }
+    return dwValue;
+}
+
+bool SetTaskbarAlignment(DWORD alignment) {
+    HKEY hKey = NULL;
+    bool success = false;
+
+    if (RegOpenKeyEx(HKEY_CURRENT_USER,
+                     TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
+                     0, KEY_SET_VALUE, &hKey) == ERROR_SUCCESS) {
+        if (RegSetValueEx(hKey, TEXT("TaskbarAl"), 0, REG_DWORD, (BYTE*)&alignment, sizeof(alignment)) == ERROR_SUCCESS) {
+            success = true;
+        }
+        RegCloseKey(hKey);
+    }
+    return success;
+}
+
+void ToggleTaskbarAlignment() {
+    DWORD current = GetTaskbarAlignment();
+    DWORD newAlign = (current == 0) ? 1 : 0;
+    Wh_Log(L"Toggling taskbar alignment from %d to %d", current, newAlign);
+    if (SetTaskbarAlignment(newAlign)) {
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)TEXT("TraySettings"), SMTO_ABORTIFHUNG, 100, NULL);
+    }
+}
+
+// Combine Taskbar Buttons
+DWORD GetCombineTaskbarButtons(const wchar_t* optionName) {
+    HKEY hKey = NULL;
+    DWORD dwValue = 0;
+    DWORD dwBufferSize = sizeof(DWORD);
+    if (RegOpenKeyEx(HKEY_CURRENT_USER,
+                     TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
+                     0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS) {
+        RegQueryValueEx(hKey, optionName, NULL, NULL, (LPBYTE)&dwValue, &dwBufferSize);
+        RegCloseKey(hKey);
+    }
+    return dwValue;
+}
+
+bool SetCombineTaskbarButtons(const wchar_t* optionName, unsigned int option) {
+    bool success = false;
+    if (option <= 2) {
+        HKEY hKey = NULL;
+        if (RegOpenKeyEx(HKEY_CURRENT_USER,
+                         TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
+                         0, KEY_SET_VALUE, &hKey) == ERROR_SUCCESS) {
+            DWORD dwValue = option;
+            if (RegSetValueEx(hKey, optionName, 0, REG_DWORD, (BYTE*)&dwValue, sizeof(dwValue)) == ERROR_SUCCESS) {
+                success = true;
+            }
+            RegCloseKey(hKey);
+        }
+    }
+    return success;
+}
+
+void CombineTaskbarButtons(const std::wstring& args) {
+    auto argsSplit = stringtools::split(args, L';');
+    auto parseState = [](const std::wstring& arg) -> int {
+        if (arg == L"COMBINE_ALWAYS") return 0;
+        if (arg == L"COMBINE_WHEN_FULL") return 1;
+        if (arg == L"COMBINE_NEVER") return 2;
+        return -1;
+    };
+    int p1 = -1, p2 = -1, s1 = -1, s2 = -1;
+    if (argsSplit.size() >= 1) p1 = parseState(argsSplit[0]);
+    if (argsSplit.size() >= 2) p2 = parseState(argsSplit[1]);
+    if (argsSplit.size() >= 3) s1 = parseState(argsSplit[2]);
+    if (argsSplit.size() >= 4) s2 = parseState(argsSplit[3]);
+
+    bool notify = false;
+
+    if (p1 != -1 && p2 != -1) {
+        static bool zigzag = (GetCombineTaskbarButtons(L"TaskbarGlomLevel") == (DWORD)p1);
+        zigzag = !zigzag;
+        notify |= SetCombineTaskbarButtons(L"TaskbarGlomLevel", zigzag ? p1 : p2);
+    }
+    if (s1 != -1 && s2 != -1) {
+        static bool zigzag2 = (GetCombineTaskbarButtons(L"MMTaskbarGlomLevel") == (DWORD)s1);
+        zigzag2 = !zigzag2;
+        notify |= SetCombineTaskbarButtons(L"MMTaskbarGlomLevel", zigzag2 ? s1 : s2);
+    }
+    if (notify) {
+        SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)TEXT("TraySettings"), SMTO_ABORTIFHUNG, 100, NULL);
+    }
+}
+
 std::function<void()> ParseAction(const std::wstring& actionName, const std::wstring& args) {
-    if (actionName == L"ACTION_SHOW_DESKTOP") return [](){ HWND hShell = FindWindow(L"Shell_TrayWnd", NULL); SendMessage(hShell, WM_COMMAND, 407, 0); };
+    if (actionName == L"ACTION_SHOW_DESKTOP") return [](){ ShowDesktopViaTaskbar(); };
+    if (actionName == L"ACTION_TOGGLE_DESKTOP_ICONS") return [](){ ToggleDesktopIcons(); };
+    if (actionName == L"ACTION_TOGGLE_TASKBAR_AUTOHIDE") return [](){ ToggleTaskbarAutohide(); };
+    if (actionName == L"ACTION_TOGGLE_TASKBAR_ALIGNMENT") return [](){ ToggleTaskbarAlignment(); };
+    if (actionName == L"ACTION_WIN_TAB") return [](){ SendWinTabKeypress(); };
+    if (actionName == L"ACTION_CTRL_ALT_TAB") return [](){ SendCtrlAltTabKeypress(); };
+    if (actionName == L"ACTION_OPEN_START_MENU") return [](){ OpenStartMenu(); };
+    if (actionName == L"ACTION_COMBINE_TASKBAR_BUTTONS") return [args](){ CombineTaskbarButtons(args); };
     if (actionName == L"ACTION_MUTE") return [](){ ToggleVolMuted(); };
     if (actionName == L"ACTION_TASK_MANAGER") return [](){ ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); };
     if (actionName == L"ACTION_ACTIVATE_SOURCE_APP") return [](){ ActivateSourceApp(); };
@@ -862,6 +1073,7 @@ void LoadSettings() {
     g_IdleSecondsCounter = 0;
     g_IsHiddenByIdle = false;
 
+    g_Settings.EnableTextScroll = Wh_GetIntSetting(L"EnableTextScroll") !=0;
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     g_Settings.enableGameDetect = Wh_GetIntSetting(L"EnableGameDetection") != 0;
 
@@ -875,7 +1087,7 @@ void LoadSettings() {
 
     if (g_Settings.bgOpacity < 0) g_Settings.bgOpacity = 0;
     if (g_Settings.bgOpacity > 255) g_Settings.bgOpacity = 255;
-    if (g_Settings.width < 100) g_Settings.width = 300;
+    if (g_Settings.width < 100) g_Settings.width = 400;
     if (g_Settings.height < 24) g_Settings.height = 48;
 
     // --- Load Action Engine Triggers ---
@@ -1093,11 +1305,11 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     graphics.SetClip(&textClip);
     float textY = (logicalH - boundRect.Height) / 2.0f;
 
-    if (g_TextWidth > textMaxW) {
+    if (g_Settings.EnableTextScroll && g_TextWidth > textMaxW) {
         g_IsScrolling = true;
         float drawX = (float)(textX - g_ScrollOffset);
         graphics.DrawString(fullText.c_str(), -1, &font, PointF(drawX, textY), &textBrush);
-        if (drawX + g_TextWidth < logicalW) {
+        if (drawX + g_TextWidth < textX + textMaxW) {
              graphics.DrawString(fullText.c_str(), -1, &font, PointF(drawX + g_TextWidth + 40, textY), &textBrush);
         }
     } else {
@@ -1164,14 +1376,17 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 InvalidateRect(hwnd, NULL, FALSE);
             }
             else if (wParam == IDT_TEXT_ANIM) {
-                if (g_IsScrolling) {
+                if (g_IsScrolling && g_Settings.EnableTextScroll) {
                     if (g_ScrollWait > 0) g_ScrollWait--;
                     else {
                         g_ScrollOffset++;
                         if (g_ScrollOffset > g_TextWidth + 40) { g_ScrollOffset = 0; g_ScrollWait = 60; }
                         InvalidateRect(hwnd, NULL, FALSE);
                     }
-                } else KillTimer(hwnd, IDT_TEXT_ANIM);
+                } else { 
+                    KillTimer(hwnd, IDT_TEXT_ANIM);
+                    g_ScrollOffset = 0;
+                }
             }
             else if (wParam == IDT_VIS_ANIM) {
                 int screenH = GetSystemMetrics(SM_CYSCREEN);
@@ -1278,7 +1493,11 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             HBITMAP memBitmap = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
             HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap);
             DrawMediaPanel(memDC, rc.right, rc.bottom);
-            if (g_IsScrolling) SetTimer(hwnd, IDT_TEXT_ANIM, 16, NULL);
+            if (g_IsScrolling && g_Settings.EnableTextScroll) {
+                SetTimer(hwnd, IDT_TEXT_ANIM, 16, NULL);
+            } else {
+                KillTimer(hwnd, IDT_TEXT_ANIM);
+            }
             BitBlt(hdc, 0, 0, rc.right, rc.bottom, memDC, 0, 0, SRCCOPY);
             SelectObject(memDC, oldBitmap); DeleteObject(memBitmap); DeleteDC(memDC);
             EndPaint(hwnd, &ps);
