@@ -2,7 +2,7 @@
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
 // @description     A native-style music ticker with media controls and custom Action Triggers.
-// @version         4.7.2
+// @version         4.8.0
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
@@ -11,11 +11,11 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.7.2)
+# Taskbar Music Lounge (v4.8.0)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
-## ✨ Features
+##                                                 ✨ Features
 * **Universal Support:** Works with any media player via GSMTC.
 * **Album Art:** Displays current track cover art.
 * **Native Look:** Uses Windows 11 hardware-accelerated rounding and acrylic blur.
@@ -24,15 +24,16 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 * **High-DPI Support:** Automatically scales UI elements to look perfect on 4K/1440p monitors.
 * **Smart Game Detection:** Automatically hides when playing Fullscreen games.
 * **Whitelist:** Keep the widget visible in specific Fullscreen apps (e.g., Firefox).
-* **Slide Animations:** Smoothly slides out AND back in when entering/exiting games.
+* **Slide Animations:** Smoothly slides in/out when entering/exiting games.
 * **Smart Docking:** Sits unobtrusively at the screen edge on boot/shutdown or if Explorer crashes.
-* **Fully Customizable:** Override Background/Text RGB - Invert Light/Dark mode
+* **Fully Customizable:** Override Background/Text RGB - Invert Light/Dark mode - Adjust Size/Position - Rounded or Square Corners.
+* **Rainbow RGB:** Optional flowing rainbow border effect beneath the widget
 
 ----
 
 &nbsp;
 
-## 🔧 Mouse Action Engine:
+##                                                 🔧 Mouse Action Engine
 Trigger custom Actions via Mouse Clicks + optional Modifiers.
 
 Available `Mouse Triggers`:
@@ -49,12 +50,21 @@ Available `Actions`:
 - Send Keystrokes (macro)
 - Open App / Run File
 - Show Desktop
+- Hide Desktop Icons
+- Toggle Taskbar Auto-Hide
+- Toggle Taskbar Alignment
+- Combine Taskbar Buttons
+- Win+Tab
+- Ctrl+Alt+Tab
+- Open Start Menu
 - Open Task Manager
 
-&nbsp;
+                                      **`Work In Progress!` Some actions may not work as expected.**
 
-### 🚧 Volume Note: You **MUST** Left Click the widget first to focus it before scrolling.
-**Tip:** Avoid assigning "Left Click" as a trigger if you use volume scrolling, as it will prevent the widget from gaining focus.
+Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBINE_* states that should be applied (see the settings description).
+
+###                         🚧 Volume Note: You **TYPICALLY** need to Left Click the widget first to focus it before scrolling.
+                        **Tip:** Avoid assigning "Left Click" as a trigger if you use volume scrolling, as it will prevent the widget from gaining focus.
 
 ----
 
@@ -66,7 +76,8 @@ Available `Actions`:
 
 &nbsp;
 
-🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
+
+                                                                                                                        🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
 */
 // ==/WindhawkModReadme==
 
@@ -94,6 +105,14 @@ Available `Actions`:
     ✓  Enabled | Dark Background.
     
     ✕ Disabled | Light Background. (Auto Theme must be OFF)
+- EnableRoundedCorners: true
+  $name: Enable Rounded Corners
+  $description: >-
+    ✓ Rounded | Native Windows 11 rounded corners.
+    
+    ✕ Square | Traditional square corners.
+- _Separator_: ""
+  $name: " "
 - BgColor: "0, 0, 0"
   $name: Manual Background Color Override (R, G, B)
   $description: Set to 0,0,0 to not override. Enter RGB values separated by commas (e.g; "102, 255, 255"). Alpha controlled below ↓
@@ -127,6 +146,24 @@ Available `Actions`:
 - IgnoredApps: firefox.exe;chrome.exe;msedge.exe;vlc.exe
   $name: Fullscreen Whitelist
   $description: Semicolon-separated list of executables to IGNORE (keep widget visible).
+- EnableRainbow: false
+  $name: Enable Rainbow RGB Effect
+  $description: >-
+    ✓ Enabled | Adds a flowing rainbow gradient border beneath the widget.
+    
+    ✕ Disabled | No rainbow effect.
+- RainbowSpeed: 3
+  $name: Rainbow Speed (1-10)
+  $description: Controls how fast the rainbow colors flow. Higher = faster.
+- RainbowBrightness: 80
+  $name: Rainbow Brightness (0-100)
+  $description: Controls the brightness/intensity of the rainbow colors.
+- RainbowThickness: 1
+  $name: Rainbow Border Thickness (1-10 pixels)
+  $description: Controls how thick the rainbow border appears.
+- RainbowBorderOffset: 0
+  $name: Rainbow Border Offset (0-10 pixels)
+  $description: Distance between main widget and rainbow border.
 - TriggerActionOptions:
   - - MouseTrigger: Double
       $name: Mouse Trigger
@@ -164,12 +201,20 @@ Available `Actions`:
       - ACTION_MEDIA_NEXT: Media Next Track
       - ACTION_MEDIA_PREV: Media Prev Track
       - ACTION_SHOW_DESKTOP: Show Desktop
+      - ACTION_TOGGLE_DESKTOP_ICONS: Toggle Desktop Icons
+      - ACTION_TOGGLE_TASKBAR_AUTOHIDE: Toggle Taskbar Auto-Hide
+      - ACTION_TOGGLE_TASKBAR_ALIGNMENT: Toggle Taskbar Alignment
+      - ACTION_COMBINE_TASKBAR_BUTTONS: Combine Taskbar Buttons
+      - ACTION_WIN_TAB: Win+Tab
+      - ACTION_CTRL_ALT_TAB: Ctrl+Alt+Tab
+      - ACTION_OPEN_START_MENU: Open Start Menu
       - ACTION_TASK_MANAGER: Open Task Manager
     - AdditionalArgs: ""
       $name: Arguments
       $description: >-
         For 'Open App': Path to exe or URL (e.g. calc.exe).
         For 'Send Keystrokes': Key combo (e.g. Ctrl+C).
+                For 'Combine Taskbar Buttons': Specify 2 or 4 COMBINE_* states separated by semicolons (e.g. COMBINE_ALWAYS;COMBINE_NEVER or COMBINE_ALWAYS;COMBINE_NEVER;COMBINE_WHEN_FULL;COMBINE_ALWAYS).
   - - MouseTrigger: ScrollUp
     - KeyboardTriggers: [none]
     - Action: ACTION_VOLUME_UP
@@ -270,6 +315,12 @@ struct ModSettings {
     bool enableSlide = true;
     bool enableGameDetect = true;
     wstring ignoredApps;
+    bool enableRainbow = false;
+    int rainbowSpeed = 3;
+    int rainbowBrightness = 80;
+    int rainbowThickness = 1;
+    int rainbowBorderOffset = 0;
+    bool enableRoundedCorners = true;
 } g_Settings;
 
 // --- Global State ---
@@ -288,6 +339,12 @@ int g_CurrentAnimY = 0;
 bool g_ShutdownMode = false;
 int g_IdleSecondsCounter = 0;
 bool g_IsHiddenByIdle = false;
+
+// Rainbow Feature State
+HWND g_hRainbowWindow = NULL;
+float g_RainbowHue = 0.0f; // 0-360 for HSV color wheel
+int g_RainbowAnimState = 0; // Mirror of main window anim state
+int g_CurrentRainbowAnimY = 0;
 
 struct MediaState {
     wstring title = L"Waiting for media...";
@@ -892,6 +949,7 @@ bool CheckBorderlessFullscreen() {
 }
 
 #define IDT_VIS_ANIM 1003
+#define IDT_RAINBOW_ANIM 1004
 
 void UpdateScaleFactor() {
     if (g_hTaskbar) {
@@ -903,8 +961,18 @@ void UpdateScaleFactor() {
 
 void ForceParkedState() {
     int screenH = GetSystemMetrics(SM_CYSCREEN);
-    SetWindowPos(g_hMediaWindow, HWND_TOPMOST, 0, screenH - 2, g_Settings.width, g_Settings.height, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    int scaledW = (int)(g_Settings.width * g_ScaleFactor);
+    int scaledH = (int)(g_Settings.height * g_ScaleFactor);
+    SetWindowPos(g_hMediaWindow, HWND_TOPMOST, 0, screenH - 2, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
     g_AnimState = 3; // Parked Mode
+    
+    // Park rainbow window too
+    if (g_hRainbowWindow && g_Settings.enableRainbow) {
+        int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+        SetWindowPos(g_hRainbowWindow, g_hMediaWindow, 0 - borderOffset, screenH - 2 - borderOffset, 
+                     scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), SWP_NOACTIVATE | SWP_SHOWWINDOW);
+        g_RainbowAnimState = 3;
+    }
 }
 
 void SyncPositionWithTaskbar() {
@@ -965,8 +1033,17 @@ void SyncPositionWithTaskbar() {
                     g_CurrentAnimY = rcMe.top;
                     g_AnimState = 1; // Hiding
                     SetTimer(g_hMediaWindow, IDT_VIS_ANIM, 16, NULL);
+                    // Sync rainbow window animation
+                    if (g_hRainbowWindow && g_Settings.enableRainbow) {
+                        RECT rcRainbow; GetWindowRect(g_hRainbowWindow, &rcRainbow);
+                        g_CurrentRainbowAnimY = rcRainbow.top;
+                        g_RainbowAnimState = 1;
+                    }
                 } else {
                     ShowWindow(g_hMediaWindow, SW_HIDE);
+                    if (g_hRainbowWindow && g_Settings.enableRainbow) {
+                        ShowWindow(g_hRainbowWindow, SW_HIDE);
+                    }
                 }
             }
             return;
@@ -987,9 +1064,20 @@ void SyncPositionWithTaskbar() {
                  SetWindowPos(g_hMediaWindow, HWND_TOPMOST, targetX, g_CurrentAnimY, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
                  g_AnimState = 2; // Showing
                  SetTimer(g_hMediaWindow, IDT_VIS_ANIM, 16, NULL);
+                 // Sync rainbow window
+                 if (g_hRainbowWindow && g_Settings.enableRainbow) {
+                     int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+                     g_CurrentRainbowAnimY = (g_RainbowAnimState == 3) ? (screenH - 2 - borderOffset) : screenH;
+                     SetWindowPos(g_hRainbowWindow, g_hMediaWindow, targetX - borderOffset, g_CurrentRainbowAnimY, 
+                                  scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), SWP_NOACTIVATE | SWP_SHOWWINDOW);
+                     g_RainbowAnimState = 2;
+                 }
                  return;
             } else {
                 ShowWindow(g_hMediaWindow, SW_SHOWNOACTIVATE);
+                if (g_hRainbowWindow && g_Settings.enableRainbow) {
+                    ShowWindow(g_hRainbowWindow, SW_SHOWNOACTIVATE);
+                }
             }
         }
 
@@ -1009,6 +1097,16 @@ void SyncPositionWithTaskbar() {
 
             SetWindowPos(g_hMediaWindow, HWND_TOPMOST, x, y, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
             g_AnimState = 0; // Synced
+            // Sync rainbow window position
+            if (g_hRainbowWindow && g_Settings.enableRainbow) {
+                int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+                SetWindowPos(g_hRainbowWindow, g_hMediaWindow, x - borderOffset, y - borderOffset,
+                             scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), 
+                             SWP_NOACTIVATE | SWP_SHOWWINDOW);
+                g_RainbowAnimState = 0;
+            } else if (g_hRainbowWindow) {
+                ShowWindow(g_hRainbowWindow, SW_HIDE);
+            }
         }
     }
 }
@@ -1084,6 +1182,25 @@ void LoadSettings() {
     } else {
         g_Settings.ignoredApps = L"firefox.exe;chrome.exe;msedge.exe";
     }
+
+    g_Settings.enableRainbow = Wh_GetIntSetting(L"EnableRainbow") != 0;
+    g_Settings.rainbowSpeed = Wh_GetIntSetting(L"RainbowSpeed");
+    if (g_Settings.rainbowSpeed < 1) g_Settings.rainbowSpeed = 1;
+    if (g_Settings.rainbowSpeed > 10) g_Settings.rainbowSpeed = 10;
+
+    g_Settings.rainbowBrightness = Wh_GetIntSetting(L"RainbowBrightness");
+    if (g_Settings.rainbowBrightness < 0) g_Settings.rainbowBrightness = 0;
+    if (g_Settings.rainbowBrightness > 100) g_Settings.rainbowBrightness = 100;
+
+    g_Settings.rainbowThickness = Wh_GetIntSetting(L"RainbowThickness");
+    if (g_Settings.rainbowThickness < 1) g_Settings.rainbowThickness = 1;
+    if (g_Settings.rainbowThickness > 10) g_Settings.rainbowThickness = 10;
+
+    g_Settings.rainbowBorderOffset = Wh_GetIntSetting(L"RainbowBorderOffset");
+    if (g_Settings.rainbowBorderOffset < 0) g_Settings.rainbowBorderOffset = 0;
+    if (g_Settings.rainbowBorderOffset > 10) g_Settings.rainbowBorderOffset = 10;
+
+    g_Settings.enableRoundedCorners = Wh_GetIntSetting(L"EnableRoundedCorners") != 0;
 
     if (g_Settings.bgOpacity < 0) g_Settings.bgOpacity = 0;
     if (g_Settings.bgOpacity > 255) g_Settings.bgOpacity = 255;
@@ -1204,7 +1321,7 @@ DWORD GetCurrentTextColor() {
 }
 
 void UpdateAppearance(HWND hwnd) {
-    DWM_WINDOW_CORNER_PREFERENCE preference = DWMWCP_ROUND;
+    DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
     DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
 
     HMODULE hUser = GetModuleHandle(L"user32.dll");
@@ -1223,6 +1340,120 @@ void UpdateAppearance(HWND hwnd) {
             ACCENT_POLICY policy = { ACCENT_ENABLE_ACRYLICBLURBEHIND, 0, tint, 0 };
             WINDOWCOMPOSITIONATTRIBDATA data = { WCA_ACCENT_POLICY, &policy, sizeof(ACCENT_POLICY) };
             SetComp(hwnd, &data);
+        }
+    }
+}
+
+// HSV to RGB conversion helper
+void HSVtoRGB(float h, float s, float v, BYTE& r, BYTE& g, BYTE& b) {
+    int hi = (int)(h / 60.0f) % 6;
+    float f = (h / 60.0f) - hi;
+    float p = v * (1 - s);
+    float q = v * (1 - f * s);
+    float t = v * (1 - (1 - f) * s);
+    
+    float rf, gf, bf;
+    switch(hi) {
+        case 0: rf = v; gf = t; bf = p; break;
+        case 1: rf = q; gf = v; bf = p; break;
+        case 2: rf = p; gf = v; bf = t; break;
+        case 3: rf = p; gf = q; bf = v; break;
+        case 4: rf = t; gf = p; bf = v; break;
+        case 5: rf = v; gf = p; bf = q; break;
+        default: rf = gf = bf = 0; break;
+    }
+    
+    r = (BYTE)(rf * 255);
+    g = (BYTE)(gf * 255);
+    b = (BYTE)(bf * 255);
+}
+
+void DrawRainbowBorder(HDC hdc, int width, int height) {
+    Graphics graphics(hdc);
+    graphics.SetSmoothingMode(SmoothingModeAntiAlias);
+    graphics.Clear(Color(0, 0, 0, 0));
+    graphics.ScaleTransform(g_ScaleFactor, g_ScaleFactor);
+    
+    int logicalW = (int)(width / g_ScaleFactor);
+    int logicalH = (int)(height / g_ScaleFactor);
+    
+    // Draw flowing gradient on all 4 corners
+    float baseHue = g_RainbowHue;
+    float brightness = g_Settings.rainbowBrightness / 100.0f;
+    float thickness = (float)g_Settings.rainbowThickness;
+    
+    // Create 4 corner gradients with offset hues
+    for (int corner = 0; corner < 4; corner++) {
+        float cornerHue = fmodf(baseHue + (corner * 90.0f), 360.0f);
+        BYTE r, g, b;
+        HSVtoRGB(cornerHue, 1.0f, brightness, r, g, b);
+        Color cornerColor(r, g, b);
+        
+        // Calculate gradient positions based on corner
+        PointF pt1, pt2;
+        RectF gradRect;
+        
+        switch(corner) {
+            case 0: // Top-left
+                pt1 = PointF(0, 0);
+                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                gradRect = RectF(0, 0, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                break;
+            case 1: // Top-right
+                pt1 = PointF((float)logicalW, 0);
+                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                gradRect = RectF((float)logicalW / 2.0f, 0, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                break;
+            case 2: // Bottom-left
+                pt1 = PointF(0, (float)logicalH);
+                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                gradRect = RectF(0, (float)logicalH / 2.0f, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                break;
+            case 3: // Bottom-right
+                pt1 = PointF((float)logicalW, (float)logicalH);
+                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                gradRect = RectF((float)logicalW / 2.0f, (float)logicalH / 2.0f, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                break;
+        }
+        
+        LinearGradientBrush gradBrush(pt1, pt2, cornerColor, Color(0, r, g, b));
+        graphics.FillRectangle(&gradBrush, gradRect);
+    }
+    
+    // Draw border outline with flowing gradient
+    int stepSize = max(2, g_Settings.rainbowSpeed / 2); // Faster = fewer segments needed
+    for (int i = 0; i < 360; i += stepSize) {
+        float segmentHue = fmodf(baseHue + i, 360.0f);
+        BYTE r, g, b;
+        HSVtoRGB(segmentHue, 1.0f, brightness, r, g, b);
+        
+        Pen pen(Color(r, g, b), thickness);
+        
+        // Determine which edge this segment belongs to
+        if (i < 90) {
+            // Top edge
+            float progress = i / 90.0f;
+            float x1 = progress * logicalW;
+            float x2 = (i + stepSize) / 90.0f * logicalW;
+            graphics.DrawLine(&pen, PointF(x1, thickness/2), PointF(x2, thickness/2));
+        } else if (i < 180) {
+            // Right edge
+            float progress = (i - 90) / 90.0f;
+            float y1 = progress * logicalH;
+            float y2 = (i + stepSize - 90) / 90.0f * logicalH;
+            graphics.DrawLine(&pen, PointF(logicalW - thickness/2, y1), PointF(logicalW - thickness/2, y2));
+        } else if (i < 270) {
+            // Bottom edge
+            float progress = (i - 180) / 90.0f;
+            float x1 = logicalW - (progress * logicalW);
+            float x2 = logicalW - ((i + stepSize - 180) / 90.0f * logicalW);
+            graphics.DrawLine(&pen, PointF(x1, logicalH - thickness/2), PointF(x2, logicalH - thickness/2));
+        } else {
+            // Left edge
+            float progress = (i - 270) / 90.0f;
+            float y1 = logicalH - (progress * logicalH);
+            float y2 = logicalH - ((i + stepSize - 270) / 90.0f * logicalH);
+            graphics.DrawLine(&pen, PointF(thickness/2, y1), PointF(thickness/2, y2));
         }
     }
 }
@@ -1266,22 +1497,24 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     SolidBrush hoverBrush{Color(255, mainColor.GetRed(), mainColor.GetGreen(), mainColor.GetBlue())};
     SolidBrush activeBg{Color(40, mainColor.GetRed(), mainColor.GetGreen(), mainColor.GetBlue())};
 
+        //Prev button
     int pX = startControlX;
     if (g_HoverState == 1) graphics.FillEllipse(&activeBg, pX - 8, controlY - 12, 24, 24);
     Point prevPts[3] = { Point(pX + 8, controlY - 6), Point(pX + 8, controlY + 6), Point(pX, controlY) };
     graphics.FillPolygon(g_HoverState == 1 ? &hoverBrush : &iconBrush, prevPts, 3);
     graphics.FillRectangle(g_HoverState == 1 ? &hoverBrush : &iconBrush, pX, controlY - 6, 2, 12);
-
+        // Pause button
     int plX = startControlX + 28;
     if (g_HoverState == 2) graphics.FillEllipse(&activeBg, plX - 8, controlY - 12, 24, 24);
     if (state.isPlaying) {
         graphics.FillRectangle(g_HoverState == 2 ? &hoverBrush : &iconBrush, plX, controlY - 7, 3, 14);
         graphics.FillRectangle(g_HoverState == 2 ? &hoverBrush : &iconBrush, plX + 6, controlY - 7, 3, 14);
     } else {
+        // Play button
         Point playPts[3] = { Point(plX, controlY - 8), Point(plX, controlY + 8), Point(plX + 10, controlY) };
         graphics.FillPolygon(g_HoverState == 2 ? &hoverBrush : &iconBrush, playPts, 3);
     }
-
+        // Next button
     int nX = startControlX + 56;
     if (g_HoverState == 3) graphics.FillEllipse(&activeBg, nX - 8, controlY - 12, 24, 24);
     Point nextPts[3] = { Point(nX, controlY - 6), Point(nX, controlY + 6), Point(nX + 8, controlY) };
@@ -1323,6 +1556,83 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
 #define IDT_POLL_MEDIA 1001
 #define IDT_TEXT_ANIM  1002
 #define APP_WM_CLOSE   WM_APP
+
+LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    switch (msg) {
+        case WM_CREATE: {
+            // Make window transparent to mouse events
+            SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TRANSPARENT);
+            if (g_Settings.enableRainbow) {
+                SetTimer(hwnd, IDT_RAINBOW_ANIM, 16, NULL); // 60 FPS
+            }
+            // Apply corner rounding to match main window
+            DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
+            DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
+            return 0;
+        }
+        case WM_ERASEBKGND: return 1;
+        case APP_WM_CLOSE: DestroyWindow(hwnd); return 0;
+        case WM_DESTROY: return 0;
+        case WM_TIMER:
+            if (wParam == IDT_RAINBOW_ANIM) {
+                g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f);
+                if (g_RainbowHue >= 360.0f) g_RainbowHue -= 360.0f;
+                InvalidateRect(hwnd, NULL, FALSE);
+            }
+            else if (wParam == IDT_VIS_ANIM) {
+                int screenH = GetSystemMetrics(SM_CYSCREEN);
+                RECT rcTb; GetWindowRect(g_hTaskbar, &rcTb);
+                int scaledH = (int)(g_Settings.height * g_ScaleFactor);
+                int scaledOffY = (int)(g_Settings.offsetY * g_ScaleFactor);
+                int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+                int targetY = rcTb.top + ((rcTb.bottom - rcTb.top) / 2) - (scaledH / 2) + scaledOffY - borderOffset;
+                
+                if (g_RainbowAnimState == 1) { // Hide
+                    if (!g_IsGameDetected && !g_IsHiddenByIdle) { g_RainbowAnimState = 2; return 0; }
+                    g_CurrentRainbowAnimY += 8;
+                    if (g_CurrentRainbowAnimY > screenH) {
+                        ShowWindow(hwnd, SW_HIDE);
+                        KillTimer(hwnd, IDT_VIS_ANIM);
+                        g_RainbowAnimState = 0;
+                    } else {
+                        RECT rc; GetWindowRect(hwnd, &rc);
+                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                    }
+                }
+                else if (g_RainbowAnimState == 2) { // Show
+                    if (g_IsGameDetected || g_IsHiddenByIdle) { g_RainbowAnimState = 1; return 0; }
+                    g_CurrentRainbowAnimY -= 8;
+                    if (g_CurrentRainbowAnimY <= targetY) {
+                        g_CurrentRainbowAnimY = targetY;
+                        RECT rc; GetWindowRect(hwnd, &rc);
+                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                        KillTimer(hwnd, IDT_VIS_ANIM);
+                        g_RainbowAnimState = 0;
+                    } else {
+                        RECT rc; GetWindowRect(hwnd, &rc);
+                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                    }
+                }
+            }
+            return 0;
+        case WM_PAINT: {
+            PAINTSTRUCT ps; HDC hdc = BeginPaint(hwnd, &ps);
+            RECT rc; GetClientRect(hwnd, &rc);
+            HDC memDC = CreateCompatibleDC(hdc);
+            HBITMAP memBitmap = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
+            HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap);
+            DrawRainbowBorder(memDC, rc.right, rc.bottom);
+            BitBlt(hdc, 0, 0, rc.right, rc.bottom, memDC, 0, 0, SRCCOPY);
+            SelectObject(memDC, oldBitmap); DeleteObject(memBitmap); DeleteDC(memDC);
+            EndPaint(hwnd, &ps);
+            return 0;
+        }
+    }
+    return DefWindowProc(hwnd, msg, wParam, lParam);
+}
 
 LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
@@ -1420,6 +1730,10 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         RECT rc; GetWindowRect(hwnd, &rc);
                         SetWindowPos(hwnd, HWND_TOPMOST, rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
+                }
+                // Sync rainbow animation timer
+                if (g_hRainbowWindow && g_Settings.enableRainbow && (g_RainbowAnimState == 1 || g_RainbowAnimState == 2)) {
+                    SetTimer(g_hRainbowWindow, IDT_VIS_ANIM, 16, NULL);
                 }
             }
             return 0;
@@ -1522,6 +1836,14 @@ void MediaThread() {
     wc.hCursor = LoadCursor(NULL, IDC_HAND);
     RegisterClass(&wc);
 
+    // Register rainbow window class
+    WNDCLASS wcRainbow = {0};
+    wcRainbow.lpfnWndProc = RainbowWndProc;
+    wcRainbow.hInstance = GetModuleHandle(NULL);
+    wcRainbow.lpszClassName = TEXT("WindhawkMusicLounge_Rainbow");
+    wcRainbow.hCursor = LoadCursor(NULL, IDC_ARROW);
+    RegisterClass(&wcRainbow);
+
     HMODULE hUser32 = GetModuleHandle(L"user32.dll");
     pCreateWindowInBand CreateWindowInBand = (pCreateWindowInBand)GetProcAddress(hUser32, "CreateWindowInBand");
 
@@ -1532,6 +1854,38 @@ void MediaThread() {
     }
 
     SetLayeredWindowAttributes(g_hMediaWindow, 0, 255, LWA_ALPHA);
+
+    int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+
+    // Create rainbow window
+    if (CreateWindowInBand) {
+        g_hRainbowWindow = CreateWindowInBand(
+            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
+            wcRainbow.lpszClassName,
+            TEXT("MusicLoungeRainbow"),
+            WS_POPUP,
+            0, 0,
+            g_Settings.width + (borderOffset * 2),
+            g_Settings.height + (borderOffset * 2),
+            NULL, NULL, wcRainbow.hInstance, NULL,
+            ZBID_IMMERSIVE_NOTIFICATION
+        );
+    } else {
+        g_hRainbowWindow = CreateWindowEx(
+            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
+            wcRainbow.lpszClassName,
+            TEXT("MusicLoungeRainbow"),
+            WS_POPUP,
+            0, 0,
+            g_Settings.width + (borderOffset * 2),
+            g_Settings.height + (borderOffset * 2),
+            NULL, NULL, wcRainbow.hInstance, NULL
+        );
+    }
+
+    if (g_hRainbowWindow) {
+        SetLayeredWindowAttributes(g_hRainbowWindow, 0, 255, LWA_ALPHA);
+    }
 
     UpdateScaleFactor();
     int screenH = GetSystemMetrics(SM_CYSCREEN);
@@ -1547,6 +1901,9 @@ void MediaThread() {
 
     if (g_hVisibilityHook) UnhookWinEvent(g_hVisibilityHook);
     UnregisterClass(wc.lpszClassName, wc.hInstance);
+    if (g_hRainbowWindow) {
+        UnregisterClass(wcRainbow.lpszClassName, wcRainbow.hInstance);
+    }
     GdiplusShutdown(gdiplusToken);
     winrt::uninit_apartment();
 }
@@ -1567,6 +1924,7 @@ void WhTool_ModUninit() {
     g_triggers.clear();
 
     g_Running = false;
+    if (g_hRainbowWindow) SendMessage(g_hRainbowWindow, APP_WM_CLOSE, 0, 0);
     if (g_hMediaWindow) SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
     if (g_pMediaThread) {
         if (g_pMediaThread->joinable()) g_pMediaThread->join();
@@ -1578,8 +1936,17 @@ void WhTool_ModUninit() {
 void WhTool_ModSettingsChanged() {
     LoadSettings();
     if (g_hMediaWindow) {
-         SyncPositionWithTaskbar();
-         SendMessage(g_hMediaWindow, WM_SETTINGCHANGE, 0, 0); 
+        SyncPositionWithTaskbar();
+        SendMessage(g_hMediaWindow, WM_SETTINGCHANGE, 0, 0);
+    }
+    if (g_hRainbowWindow) {
+        if (g_Settings.enableRainbow) {
+            SetTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM, 16, NULL);
+        } else {
+            KillTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM);
+            ShowWindow(g_hRainbowWindow, SW_HIDE);
+        }
+        InvalidateRect(g_hRainbowWindow, NULL, TRUE);
     }
 }
 
