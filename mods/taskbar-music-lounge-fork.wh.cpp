@@ -1,8 +1,8 @@
 // ==WindhawkMod==
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
-// @description     A native-style music ticker with media controls and custom Action Triggers.
-// @version         4.8.0
+// @description     A native-style music ticker with media controls and custom Action Triggers with delay support.
+// @version         4.9.0
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
@@ -11,7 +11,7 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.8.0)
+# Taskbar Music Lounge (v4.9.0)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
@@ -55,7 +55,6 @@ Available `Actions`:
 - Toggle Taskbar Alignment
 - Combine Taskbar Buttons
 - Win+Tab
-- Ctrl+Alt+Tab
 - Open Start Menu
 - Open Task Manager
 
@@ -111,8 +110,6 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
     ✓ Rounded | Native Windows 11 rounded corners.
     
     ✕ Square | Traditional square corners.
-- _Separator_: ""
-  $name: " "
 - BgColor: "0, 0, 0"
   $name: Manual Background Color Override (R, G, B)
   $description: Set to 0,0,0 to not override. Enter RGB values separated by commas (e.g; "102, 255, 255"). Alpha controlled below ↓
@@ -152,6 +149,12 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
     ✓ Enabled | Adds a flowing rainbow gradient border beneath the widget.
     
     ✕ Disabled | No rainbow effect.
+- RainbowAboveWidget: false
+  $name: Rainbow Above Widget (Debug)
+  $description: >-
+      ✓ On | Draws rainbow above the main widget.
+  
+      ✕ Off | Draws rainbow below the main widget.
 - RainbowSpeed: 3
   $name: Rainbow Speed (1-10)
   $description: Controls how fast the rainbow colors flow. Higher = faster.
@@ -164,6 +167,55 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 - RainbowBorderOffset: 0
   $name: Rainbow Border Offset (0-10 pixels)
   $description: Distance between main widget and rainbow border.
+- EnableAudioReactive: false
+  $name: Audio Reactive Rainbow                        🚧    WORK IN PROGRESS    🚧
+  $description: >-
+
+    ✓ Enabled | Rainbow effect reacts to system audio levels.
+
+    ✕ Disabled | Rainbow animates at fixed speed.
+- AudioResponsiveness: 20
+  $name: Audio Responsiveness (Smoothing)
+  $description: Controls how quickly the effect reacts to audio changes (0 - 20). Higher values mean smoother but slower response.
+- AudioThreshold: 80
+  $name: Audio Threshold (0 - 100)
+  $description: Minimum volume level required to trigger the effect.
+- AudioRamp: 50
+  $name: Audio Ramp (0 - 100)
+  $description: Audio level treated as the lowest point in the spectrum.
+- AudioBinary: false
+  $name: Binary Animation
+  $description: >-
+    ✓ On | Audio over threshold sets value to maximum.
+    
+    ✕ Off | Audio scales continuously.
+- AudioFlicker: 99
+  $name: Min Result (Flicker Control) 0-100
+  $description: Result values below this ratio will trigger the range minimum.
+- AudioDynamicRange: true
+  $name: Dynamic Range / Advanced Mode
+  $description: >-
+    ✓ On | Map audio to full range using these advanced settings.
+    
+    ✕ Off | Use legacy simple smoothing logic.
+- AudioMinValue: 100
+  $name: Min Value (0 - 100)
+  $description: The minimum output value % when audio is low.
+- AudioMaxValue: 100
+  $name: Max Value (0 - 100)
+  $description: The maximum output value % when audio is high.
+- AudioHueReactiveMode: 0
+  $name: Audio Hue Reactive Mode
+  $description: Audio-driven hue effects for rainbow border
+  $options:
+  - 0: Off
+  - 1: Speed Boost
+  - 2: Pulse (Color Jump)
+  - 3: Bounce (Direction Reverse)
+  - 4: Speed Boost + Pulse
+  - 5: Speed Boost + Bounce
+  - 6: Pulse + Bounce
+  - 7: All Effects
 - TriggerActionOptions:
   - - MouseTrigger: Double
       $name: Mouse Trigger
@@ -206,15 +258,22 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
       - ACTION_TOGGLE_TASKBAR_ALIGNMENT: Toggle Taskbar Alignment
       - ACTION_COMBINE_TASKBAR_BUTTONS: Combine Taskbar Buttons
       - ACTION_WIN_TAB: Win+Tab
-      - ACTION_CTRL_ALT_TAB: Ctrl+Alt+Tab
       - ACTION_OPEN_START_MENU: Open Start Menu
       - ACTION_TASK_MANAGER: Open Task Manager
+      - ACTION_TOGGLE_AUDIO_REACTIVE: Toggle Audio Reactive Rainbow
+      - ACTION_TOGGLE_RAINBOW_ZORDER: Toggle Rainbow Z-Order (Above/Below)
     - AdditionalArgs: ""
       $name: Arguments
       $description: >-
-        For 'Open App': Path to exe or URL (e.g. calc.exe).
-        For 'Send Keystrokes': Key combo (e.g. Ctrl+C).
-                For 'Combine Taskbar Buttons': Specify 2 or 4 COMBINE_* states separated by semicolons (e.g. COMBINE_ALWAYS;COMBINE_NEVER or COMBINE_ALWAYS;COMBINE_NEVER;COMBINE_WHEN_FULL;COMBINE_ALWAYS).
+                Delay (optional): Prefix with seconds followed by colon (max 9999 seconds)
+                    2:calc.exe → waits 2 seconds  |  calc.exe → instant
+                    Syntax: SECONDS:argument (e.g., "5.5:calc.exe" or "10:Ctrl+V")
+                
+                Arguments by action:
+                    Open App: 2:calc.exe or notepad.exe
+                    Keystrokes: 0.5:Ctrl+C or Win+Tab (use + or ;)
+                    Combine Buttons: 1:COMBINE_ALWAYS;COMBINE_NEVER (2 or 4 states)
+                    Volume/Media/Desktop/Taskbar: 3: (delay only, no args needed)
   - - MouseTrigger: ScrollUp
     - KeyboardTriggers: [none]
     - Action: ACTION_VOLUME_UP
@@ -232,7 +291,7 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 #include <shellapi.h>
 #include <dwmapi.h>
 #include <gdiplus.h>
-#include <shcore.h> 
+#include <shcore.h>
 #include <propsys.h>
 #include <propkey.h>
 #include <string>
@@ -244,10 +303,12 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 #include <windhawk_utils.h>
 #include <sstream>
 
-// Action Engine Includes
+// COM & Audio
 #include <commctrl.h>
 #include <endpointvolume.h>
 #include <mmdeviceapi.h>
+
+// Utilities
 #include <windef.h>
 #include <winerror.h>
 #include <winuser.h>
@@ -257,6 +318,7 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 #include <string_view>
 #include <unordered_map>
 #include <vector>
+#include <tuple>
 
 // WinRT
 #include <winrt/Windows.Foundation.h>
@@ -269,8 +331,37 @@ using namespace winrt;
 using namespace Windows::Media::Control;
 using namespace Windows::Storage::Streams;
 
+// Clamps value v between min and max bounds
+template<typename T> T Clamp(T v, T min, T max) { return (v < min) ? min : (v > max) ? max : v; }
+
+// Linear interpolation helper for smooth blending
+template<typename T> T Lerp(T a, T b, T f) { return a + f * (b - a); }
+
+// --- Helper Macros ---
+#define AUDIO_REACTIVE_MODE 3 // 1=Brightness, 2=Thickness, 3=Both
+#define AUDIO_HUE_REACTIVE_MODE 0 // 0=Off, 1=SpeedBoost, 2=Pulse, 3=Bounce, 4=SpeedBoost+Pulse, 5=SpeedBoost+Bounce, 6=Pulse+Bounce, 7=All
+
 // --- Constants ---
-const WCHAR* FONT_NAME = L"Segoe UI Variable Display"; 
+const WCHAR* FONT_NAME = L"Segoe UI Variable Display";
+
+// Audio Reactive Rainbow Tuning
+const float AUDIO_SENSITIVITY = 1.5f;
+const float AUDIO_SMOOTHING = 0.25f;
+
+// Audio Hue Reactive Constants
+const float AUDIO_HUE_SPEED_BOOST = 2.5f;        // Multiplier for rainbow speed during audio reactivity
+const float AUDIO_HUE_PULSE_AMOUNT = 180.0f;     // Degrees of hue shift per audio peak
+const float AUDIO_HUE_BOUNCE_THRESHOLD = 0.65f;  // Peak threshold to trigger direction bounce
+
+// --- Audio Metering API ---
+static const GUID IID_IAudioMeterInformation = { 0xC02216F6, 0x8C67, 0x4B5B, {0x9D, 0x00, 0xD0, 0x08, 0xE7, 0x3E, 0x00, 0x64} };
+
+interface IAudioMeterInformation : public IUnknown {
+    virtual HRESULT STDMETHODCALLTYPE GetPeakValue(float *pfPeak) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetMeteringChannelCount(UINT *pnChannelCount) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetChannelsPeakValues(UINT u32ChannelCount, float *afPeakValues) = 0;
+    virtual HRESULT STDMETHODCALLTYPE QueryHardwareSupport(DWORD *pdwHardwareSupportMask) = 0;
+};
 
 // --- DWM API ---
 typedef enum _WINDOWCOMPOSITIONATTRIB { WCA_ACCENT_POLICY = 19 } WINDOWCOMPOSITIONATTRIB;
@@ -316,11 +407,27 @@ struct ModSettings {
     bool enableGameDetect = true;
     wstring ignoredApps;
     bool enableRainbow = false;
+    bool rainbowAboveWidget = false;
+    bool enableAudioReactive = false;
     int rainbowSpeed = 3;
     int rainbowBrightness = 80;
     int rainbowThickness = 1;
     int rainbowBorderOffset = 0;
     bool enableRoundedCorners = true;
+    
+    // Internal state tracking
+    bool storedRainbowAboveWidget = false;
+
+    // Audio Processing Settings
+    int audioResponsiveness = 20;
+    int audioThreshold = 80;
+    int audioRamp = 50;
+    bool audioBinary = false;
+    int audioFlicker = 99;
+    bool audioDynamicRange = true;
+    int audioMinValue = 100;
+    int audioMaxValue = 100;
+    int audioHueReactiveMode = 0;
 } g_Settings;
 
 // --- Global State ---
@@ -334,7 +441,7 @@ float g_ScaleFactor = 1.0f; // DPI Scale
 // Detection & Animation State
 bool g_IsGameDetected = false;
 int g_FsCheckTick = 0;
-int g_AnimState = 0; // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Parked
+int g_AnimState = 0; // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Docked
 int g_CurrentAnimY = 0;
 bool g_ShutdownMode = false;
 int g_IdleSecondsCounter = 0;
@@ -345,6 +452,13 @@ HWND g_hRainbowWindow = NULL;
 float g_RainbowHue = 0.0f; // 0-360 for HSV color wheel
 int g_RainbowAnimState = 0; // Mirror of main window anim state
 int g_CurrentRainbowAnimY = 0;
+ULONG_PTR g_gdiplusToken = 0;
+bool g_RainbowDirectionReverse = false; // Direction bounce state for audio hue reactivity
+
+// Audio Reactive State
+float g_AudioPeakLevel = 0.0f;
+float g_AudioPeakSmoothed = 0.0f;
+bool g_AudioReactiveRuntimeEnabled = true;
 
 struct MediaState {
     wstring title = L"Waiting for media...";
@@ -376,7 +490,10 @@ namespace stringtools {
         std::wstring token;
         std::wstringstream tokenStream(s);
         while (std::getline(tokenStream, token, delimiter)) {
-            tokens.push_back(trim(token));
+            std::wstring trimmed = trim(token);
+            if (!trimmed.empty()) {
+                tokens.push_back(trimmed);
+            }
         }
         return tokens;
     }
@@ -389,7 +506,7 @@ namespace stringtools {
 
 class AudioCOMAPI {
  public:
-    AudioCOMAPI() : m_isInitialized(false), m_isCOMInitialized(false), m_pDeviceEnumerator(nullptr) {}
+    AudioCOMAPI() : m_isInitialized(false), m_isCOMInitialized(false), m_pDeviceEnumerator(nullptr), m_pAudioMeter(nullptr), m_meterInitialized(false) {}
     bool Init() {
         if (!m_isCOMInitialized) {
             if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED))) m_isCOMInitialized = true;
@@ -403,9 +520,49 @@ class AudioCOMAPI {
         }
         return m_isInitialized;
     }
+    bool InitMeter() {
+        if (m_meterInitialized) return true;
+        if (!m_isInitialized) return false;
+        
+        com_ptr<IMMDevice> pDevice;
+        if (FAILED(m_pDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, pDevice.put()))) {
+            Wh_Log(L"[Audio Meter] Failed to get default audio endpoint");
+            return false;
+        }
+        
+        if (FAILED(pDevice->Activate(IID_IAudioMeterInformation, CLSCTX_INPROC_SERVER, NULL, m_pAudioMeter.put_void()))) {
+            Wh_Log(L"[Audio Meter] Failed to activate IAudioMeterInformation");
+            return false;
+        }
+        
+        m_meterInitialized = true;
+        Wh_Log(L"[Audio Meter] Successfully initialized");
+        return true;
+    }
+    float GetPeakLevel() {
+        if (!m_meterInitialized || !m_pAudioMeter) return 0.0f;
+        float peak = 0.0f;
+        if (SUCCEEDED(m_pAudioMeter->GetPeakValue(&peak))) {
+            return peak;
+        }
+        return 0.0f;
+    }
     void Uninit() {
-        if (m_isInitialized) { m_pDeviceEnumerator = nullptr; m_isInitialized = false; }
-        if (m_isCOMInitialized) { CoUninitialize(); m_isCOMInitialized = false; }
+        if (m_pAudioMeter) {
+            m_pAudioMeter = nullptr;
+            m_meterInitialized = false;
+            Wh_Log(L"[Audio Meter] Released IAudioMeterInformation");
+        }
+        if (m_isInitialized) {
+            m_pDeviceEnumerator = nullptr;
+            m_isInitialized = false;
+            Wh_Log(L"[Audio Meter] Released IMMDeviceEnumerator");
+        }
+        if (m_isCOMInitialized) {
+            CoUninitialize();
+            m_isCOMInitialized = false;
+            Wh_Log(L"[Audio Meter] COM uninitialized");
+        }
     }
     bool IsInitialized() { return m_isInitialized; }
     const com_ptr<IMMDeviceEnumerator> GetDeviceEnumerator() { return m_pDeviceEnumerator; }
@@ -413,6 +570,8 @@ class AudioCOMAPI {
     bool m_isInitialized;
     bool m_isCOMInitialized;
     com_ptr<IMMDeviceEnumerator> m_pDeviceEnumerator;
+    com_ptr<IAudioMeterInformation> m_pAudioMeter;
+    bool m_meterInitialized;
 };
 static AudioCOMAPI g_audioCOM;
 
@@ -557,8 +716,18 @@ BOOL IsAudioMuted(com_ptr<IMMDeviceEnumerator> pDeviceEnumerator) {
 }
 
 void ToggleVolMuted() {
-    if (!g_audioCOM.IsInitialized()) { if (!g_audioCOM.Init()) return; }
-    auto pDeviceEnumerator = g_audioCOM.GetDeviceEnumerator(); if (!pDeviceEnumerator) return;
+    if (!g_audioCOM.IsInitialized()) {
+        if (!g_audioCOM.Init()) {
+            Wh_Log(L"WARNING: Audio COM not initialized, cannot toggle mute");
+            return;
+        }
+    }
+    auto pDeviceEnumerator = g_audioCOM.GetDeviceEnumerator();
+    if (!pDeviceEnumerator) {
+        Wh_Log(L"WARNING: Device enumerator not available");
+        return;
+    }
+    
     const GUID XIID_IAudioEndpointVolume = { 0x5CDF2C82, 0x841E, 0x4546, {0x97, 0x22, 0x0C, 0xF7, 0x40, 0x78, 0x22, 0x9A} };
     const BOOL isMuted = IsAudioMuted(pDeviceEnumerator);
     com_ptr<IMMDeviceCollection> pDeviceCollection;
@@ -655,14 +824,25 @@ struct ConfiguredTrigger {
 
 std::vector<ConfiguredTrigger> g_triggers;
 
+// --- Delayed Action Execution System ---
+struct PendingAction {
+    std::function<void()> action;
+    DWORD executeAtTick;
+};
+std::vector<PendingAction> g_pendingActions;
+std::mutex g_pendingActionsMutex;
+
+#define IDT_DELAYED_ACTIONS 1005
+
 // --- Additional Actions: Taskbar & Desktop Helpers ---
 
-// Simple Key-Based Actions
-void SendCtrlAltTabKeypress() {
-    Wh_Log(L"Sending Ctrl+Alt+Tab");
-    SendKeypress({VK_LCONTROL, VK_LMENU, VK_TAB});
-}
+// Timer interval constants (milliseconds) for readability and maintainability
+#define TIMER_ANIMATION_MS 16         // 60 FPS for visual animations and rainbow border
+#define TIMER_MEDIA_POLL_MS 1000      // 1 second poll for media state updates
+#define TIMER_TEXT_ANIM_MS 16         // 60 FPS for text scrolling animation (match previous behavior)
+#define TIMER_DELAYED_ACTIONS_MS 50   // 50ms for delayed action checks
 
+// Simple Key-Based Actions
 void SendWinTabKeypress() {
     Wh_Log(L"Sending Win+Tab");
     SendKeypress({VK_LWIN, VK_TAB});
@@ -673,9 +853,12 @@ void OpenStartMenu() {
     SendKeypress({VK_LWIN});
 }
 
+// Forward declaration - defined later
+HWND EnsureTaskbarHandle();
+
 // Taskbar Auto-Hide
 bool GetTaskbarAutohideState() {
-    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar != NULL) {
         APPBARDATA msgData{};
         msgData.cbSize = sizeof(msgData);
@@ -687,7 +870,7 @@ bool GetTaskbarAutohideState() {
 }
 
 void SetTaskbarAutohide(bool enabled) {
-    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar != NULL) {
         APPBARDATA msgData{};
         msgData.cbSize = sizeof(msgData);
@@ -698,7 +881,7 @@ void SetTaskbarAutohide(bool enabled) {
 }
 
 void ToggleTaskbarAutohide() {
-    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar != NULL) {
         const bool isEnabled = GetTaskbarAutohideState();
         Wh_Log(L"Setting taskbar autohide to %s", isEnabled ? L"disabled" : L"enabled");
@@ -710,7 +893,7 @@ void ToggleTaskbarAutohide() {
 
 // Show Desktop & Hide Icons
 void ShowDesktopViaTaskbar() {
-    HWND hTaskbar = g_hTaskbar ? g_hTaskbar : FindWindow(L"Shell_TrayWnd", NULL);
+    HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar) {
         Wh_Log(L"Sending ShowDesktop message");
         SendMessage(hTaskbar, WM_COMMAND, MAKELONG(407, 0), 0);
@@ -742,29 +925,29 @@ void ToggleDesktopIcons() {
     }
 }
 
-// Taskbar Alignment (Windows 11)
-DWORD GetTaskbarAlignment() {
+// --- Registry Helpers ---
+DWORD GetExplorerAdvancedSetting(const wchar_t* valueName, DWORD defaultValue = 0) {
     HKEY hKey = NULL;
-    DWORD dwValue = 1; // Default to center
+    DWORD dwValue = defaultValue;
     DWORD dwBufferSize = sizeof(DWORD);
-
     if (RegOpenKeyEx(HKEY_CURRENT_USER,
                      TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
                      0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS) {
-        RegQueryValueEx(hKey, TEXT("TaskbarAl"), NULL, NULL, (LPBYTE)&dwValue, &dwBufferSize);
+        if (RegQueryValueEx(hKey, valueName, NULL, NULL, (LPBYTE)&dwValue, &dwBufferSize) != ERROR_SUCCESS) {
+             // Use default if value missing
+        }
         RegCloseKey(hKey);
     }
     return dwValue;
 }
 
-bool SetTaskbarAlignment(DWORD alignment) {
+bool SetExplorerAdvancedSetting(const wchar_t* valueName, DWORD value) {
     HKEY hKey = NULL;
     bool success = false;
-
     if (RegOpenKeyEx(HKEY_CURRENT_USER,
                      TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
                      0, KEY_SET_VALUE, &hKey) == ERROR_SUCCESS) {
-        if (RegSetValueEx(hKey, TEXT("TaskbarAl"), 0, REG_DWORD, (BYTE*)&alignment, sizeof(alignment)) == ERROR_SUCCESS) {
+        if (RegSetValueEx(hKey, valueName, 0, REG_DWORD, (BYTE*)&value, sizeof(value)) == ERROR_SUCCESS) {
             success = true;
         }
         RegCloseKey(hKey);
@@ -772,112 +955,229 @@ bool SetTaskbarAlignment(DWORD alignment) {
     return success;
 }
 
+// Centralized taskbar handle acquisition with validation
+HWND EnsureTaskbarHandle() {
+    // Validate existing handle (checks if window still exists)
+    if (g_hTaskbar && IsWindow(g_hTaskbar)) {
+        return g_hTaskbar;
+    }
+    
+    // Find and cache new handle
+    g_hTaskbar = FindWindowW(L"Shell_TrayWnd", NULL);
+    
+    if (g_hTaskbar) {
+        Wh_Log(L"Taskbar handle acquired: 0x%p", g_hTaskbar);
+    } else {
+        Wh_Log(L"WARNING: Failed to find taskbar window");
+    }
+    
+    return g_hTaskbar;  // May be NULL
+}
+
+// Taskbar Alignment (Windows 11)
 void ToggleTaskbarAlignment() {
-    DWORD current = GetTaskbarAlignment();
+    DWORD current = GetExplorerAdvancedSetting(L"TaskbarAl", 1);
     DWORD newAlign = (current == 0) ? 1 : 0;
     Wh_Log(L"Toggling taskbar alignment from %d to %d", current, newAlign);
-    if (SetTaskbarAlignment(newAlign)) {
+    if (SetExplorerAdvancedSetting(L"TaskbarAl", newAlign)) {
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)TEXT("TraySettings"), SMTO_ABORTIFHUNG, 100, NULL);
     }
 }
 
 // Combine Taskbar Buttons
-DWORD GetCombineTaskbarButtons(const wchar_t* optionName) {
-    HKEY hKey = NULL;
-    DWORD dwValue = 0;
-    DWORD dwBufferSize = sizeof(DWORD);
-    if (RegOpenKeyEx(HKEY_CURRENT_USER,
-                     TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
-                     0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS) {
-        RegQueryValueEx(hKey, optionName, NULL, NULL, (LPBYTE)&dwValue, &dwBufferSize);
-        RegCloseKey(hKey);
-    }
-    return dwValue;
-}
+enum TaskBarButtonsState {
+    COMBINE_ALWAYS = 0,
+    COMBINE_WHEN_FULL,
+    COMBINE_NEVER,
+    COMBINE_INVALID
+};
 
-bool SetCombineTaskbarButtons(const wchar_t* optionName, unsigned int option) {
-    bool success = false;
-    if (option <= 2) {
-        HKEY hKey = NULL;
-        if (RegOpenKeyEx(HKEY_CURRENT_USER,
-                         TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"),
-                         0, KEY_SET_VALUE, &hKey) == ERROR_SUCCESS) {
-            DWORD dwValue = option;
-            if (RegSetValueEx(hKey, optionName, 0, REG_DWORD, (BYTE*)&dwValue, sizeof(dwValue)) == ERROR_SUCCESS) {
-                success = true;
-            }
-            RegCloseKey(hKey);
-        }
-    }
-    return success;
-}
+std::tuple<TaskBarButtonsState, TaskBarButtonsState, TaskBarButtonsState, TaskBarButtonsState> ParseTaskbarButtonsState(const std::wstring& args) {
+    TaskBarButtonsState primary1 = COMBINE_INVALID;
+    TaskBarButtonsState primary2 = COMBINE_INVALID;
+    TaskBarButtonsState secondary1 = COMBINE_INVALID;
+    TaskBarButtonsState secondary2 = COMBINE_INVALID;
 
-void CombineTaskbarButtons(const std::wstring& args) {
-    auto argsSplit = stringtools::split(args, L';');
-    auto parseState = [](const std::wstring& arg) -> int {
-        if (arg == L"COMBINE_ALWAYS") return 0;
-        if (arg == L"COMBINE_WHEN_FULL") return 1;
-        if (arg == L"COMBINE_NEVER") return 2;
-        return -1;
+    const auto argsSplit = stringtools::split(args, L';');
+    if (!(argsSplit.size() == 2 || argsSplit.size() == 4)) {
+        Wh_Log(L"CombineTaskbarButtons expects 2 or 4 COMBINE_* states; got %u", (unsigned)argsSplit.size());
+    }
+
+    auto parseState = [](const std::wstring& arg) -> TaskBarButtonsState {
+        if (arg == L"COMBINE_ALWAYS") return COMBINE_ALWAYS;
+        if (arg == L"COMBINE_WHEN_FULL") return COMBINE_WHEN_FULL;
+        if (arg == L"COMBINE_NEVER") return COMBINE_NEVER;
+        Wh_Log(L"Unknown taskbar combine state '%s'", arg.c_str());
+        return COMBINE_INVALID;
     };
-    int p1 = -1, p2 = -1, s1 = -1, s2 = -1;
-    if (argsSplit.size() >= 1) p1 = parseState(argsSplit[0]);
-    if (argsSplit.size() >= 2) p2 = parseState(argsSplit[1]);
-    if (argsSplit.size() >= 3) s1 = parseState(argsSplit[2]);
-    if (argsSplit.size() >= 4) s2 = parseState(argsSplit[3]);
 
+    if (argsSplit.size() >= 1) primary1 = parseState(argsSplit[0]);
+    if (argsSplit.size() >= 2) primary2 = parseState(argsSplit[1]);
+    if (argsSplit.size() >= 3) secondary1 = parseState(argsSplit[2]);
+    if (argsSplit.size() >= 4) secondary2 = parseState(argsSplit[3]);
+
+    return std::make_tuple(primary1, primary2, secondary1, secondary2);
+}
+
+void CombineTaskbarButtonsInternal(const TaskBarButtonsState primary1, const TaskBarButtonsState primary2,
+                                   const TaskBarButtonsState secondary1, const TaskBarButtonsState secondary2) {
     bool notify = false;
 
-    if (p1 != -1 && p2 != -1) {
-        static bool zigzag = (GetCombineTaskbarButtons(L"TaskbarGlomLevel") == (DWORD)p1);
-        zigzag = !zigzag;
-        notify |= SetCombineTaskbarButtons(L"TaskbarGlomLevel", zigzag ? p1 : p2);
+    if ((primary1 != COMBINE_INVALID) && (primary2 != COMBINE_INVALID)) {
+        static bool zigzagPrimary = (GetExplorerAdvancedSetting(L"TaskbarGlomLevel") == (DWORD)primary1);
+        zigzagPrimary = !zigzagPrimary;
+        notify |= SetExplorerAdvancedSetting(L"TaskbarGlomLevel", zigzagPrimary ? (unsigned)primary1 : (unsigned)primary2);
     }
-    if (s1 != -1 && s2 != -1) {
-        static bool zigzag2 = (GetCombineTaskbarButtons(L"MMTaskbarGlomLevel") == (DWORD)s1);
-        zigzag2 = !zigzag2;
-        notify |= SetCombineTaskbarButtons(L"MMTaskbarGlomLevel", zigzag2 ? s1 : s2);
+    if ((secondary1 != COMBINE_INVALID) && (secondary2 != COMBINE_INVALID)) {
+        static bool zigzagSecondary = (GetExplorerAdvancedSetting(L"MMTaskbarGlomLevel") == (DWORD)secondary1);
+        zigzagSecondary = !zigzagSecondary;
+        notify |= SetExplorerAdvancedSetting(L"MMTaskbarGlomLevel", zigzagSecondary ? (unsigned)secondary1 : (unsigned)secondary2);
     }
+
     if (notify) {
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)TEXT("TraySettings"), SMTO_ABORTIFHUNG, 100, NULL);
     }
 }
 
-std::function<void()> ParseAction(const std::wstring& actionName, const std::wstring& args) {
-    if (actionName == L"ACTION_SHOW_DESKTOP") return [](){ ShowDesktopViaTaskbar(); };
-    if (actionName == L"ACTION_TOGGLE_DESKTOP_ICONS") return [](){ ToggleDesktopIcons(); };
-    if (actionName == L"ACTION_TOGGLE_TASKBAR_AUTOHIDE") return [](){ ToggleTaskbarAutohide(); };
-    if (actionName == L"ACTION_TOGGLE_TASKBAR_ALIGNMENT") return [](){ ToggleTaskbarAlignment(); };
-    if (actionName == L"ACTION_WIN_TAB") return [](){ SendWinTabKeypress(); };
-    if (actionName == L"ACTION_CTRL_ALT_TAB") return [](){ SendCtrlAltTabKeypress(); };
-    if (actionName == L"ACTION_OPEN_START_MENU") return [](){ OpenStartMenu(); };
-    if (actionName == L"ACTION_COMBINE_TASKBAR_BUTTONS") return [args](){ CombineTaskbarButtons(args); };
-    if (actionName == L"ACTION_MUTE") return [](){ ToggleVolMuted(); };
-    if (actionName == L"ACTION_TASK_MANAGER") return [](){ ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); };
-    if (actionName == L"ACTION_ACTIVATE_SOURCE_APP") return [](){ ActivateSourceApp(); };
-    if (actionName == L"ACTION_VOLUME_UP") return [](){ SendKeypress({VK_VOLUME_UP}); };
-    if (actionName == L"ACTION_VOLUME_DOWN") return [](){ SendKeypress({VK_VOLUME_DOWN}); };
-    if (actionName == L"ACTION_START_PROCESS") return [args](){ StartProcess(args); };
-    if (actionName == L"ACTION_SEND_KEYPRESS") {
-        std::vector<int> keys; 
-        std::vector<std::wstring> parts;
-        if (args.find(L';') != std::wstring::npos) parts = stringtools::split(args, L';');
-        else parts = stringtools::split(args, L'+');
-        
-        for(auto& part : parts) {
-            UINT mod, vk;
-            if(FromStringHotKey(part, &mod, &vk)) {
-                if(mod & MOD_CONTROL) keys.push_back(VK_CONTROL); if(mod & MOD_SHIFT) keys.push_back(VK_SHIFT);
-                if(mod & MOD_ALT) keys.push_back(VK_MENU); if(mod & MOD_WIN) keys.push_back(VK_LWIN);
-                if (vk) keys.push_back(vk);
-            }
-        }
-        return [keys](){ SendKeypress(keys); };
+void CombineTaskbarButtons(const std::wstring& args) {
+    const auto [primary1, primary2, secondary1, secondary2] = ParseTaskbarButtonsState(args);
+    CombineTaskbarButtonsInternal(primary1, primary2, secondary1, secondary2);
+}
+
+// --- Argument Parsing with Delay Support ---
+struct ParsedArgs {
+    float delaySeconds;
+    std::wstring actualArgs;
+};
+
+ParsedArgs ParseArgumentsWithDelay(const std::wstring& rawArgs) {
+    ParsedArgs result{0.0f, rawArgs};
+    if (rawArgs.empty()) return result;
+
+    // Only split if colon appears within first 5 characters (prevents accidental splits)
+    // e.g. "2.5:..." or "9999:..." are valid, but "path:file:with:colons" is not
+    size_t colonPos = rawArgs.find(L':');
+    if (colonPos == std::wstring::npos || colonPos > 5) return result;
+
+    std::wstring prefix = stringtools::trim(rawArgs.substr(0, colonPos));
+    
+    // Quick validation: prefix should only contain digits and optional decimal point
+    if (prefix.find_first_not_of(L"0123456789.") != std::wstring::npos) {
+        return result; // Not a clean number, treat as normal arg
     }
-    if (actionName == L"ACTION_MEDIA_PLAY_PAUSE") return [](){ SendKeypress({VK_MEDIA_PLAY_PAUSE}); };
-    if (actionName == L"ACTION_MEDIA_NEXT") return [](){ SendKeypress({VK_MEDIA_NEXT_TRACK}); };
-    if (actionName == L"ACTION_MEDIA_PREV") return [](){ SendKeypress({VK_MEDIA_PREV_TRACK}); };
-    return [](){};
+
+    try {
+        size_t processed = 0;
+        float delay = std::stof(prefix, &processed);
+        // Ensure the entire prefix was consumed (valid number)
+        if (processed == prefix.length()) {
+            result.delaySeconds = std::max(0.0f, delay);
+            result.actualArgs = rawArgs.substr(colonPos + 1);
+        }
+    } catch (...) {
+        // Conversion failed, fallback: treat entire string as argument
+    }
+    return result;
+}
+
+void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds);
+
+// Forward Declarations for Z-Order Helpers
+HWND GetMediaZOrderInsertAfter();
+HWND GetRainbowZOrderInsertAfter();
+
+std::vector<int> BuildKeypressSequence(const std::wstring& args) {
+    std::vector<int> keys;
+    const bool useSemicolonDelimiter = args.find(L';') != std::wstring::npos;
+    const auto parts = useSemicolonDelimiter ? stringtools::split(args, L';') : stringtools::split(args, L'+');
+
+    for (const auto& part : parts) {
+        UINT mod = 0;
+        UINT vk = 0;
+        if (FromStringHotKey(part, &mod, &vk)) {
+            if (mod & MOD_CONTROL) keys.push_back(VK_CONTROL);
+            if (mod & MOD_SHIFT) keys.push_back(VK_SHIFT);
+            if (mod & MOD_ALT) keys.push_back(VK_MENU);
+            if (mod & MOD_WIN) keys.push_back(VK_LWIN);
+            if (vk) keys.push_back(static_cast<int>(vk));
+        }
+    }
+
+    return keys;
+}
+
+std::function<void()> ParseAction(const std::wstring& actionName, const std::wstring& rawArgs) {
+    ParsedArgs parsed = ParseArgumentsWithDelay(rawArgs);
+    const std::wstring& args = parsed.actualArgs;
+    const float delay = parsed.delaySeconds;
+    using ActionFactory = std::function<std::function<void()>(const std::wstring&)>;
+
+    static const std::unordered_map<std::wstring_view, ActionFactory> kActionFactories = {
+        {L"ACTION_SHOW_DESKTOP", [](const std::wstring&) { return []() { ShowDesktopViaTaskbar(); }; }},
+        {L"ACTION_TOGGLE_DESKTOP_ICONS", [](const std::wstring&) { return []() { ToggleDesktopIcons(); }; }},
+        {L"ACTION_TOGGLE_TASKBAR_AUTOHIDE", [](const std::wstring&) { return []() { ToggleTaskbarAutohide(); }; }},
+        {L"ACTION_TOGGLE_TASKBAR_ALIGNMENT", [](const std::wstring&) { return []() { ToggleTaskbarAlignment(); }; }},
+        {L"ACTION_WIN_TAB", [](const std::wstring&) { return []() { SendWinTabKeypress(); }; }},
+        {L"ACTION_OPEN_START_MENU", [](const std::wstring&) { return []() { OpenStartMenu(); }; }},
+        {L"ACTION_COMBINE_TASKBAR_BUTTONS", [](const std::wstring& input) { return [input]() { CombineTaskbarButtons(input); }; }},
+        {L"ACTION_MUTE", [](const std::wstring&) { return []() { ToggleVolMuted(); }; }},
+        {L"ACTION_TASK_MANAGER", [](const std::wstring&) { return []() { ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); }; }},
+        {L"ACTION_ACTIVATE_SOURCE_APP", [](const std::wstring&) { return []() { ActivateSourceApp(); }; }},
+        {L"ACTION_VOLUME_UP", [](const std::wstring&) { return []() { SendKeypress({VK_VOLUME_UP}); }; }},
+        {L"ACTION_VOLUME_DOWN", [](const std::wstring&) { return []() { SendKeypress({VK_VOLUME_DOWN}); }; }},
+        {L"ACTION_START_PROCESS", [](const std::wstring& input) { return [input]() { StartProcess(input); }; }},
+        {L"ACTION_SEND_KEYPRESS", [](const std::wstring& input) {
+            const auto keys = BuildKeypressSequence(input);
+            return [keys]() { SendKeypress(keys); };
+        }},
+        {L"ACTION_MEDIA_PLAY_PAUSE", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_PLAY_PAUSE}); }; }},
+        {L"ACTION_MEDIA_NEXT", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_NEXT_TRACK}); }; }},
+        {L"ACTION_MEDIA_PREV", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_PREV_TRACK}); }; }},
+        {L"ACTION_TOGGLE_AUDIO_REACTIVE", [](const std::wstring&) { return []() {
+            g_AudioReactiveRuntimeEnabled = !g_AudioReactiveRuntimeEnabled;
+            g_AudioPeakSmoothed = 0.0f;
+            Wh_Log(L"[Audio Reactive] Toggled: %s", g_AudioReactiveRuntimeEnabled ? L"ON" : L"OFF");
+        }; }},
+        {L"ACTION_TOGGLE_RAINBOW_ZORDER", [](const std::wstring&) { return []() {
+            g_Settings.rainbowAboveWidget = !g_Settings.rainbowAboveWidget;
+            Wh_Log(L"[Rainbow] Z-Order Toggled: %s", g_Settings.rainbowAboveWidget ? L"Above" : L"Below");
+            if (g_hMediaWindow && g_hRainbowWindow) {
+                HWND mediaInsert = GetMediaZOrderInsertAfter();
+                HWND rainbowInsert = GetRainbowZOrderInsertAfter();
+                UINT flags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW;
+                // Force update both
+                SetWindowPos(g_hRainbowWindow, rainbowInsert, 0,0,0,0, flags);
+                SetWindowPos(g_hMediaWindow, mediaInsert, 0,0,0,0, flags);
+            }
+        }; }}
+    };
+
+    const std::wstring_view actionView = actionName;
+    if (const auto it = kActionFactories.find(actionView); it != kActionFactories.end()) {
+        auto baseAction = it->second(args);
+
+        // Wrap with delay if specified
+        if (delay > 0) {
+            return [baseAction, delay]() {
+                ExecuteActionWithDelay(baseAction, delay);
+            };
+        }
+
+        return baseAction;
+    }
+
+    return []() {};
+}
+
+void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds) {
+    Wh_Log(L"[DELAY] Queueing action with %.2f second delay", delaySeconds);
+    std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+    g_pendingActions.push_back({
+        action,
+        GetTickCount() + (DWORD)(delaySeconds * 1000)
+    });
+    Wh_Log(L"[DELAY] Queue size: %d", (int)g_pendingActions.size());
+    SetTimer(g_hMediaWindow, IDT_DELAYED_ACTIONS, TIMER_DELAYED_ACTIONS_MS, NULL);
 }
 
 bool OnMouseClick(const std::wstring& detectedTriggerName) {
@@ -900,27 +1200,42 @@ bool OnMouseClick(const std::wstring& detectedTriggerName) {
 // --- Helper: Whitelist Check ---
 bool IsAppIgnored(HWND hFg) {
     if (!hFg) return false;
+    
+    static DWORD s_lastPid = 0;
+    static bool s_lastResult = false;
+
     DWORD pid = 0;
     GetWindowThreadProcessId(hFg, &pid);
     if (pid == 0) return false;
 
+    // Cache hit: same PID as last check, return cached result
+    if (pid == s_lastPid) return s_lastResult;
+
     HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-    if (!hProcess) return false;
+    if (!hProcess) {
+        s_lastPid = pid;
+        s_lastResult = false;
+        return false;
+    }
 
     WCHAR buffer[MAX_PATH];
     bool match = false;
     if (GetModuleFileNameExW(hProcess, NULL, buffer, MAX_PATH)) {
+        buffer[MAX_PATH - 1] = L'\0';
         wstring fullPath = buffer;
         size_t lastSlash = fullPath.find_last_of(L"\\");
         wstring exeName = (lastSlash == wstring::npos) ? fullPath : fullPath.substr(lastSlash + 1);
         
-        for (auto & c: exeName) c = tolower(c);
-        wstring list = g_Settings.ignoredApps;
-        for (auto & c: list) c = tolower(c);
+        exeName = stringtools::toLower(exeName);
+        wstring list = stringtools::toLower(g_Settings.ignoredApps);
         
         if (list.find(exeName) != wstring::npos) match = true;
     }
     CloseHandle(hProcess);
+    
+    // Update cache
+    s_lastPid = pid;
+    s_lastResult = match;
     return match;
 }
 
@@ -933,6 +1248,7 @@ bool CheckBorderlessFullscreen() {
 
     WCHAR clsName[256];
     GetClassNameW(hFg, clsName, 256);
+    clsName[255] = L'\0';
     if (wcscmp(clsName, L"WorkerW") == 0 || wcscmp(clsName, L"Progman") == 0) return false;
 
     HMONITOR hMon = MonitorFromWindow(hFg, MONITOR_DEFAULTTOPRIMARY);
@@ -952,24 +1268,33 @@ bool CheckBorderlessFullscreen() {
 #define IDT_RAINBOW_ANIM 1004
 
 void UpdateScaleFactor() {
-    if (g_hTaskbar) {
-        UINT dpi = GetDpiForWindow(g_hTaskbar);
-        if (dpi == 0) dpi = 96;
-        g_ScaleFactor = dpi / 96.0f;
-    }
+    UINT dpi = GetDpiForSystem();  // No window needed, system-wide DPI
+    if (dpi == 0) dpi = 96;
+    g_ScaleFactor = dpi / 96.0f;
 }
 
-void ForceParkedState() {
+HWND GetMediaZOrderInsertAfter() {
+    if (g_Settings.rainbowAboveWidget && g_hRainbowWindow) return g_hRainbowWindow;
+    return HWND_TOPMOST;
+}
+
+HWND GetRainbowZOrderInsertAfter() {
+    if (g_Settings.rainbowAboveWidget) return HWND_TOPMOST;
+    if (g_hMediaWindow) return g_hMediaWindow;
+    return HWND_TOPMOST;
+}
+
+void ForceDockedState() {
     int screenH = GetSystemMetrics(SM_CYSCREEN);
     int scaledW = (int)(g_Settings.width * g_ScaleFactor);
     int scaledH = (int)(g_Settings.height * g_ScaleFactor);
-    SetWindowPos(g_hMediaWindow, HWND_TOPMOST, 0, screenH - 2, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
-    g_AnimState = 3; // Parked Mode
+    SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), 0, screenH - 2, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    g_AnimState = 3; // Docked Mode
     
-    // Park rainbow window too
+    // Dock rainbow window too
     if (g_hRainbowWindow && g_Settings.enableRainbow) {
         int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
-        SetWindowPos(g_hRainbowWindow, g_hMediaWindow, 0 - borderOffset, screenH - 2 - borderOffset, 
+        SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0 - borderOffset, screenH - 2 - borderOffset, 
                      scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), SWP_NOACTIVATE | SWP_SHOWWINDOW);
         g_RainbowAnimState = 3;
     }
@@ -978,13 +1303,10 @@ void ForceParkedState() {
 void SyncPositionWithTaskbar() {
     if (!g_hMediaWindow || g_ShutdownMode) return;
     
-    // 1. Startup / Crash Recovery
-    if (!g_hTaskbar || !IsWindow(g_hTaskbar)) {
-        g_hTaskbar = FindWindowW(L"Shell_TrayWnd", NULL);
-        if (!g_hTaskbar) {
-            if (g_AnimState != 3) ForceParkedState();
-            return;
-        }
+    // 1. Startup / Crash Recovery - centralized handle validation
+    if (!EnsureTaskbarHandle()) {
+        if (g_AnimState != 3) ForceDockedState();
+        return;
     }
 
     if (g_hTaskbar) {
@@ -1032,7 +1354,7 @@ void SyncPositionWithTaskbar() {
                     RECT rcMe; GetWindowRect(g_hMediaWindow, &rcMe);
                     g_CurrentAnimY = rcMe.top;
                     g_AnimState = 1; // Hiding
-                    SetTimer(g_hMediaWindow, IDT_VIS_ANIM, 16, NULL);
+                    SetTimer(g_hMediaWindow, IDT_VIS_ANIM, TIMER_ANIMATION_MS, NULL);
                     // Sync rainbow window animation
                     if (g_hRainbowWindow && g_Settings.enableRainbow) {
                         RECT rcRainbow; GetWindowRect(g_hRainbowWindow, &rcRainbow);
@@ -1061,14 +1383,14 @@ void SyncPositionWithTaskbar() {
                  int scaledH = (int)(g_Settings.height * g_ScaleFactor);
                  int targetX = rcTb.left + scaledOffX;
 
-                 SetWindowPos(g_hMediaWindow, HWND_TOPMOST, targetX, g_CurrentAnimY, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+                 SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), targetX, g_CurrentAnimY, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
                  g_AnimState = 2; // Showing
-                 SetTimer(g_hMediaWindow, IDT_VIS_ANIM, 16, NULL);
+                 SetTimer(g_hMediaWindow, IDT_VIS_ANIM, TIMER_ANIMATION_MS, NULL);
                  // Sync rainbow window
                  if (g_hRainbowWindow && g_Settings.enableRainbow) {
                      int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
                      g_CurrentRainbowAnimY = (g_RainbowAnimState == 3) ? (screenH - 2 - borderOffset) : screenH;
-                     SetWindowPos(g_hRainbowWindow, g_hMediaWindow, targetX - borderOffset, g_CurrentRainbowAnimY, 
+                     SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), targetX - borderOffset, g_CurrentRainbowAnimY, 
                                   scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), SWP_NOACTIVATE | SWP_SHOWWINDOW);
                      g_RainbowAnimState = 2;
                  }
@@ -1095,12 +1417,12 @@ void SyncPositionWithTaskbar() {
             int x = rc.left + scaledOffX; 
             int y = rc.top + (taskbarHeight / 2) - (scaledH / 2) + scaledOffY;
 
-            SetWindowPos(g_hMediaWindow, HWND_TOPMOST, x, y, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+            SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), x, y, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
             g_AnimState = 0; // Synced
             // Sync rainbow window position
             if (g_hRainbowWindow && g_Settings.enableRainbow) {
                 int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
-                SetWindowPos(g_hRainbowWindow, g_hMediaWindow, x - borderOffset, y - borderOffset,
+                SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), x - borderOffset, y - borderOffset,
                              scaledW + (borderOffset * 2), scaledH + (borderOffset * 2), 
                              SWP_NOACTIVATE | SWP_SHOWWINDOW);
                 g_RainbowAnimState = 0;
@@ -1117,6 +1439,62 @@ void CALLBACK WinEventProc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND hwnd, 
     }
 }
 
+// --- Color Parsing Helper ---
+bool ParseColorComponents(const wchar_t* str, int& r, int& g, int& b, int& a) {
+    if (!str) return false;
+    int ri = 0, gi = 0, bi = 0, ai = 255;
+    int count = swscanf_s(str, L"%d,%d,%d,%d", &ri, &gi, &bi, &ai);
+    if (count < 3) return false;
+    
+    // Clamp values
+    if (ri > 255) ri = 255; if (ri < 0) ri = 0;
+    if (gi > 255) gi = 255; if (gi < 0) gi = 0;
+    if (bi > 255) bi = 255; if (bi < 0) bi = 0;
+    if (ai > 255) ai = 255; if (ai < 0) ai = 0;
+
+    r = Clamp(ri, 0, 255);
+    g = Clamp(gi, 0, 255);
+    b = Clamp(bi, 0, 255);
+    a = Clamp(ai, 0, 255);
+    return true;
+}
+
+int GetClampedSetting(PCWSTR name, int min, int max) {
+    return Clamp(Wh_GetIntSetting(name), min, max);
+}
+
+// Clamp and validate all settings after load
+void ValidateSettings() {
+    // Size/position
+    g_Settings.width = Clamp(g_Settings.width, 100, 800);
+    g_Settings.height = Clamp(g_Settings.height, 20, 100);
+    g_Settings.fontSize = Clamp(g_Settings.fontSize, 8, 32);
+    
+    // Rainbow
+    g_Settings.rainbowSpeed = Clamp(g_Settings.rainbowSpeed, 1, 10);
+    g_Settings.rainbowBrightness = Clamp(g_Settings.rainbowBrightness, 0, 100);
+    g_Settings.rainbowThickness = Clamp(g_Settings.rainbowThickness, 1, 10);
+    g_Settings.rainbowBorderOffset = Clamp(g_Settings.rainbowBorderOffset, 0, 10);
+    
+    // Audio reactive
+    g_Settings.audioResponsiveness = Clamp(g_Settings.audioResponsiveness, 0, 20);
+    g_Settings.audioThreshold = Clamp(g_Settings.audioThreshold, 0, 100);
+    g_Settings.audioRamp = Clamp(g_Settings.audioRamp, 0, 100);
+    g_Settings.audioFlicker = Clamp(g_Settings.audioFlicker, 0, 100);
+    g_Settings.audioMinValue = Clamp(g_Settings.audioMinValue, 0, 100);
+    g_Settings.audioMaxValue = Clamp(g_Settings.audioMaxValue, 0, 100);
+    g_Settings.audioHueReactiveMode = Clamp(g_Settings.audioHueReactiveMode, 0, 7);
+    
+    // Intervals
+    g_Settings.fsInterval = Clamp(g_Settings.fsInterval, 1, 10);
+    g_Settings.idleTimeout = Clamp(g_Settings.idleTimeout, 0, 300);
+    
+    // Opacity
+    g_Settings.bgOpacity = Clamp(g_Settings.bgOpacity, 0, 255);
+    
+    Wh_Log(L"Settings validated");
+}
+
 // --- Settings ---
 void LoadSettings() {
     g_Settings.width = Wh_GetIntSetting(L"PanelWidth");
@@ -1130,15 +1508,11 @@ void LoadSettings() {
 
     PCWSTR textColorStr = Wh_GetStringSetting(L"TextColor");
     if (textColorStr) {
-        int r = 255, g = 255, b = 255, a = 255;
-        int count = swscanf_s(textColorStr, L"%d,%d,%d,%d", &r, &g, &b, &a);
-        if(r>255) r=255; if(g>255) g=255; if(b>255) b=255; if(a>255) a=255;
-        if(r<0) r=0; if(g<0) g=0; if(b<0) b=0; if(a<0) a=0;
-        
-        if (count >= 3) {
-            g_Settings.manualTextColor = ((DWORD)a << 24) | ((DWORD)r << 16) | ((DWORD)g << 8) | (DWORD)b;
+        int r, g, b, a;
+        if (ParseColorComponents(textColorStr, r, g, b, a)) {
+             g_Settings.manualTextColor = ((DWORD)a << 24) | ((DWORD)r << 16) | ((DWORD)g << 8) | (DWORD)b;
         } else {
-            g_Settings.manualTextColor = 0xFFFFFFFF;
+             g_Settings.manualTextColor = 0xFFFFFFFF;
         }
         Wh_FreeStringSetting(textColorStr);
     } else {
@@ -1147,12 +1521,8 @@ void LoadSettings() {
 
     PCWSTR bgColorStr = Wh_GetStringSetting(L"BgColor");
     if (bgColorStr) {
-        int r = 0, g = 0, b = 0, a = 0;
-        int count = swscanf_s(bgColorStr, L"%d,%d,%d,%d", &r, &g, &b, &a);
-        if(r>255) r=255; if(g>255) g=255; if(b>255) b=255;
-        if(r<0) r=0; if(g<0) g=0; if(b<0) b=0;
-
-        if (count >= 3 && !(r==0 && g==0 && b==0)) {
+        int r, g, b, a;
+        if (ParseColorComponents(bgColorStr, r, g, b, a) && !(r==0 && g==0 && b==0)) {
             g_Settings.manualBgColorRGB = ((DWORD)b << 16) | ((DWORD)g << 8) | (DWORD)r;
         } else {
             g_Settings.manualBgColorRGB = 0; 
@@ -1184,28 +1554,61 @@ void LoadSettings() {
     }
 
     g_Settings.enableRainbow = Wh_GetIntSetting(L"EnableRainbow") != 0;
-    g_Settings.rainbowSpeed = Wh_GetIntSetting(L"RainbowSpeed");
-    if (g_Settings.rainbowSpeed < 1) g_Settings.rainbowSpeed = 1;
-    if (g_Settings.rainbowSpeed > 10) g_Settings.rainbowSpeed = 10;
+    
+    // Logic to preserve runtime toggle unless setting specifically changes
+    bool newRainbowAboveWidget = Wh_GetIntSetting(L"RainbowAboveWidget") != 0;
+    static bool isFirstLoad = true;
 
-    g_Settings.rainbowBrightness = Wh_GetIntSetting(L"RainbowBrightness");
-    if (g_Settings.rainbowBrightness < 0) g_Settings.rainbowBrightness = 0;
-    if (g_Settings.rainbowBrightness > 100) g_Settings.rainbowBrightness = 100;
+    if (isFirstLoad) {
+        g_Settings.rainbowAboveWidget = newRainbowAboveWidget;
+        g_Settings.storedRainbowAboveWidget = newRainbowAboveWidget;
+        isFirstLoad = false;
+    } else {
+        // If the configuration changed effectively (user modified it in settings), update runtime.
+        if (newRainbowAboveWidget != g_Settings.storedRainbowAboveWidget) {
+            g_Settings.rainbowAboveWidget = newRainbowAboveWidget;
+            g_Settings.storedRainbowAboveWidget = newRainbowAboveWidget;
+        }
+        // Else: Configuration is same as last known file state, but runtime (g_Settings.rainbowAboveWidget)
+        // might have been toggled by user action. Keep the runtime value.
+    }
 
-    g_Settings.rainbowThickness = Wh_GetIntSetting(L"RainbowThickness");
-    if (g_Settings.rainbowThickness < 1) g_Settings.rainbowThickness = 1;
-    if (g_Settings.rainbowThickness > 10) g_Settings.rainbowThickness = 10;
-
-    g_Settings.rainbowBorderOffset = Wh_GetIntSetting(L"RainbowBorderOffset");
-    if (g_Settings.rainbowBorderOffset < 0) g_Settings.rainbowBorderOffset = 0;
-    if (g_Settings.rainbowBorderOffset > 10) g_Settings.rainbowBorderOffset = 10;
+    g_Settings.enableAudioReactive = Wh_GetIntSetting(L"EnableAudioReactive") != 0;
+    
+    g_Settings.rainbowSpeed = GetClampedSetting(L"RainbowSpeed", 1, 10);
+    g_Settings.rainbowBrightness = GetClampedSetting(L"RainbowBrightness", 0, 100);
+    g_Settings.rainbowThickness = GetClampedSetting(L"RainbowThickness", 1, 10);
+    g_Settings.rainbowBorderOffset = GetClampedSetting(L"RainbowBorderOffset", 0, 10);
 
     g_Settings.enableRoundedCorners = Wh_GetIntSetting(L"EnableRoundedCorners") != 0;
 
-    if (g_Settings.bgOpacity < 0) g_Settings.bgOpacity = 0;
-    if (g_Settings.bgOpacity > 255) g_Settings.bgOpacity = 255;
+    // Load Audio Processing Settings
+    g_Settings.audioResponsiveness = GetClampedSetting(L"AudioResponsiveness", 0, 20);
+    g_Settings.audioThreshold = GetClampedSetting(L"AudioThreshold", 0, 100);
+    g_Settings.audioRamp = GetClampedSetting(L"AudioRamp", 0, 100);
+    g_Settings.audioBinary = Wh_GetIntSetting(L"AudioBinary") != 0;
+    g_Settings.audioFlicker = GetClampedSetting(L"AudioFlicker", 0, 100);
+    g_Settings.audioDynamicRange = Wh_GetIntSetting(L"AudioDynamicRange") != 0;
+    
+    g_Settings.audioMinValue = GetClampedSetting(L"AudioMinValue", 0, 100);
+    g_Settings.audioMaxValue = GetClampedSetting(L"AudioMaxValue", 0, 100);
+    g_Settings.audioHueReactiveMode = GetClampedSetting(L"AudioHueReactiveMode", 0, 7);
+
+    g_Settings.bgOpacity = GetClampedSetting(L"BgOpacity", 0, 255);
+
+    // Validate Dimensions with Defaults
     if (g_Settings.width < 100) g_Settings.width = 400;
     if (g_Settings.height < 24) g_Settings.height = 48;
+
+    // Initialize audio meter if audio reactive is enabled
+    if (g_Settings.enableAudioReactive && g_audioCOM.IsInitialized()) {
+        g_audioCOM.InitMeter();
+    }
+
+    // Reset audio state on settings load
+    g_AudioPeakLevel = 0.0f;
+    g_AudioPeakSmoothed = 0.0f;
+    g_AudioReactiveRuntimeEnabled = true;
 
     // --- Load Action Engine Triggers ---
     using WindhawkUtils::StringSetting;
@@ -1229,6 +1632,8 @@ void LoadSettings() {
         ct.action = ParseAction(actionStr, argsStr);
         g_triggers.push_back(ct);
     }
+    
+    ValidateSettings();  // Clamp and validate all loaded values
 }
 
 // --- WinRT / GSMTC ---
@@ -1247,47 +1652,73 @@ Bitmap* StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
 }
 
 void UpdateMediaInfo() {
-    try {
-        if (!g_SessionManager) {
+    if (!g_SessionManager) {
+        try {
             g_SessionManager = GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
+            if (!g_SessionManager) {
+                Wh_Log(L"WARNING: Failed to acquire GSMTC manager");
+                return;
+            }
+        } catch (const std::exception& e) {
+            Wh_Log(L"ERROR: Exception acquiring GSMTC manager");
+            return;
+        } catch (...) {
+            Wh_Log(L"ERROR: Unknown exception acquiring GSMTC manager");
+            return;
         }
-        if (!g_SessionManager) return;
-
+    }
+    
+    try {
         auto session = g_SessionManager.GetCurrentSession();
-        if (session) {
-            auto props = session.TryGetMediaPropertiesAsync().get();
-            auto info = session.GetPlaybackInfo();
-
-            lock_guard<mutex> guard(g_MediaState.lock);
-            
-            wstring newId = session.SourceAppUserModelId().c_str();
-            if (newId != g_MediaState.sourceId) {
-                Wh_Log(L"[MusicLounge] New Source: %s", newId.c_str());
-                g_MediaState.sourceId = newId;
-            }
-            
-            wstring newTitle = props.Title().c_str();
-            if (newTitle != g_MediaState.title || g_MediaState.albumArt == nullptr) {
-                if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
-                auto thumbRef = props.Thumbnail();
-                if (thumbRef) {
-                    auto stream = thumbRef.OpenReadAsync().get();
-                    g_MediaState.albumArt = StreamToBitmap(stream);
-                }
-            }
-            g_MediaState.title = newTitle;
-            g_MediaState.artist = props.Artist().c_str();
-            g_MediaState.isPlaying = (info.PlaybackStatus() == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing);
-            g_MediaState.hasMedia = true;
-        } else {
+        if (!session) {
+            Wh_Log(L"WARNING: No active media session");
             lock_guard<mutex> guard(g_MediaState.lock);
             g_MediaState.hasMedia = false;
             g_MediaState.title = L"No Media";
             g_MediaState.artist = L"";
             g_MediaState.sourceId = L"";
             if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
+            return;
         }
+        
+        auto props = session.TryGetMediaPropertiesAsync().get();
+        if (!props) {
+            Wh_Log(L"WARNING: Failed to get media properties");
+            lock_guard<mutex> guard(g_MediaState.lock);
+            g_MediaState.hasMedia = false;
+            return;
+        }
+        
+        auto info = session.GetPlaybackInfo();
+
+        lock_guard<mutex> guard(g_MediaState.lock);
+        
+        wstring newId = session.SourceAppUserModelId().c_str();
+        if (newId != g_MediaState.sourceId) {
+            Wh_Log(L"[MusicLounge] New Source: %s", newId.c_str());
+            g_MediaState.sourceId = newId;
+        }
+        
+        wstring newTitle = props.Title().c_str();
+        if (newTitle != g_MediaState.title || g_MediaState.albumArt == nullptr) {
+            if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
+            auto thumbRef = props.Thumbnail();
+            if (thumbRef) {
+                auto stream = thumbRef.OpenReadAsync().get();
+                g_MediaState.albumArt = StreamToBitmap(stream);
+            }
+        }
+        g_MediaState.title = newTitle;
+        g_MediaState.artist = props.Artist().c_str();
+        g_MediaState.isPlaying = (info.PlaybackStatus() == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing);
+        g_MediaState.hasMedia = true;
+    } catch (const std::exception& e) {
+        Wh_Log(L"ERROR: Exception in UpdateMediaInfo");
+        lock_guard<mutex> guard(g_MediaState.lock);
+        g_MediaState.hasMedia = false;
+        g_MediaState.sourceId = L"";
     } catch (...) {
+        Wh_Log(L"ERROR: Unknown exception in UpdateMediaInfo");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
@@ -1296,14 +1727,24 @@ void UpdateMediaInfo() {
 
 void SendMediaCommand(int cmd) {
     try {
-        if (!g_SessionManager) return;
-        auto session = g_SessionManager.GetCurrentSession();
-        if (session) {
-            if (cmd == 1) session.TrySkipPreviousAsync();
-            else if (cmd == 2) session.TryTogglePlayPauseAsync();
-            else if (cmd == 3) session.TrySkipNextAsync();
+        if (!g_SessionManager) {
+            Wh_Log(L"WARNING: GSMTC manager not available for media command");
+            return;
         }
-    } catch (...) {}
+        auto session = g_SessionManager.GetCurrentSession();
+        if (!session) {
+            Wh_Log(L"WARNING: No active media session for command");
+            return;
+        }
+        
+        if (cmd == 1) session.TrySkipPreviousAsync();
+        else if (cmd == 2) session.TryTogglePlayPauseAsync();
+        else if (cmd == 3) session.TrySkipNextAsync();
+    } catch (const std::exception& e) {
+        Wh_Log(L"ERROR: Exception sending media command %d", cmd);
+    } catch (...) {
+        Wh_Log(L"ERROR: Unknown exception sending media command %d", cmd);
+    }
 }
 
 // --- Visuals ---
@@ -1377,10 +1818,32 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {
     int logicalW = (int)(width / g_ScaleFactor);
     int logicalH = (int)(height / g_ScaleFactor);
     
-    // Draw flowing gradient on all 4 corners
     float baseHue = g_RainbowHue;
     float brightness = g_Settings.rainbowBrightness / 100.0f;
     float thickness = (float)g_Settings.rainbowThickness;
+    
+    // Apply audio reactivity if enabled and running
+    if (g_Settings.enableAudioReactive && g_AudioReactiveRuntimeEnabled) {
+        if (AUDIO_REACTIVE_MODE == 1 || AUDIO_REACTIVE_MODE == 3) {
+            if (g_Settings.audioDynamicRange) {
+                // When audio is 0 (g_AudioPeakLevel=0), we return to Base Brightness.
+                // When audio is 1, we go to Max Brightness (100%).
+                // Formula: Base + (Audio * (1.0 - Base))
+                float audioBoost = g_AudioPeakLevel * (1.0f - brightness);
+                brightness += audioBoost;
+            } else {
+                brightness += (g_AudioPeakLevel * AUDIO_SENSITIVITY * 0.15f);
+            }
+            if (brightness > 1.0f) brightness = 1.0f;
+        }
+        if (AUDIO_REACTIVE_MODE == 2 || AUDIO_REACTIVE_MODE == 3) {
+            thickness += (g_AudioPeakLevel * AUDIO_SENSITIVITY * 2.5f);
+        }
+    }
+    
+    // Check if rounding is enabled for drawing paths
+    bool rounded = g_Settings.enableRoundedCorners; 
+    float radius = rounded ? 8.0f : 0.0f; 
     
     // Create 4 corner gradients with offset hues
     for (int corner = 0; corner < 4; corner++) {
@@ -1421,6 +1884,25 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {
     }
     
     // Draw border outline with flowing gradient
+    GraphicsPath path;
+    if (rounded) {
+        float d = radius * 2.0f;
+        RectF rect(0, 0, (float)logicalW, (float)logicalH);
+        
+        // Inset slightly so the thick border doesn't get clipped by the DWM window region
+        float inset = thickness / 2.0f;
+        rect.Inflate(-inset, -inset);
+        
+        path.AddArc(rect.X, rect.Y, d, d, 180, 90); // Top-Left
+        path.AddArc(rect.X + rect.Width - d, rect.Y, d, d, 270, 90); // Top-Right
+        path.AddArc(rect.X + rect.Width - d, rect.Y + rect.Height - d, d, d, 0, 90); // Bottom-Right
+        path.AddArc(rect.X, rect.Y + rect.Height - d, d, d, 90, 90); // Bottom-Left
+        path.CloseFigure();
+    } else {
+         float inset = thickness / 2.0f;
+         path.AddRectangle(RectF(inset, inset, logicalW - thickness, logicalH - thickness));
+    }
+
     int stepSize = max(2, g_Settings.rainbowSpeed / 2); // Faster = fewer segments needed
     for (int i = 0; i < 360; i += stepSize) {
         float segmentHue = fmodf(baseHue + i, 360.0f);
@@ -1467,28 +1949,31 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
 
     Color mainColor{GetCurrentTextColor()};
     
-    MediaState state;
-    {
-        lock_guard<mutex> guard(g_MediaState.lock);
-        state.title = g_MediaState.title;
-        state.artist = g_MediaState.artist;
-        state.albumArt = g_MediaState.albumArt ? g_MediaState.albumArt->Clone() : nullptr;
-        state.hasMedia = g_MediaState.hasMedia;
-        state.isPlaying = g_MediaState.isPlaying;
-    }
-
     int logicalH = g_Settings.height;
     int logicalW = g_Settings.width;
 
     int artSize = logicalH - 12;
     int artX = 6, artY = 6;
     
-    if (state.albumArt) {
-        graphics.DrawImage(state.albumArt, artX, artY, artSize, artSize);
-        delete state.albumArt;
-    } else {
-        SolidBrush placeBrush{Color(40, 128, 128, 128)};
-        graphics.FillRectangle(&placeBrush, artX, artY, artSize, artSize);
+    // Hold lock only while drawing the image, then immediately release
+    {
+        lock_guard<mutex> guard(g_MediaState.lock);
+        if (g_MediaState.albumArt && g_MediaState.albumArt->GetLastStatus() == Ok) {
+            graphics.DrawImage(g_MediaState.albumArt, artX, artY, artSize, artSize);
+        } else {
+            SolidBrush placeBrush{Color(40, 128, 128, 128)};
+            graphics.FillRectangle(&placeBrush, artX, artY, artSize, artSize);
+        }
+    }
+    
+    // Copy scalar state outside the lock for text rendering
+    wstring title, artist;
+    bool isPlaying;
+    {
+        lock_guard<mutex> guard(g_MediaState.lock);
+        title = g_MediaState.title;
+        artist = g_MediaState.artist;
+        isPlaying = g_MediaState.isPlaying;
     }
 
     int startControlX = artX + artSize + 12;
@@ -1506,7 +1991,7 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
         // Pause button
     int plX = startControlX + 28;
     if (g_HoverState == 2) graphics.FillEllipse(&activeBg, plX - 8, controlY - 12, 24, 24);
-    if (state.isPlaying) {
+    if (isPlaying) {
         graphics.FillRectangle(g_HoverState == 2 ? &hoverBrush : &iconBrush, plX, controlY - 7, 3, 14);
         graphics.FillRectangle(g_HoverState == 2 ? &hoverBrush : &iconBrush, plX + 6, controlY - 7, 3, 14);
     } else {
@@ -1523,8 +2008,8 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
 
     int textX = nX + 20;
     int textMaxW = logicalW - textX - 10;
-    wstring fullText = state.title;
-    if (!state.artist.empty()) fullText += L" • " + state.artist;
+    wstring fullText = title;
+    if (!artist.empty()) fullText += L" • " + artist;
 
     FontFamily fontFamily(FONT_NAME, nullptr);
     Font font(&fontFamily, (REAL)g_Settings.fontSize, FontStyleBold, UnitPixel);
@@ -1557,13 +2042,53 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
 #define IDT_TEXT_ANIM  1002
 #define APP_WM_CLOSE   WM_APP
 
+// --- Advanced Audio Processing Logic ---
+float CalculateAudioPeak(float rawPeak) {
+    if (!g_Settings.audioDynamicRange) {
+        // Simple Lerp-based smoothing
+        g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, AUDIO_SMOOTHING);
+        return g_AudioPeakSmoothed;
+    }
+
+    // Advanced Processing (Script Port)
+    float sMin = (float)g_Settings.audioMinValue / 100.0f;
+    float sMax = (float)g_Settings.audioMaxValue / 100.0f;
+    float sRamp = (float)g_Settings.audioRamp / 100.0f;
+    float sThresh = (float)g_Settings.audioThreshold / 100.0f;
+    float sFlicker = (float)g_Settings.audioFlicker / 100.0f;
+    
+    float valDelta = sMax + sRamp - sMin;
+    
+    // Normalize responsiveness to a lerp factor (higher responsiveness = faster response)
+    // Responsiveness range 0-20, map to lerp range [0.01, 1.0]
+    float lerpFactor = Clamp((float)g_Settings.audioResponsiveness / 20.0f, 0.01f, 1.0f);
+    
+    // Apply smoothing via Lerp
+    g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, lerpFactor);
+    g_AudioPeakSmoothed = Clamp(g_AudioPeakSmoothed, 0.0f, 1.0f);
+    
+    float audioValue = (g_AudioPeakSmoothed * valDelta) + sMin;
+    
+    float finalValue = 0.0f;
+    if (audioValue >= sThresh) {
+        finalValue = audioValue - sRamp;
+        if (g_Settings.audioBinary) finalValue = 1.0f;
+    } else {
+        finalValue = 0.0f;
+    }
+    
+    if (finalValue <= sFlicker) finalValue = 0.0f;
+    
+    return Clamp(finalValue, 0.0f, 1.0f);
+}
+
 LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
         case WM_CREATE: {
             // Make window transparent to mouse events
             SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TRANSPARENT);
             if (g_Settings.enableRainbow) {
-                SetTimer(hwnd, IDT_RAINBOW_ANIM, 16, NULL); // 60 FPS
+                SetTimer(hwnd, IDT_RAINBOW_ANIM, TIMER_ANIMATION_MS, NULL);
             }
             // Apply corner rounding to match main window
             DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
@@ -1572,11 +2097,67 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
         }
         case WM_ERASEBKGND: return 1;
         case APP_WM_CLOSE: DestroyWindow(hwnd); return 0;
-        case WM_DESTROY: return 0;
+        case WM_DESTROY:
+            Wh_Log(L"RainbowWndProc WM_DESTROY");
+            KillTimer(hwnd, IDT_RAINBOW_ANIM);
+            Wh_Log(L"Rainbow timer killed");
+            return 0;
         case WM_TIMER:
             if (wParam == IDT_RAINBOW_ANIM) {
-                g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f);
+                // Sample audio peak if audio reactive enabled
+                if (g_Settings.enableAudioReactive && g_AudioReactiveRuntimeEnabled) {
+                    float peak = g_audioCOM.GetPeakLevel();
+                    g_AudioPeakLevel = CalculateAudioPeak(peak);
+                }
+                
+                // === Audio Hue Reactive Feature ===
+                if (g_Settings.audioHueReactiveMode > 0 && g_Settings.enableAudioReactive && 
+                    g_Settings.enableRainbow && g_AudioReactiveRuntimeEnabled) {
+                    
+                    // Speed boost (modes 1, 4, 5, 7)
+                    if (g_Settings.audioHueReactiveMode == 1 || g_Settings.audioHueReactiveMode == 4 || 
+                        g_Settings.audioHueReactiveMode == 5 || g_Settings.audioHueReactiveMode == 7) {
+                        float speedMult = 1.0f + (g_AudioPeakLevel * AUDIO_SENSITIVITY * AUDIO_HUE_SPEED_BOOST);
+                        g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f * speedMult);
+                    } else {
+                        g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f);
+                    }
+                    
+                    // Pulse effect (modes 2, 4, 6, 7)
+                    if (g_Settings.audioHueReactiveMode == 2 || g_Settings.audioHueReactiveMode == 4 || 
+                        g_Settings.audioHueReactiveMode == 6 || g_Settings.audioHueReactiveMode == 7) {
+                        g_RainbowHue += (g_AudioPeakLevel * AUDIO_HUE_PULSE_AMOUNT * 0.1f);
+                    }
+                    
+                    // Bounce effect (modes 3, 5, 6, 7)
+                    if (g_Settings.audioHueReactiveMode == 3 || g_Settings.audioHueReactiveMode == 5 || 
+                        g_Settings.audioHueReactiveMode == 6 || g_Settings.audioHueReactiveMode == 7) {
+                        if (g_AudioPeakLevel > AUDIO_HUE_BOUNCE_THRESHOLD && !g_RainbowDirectionReverse) {
+                            g_RainbowDirectionReverse = true;
+                        } else if (g_AudioPeakLevel <= AUDIO_HUE_BOUNCE_THRESHOLD && g_RainbowDirectionReverse) {
+                            g_RainbowDirectionReverse = false;
+                        }
+                        
+                        if (g_RainbowDirectionReverse) {
+                            g_RainbowHue -= (g_Settings.rainbowSpeed * 0.6f * 0.5f);
+                        }
+                    }
+                    
+                } else {
+                    // Standard audio reactive (existing behavior)
+                    float speedMult = 1.0f;
+                    if (g_Settings.enableAudioReactive && g_AudioReactiveRuntimeEnabled && 
+                        (AUDIO_REACTIVE_MODE == 0 || AUDIO_REACTIVE_MODE == 3)) {
+                        speedMult = 1.0f + (g_AudioPeakLevel * AUDIO_SENSITIVITY * 2.0f);
+                    }
+                    
+                    g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f * speedMult);
+                }
+                
+                // Wrap hue to 0-360 range
                 if (g_RainbowHue >= 360.0f) g_RainbowHue -= 360.0f;
+                if (g_RainbowHue < 0.0f) g_RainbowHue += 360.0f;
+                
                 InvalidateRect(hwnd, NULL, FALSE);
             }
             else if (wParam == IDT_VIS_ANIM) {
@@ -1596,8 +2177,7 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                         g_RainbowAnimState = 0;
                     } else {
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
-                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetRainbowZOrderInsertAfter(), rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
                 }
                 else if (g_RainbowAnimState == 2) { // Show
@@ -1606,14 +2186,12 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                     if (g_CurrentRainbowAnimY <= targetY) {
                         g_CurrentRainbowAnimY = targetY;
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
-                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetRainbowZOrderInsertAfter(), rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                         KillTimer(hwnd, IDT_VIS_ANIM);
                         g_RainbowAnimState = 0;
                     } else {
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_BOTTOM, rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
-                        SetWindowPos(hwnd, g_hMediaWindow, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetRainbowZOrderInsertAfter(), rc.left, g_CurrentRainbowAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
                 }
             }
@@ -1634,19 +2212,68 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
+// Helper: Check if click is in the "background" area (right of the art/controls)
+bool IsClickOnBackground(LPARAM lParam) {
+    int x = (int)(LOWORD(lParam) / g_ScaleFactor);
+    int artSize = g_Settings.height - 12;
+    int artRightEdge = 6 + artSize + 5;
+    return (x > artRightEdge);
+}
+
 LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+
     switch (msg) {
         case WM_CREATE: 
             UpdateAppearance(hwnd);
-            SetTimer(hwnd, IDT_POLL_MEDIA, 1000, NULL); 
+            SetTimer(hwnd, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL); 
             return 0;
         case WM_ERASEBKGND: return 1;
         case APP_WM_CLOSE: DestroyWindow(hwnd); return 0;
-        case WM_DESTROY: g_SessionManager = nullptr; PostQuitMessage(0); return 0;
+        case WM_DESTROY:
+            Wh_Log(L"MediaWndProc WM_DESTROY");
+            KillTimer(hwnd, IDT_VIS_ANIM);
+            KillTimer(hwnd, IDT_TEXT_ANIM);
+            KillTimer(hwnd, IDT_POLL_MEDIA);
+            KillTimer(hwnd, IDT_DELAYED_ACTIONS);
+            Wh_Log(L"All timers killed");
+            g_SessionManager = nullptr;
+            PostQuitMessage(0);
+            return 0;
         case WM_SETTINGCHANGE: UpdateAppearance(hwnd); InvalidateRect(hwnd, NULL, TRUE); return 0;
+        case WM_DPICHANGED: {
+            // Centralized DPI refresh - use UpdateScaleFactor instead of manual calculation
+            UpdateScaleFactor();
+            Wh_Log(L"WM_DPICHANGED: Scale factor updated to %.2f", g_ScaleFactor);
+
+            // Use suggested rect from system if provided
+            RECT* prcNew = reinterpret_cast<RECT*>(lParam);
+            if (prcNew) {
+                SetWindowPos(hwnd, GetMediaZOrderInsertAfter(), prcNew->left, prcNew->top,
+                             prcNew->right - prcNew->left, prcNew->bottom - prcNew->top,
+                             SWP_NOZORDER | SWP_NOACTIVATE);
+            }
+
+            // Recalculate and refresh everything with new DPI
+            SyncPositionWithTaskbar();
+            UpdateAppearance(hwnd);
+            InvalidateRect(hwnd, NULL, TRUE);
+
+            // Update rainbow window with new scaled dimensions
+            if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+                int scaledW = (int)(g_Settings.width * g_ScaleFactor);
+                int scaledH = (int)(g_Settings.height * g_ScaleFactor);
+                int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+                SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0, 0,
+                             scaledW + (borderOffset * 2),
+                             scaledH + (borderOffset * 2),
+                             SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+                InvalidateRect(g_hRainbowWindow, NULL, TRUE);
+            }
+            return 0;
+        }
         case WM_QUERYENDSESSION:
             g_ShutdownMode = true;
-            ForceParkedState();
+            ForceDockedState();
             return TRUE;
         case WM_SETCURSOR: {
             POINT pt; GetCursorPos(&pt);
@@ -1714,7 +2341,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         g_AnimState = 0;
                     } else {
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_TOPMOST, rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetMediaZOrderInsertAfter(), rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
                 }
                 else if (g_AnimState == 2) { // Show
@@ -1723,17 +2350,41 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     if (g_CurrentAnimY <= targetY) {
                         g_CurrentAnimY = targetY;
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_TOPMOST, rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetMediaZOrderInsertAfter(), rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                         KillTimer(hwnd, IDT_VIS_ANIM);
                         g_AnimState = 0;
                     } else {
                         RECT rc; GetWindowRect(hwnd, &rc);
-                        SetWindowPos(hwnd, HWND_TOPMOST, rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                        SetWindowPos(hwnd, GetMediaZOrderInsertAfter(), rc.left, g_CurrentAnimY, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
                 }
                 // Sync rainbow animation timer
                 if (g_hRainbowWindow && g_Settings.enableRainbow && (g_RainbowAnimState == 1 || g_RainbowAnimState == 2)) {
-                    SetTimer(g_hRainbowWindow, IDT_VIS_ANIM, 16, NULL);
+                    SetTimer(g_hRainbowWindow, IDT_VIS_ANIM, TIMER_ANIMATION_MS, NULL);
+                }
+            }
+            else if (wParam == IDT_DELAYED_ACTIONS) {
+                std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+                DWORD now = GetTickCount();
+                
+                Wh_Log(L"[DELAY] Timer tick - checking %d pending actions", (int)g_pendingActions.size());
+
+                // Execute ready actions
+                auto it = g_pendingActions.begin();
+                while (it != g_pendingActions.end()) {
+                    if (now >= it->executeAtTick) {
+                        Wh_Log(L"[DELAY] Executing delayed action");
+                        it->action();
+                        it = g_pendingActions.erase(it);
+                    } else {
+                        ++it;
+                    }
+                }
+
+                // Stop timer if no pending actions
+                if (g_pendingActions.empty()) {
+                    Wh_Log(L"[DELAY] Queue empty - stopping timer");
+                    KillTimer(hwnd, IDT_DELAYED_ACTIONS);
                 }
             }
             return 0;
@@ -1758,36 +2409,19 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_LBUTTONUP:
             if (g_HoverState > 0) {
                 SendMediaCommand(g_HoverState);
-            } else {
-                int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-                int artSize = g_Settings.height - 12;
-                int artRightEdge = 6 + artSize + 5;
-                if (x > artRightEdge) {
-                    OnMouseClick(L"Left");
-                }
+            } else if (IsClickOnBackground(lParam)) {
+                OnMouseClick(L"Left");
             }
             return 0;
-        case WM_RBUTTONUP: {
-            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-            int artSize = g_Settings.height - 12;
-            int artRightEdge = 6 + artSize + 5;
-            if (x > artRightEdge) { OnMouseClick(L"Right"); }
+        case WM_RBUTTONUP:
+            if (IsClickOnBackground(lParam)) OnMouseClick(L"Right");
             return 0;
-        }
-        case WM_MBUTTONUP: {
-            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-            int artSize = g_Settings.height - 12;
-            int artRightEdge = 6 + artSize + 5;
-            if (x > artRightEdge) { OnMouseClick(L"Middle"); }
+        case WM_MBUTTONUP:
+            if (IsClickOnBackground(lParam)) OnMouseClick(L"Middle");
             return 0;
-        }
-        case WM_LBUTTONDBLCLK: {
-            int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-            int artSize = g_Settings.height - 12;
-            int artRightEdge = 6 + artSize + 5;
-            if (x > artRightEdge) { OnMouseClick(L"Double"); }
+        case WM_LBUTTONDBLCLK:
+            if (IsClickOnBackground(lParam)) OnMouseClick(L"Double");
             return 0;
-        }
         case WM_MOUSEWHEEL: {
             short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
             bool handled = false;
@@ -1808,7 +2442,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap);
             DrawMediaPanel(memDC, rc.right, rc.bottom);
             if (g_IsScrolling && g_Settings.EnableTextScroll) {
-                SetTimer(hwnd, IDT_TEXT_ANIM, 16, NULL);
+                SetTimer(hwnd, IDT_TEXT_ANIM, TIMER_TEXT_ANIM_MS, NULL);
             } else {
                 KillTimer(hwnd, IDT_TEXT_ANIM);
             }
@@ -1822,12 +2456,39 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 void MediaThread() {
-    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
-    winrt::init_apartment();
-    GdiplusStartupInput gdiplusStartupInput;
-    ULONG_PTR gdiplusToken;
-    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+    Wh_Log(L"MediaThread started");
 
+    SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+    Wh_Log(L"DPI awareness set");
+
+    bool winrtInitialized = false;
+    try {
+        winrt::init_apartment();
+        winrtInitialized = true;
+        Wh_Log(L"WinRT apartment initialized");
+    } catch (...) {
+        Wh_Log(L"ERROR: Failed to initialize WinRT apartment");
+        return;
+    }
+
+    GdiplusStartupInput gdiplusStartupInput;
+    if (GdiplusStartup(&g_gdiplusToken, &gdiplusStartupInput, NULL) != Ok) {
+        Wh_Log(L"ERROR: GDI+ initialization failed");
+        if (winrtInitialized) {
+            winrt::uninit_apartment();
+            Wh_Log(L"WinRT apartment uninitialized");
+        }
+        return;
+    }
+    Wh_Log(L"GDI+ initialized");
+
+    // UPDATE DPI FIRST (independent from any window)
+    UpdateScaleFactor();
+    Wh_Log(L"Scale factor updated to %.2f", g_ScaleFactor);
+    
+    // ENSURE TASKBAR HANDLE is available
+    EnsureTaskbarHandle();
+    Wh_Log(L"Taskbar handle ensured");
     WNDCLASS wc = {0};
     wc.style = CS_DBLCLKS;
     wc.lpfnWndProc = MediaWndProc;
@@ -1847,17 +2508,62 @@ void MediaThread() {
     HMODULE hUser32 = GetModuleHandle(L"user32.dll");
     pCreateWindowInBand CreateWindowInBand = (pCreateWindowInBand)GetProcAddress(hUser32, "CreateWindowInBand");
 
-    if (CreateWindowInBand) {
-        g_hMediaWindow = CreateWindowInBand(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST, wc.lpszClassName, TEXT("MusicLounge"), WS_POPUP | WS_VISIBLE, 0, 0, g_Settings.width, g_Settings.height, NULL, NULL, wc.hInstance, NULL, ZBID_IMMERSIVE_NOTIFICATION);
-    } else {
-        g_hMediaWindow = CreateWindowEx(WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST, wc.lpszClassName, TEXT("MusicLounge"), WS_POPUP | WS_VISIBLE, 0, 0, g_Settings.width, g_Settings.height, NULL, NULL, wc.hInstance, NULL);
-    }
-
-    SetLayeredWindowAttributes(g_hMediaWindow, 0, 255, LWA_ALPHA);
-
+    // Pre-calculate scaled dimensions
+    int scaledW = (int)(g_Settings.width * g_ScaleFactor);
+    int scaledH = (int)(g_Settings.height * g_ScaleFactor);
     int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
 
-    // Create rainbow window
+    auto cleanup = [&]() {
+        if (g_hVisibilityHook) {
+            UnhookWinEvent(g_hVisibilityHook);
+            Wh_Log(L"WinEvent hook unhooked");
+            g_hVisibilityHook = NULL;
+        }
+        UnregisterClass(wc.lpszClassName, wc.hInstance);
+        UnregisterClass(wcRainbow.lpszClassName, wcRainbow.hInstance);
+        if (g_gdiplusToken) {
+            GdiplusShutdown(g_gdiplusToken);
+            Wh_Log(L"GDI+ shutdown completed");
+            g_gdiplusToken = 0;
+        }
+        if (winrtInitialized) {
+            winrt::uninit_apartment();
+            Wh_Log(L"WinRT apartment uninitialized");
+        }
+        Wh_Log(L"MediaThread exiting");
+    };
+
+    // Create media window hidden with scaled size
+    if (CreateWindowInBand) {
+        g_hMediaWindow = CreateWindowInBand(
+            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
+            wc.lpszClassName,
+            TEXT("MusicLounge"),
+            WS_POPUP,
+            0, 0,
+            scaledW,
+            scaledH,
+            NULL, NULL, wc.hInstance, NULL,
+            ZBID_IMMERSIVE_NOTIFICATION);
+    } else {
+        g_hMediaWindow = CreateWindowEx(
+            WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
+            wc.lpszClassName,
+            TEXT("MusicLounge"),
+            WS_POPUP,
+            0, 0,
+            scaledW,
+            scaledH,
+            NULL, NULL, wc.hInstance, NULL);
+    }
+
+    if (!g_hMediaWindow) {
+        Wh_Log(L"ERROR: Failed to create media window");
+        cleanup();
+        return;
+    }
+
+    // Create rainbow window hidden with scaled size
     if (CreateWindowInBand) {
         g_hRainbowWindow = CreateWindowInBand(
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
@@ -1865,11 +2571,10 @@ void MediaThread() {
             TEXT("MusicLoungeRainbow"),
             WS_POPUP,
             0, 0,
-            g_Settings.width + (borderOffset * 2),
-            g_Settings.height + (borderOffset * 2),
+            scaledW + (borderOffset * 2),
+            scaledH + (borderOffset * 2),
             NULL, NULL, wcRainbow.hInstance, NULL,
-            ZBID_IMMERSIVE_NOTIFICATION
-        );
+            ZBID_IMMERSIVE_NOTIFICATION);
     } else {
         g_hRainbowWindow = CreateWindowEx(
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
@@ -1877,77 +2582,218 @@ void MediaThread() {
             TEXT("MusicLoungeRainbow"),
             WS_POPUP,
             0, 0,
-            g_Settings.width + (borderOffset * 2),
-            g_Settings.height + (borderOffset * 2),
-            NULL, NULL, wcRainbow.hInstance, NULL
-        );
+            scaledW + (borderOffset * 2),
+            scaledH + (borderOffset * 2),
+            NULL, NULL, wcRainbow.hInstance, NULL);
     }
 
+    // Apply appearance and transparency while hidden
+    SetLayeredWindowAttributes(g_hMediaWindow, 0, 255, LWA_ALPHA);
+    UpdateAppearance(g_hMediaWindow);
     if (g_hRainbowWindow) {
         SetLayeredWindowAttributes(g_hRainbowWindow, 0, 255, LWA_ALPHA);
     }
 
-    UpdateScaleFactor();
-    int screenH = GetSystemMetrics(SM_CYSCREEN);
-    int scaledW = (int)(g_Settings.width * g_ScaleFactor);
-    int scaledH = (int)(g_Settings.height * g_ScaleFactor);
-    SetWindowPos(g_hMediaWindow, HWND_TOPMOST, 0, screenH - 2, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
-    g_AnimState = 3; // Parked
+    // Position while hidden
+    g_AnimState = 3; // Docked
+    SyncPositionWithTaskbar();
+
+    // Show after setup is complete
+    ShowWindow(g_hMediaWindow, SW_SHOWNOACTIVATE);
+    if (g_Settings.enableRainbow && g_hRainbowWindow) {
+        ShowWindow(g_hRainbowWindow, SW_SHOWNOACTIVATE);
+    }
 
     g_hVisibilityHook = SetWinEventHook(EVENT_OBJECT_LOCATIONCHANGE, EVENT_OBJECT_LOCATIONCHANGE, NULL, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT);
+    if (g_hVisibilityHook) {
+        Wh_Log(L"WinEvent hook installed: 0x%p", g_hVisibilityHook);
+    } else {
+        Wh_Log(L"WARNING: Failed to install WinEvent hook");
+    }
+
+    Wh_Log(L"MediaThread entering message loop");
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) { TranslateMessage(&msg); DispatchMessage(&msg); }
 
-    if (g_hVisibilityHook) UnhookWinEvent(g_hVisibilityHook);
-    UnregisterClass(wc.lpszClassName, wc.hInstance);
-    if (g_hRainbowWindow) {
-        UnregisterClass(wcRainbow.lpszClassName, wcRainbow.hInstance);
-    }
-    GdiplusShutdown(gdiplusToken);
-    winrt::uninit_apartment();
+    Wh_Log(L"MediaThread exiting message loop");
+
+    cleanup();
 }
 
 std::thread* g_pMediaThread = nullptr;
 
 BOOL WhTool_ModInit() {
-    SetCurrentProcessExplicitAppUserModelID(L"taskbar-mouse-actions");
+    Wh_Log(L"Init " WH_MOD_ID L" version " WH_MOD_VERSION);
+    
+    // Reset all global state to ensure clean initialization
+    g_RainbowDirectionReverse = false;
+    g_AudioPeakLevel = 0.0f;
+    g_AudioPeakSmoothed = 0.0f;
+    g_RainbowHue = 0.0f;
+    g_RainbowAnimState = 0;
+    g_AnimState = 0;
+    g_IsGameDetected = false;
+    g_IsHiddenByIdle = false;
+    g_IdleSecondsCounter = 0;
+    Wh_Log(L"Global state reset");
+
+    if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-fork"))) {
+        Wh_Log(L"WARNING: SetCurrentProcessExplicitAppUserModelID failed");
+    }
+    
+    // CRITICAL: Initialize DPI scaling FIRST (independent of taskbar)
+    UpdateScaleFactor();
+    Wh_Log(L"Scale factor initialized to %.2f", g_ScaleFactor);
+    
+    // CRITICAL: Initialize taskbar handle FIRST (before thread spawn)
+    EnsureTaskbarHandle();
+    
+    // Initialize Audio COM first so LoadSettings can enable the meter if needed
+    if (!g_audioCOM.Init()) {
+        Wh_Log(L"ERROR: Failed to initialize audio COM");
+        return FALSE;
+    }
+    Wh_Log(L"Audio COM initialized");
+
     LoadSettings();
-    g_audioCOM.Init();
+    Wh_Log(L"Settings loaded");
+
     g_Running = true;
-    g_pMediaThread = new std::thread(MediaThread);
+    if (!g_pMediaThread) {
+        g_pMediaThread = new std::thread(MediaThread);
+        Wh_Log(L"Media thread spawned");
+    } else {
+        Wh_Log(L"WARNING: Media thread already exists");
+    }
+
+    Wh_Log(L"Init complete");
     return TRUE;
 }
 
 void WhTool_ModUninit() {
-    g_audioCOM.Uninit();
+    Wh_Log(L"Uninit " WH_MOD_ID L" starting");
+
+    // Clear pending actions
+    {
+        std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+        g_pendingActions.clear();
+    }
+    
     g_triggers.clear();
 
     g_Running = false;
-    if (g_hRainbowWindow) SendMessage(g_hRainbowWindow, APP_WM_CLOSE, 0, 0);
-    if (g_hMediaWindow) SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
+    Wh_Log(L"Signaled media thread to stop");
+
+    if (g_hRainbowWindow) {
+        SendMessage(g_hRainbowWindow, APP_WM_CLOSE, 0, 0);
+        Wh_Log(L"Sent close to rainbow window");
+    }
+    if (g_hMediaWindow) {
+        SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
+        Wh_Log(L"Sent close to media window");
+    }
+
     if (g_pMediaThread) {
+        Wh_Log(L"Waiting for media thread to exit...");
         if (g_pMediaThread->joinable()) g_pMediaThread->join();
         delete g_pMediaThread;
         g_pMediaThread = nullptr;
+        Wh_Log(L"Media thread joined and cleaned up");
     }
+
+    {
+        std::lock_guard<std::mutex> guard(g_MediaState.lock);
+        if (g_MediaState.albumArt) {
+            delete g_MediaState.albumArt;
+            g_MediaState.albumArt = nullptr;
+            Wh_Log(L"Album art freed during shutdown");
+        }
+    }
+    
+    // Reset audio reactive state
+    g_AudioPeakLevel = 0.0f;
+    g_AudioPeakSmoothed = 0.0f;
+    g_RainbowDirectionReverse = false;
+    Wh_Log(L"Audio reactive state reset");
+
+    g_audioCOM.Uninit();
+    Wh_Log(L"Audio COM uninitialized");
+
+    Wh_Log(L"Uninit complete");
 }
 
 void WhTool_ModSettingsChanged() {
-    LoadSettings();
-    if (g_hMediaWindow) {
-        SyncPositionWithTaskbar();
-        SendMessage(g_hMediaWindow, WM_SETTINGCHANGE, 0, 0);
+    Wh_Log(L"Settings changed, reloading...");
+    
+    // CRITICAL: Pause any live animation timers
+    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        KillTimer(g_hMediaWindow, IDT_VIS_ANIM);
+        KillTimer(g_hMediaWindow, IDT_TEXT_ANIM);
+        KillTimer(g_hMediaWindow, IDT_POLL_MEDIA);
+        KillTimer(g_hMediaWindow, IDT_DELAYED_ACTIONS);
+        Wh_Log(L"Paused media window timers");
     }
-    if (g_hRainbowWindow) {
-        if (g_Settings.enableRainbow) {
-            SetTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM, 16, NULL);
-        } else {
-            KillTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM);
-            ShowWindow(g_hRainbowWindow, SW_HIDE);
+    
+    if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        KillTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM);
+        Wh_Log(L"Paused rainbow window timer");
+    }
+    
+    // Reload settings with validation
+    LoadSettings();  // Calls ValidateSettings() at end
+    
+    // Refresh DPI scaling in case system DPI changed
+    UpdateScaleFactor();
+    
+    // Reapply appearance
+    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        UpdateAppearance(g_hMediaWindow);
+        SyncPositionWithTaskbar();
+        // Trigger repaint
+        InvalidateRect(g_hMediaWindow, NULL, FALSE);
+        Wh_Log(L"Applied new appearance to media window");
+    }
+    
+    if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        // Apply corner rounding update
+        DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
+        DwmSetWindowAttribute(g_hRainbowWindow, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
+
+        if (g_hMediaWindow && g_Settings.enableRainbow) {
+            SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
         }
+        
+        // Reset audio reactive state on settings change
+        g_AudioPeakLevel = 0.0f;
+        g_AudioPeakSmoothed = 0.0f;
+        g_RainbowDirectionReverse = false;
+        if (g_Settings.enableAudioReactive && g_audioCOM.IsInitialized()) {
+            g_audioCOM.InitMeter();
+        }
+        
         InvalidateRect(g_hRainbowWindow, NULL, TRUE);
     }
+    
+    // Restart timers with new settings
+    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        SetTimer(g_hMediaWindow, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL);
+        Wh_Log(L"Restarted media window timers");
+    }
+    
+    if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        if (g_Settings.enableRainbow) {
+            SetTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM, TIMER_ANIMATION_MS, NULL);
+            ShowWindow(g_hRainbowWindow, SW_SHOWNOACTIVATE);
+            Wh_Log(L"Restarted rainbow timer");
+        } else {
+            ShowWindow(g_hRainbowWindow, SW_HIDE);
+            Wh_Log(L"Rainbow disabled, window hidden");
+        }
+    }
+    
+    Wh_Log(L"Settings reload complete");
 }
 
 // --- Launcher Boilerplate ---
@@ -1980,6 +2826,7 @@ void Wh_ModAfterInit() {
     if (!g_isToolModProcessLauncher) return;
     WCHAR path[MAX_PATH], cmd[MAX_PATH + 100];
     GetModuleFileName(nullptr, path, MAX_PATH);
+    path[MAX_PATH - 1] = L'\0';
     swprintf_s(cmd, L"\"%s\" -tool-mod \"%s\"", path, WH_MOD_ID);
     STARTUPINFO si = { sizeof(si) }; PROCESS_INFORMATION pi;
     if (CreateProcess(nullptr, cmd, nullptr, nullptr, FALSE, NORMAL_PRIORITY_CLASS, nullptr, nullptr, &si, &pi)) {
