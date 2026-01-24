@@ -1,8 +1,10 @@
+#pragma region Windhawk
+
 // ==WindhawkMod==
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
 // @description     A native-style music ticker with media controls and custom Action Triggers with delay support.
-// @version         4.9.0
+// @version         4.9.1
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
@@ -11,7 +13,7 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.9.0)
+# Taskbar Music Lounge (v4.9.1)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
@@ -34,6 +36,9 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 &nbsp;
 
 ##                                                 🔧 Mouse Action Engine
+Inspired by [@m1lhaus](https://github.com/m1lhaus)'s mod [taskbar-empty-space-clicks](https://github.com/ramensoftware/windhawk-mods/blob/main/mods/taskbar-empty-space-clicks.wh.cpp)
+as well as [@m417z](https://github.com/m417z)'s mod [keyboard-shortcut-actions](https://github.com/ramensoftware/windhawk-mods/blob/f016abc733a47b45faa02a0d8501a95304d96587/mods/keyboard-shortcut-actions.wh.cpp)
+
 Trigger custom Actions via Mouse Clicks + optional Modifiers.
 
 Available `Mouse Triggers`:
@@ -75,6 +80,9 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 
 &nbsp;
 
+###                                                                  *Maintained with the help of AI and careful babysitting*
+
+&nbsp;
 
                                                                                                                         🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
 */
@@ -92,7 +100,7 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
   $name: X Offset
 - OffsetY: 0
   $name: Y Offset
-- AutoTheme: true
+- AutoTheme: false
   $name: Auto Theme
   $description: >-
     ✓ System | B/W Text & Icons based on System Light/Dark mode.
@@ -113,10 +121,10 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 - BgColor: "0, 0, 0"
   $name: Manual Background Color Override (R, G, B)
   $description: Set to 0,0,0 to not override. Enter RGB values separated by commas (e.g; "102, 255, 255"). Alpha controlled below ↓
-- BgOpacity: 0
+- BgOpacity: 20
   $name: Acrylic Tint Opacity (0-255)
   $description: Keep 0 for pure glass. Controls Alpha for Manual Background Color.
-- TextColor: "255, 255, 255"
+- TextColor: "240, 220, 240, 255"
   $name: Manual Text Color (R, G, B, [A])
   $description: Enter RGB or RGBA values separated by commas (e.g; "102, 255, 255" or "255, 0, 0, 128")
 - IdleTimeout: 0
@@ -143,7 +151,7 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 - IgnoredApps: firefox.exe;chrome.exe;msedge.exe;vlc.exe
   $name: Fullscreen Whitelist
   $description: Semicolon-separated list of executables to IGNORE (keep widget visible).
-- EnableRainbow: false
+- EnableRainbow: true
   $name: Enable Rainbow RGB Effect
   $description: >-
     ✓ Enabled | Adds a flowing rainbow gradient border beneath the widget.
@@ -155,19 +163,19 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
       ✓ On | Draws rainbow above the main widget.
   
       ✕ Off | Draws rainbow below the main widget.
-- RainbowSpeed: 3
+- RainbowSpeed: 4
   $name: Rainbow Speed (1-10)
   $description: Controls how fast the rainbow colors flow. Higher = faster.
 - RainbowBrightness: 80
   $name: Rainbow Brightness (0-100)
   $description: Controls the brightness/intensity of the rainbow colors.
-- RainbowThickness: 1
+- RainbowThickness: 6
   $name: Rainbow Border Thickness (1-10 pixels)
   $description: Controls how thick the rainbow border appears.
-- RainbowBorderOffset: 0
+- RainbowBorderOffset: 3
   $name: Rainbow Border Offset (0-10 pixels)
   $description: Distance between main widget and rainbow border.
-- EnableAudioReactive: false
+- EnableAudioReactive: true
   $name: Audio Reactive Rainbow                        🚧    WORK IN PROGRESS    🚧
   $description: >-
 
@@ -180,7 +188,7 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 - AudioThreshold: 80
   $name: Audio Threshold (0 - 100)
   $description: Minimum volume level required to trigger the effect.
-- AudioRamp: 50
+- AudioRamp: 90
   $name: Audio Ramp (0 - 100)
   $description: Audio level treated as the lowest point in the spectrum.
 - AudioBinary: false
@@ -189,37 +197,38 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
     ✓ On | Audio over threshold sets value to maximum.
     
     ✕ Off | Audio scales continuously.
-- AudioFlicker: 99
+- AudioFlicker: 0
   $name: Min Result (Flicker Control) 0-100
   $description: Result values below this ratio will trigger the range minimum.
-- AudioDynamicRange: true
+- AudioDynamicRange: false
   $name: Dynamic Range / Advanced Mode
   $description: >-
     ✓ On | Map audio to full range using these advanced settings.
     
     ✕ Off | Use legacy simple smoothing logic.
-- AudioMinValue: 100
+- AudioMinValue: 99
   $name: Min Value (0 - 100)
   $description: The minimum output value % when audio is low.
 - AudioMaxValue: 100
   $name: Max Value (0 - 100)
   $description: The maximum output value % when audio is high.
-- AudioHueReactiveMode: 0
+- AudioHueReactiveMode: 2
   $name: Audio Hue Reactive Mode
-  $description: Audio-driven hue effects for rainbow border
-  $options:
-  - 0: Off
-  - 1: Speed Boost
-  - 2: Pulse (Color Jump)
-  - 3: Bounce (Direction Reverse)
-  - 4: Speed Boost + Pulse
-  - 5: Speed Boost + Bounce
-  - 6: Pulse + Bounce
-  - 7: All Effects
-- TriggerActionOptions:
+  $description: >-
+    Audio-driven hue effects for rainbow border
+     0:   Off
+     1:   Speed Boost
+     2:   Pulse (Color Jump)
+     3:   Bounce (Direction Reverse)
+     4:   Speed Boost + Pulse
+     5:   Speed Boost + Bounce
+     6:   Pulse + Bounce
+     7:   All Effects
+
+- Triggers:
   - - MouseTrigger: Double
       $name: Mouse Trigger
-      $description: The mouse button or wheel action to detect on the empty space.
+      $description: The mouse button or wheel action to detect.
       $options:
       - Left: Left Click
       - Right: Right Click
@@ -239,122 +248,188 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
       - lalt: Left Alt
       - ralt: Right Alt
       - win: Win Key
-    - Action: ACTION_ACTIVATE_SOURCE_APP
-      $name: Action
-      $description: The command to execute.
-      $options:
-      - ACTION_ACTIVATE_SOURCE_APP: Switch to Audible Window
-      - ACTION_VOLUME_UP: Volume Up
-      - ACTION_VOLUME_DOWN: Volume Down
-      - ACTION_START_PROCESS: Open App / Run File
-      - ACTION_SEND_KEYPRESS: Send Keystrokes (Macro)
-      - ACTION_MUTE: Toggle Mute
-      - ACTION_MEDIA_PLAY_PAUSE: Media Play/Pause
-      - ACTION_MEDIA_NEXT: Media Next Track
-      - ACTION_MEDIA_PREV: Media Prev Track
-      - ACTION_SHOW_DESKTOP: Show Desktop
-      - ACTION_TOGGLE_DESKTOP_ICONS: Toggle Desktop Icons
-      - ACTION_TOGGLE_TASKBAR_AUTOHIDE: Toggle Taskbar Auto-Hide
-      - ACTION_TOGGLE_TASKBAR_ALIGNMENT: Toggle Taskbar Alignment
-      - ACTION_COMBINE_TASKBAR_BUTTONS: Combine Taskbar Buttons
-      - ACTION_WIN_TAB: Win+Tab
-      - ACTION_OPEN_START_MENU: Open Start Menu
-      - ACTION_TASK_MANAGER: Open Task Manager
-      - ACTION_TOGGLE_AUDIO_REACTIVE: Toggle Audio Reactive Rainbow
-      - ACTION_TOGGLE_RAINBOW_ZORDER: Toggle Rainbow Z-Order (Above/Below)
-    - AdditionalArgs: ""
-      $name: Arguments
-      $description: >-
-                Delay (optional): Prefix with seconds followed by colon (max 9999 seconds)
-                    2:calc.exe → waits 2 seconds  |  calc.exe → instant
-                    Syntax: SECONDS:argument (e.g., "5.5:calc.exe" or "10:Ctrl+V")
-                
-                Arguments by action:
-                    Open App: 2:calc.exe or notepad.exe
-                    Keystrokes: 0.5:Ctrl+C or Win+Tab (use + or ;)
-                    Combine Buttons: 1:COMBINE_ALWAYS;COMBINE_NEVER (2 or 4 states)
-                    Volume/Media/Desktop/Taskbar: 3: (delay only, no args needed)
+    - Actions:
+      - - Action: ACTION_ACTIVATE_SOURCE_APP
+          $name: Action
+          $description: The command to execute.
+          $options:
+          - ACTION_ACTIVATE_SOURCE_APP: Switch to Audible Window
+          - ACTION_VOLUME_UP: Volume Up
+          - ACTION_VOLUME_DOWN: Volume Down
+          - ACTION_START_PROCESS: Open App / Run File
+          - ACTION_SEND_KEYPRESS: Send Keystrokes (Macro)
+          - ACTION_MUTE: Toggle Mute
+          - ACTION_MEDIA_PLAY_PAUSE: Media Play/Pause
+          - ACTION_MEDIA_NEXT: Media Next Track
+          - ACTION_MEDIA_PREV: Media Prev Track
+          - ACTION_SHOW_DESKTOP: Show Desktop
+          - ACTION_TOGGLE_DESKTOP_ICONS: Toggle Desktop Icons
+          - ACTION_TOGGLE_TASKBAR_AUTOHIDE: Toggle Taskbar Auto-Hide
+          - ACTION_TOGGLE_TASKBAR_ALIGNMENT: Toggle Taskbar Alignment
+          - ACTION_COMBINE_TASKBAR_BUTTONS: Combine Taskbar Buttons
+          - ACTION_WIN_TAB: Win+Tab
+          - ACTION_OPEN_START_MENU: Open Start Menu
+          - ACTION_TASK_MANAGER: Open Task Manager
+          - ACTION_TOGGLE_AUDIO_REACTIVE: Toggle Audio Reactive Rainbow
+          - ACTION_TOGGLE_RAINBOW_ZORDER: Toggle Rainbow Z-Order (Above/Below)
+        - AdditionalArgs: ""
+          $name: Arguments
+          $description: >-
+                    Delay (optional): Prefix with seconds followed by colon (max 9999 seconds)
+                        2:calc.exe → waits 2 seconds  |  calc.exe → instant
+                        Syntax: SECONDS:argument (e.g., "5.5:calc.exe" or "10:Ctrl+V")
+                    
+                    Arguments by action:
+                        Open App: 2:calc.exe or notepad.exe
+                        Keystrokes: 0.5:Ctrl+C or Win+Tab (use + or ;)
+                        Combine Buttons: 1:COMBINE_ALWAYS;COMBINE_NEVER (2 or 4 states)
+                        Volume/Media/Desktop/Taskbar: 3: (delay only, no args needed)
+      $name: Actions
+      $description: Add multiple actions to execute when this trigger fires. Actions run in order.
   - - MouseTrigger: ScrollUp
     - KeyboardTriggers: [none]
-    - Action: ACTION_VOLUME_UP
-    - AdditionalArgs: ""
+    - Actions:
+      - - Action: ACTION_VOLUME_UP
+        - AdditionalArgs: ""
   - - MouseTrigger: ScrollDown
     - KeyboardTriggers: [none]
-    - Action: ACTION_VOLUME_DOWN
-    - AdditionalArgs: ""
-  $name: Custom Mouse Actions
-  $description: Configure what happens when you click the widget background.
+    - Actions:
+      - - Action: ACTION_VOLUME_DOWN
+        - AdditionalArgs: ""
+  $name: Triggers
+  $description: Configure mouse/keyboard triggers and the actions they execute.
 */
 // ==/WindhawkModSettings==
 
+#pragma endregion Windhawk // ^Windhawk Readme/Metadata/Settings
+
+//! =====================================================================
+
+#pragma region includes
+// Windows Core
 #include <windows.h>
-#include <shellapi.h>
-#include <dwmapi.h>
-#include <gdiplus.h>
-#include <shcore.h>
-#include <propsys.h>
-#include <propkey.h>
-#include <string>
-#include <thread>
-#include <mutex>
-#include <cstdio>
-#include <psapi.h>
-#include <shobjidl.h>
-#include <windhawk_utils.h>
-#include <sstream>
-
-// COM & Audio
-#include <commctrl.h>
-#include <endpointvolume.h>
-#include <mmdeviceapi.h>
-
-// Utilities
 #include <windef.h>
 #include <winerror.h>
 #include <winuser.h>
+// Windows Shell & UI
+#include <shellapi.h>
+#include <shlobj.h>
+#include <shobjidl.h>
+#include <commctrl.h>
+#include <dwmapi.h>
+#include <shcore.h>
+// Windows Media & Audio
+#include <mmdeviceapi.h>
+#include <endpointvolume.h>
+#include <propsys.h>
+#include <propkey.h>
+// Graphics
+#include <gdiplus.h>
+// Process & System
+#include <psapi.h>
+// C++ Standard Library
 #include <algorithm>
+#include <cstdio>
 #include <cwctype>
 #include <functional>
+#include <mutex>
+#include <sstream>
+#include <string>
 #include <string_view>
+#include <thread>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
-#include <tuple>
-
-// WinRT
+// WinRT (Windows Runtime for GSMTC media control)
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Media.Control.h>
 #include <winrt/Windows.Storage.Streams.h>
+// Windhawk
+#include <windhawk_utils.h>
 
-using namespace Gdiplus;
+// Standard Library (common types used throughout)
 using namespace std;
+// Graphics (GDI+)
+using namespace Gdiplus;
+// WinRT namespaces (required for media control)
 using namespace winrt;
 using namespace Windows::Media::Control;
 using namespace Windows::Storage::Streams;
+using winrt::com_ptr;
 
-// Clamps value v between min and max bounds
-template<typename T> T Clamp(T v, T min, T max) { return (v < min) ? min : (v > max) ? max : v; }
+#pragma endregion  //^ includes
 
-// Linear interpolation helper for smooth blending
-template<typename T> T Lerp(T a, T b, T f) { return a + f * (b - a); }
+//! =====================================================================
 
-// --- Helper Macros ---
-#define AUDIO_REACTIVE_MODE 3 // 1=Brightness, 2=Thickness, 3=Both
-#define AUDIO_HUE_REACTIVE_MODE 0 // 0=Off, 1=SpeedBoost, 2=Pulse, 3=Bounce, 4=SpeedBoost+Pulse, 5=SpeedBoost+Bounce, 6=Pulse+Bounce, 7=All
+#pragma region types_and_globals
 
-// --- Constants ---
-const WCHAR* FONT_NAME = L"Segoe UI Variable Display";
+// --- Forward Declarations ---
+HWND EnsureTaskbarHandle();
+HWND GetMediaZOrderInsertAfter();
+HWND GetRainbowZOrderInsertAfter();
+void UpdateScaleFactor();
+void SyncPositionWithTaskbar();
+void ForceDockedState();
 
-// Audio Reactive Rainbow Tuning
-const float AUDIO_SENSITIVITY = 1.5f;
-const float AUDIO_SMOOTHING = 0.25f;
+// Settings & Appearance
+void LoadSettings();
+void ValidateSettings();
+void UpdateAppearance(HWND hwnd);
 
-// Audio Hue Reactive Constants
-const float AUDIO_HUE_SPEED_BOOST = 2.5f;        // Multiplier for rainbow speed during audio reactivity
-const float AUDIO_HUE_PULSE_AMOUNT = 180.0f;     // Degrees of hue shift per audio peak
-const float AUDIO_HUE_BOUNCE_THRESHOLD = 0.65f;  // Peak threshold to trigger direction bounce
+// Action Engine
+void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds);
+bool OnMouseClick(const std::wstring& detectedTriggerName);
 
-// --- Audio Metering API ---
-static const GUID IID_IAudioMeterInformation = { 0xC02216F6, 0x8C67, 0x4B5B, {0x9D, 0x00, 0xD0, 0x08, 0xE7, 0x3E, 0x00, 0x64} };
+// --- Timer IDs ---
+#define IDT_POLL_MEDIA      1001  // Media state polling
+#define IDT_TEXT_ANIM       1002  // Text scroll animation
+#define IDT_VIS_ANIM        1003  // Visibility/slide animation
+#define IDT_RAINBOW_ANIM    1004  // Rainbow border animation
+#define IDT_DELAYED_ACTIONS 1005  // Delayed action execution
+
+// --- Timer Intervals (milliseconds) ---
+#define TIMER_ANIMATION_MS       16   // ~60 FPS for smooth animations
+#define TIMER_MEDIA_POLL_MS      1000 // 1 second media state poll
+#define TIMER_TEXT_ANIM_MS       16   // ~60 FPS text scroll
+#define TIMER_DELAYED_ACTIONS_MS 50   // Delayed action check interval
+
+// --- Custom Window Messages ---
+#define APP_WM_CLOSE WM_APP  // Custom close message for cleanup
+
+// --- Audio Reactive Mode Flags ---
+#define kAudioReactiveMode     3  // 1=Brightness, 2=Thickness, 3=Both
+#define kAudioHueReactiveMode  0  // 0=Off, 1-7=Various combos (see settings)
+
+// --- UI Constants ---
+static const WCHAR* kFontName = L"Segoe UI Variable Display";
+
+// --- Audio Reactive Tuning ---
+static const float kAudioSensitivity       = 1.5f;   // Overall sensitivity multiplier
+static const float kAudioSmoothing         = 0.25f;  // Lerp factor for smoothing
+static const float kAudioHueSpeedBoost     = 2.5f;   // Rainbow speed multiplier during audio
+static const float kAudioHuePulseAmount    = 180.0f; // Degrees of hue shift per peak
+static const float kAudioHueBounceThreshold = 0.65f; // Peak threshold for direction bounce
+
+// --- Template Utilities ---
+
+/// Clamps value v between min and max bounds
+template<typename T>
+T Clamp(T v, T lo, T hi) {
+    return (v < lo) ? lo : (v > hi) ? hi : v;
+}
+
+/// Linear interpolation: returns a + f * (b - a)
+template<typename T>
+T Lerp(T a, T b, T f) {
+    return a + f * (b - a);
+}
+
+// --- Audio Metering Interface (Windows Core Audio) ---
+// Used for real-time audio peak level detection for reactive effects
+static const GUID IID_IAudioMeterInformation = {
+    0xC02216F6, 0x8C67, 0x4B5B,
+    {0x9D, 0x00, 0xD0, 0x08, 0xE7, 0x3E, 0x00, 0x64}
+};
 
 interface IAudioMeterInformation : public IUnknown {
     virtual HRESULT STDMETHODCALLTYPE GetPeakValue(float *pfPeak) = 0;
@@ -363,103 +438,131 @@ interface IAudioMeterInformation : public IUnknown {
     virtual HRESULT STDMETHODCALLTYPE QueryHardwareSupport(DWORD *pdwHardwareSupportMask) = 0;
 };
 
-// --- DWM API ---
-typedef enum _WINDOWCOMPOSITIONATTRIB { WCA_ACCENT_POLICY = 19 } WINDOWCOMPOSITIONATTRIB;
+// --- DWM Composition Attribute API ---
+// Used for acrylic blur and window composition effects
+typedef enum _WINDOWCOMPOSITIONATTRIB { 
+    WCA_ACCENT_POLICY = 19 
+} WINDOWCOMPOSITIONATTRIB;
+
 typedef enum _ACCENT_STATE {
     ACCENT_DISABLED = 0,
     ACCENT_ENABLE_BLURBEHIND = 3,
     ACCENT_ENABLE_ACRYLICBLURBEHIND = 4, 
     ACCENT_INVALID_STATE = 5
 } ACCENT_STATE;
+
 typedef struct _ACCENT_POLICY {
     ACCENT_STATE AccentState;
     DWORD AccentFlags;
     DWORD GradientColor;
     DWORD AnimationId;
 } ACCENT_POLICY;
+
 typedef struct _WINDOWCOMPOSITIONATTRIBDATA {
     WINDOWCOMPOSITIONATTRIB Attribute;
     PVOID Data;
     SIZE_T SizeOfData;
 } WINDOWCOMPOSITIONATTRIBDATA;
+
 typedef BOOL(WINAPI* pSetWindowCompositionAttribute)(HWND, WINDOWCOMPOSITIONATTRIBDATA*);
 
 // --- Z-Band API ---
+// Used for creating windows in special z-order bands
 typedef HWND(WINAPI* pCreateWindowInBand)(DWORD, LPCWSTR, LPCWSTR, DWORD, int, int, int, int, HWND, HMENU, HINSTANCE, LPVOID, DWORD);
 enum ZBID { ZBID_IMMERSIVE_NOTIFICATION = 4 };
 
-// --- Configurable State ---
+//! ============================================================================
+//^ SETTINGS STRUCTURE
+//! ============================================================================
+
+/// User-configurable mod settings loaded from Windhawk UI
 struct ModSettings {
-    int width = 400;
-    int height = 35;
-    int fontSize = 13;
-    int offsetX = 140;
-    int offsetY = 0;
-    bool autoTheme = true;
-    bool invertTheme = false;
-    DWORD manualTextColor = 0xFFFFFFFF; 
-    DWORD manualBgColorRGB = 0; // Stores BGR for DWM
-    int bgOpacity = 0;
-    int fsInterval = 2;
-    int idleTimeout = 0;
-    bool EnableTextScroll = true;
-    bool enableSlide = true;
-    bool enableGameDetect = true;
-    wstring ignoredApps;
-    bool enableRainbow = false;
-    bool rainbowAboveWidget = false;
-    bool enableAudioReactive = false;
-    int rainbowSpeed = 3;
-    int rainbowBrightness = 80;
-    int rainbowThickness = 1;
-    int rainbowBorderOffset = 0;
-    bool enableRoundedCorners = true;
+    // --- Dimensions & Position ---
+    int width = 400;              // Widget width in pixels
+    int height = 35;              // Widget height in pixels
+    int fontSize = 13;            // Text font size
+    int offsetX = 140;            // Horizontal offset from taskbar edge
+    int offsetY = 0;              // Vertical offset from taskbar center
     
-    // Internal state tracking
+    // --- Theme & Colors ---
+    bool autoTheme = true;        // Auto-detect light/dark theme
+    bool invertTheme = false;     // Invert detected theme
+    DWORD manualTextColor = 0xFFFFFFFF;  // Manual text color (ARGB)
+    DWORD manualBgColorRGB = 0;   // Manual background color (BGR for DWM)
+    int bgOpacity = 0;            // Background opacity (0-255)
+    
+    // --- Behavior ---
+    int fsInterval = 2;           // Fullscreen check interval (seconds)
+    int idleTimeout = 0;          // Hide after N seconds idle (0=disabled)
+    bool EnableTextScroll = true; // Enable text scrolling for long titles
+    bool enableSlide = true;      // Enable slide animation
+    bool enableGameDetect = true; // Detect fullscreen apps
+    wstring ignoredApps;          // Comma-separated list of ignored apps
+    
+    // --- Rainbow Border ---
+    bool enableRainbow = false;         // Enable rainbow border effect
+    bool rainbowAboveWidget = false;    // Render rainbow above media widget
+    bool enableAudioReactive = false;   // Audio-reactive rainbow effects
+    int rainbowSpeed = 3;               // Rainbow hue rotation speed
+    int rainbowBrightness = 80;         // Rainbow brightness (0-100)
+    int rainbowThickness = 1;           // Border thickness in pixels
+    int rainbowBorderOffset = 0;        // Border position offset
+    bool enableRoundedCorners = true;   // Rounded corners on border
+    
+    // Internal state (not user-configurable)
     bool storedRainbowAboveWidget = false;
 
-    // Audio Processing Settings
-    int audioResponsiveness = 20;
-    int audioThreshold = 80;
-    int audioRamp = 50;
-    bool audioBinary = false;
-    int audioFlicker = 99;
-    bool audioDynamicRange = true;
-    int audioMinValue = 100;
-    int audioMaxValue = 100;
-    int audioHueReactiveMode = 0;
+    // --- Advanced Audio Processing ---
+    int audioResponsiveness = 20;       // How quickly audio reacts
+    int audioThreshold = 80;            // Audio activation threshold
+    int audioRamp = 50;                 // Ramp-up speed
+    bool audioBinary = false;           // Binary on/off mode
+    int audioFlicker = 99;              // Anti-flicker setting
+    bool audioDynamicRange = true;      // Use dynamic range processing
+    int audioMinValue = 100;            // Min output value
+    int audioMaxValue = 100;            // Max output value
+    int audioHueReactiveMode = 0;       // Hue reactive mode (0-7)
 } g_Settings;
 
-// --- Global State ---
-HWND g_hMediaWindow = NULL;
-HWND g_hTaskbar = NULL;
-HWINEVENTHOOK g_hVisibilityHook = NULL;
-bool g_Running = true; 
-int g_HoverState = 0; 
-float g_ScaleFactor = 1.0f; // DPI Scale
+//! ============================================================================
+//^ GLOBAL STATE
+//! ============================================================================
 
-// Detection & Animation State
-bool g_IsGameDetected = false;
-int g_FsCheckTick = 0;
-int g_AnimState = 0; // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Docked
-int g_CurrentAnimY = 0;
-bool g_ShutdownMode = false;
-int g_IdleSecondsCounter = 0;
-bool g_IsHiddenByIdle = false;
+// --- Window Handles ---
+HWND g_hMediaWindow = NULL;      // Main media widget window
+HWND g_hTaskbar = NULL;          // Windows taskbar handle
+HWND g_hRainbowWindow = NULL;    // Rainbow border overlay window
+HWINEVENTHOOK g_hVisibilityHook = NULL;  // Taskbar visibility hook
 
-// Rainbow Feature State
-HWND g_hRainbowWindow = NULL;
-float g_RainbowHue = 0.0f; // 0-360 for HSV color wheel
-int g_RainbowAnimState = 0; // Mirror of main window anim state
-int g_CurrentRainbowAnimY = 0;
-ULONG_PTR g_gdiplusToken = 0;
-bool g_RainbowDirectionReverse = false; // Direction bounce state for audio hue reactivity
+// --- Runtime Flags ---
+bool g_Running = true;           // Main loop control flag
+bool g_ShutdownMode = false;     // Graceful shutdown in progress
 
-// Audio Reactive State
-float g_AudioPeakLevel = 0.0f;
-float g_AudioPeakSmoothed = 0.0f;
-bool g_AudioReactiveRuntimeEnabled = true;
+// --- UI State ---
+int g_HoverState = 0;            // Current hover/click state (0=none, 1-3=buttons)
+float g_ScaleFactor = 1.0f;      // DPI scaling factor
 
+// --- Visibility & Animation State ---
+bool g_IsGameDetected = false;   // Fullscreen game/app detected
+int g_FsCheckTick = 0;           // Fullscreen check counter
+int g_AnimState = 0;             // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Docked
+int g_CurrentAnimY = 0;          // Current Y position during animation
+int g_IdleSecondsCounter = 0;    // Seconds since last activity
+bool g_IsHiddenByIdle = false;   // Hidden due to idle timeout
+
+// --- Rainbow Effect State ---
+float g_RainbowHue = 0.0f;       // Current hue angle (0-360)
+int g_RainbowAnimState = 0;      // Rainbow window animation state
+int g_CurrentRainbowAnimY = 0;   // Rainbow Y position during animation
+ULONG_PTR g_gdiplusToken = 0;    // GDI+ initialization token
+bool g_RainbowDirectionReverse = false;  // Direction for bounce effect
+
+// --- Audio Reactive State ---
+float g_AudioPeakLevel = 0.0f;          // Current audio peak (0.0-1.0)
+float g_AudioPeakSmoothed = 0.0f;       // Smoothed audio peak
+bool g_AudioReactiveRuntimeEnabled = true;  // Runtime enable flag
+
+// --- Media State ---
 struct MediaState {
     wstring title = L"Waiting for media...";
     wstring artist = L"";
@@ -470,21 +573,23 @@ struct MediaState {
     mutex lock;
 } g_MediaState;
 
-int g_ScrollOffset = 0;
-int g_TextWidth = 0;
-bool g_IsScrolling = false;
-int g_ScrollWait = 60;
+// --- Text Scrolling State ---
+int g_ScrollOffset = 0;          // Current scroll position
+int g_TextWidth = 0;             // Measured text width
+bool g_IsScrolling = false;      // Currently scrolling
+int g_ScrollWait = 60;           // Pause frames at scroll start
 
-// --- ACTION ENGINE LIBRARY ---
-
-using winrt::com_ptr;
+// --- String Utilities ---
 
 namespace stringtools {
+    /// Trim leading and trailing whitespace from string
     std::wstring trim(const std::wstring& s) {
         auto wsfront = std::find_if_not(s.begin(), s.end(), [](int c) { return std::iswspace(c); });
         auto wsback = std::find_if_not(s.rbegin(), s.rend(), [](int c) { return std::iswspace(c); }).base();
         return (wsback <= wsfront) ? std::wstring() : std::wstring(wsfront, wsback);
     }
+    
+    /// Split string by delimiter and trim each token
     std::vector<std::wstring> split(const std::wstring& s, wchar_t delimiter) {
         std::vector<std::wstring> tokens;
         std::wstring token;
@@ -497,6 +602,8 @@ namespace stringtools {
         }
         return tokens;
     }
+    
+    /// Convert string to lowercase
     std::wstring toLower(const std::wstring& s) {
         std::wstring result = s;
         std::transform(result.begin(), result.end(), result.begin(), ::towlower);
@@ -504,18 +611,45 @@ namespace stringtools {
     }
 }
 
+// --- Audio COM API Wrapper ---
+
+/// Manages COM-based audio metering for reactive effects
 class AudioCOMAPI {
- public:
-    AudioCOMAPI() : m_isInitialized(false), m_isCOMInitialized(false), m_pDeviceEnumerator(nullptr), m_pAudioMeter(nullptr), m_meterInitialized(false) {}
+public:
+    AudioCOMAPI() 
+        : m_isInitialized(false)
+        , m_isCOMInitialized(false)
+        , m_pDeviceEnumerator(nullptr)
+        , m_pAudioMeter(nullptr)
+        , m_meterInitialized(false) 
+    {}
+    
+    /// Initialize COM and device enumerator
     bool Init() {
         if (!m_isCOMInitialized) {
-            if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED))) m_isCOMInitialized = true;
-            else return false;
+            if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED))) {
+                m_isCOMInitialized = true;
+            } else {
+                return false;
+            }
         }
+        
         if (!m_isInitialized && m_isCOMInitialized) {
-            const GUID XIID_IMMDeviceEnumerator = {0xA95664D2, 0x9614, 0x4F35, {0xA7, 0x46, 0xDE, 0x8D, 0xB6, 0x36, 0x17, 0xE6}};
-            const GUID XIID_MMDeviceEnumerator = {0xBCDE0395, 0xE52F, 0x467C, {0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E}};
-            if (FAILED(CoCreateInstance(XIID_MMDeviceEnumerator, NULL, CLSCTX_INPROC_SERVER, XIID_IMMDeviceEnumerator, m_pDeviceEnumerator.put_void())) || !m_pDeviceEnumerator) return false;
+            const GUID XIID_IMMDeviceEnumerator = {
+                0xA95664D2, 0x9614, 0x4F35, 
+                {0xA7, 0x46, 0xDE, 0x8D, 0xB6, 0x36, 0x17, 0xE6}
+            };
+            const GUID XIID_MMDeviceEnumerator = {
+                0xBCDE0395, 0xE52F, 0x467C, 
+                {0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E}
+            };
+            
+            if (FAILED(CoCreateInstance(
+                    XIID_MMDeviceEnumerator, NULL, CLSCTX_INPROC_SERVER, 
+                    XIID_IMMDeviceEnumerator, m_pDeviceEnumerator.put_void())) 
+                || !m_pDeviceEnumerator) {
+                return false;
+            }
             m_isInitialized = true;
         }
         return m_isInitialized;
@@ -539,6 +673,8 @@ class AudioCOMAPI {
         Wh_Log(L"[Audio Meter] Successfully initialized");
         return true;
     }
+    
+    /// Get current audio peak level (0.0-1.0)
     float GetPeakLevel() {
         if (!m_meterInitialized || !m_pAudioMeter) return 0.0f;
         float peak = 0.0f;
@@ -547,6 +683,8 @@ class AudioCOMAPI {
         }
         return 0.0f;
     }
+    
+    /// Release all COM resources
     void Uninit() {
         if (m_pAudioMeter) {
             m_pAudioMeter = nullptr;
@@ -564,27 +702,48 @@ class AudioCOMAPI {
             Wh_Log(L"[Audio Meter] COM uninitialized");
         }
     }
-    bool IsInitialized() { return m_isInitialized; }
-    const com_ptr<IMMDeviceEnumerator> GetDeviceEnumerator() { return m_pDeviceEnumerator; }
- private:
+    
+    bool IsInitialized() const { return m_isInitialized; }
+    const com_ptr<IMMDeviceEnumerator>& GetDeviceEnumerator() const { return m_pDeviceEnumerator; }
+
+private:
     bool m_isInitialized;
     bool m_isCOMInitialized;
     com_ptr<IMMDeviceEnumerator> m_pDeviceEnumerator;
     com_ptr<IAudioMeterInformation> m_pAudioMeter;
     bool m_meterInitialized;
 };
+
 static AudioCOMAPI g_audioCOM;
 
+#pragma endregion  // ^types_and_globals
+
+//! =====================================================================
+
+#pragma region action_engine
+
+/// Keyboard modifier key identifiers
 enum KeyModifier {
-    KEY_MODIFIER_LCTRL = 0, KEY_MODIFIER_RCTRL, KEY_MODIFIER_LALT, KEY_MODIFIER_RALT,
-    KEY_MODIFIER_LSHIFT, KEY_MODIFIER_RSHIFT, KEY_MODIFIER_LWIN, KEY_MODIFIER_INVALID
+    KEY_MODIFIER_LCTRL = 0,
+    KEY_MODIFIER_RCTRL,
+    KEY_MODIFIER_LALT,
+    KEY_MODIFIER_RALT,
+    KEY_MODIFIER_LSHIFT,
+    KEY_MODIFIER_RSHIFT,
+    KEY_MODIFIER_LWIN,
+    KEY_MODIFIER_INVALID
 };
 
-void SetBit(uint32_t &value, uint32_t bit) { value |= (1U << bit); }
+/// Set a specific bit in a value (for modifier bitmask)
+inline void SetBit(uint32_t& value, uint32_t bit) { 
+    value |= (1U << bit); 
+}
 
+/// Get current state of all modifier keys as bitmask
 static uint32_t GetKeyModifiersState() {
     BYTE keyState[256] = {0};
     if (!GetKeyboardState(keyState)) return 0U;
+    
     uint32_t currentKeyModifiersState = 0U;
     if (keyState[VK_LCONTROL] & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LCTRL);
     if (keyState[VK_LSHIFT]   & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LSHIFT);
@@ -596,7 +755,8 @@ static uint32_t GetKeyModifiersState() {
     return currentKeyModifiersState;
 }
 
-KeyModifier GetKeyModifierFromName(const std::wstring &keyName) {
+/// Convert modifier name string to enum value
+KeyModifier GetKeyModifierFromName(const std::wstring& keyName) {
     if (keyName == L"lctrl") return KEY_MODIFIER_LCTRL;
     if (keyName == L"rctrl") return KEY_MODIFIER_RCTRL;
     if (keyName == L"lshift") return KEY_MODIFIER_LSHIFT;
@@ -744,7 +904,7 @@ void ToggleVolMuted() {
     }
 }
 
-// Helper: get AUMID from a window
+// Helper: get AUMID from a window  - used to identify source app
 std::wstring GetWindowAUMID(HWND hwnd) {
     IPropertyStore* pps = nullptr;
     if (FAILED(SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps)))) return L"";
@@ -819,30 +979,24 @@ void ActivateSourceApp() {
 struct ConfiguredTrigger {
     std::wstring mouseTriggerName;
     uint32_t expectedModifiers;
-    std::function<void()> action;
+    std::vector<std::function<void()>> actions;  // Multiple actions per trigger
 };
 
 std::vector<ConfiguredTrigger> g_triggers;
 
-// --- Delayed Action Execution System ---
+// --- Delayed Action Execution ---
+
+/// Pending action for deferred execution
 struct PendingAction {
     std::function<void()> action;
     DWORD executeAtTick;
 };
+
 std::vector<PendingAction> g_pendingActions;
 std::mutex g_pendingActionsMutex;
 
-#define IDT_DELAYED_ACTIONS 1005
+// --- Taskbar & Desktop Helpers ---
 
-// --- Additional Actions: Taskbar & Desktop Helpers ---
-
-// Timer interval constants (milliseconds) for readability and maintainability
-#define TIMER_ANIMATION_MS 16         // 60 FPS for visual animations and rainbow border
-#define TIMER_MEDIA_POLL_MS 1000      // 1 second poll for media state updates
-#define TIMER_TEXT_ANIM_MS 16         // 60 FPS for text scrolling animation (match previous behavior)
-#define TIMER_DELAYED_ACTIONS_MS 50   // 50ms for delayed action checks
-
-// Simple Key-Based Actions
 void SendWinTabKeypress() {
     Wh_Log(L"Sending Win+Tab");
     SendKeypress({VK_LWIN, VK_TAB});
@@ -1186,9 +1340,15 @@ bool OnMouseClick(const std::wstring& detectedTriggerName) {
     for(const auto& t : g_triggers) {
         if (t.mouseTriggerName == detectedTriggerName) {
             if (t.expectedModifiers == currentMods) {
-                if (t.action) {
-                    t.action();
-                    Wh_Log(L"[MusicLounge] Trigger Executed: %s", detectedTriggerName.c_str());
+                // Execute all actions for this trigger in order
+                for (size_t i = 0; i < t.actions.size(); i++) {
+                    if (t.actions[i]) {
+                        t.actions[i]();
+                        Wh_Log(L"[MusicLounge] Trigger '%s' Action %d/%d executed", 
+                               detectedTriggerName.c_str(), (int)(i+1), (int)t.actions.size());
+                    }
+                }
+                if (!t.actions.empty()) {
                     handled = true;
                 }
             }
@@ -1263,9 +1423,6 @@ bool CheckBorderlessFullscreen() {
             rcWin.right >= mi.rcMonitor.right && 
             rcWin.bottom >= mi.rcMonitor.bottom);
 }
-
-#define IDT_VIS_ANIM 1003
-#define IDT_RAINBOW_ANIM 1004
 
 void UpdateScaleFactor() {
     UINT dpi = GetDpiForSystem();  // No window needed, system-wide DPI
@@ -1495,17 +1652,27 @@ void ValidateSettings() {
     Wh_Log(L"Settings validated");
 }
 
-// --- Settings ---
+#pragma endregion  // ^action_engine
+
+//! =====================================================================
+
+#pragma region settings
+
+/// Load all settings from Windhawk configuration
 void LoadSettings() {
+    // --- Dimensions & Position ---
     g_Settings.width = Wh_GetIntSetting(L"PanelWidth");
     g_Settings.height = Wh_GetIntSetting(L"PanelHeight");
     g_Settings.fontSize = Wh_GetIntSetting(L"FontSize");
     g_Settings.offsetX = Wh_GetIntSetting(L"OffsetX");
     g_Settings.offsetY = Wh_GetIntSetting(L"OffsetY");
+    
+    // --- Theme Settings ---
     g_Settings.autoTheme = Wh_GetIntSetting(L"AutoTheme") != 0;
     g_Settings.invertTheme = Wh_GetIntSetting(L"InvertTheme") != 0;
     g_Settings.bgOpacity = Wh_GetIntSetting(L"BgOpacity");
 
+    // --- Manual Text Color ---
     PCWSTR textColorStr = Wh_GetStringSetting(L"TextColor");
     if (textColorStr) {
         int r, g, b, a;
@@ -1519,6 +1686,7 @@ void LoadSettings() {
         g_Settings.manualTextColor = 0xFFFFFFFF;
     }
 
+    // --- Manual Background Color ---
     PCWSTR bgColorStr = Wh_GetStringSetting(L"BgColor");
     if (bgColorStr) {
         int r, g, b, a;
@@ -1614,23 +1782,38 @@ void LoadSettings() {
     using WindhawkUtils::StringSetting;
     g_triggers.clear();
     for (int i = 0; i < 50; i++) {
-        auto mouseTriggerStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].MouseTrigger", i).get());
+        auto mouseTriggerStr = std::wstring(StringSetting::make(L"Triggers[%d].MouseTrigger", i).get());
+        if (mouseTriggerStr.empty()) continue;
+        
         uint32_t mods = 0;
         for (int j = 0; j < 8; j++) {
-            auto modStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].KeyboardTriggers[%d]", i, j).get());
+            auto modStr = std::wstring(StringSetting::make(L"Triggers[%d].KeyboardTriggers[%d]", i, j).get());
             if (modStr.empty()) break;
             if (modStr == L"none") continue;
             KeyModifier km = GetKeyModifierFromName(modStr);
             if (km != KEY_MODIFIER_INVALID) SetBit(mods, km);
         }
-        auto actionStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].Action", i).get());
-        auto argsStr = std::wstring(StringSetting::make(L"TriggerActionOptions[%d].AdditionalArgs", i).get());
-        if (mouseTriggerStr.empty() || actionStr.empty()) continue;
+        
         ConfiguredTrigger ct;
         ct.mouseTriggerName = mouseTriggerStr;
         ct.expectedModifiers = mods;
-        ct.action = ParseAction(actionStr, argsStr);
-        g_triggers.push_back(ct);
+        
+        // Load multiple actions per trigger
+        for (int k = 0; k < 20; k++) {  // Up to 20 actions per trigger
+            auto actionStr = std::wstring(StringSetting::make(L"Triggers[%d].Actions[%d].Action", i, k).get());
+            if (actionStr.empty()) break;
+            auto argsStr = std::wstring(StringSetting::make(L"Triggers[%d].Actions[%d].AdditionalArgs", i, k).get());
+            auto parsedAction = ParseAction(actionStr, argsStr);
+            if (parsedAction) {
+                ct.actions.push_back(parsedAction);
+            }
+        }
+        
+        if (!ct.actions.empty()) {
+            g_triggers.push_back(ct);
+            Wh_Log(L"[MusicLounge] Loaded Trigger '%s' with %d action(s)", 
+                   ct.mouseTriggerName.c_str(), (int)ct.actions.size());
+        }
     }
     
     ValidateSettings();  // Clamp and validate all loaded values
@@ -1671,7 +1854,6 @@ void UpdateMediaInfo() {
     try {
         auto session = g_SessionManager.GetCurrentSession();
         if (!session) {
-            Wh_Log(L"WARNING: No active media session");
             lock_guard<mutex> guard(g_MediaState.lock);
             g_MediaState.hasMedia = false;
             g_MediaState.title = L"No Media";
@@ -1824,7 +2006,7 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {
     
     // Apply audio reactivity if enabled and running
     if (g_Settings.enableAudioReactive && g_AudioReactiveRuntimeEnabled) {
-        if (AUDIO_REACTIVE_MODE == 1 || AUDIO_REACTIVE_MODE == 3) {
+        if (kAudioReactiveMode == 1 || kAudioReactiveMode == 3) {
             if (g_Settings.audioDynamicRange) {
                 // When audio is 0 (g_AudioPeakLevel=0), we return to Base Brightness.
                 // When audio is 1, we go to Max Brightness (100%).
@@ -1832,12 +2014,12 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {
                 float audioBoost = g_AudioPeakLevel * (1.0f - brightness);
                 brightness += audioBoost;
             } else {
-                brightness += (g_AudioPeakLevel * AUDIO_SENSITIVITY * 0.15f);
+                brightness += (g_AudioPeakLevel * kAudioSensitivity * 0.15f);
             }
             if (brightness > 1.0f) brightness = 1.0f;
         }
-        if (AUDIO_REACTIVE_MODE == 2 || AUDIO_REACTIVE_MODE == 3) {
-            thickness += (g_AudioPeakLevel * AUDIO_SENSITIVITY * 2.5f);
+        if (kAudioReactiveMode == 2 || kAudioReactiveMode == 3) {
+            thickness += (g_AudioPeakLevel * kAudioSensitivity * 2.5f);
         }
     }
     
@@ -2011,7 +2193,7 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     wstring fullText = title;
     if (!artist.empty()) fullText += L" • " + artist;
 
-    FontFamily fontFamily(FONT_NAME, nullptr);
+    FontFamily fontFamily(kFontName, nullptr);
     Font font(&fontFamily, (REAL)g_Settings.fontSize, FontStyleBold, UnitPixel);
     SolidBrush textBrush{mainColor};
     
@@ -2037,16 +2219,21 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     }
 }
 
-// --- Window Procedure ---
-#define IDT_POLL_MEDIA 1001
-#define IDT_TEXT_ANIM  1002
-#define APP_WM_CLOSE   WM_APP
+#pragma endregion  // ^settings
 
-// --- Advanced Audio Processing Logic ---
+//! =====================================================================
+
+#pragma region rendering
+
+//! ============================================================================
+// AUDIO PROCESSING
+//! ============================================================================
+
+/// Calculate smoothed audio peak level with optional dynamic range processing
 float CalculateAudioPeak(float rawPeak) {
     if (!g_Settings.audioDynamicRange) {
         // Simple Lerp-based smoothing
-        g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, AUDIO_SMOOTHING);
+        g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, kAudioSmoothing);
         return g_AudioPeakSmoothed;
     }
 
@@ -2082,6 +2269,13 @@ float CalculateAudioPeak(float rawPeak) {
     return Clamp(finalValue, 0.0f, 1.0f);
 }
 
+#pragma endregion  // ^rendering
+
+//! =====================================================================
+
+#pragma region window_procedures
+
+/// Rainbow border window procedure
 LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
         case WM_CREATE: {
@@ -2117,7 +2311,7 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                     // Speed boost (modes 1, 4, 5, 7)
                     if (g_Settings.audioHueReactiveMode == 1 || g_Settings.audioHueReactiveMode == 4 || 
                         g_Settings.audioHueReactiveMode == 5 || g_Settings.audioHueReactiveMode == 7) {
-                        float speedMult = 1.0f + (g_AudioPeakLevel * AUDIO_SENSITIVITY * AUDIO_HUE_SPEED_BOOST);
+                        float speedMult = 1.0f + (g_AudioPeakLevel * kAudioSensitivity * kAudioHueSpeedBoost);
                         g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f * speedMult);
                     } else {
                         g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f);
@@ -2126,15 +2320,15 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                     // Pulse effect (modes 2, 4, 6, 7)
                     if (g_Settings.audioHueReactiveMode == 2 || g_Settings.audioHueReactiveMode == 4 || 
                         g_Settings.audioHueReactiveMode == 6 || g_Settings.audioHueReactiveMode == 7) {
-                        g_RainbowHue += (g_AudioPeakLevel * AUDIO_HUE_PULSE_AMOUNT * 0.1f);
+                        g_RainbowHue += (g_AudioPeakLevel * kAudioHuePulseAmount * 0.1f);
                     }
                     
                     // Bounce effect (modes 3, 5, 6, 7)
                     if (g_Settings.audioHueReactiveMode == 3 || g_Settings.audioHueReactiveMode == 5 || 
                         g_Settings.audioHueReactiveMode == 6 || g_Settings.audioHueReactiveMode == 7) {
-                        if (g_AudioPeakLevel > AUDIO_HUE_BOUNCE_THRESHOLD && !g_RainbowDirectionReverse) {
+                        if (g_AudioPeakLevel > kAudioHueBounceThreshold && !g_RainbowDirectionReverse) {
                             g_RainbowDirectionReverse = true;
-                        } else if (g_AudioPeakLevel <= AUDIO_HUE_BOUNCE_THRESHOLD && g_RainbowDirectionReverse) {
+                        } else if (g_AudioPeakLevel <= kAudioHueBounceThreshold && g_RainbowDirectionReverse) {
                             g_RainbowDirectionReverse = false;
                         }
                         
@@ -2147,8 +2341,8 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                     // Standard audio reactive (existing behavior)
                     float speedMult = 1.0f;
                     if (g_Settings.enableAudioReactive && g_AudioReactiveRuntimeEnabled && 
-                        (AUDIO_REACTIVE_MODE == 0 || AUDIO_REACTIVE_MODE == 3)) {
-                        speedMult = 1.0f + (g_AudioPeakLevel * AUDIO_SENSITIVITY * 2.0f);
+                        (kAudioReactiveMode == 0 || kAudioReactiveMode == 3)) {
+                        speedMult = 1.0f + (g_AudioPeakLevel * kAudioSensitivity * 2.0f);
                     }
                     
                     g_RainbowHue += (g_Settings.rainbowSpeed * 0.6f * speedMult);
@@ -2212,7 +2406,7 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-// Helper: Check if click is in the "background" area (right of the art/controls)
+/// Helper: Check if click is in the "background" area (right of the art/controls)
 bool IsClickOnBackground(LPARAM lParam) {
     int x = (int)(LOWORD(lParam) / g_ScaleFactor);
     int artSize = g_Settings.height - 12;
@@ -2220,6 +2414,7 @@ bool IsClickOnBackground(LPARAM lParam) {
     return (x > artRightEdge);
 }
 
+/// Media widget window procedure
 LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
     switch (msg) {
@@ -2236,7 +2431,8 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             KillTimer(hwnd, IDT_POLL_MEDIA);
             KillTimer(hwnd, IDT_DELAYED_ACTIONS);
             Wh_Log(L"All timers killed");
-            g_SessionManager = nullptr;
+            // NOTE: g_SessionManager cleanup moved to MediaThread cleanup lambda
+            // to ensure proper shutdown order (before winrt::uninit_apartment)
             PostQuitMessage(0);
             return 0;
         case WM_SETTINGCHANGE: UpdateAppearance(hwnd); InvalidateRect(hwnd, NULL, TRUE); return 0;
@@ -2455,12 +2651,21 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
+#pragma endregion  // ^window_procedures
+
+//! =====================================================================
+
+#pragma region main_thread
+
+/// Main media widget thread - runs in dedicated process via tool mod
 void MediaThread() {
     Wh_Log(L"MediaThread started");
 
+    // --- DPI Awareness ---
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
     Wh_Log(L"DPI awareness set");
 
+    // --- WinRT Initialization (required for GSMTC media control) ---
     bool winrtInitialized = false;
     try {
         winrt::init_apartment();
@@ -2471,6 +2676,7 @@ void MediaThread() {
         return;
     }
 
+    // --- GDI+ Initialization (required for rendering) ---
     GdiplusStartupInput gdiplusStartupInput;
     if (GdiplusStartup(&g_gdiplusToken, &gdiplusStartupInput, NULL) != Ok) {
         Wh_Log(L"ERROR: GDI+ initialization failed");
@@ -2525,6 +2731,18 @@ void MediaThread() {
             GdiplusShutdown(g_gdiplusToken);
             Wh_Log(L"GDI+ shutdown completed");
             g_gdiplusToken = 0;
+        }
+        // CRITICAL: Release GSMTC session manager BEFORE uninit_apartment
+        // to properly terminate RPC connections and avoid "RPC server unavailable" errors
+        if (g_SessionManager) {
+            try {
+                // Setting to nullptr releases the WinRT COM reference
+                g_SessionManager = nullptr;
+                Wh_Log(L"GSMTC session manager released");
+            } catch (...) {
+                Wh_Log(L"WARNING: Exception releasing GSMTC session manager");
+                g_SessionManager = nullptr;
+            }
         }
         if (winrtInitialized) {
             winrt::uninit_apartment();
@@ -2796,43 +3014,173 @@ void WhTool_ModSettingsChanged() {
     Wh_Log(L"Settings reload complete");
 }
 
-// --- Launcher Boilerplate ---
+#pragma endregion  // ^main_thread
+
+//! =====================================================================
+
+#pragma region windhawk_exports
+
+////////////////////////////////////////////////////////////////////////////////
+// Windhawk tool mod implementation for mods which don't need to inject to other
+// processes or hook other functions. Context:
+// https://github.com/ramensoftware/windhawk-mods/pull/1916
+//
+// The mod will load and run in a dedicated windhawk.exe process.
+
 bool g_isToolModProcessLauncher;
 HANDLE g_toolModProcessMutex;
-void WINAPI EntryPoint_Hook() { ExitThread(0); }
+
+void WINAPI EntryPoint_Hook() {
+    Wh_Log(L">");
+    ExitThread(0);
+}
 
 BOOL Wh_ModInit() {
-    bool isService = false, isCurrentToolModProcess = false;
-    int argc; LPWSTR* argv = CommandLineToArgvW(GetCommandLine(), &argc);
-    if (!argv) return FALSE;
-    for (int i = 1; i < argc; i++) { if (wcscmp(argv[i], L"-service") == 0) isService = true; }
-    for (int i = 1; i < argc - 1; i++) { if (wcscmp(argv[i], L"-tool-mod") == 0 && wcscmp(argv[i + 1], WH_MOD_ID) == 0) isCurrentToolModProcess = true; }
+    bool isService = false;
+    bool isToolModProcess = false;
+    bool isCurrentToolModProcess = false;
+    int argc;
+    LPWSTR* argv = CommandLineToArgvW(GetCommandLine(), &argc);
+    if (!argv) {
+        Wh_Log(L"CommandLineToArgvW failed");
+        return FALSE;
+    }
+
+    for (int i = 1; i < argc; i++) {
+        if (wcscmp(argv[i], L"-service") == 0) {
+            isService = true;
+            break;
+        }
+    }
+
+    for (int i = 1; i < argc - 1; i++) {
+        if (wcscmp(argv[i], L"-tool-mod") == 0) {
+            isToolModProcess = true;
+            if (wcscmp(argv[i + 1], WH_MOD_ID) == 0) {
+                isCurrentToolModProcess = true;
+            }
+            break;
+        }
+    }
+
     LocalFree(argv);
-    if (isService) return FALSE;
+
+    if (isService) {
+        return FALSE;
+    }
 
     if (isCurrentToolModProcess) {
-        g_toolModProcessMutex = CreateMutex(nullptr, TRUE, L"windhawk-tool-mod_" WH_MOD_ID);
-        if (!g_toolModProcessMutex || GetLastError() == ERROR_ALREADY_EXISTS) ExitProcess(1);
-        if (!WhTool_ModInit()) ExitProcess(1);
-        IMAGE_DOS_HEADER* dosHeader = (IMAGE_DOS_HEADER*)GetModuleHandle(nullptr);
-        IMAGE_NT_HEADERS* ntHeaders = (IMAGE_NT_HEADERS*)((BYTE*)dosHeader + dosHeader->e_lfanew);
-        Wh_SetFunctionHook((BYTE*)dosHeader + ntHeaders->OptionalHeader.AddressOfEntryPoint, (void*)EntryPoint_Hook, nullptr);
+        g_toolModProcessMutex =
+            CreateMutex(nullptr, TRUE, L"windhawk-tool-mod_" WH_MOD_ID);
+        if (!g_toolModProcessMutex) {
+            Wh_Log(L"CreateMutex failed");
+            ExitProcess(1);
+        }
+
+        if (GetLastError() == ERROR_ALREADY_EXISTS) {
+            Wh_Log(L"Tool mod already running (%s)", WH_MOD_ID);
+            ExitProcess(1);
+        }
+
+        if (!WhTool_ModInit()) {
+            ExitProcess(1);
+        }
+
+        IMAGE_DOS_HEADER* dosHeader =
+            (IMAGE_DOS_HEADER*)GetModuleHandle(nullptr);
+        IMAGE_NT_HEADERS* ntHeaders =
+            (IMAGE_NT_HEADERS*)((BYTE*)dosHeader + dosHeader->e_lfanew);
+
+        DWORD entryPointRVA = ntHeaders->OptionalHeader.AddressOfEntryPoint;
+        void* entryPoint = (BYTE*)dosHeader + entryPointRVA;
+
+        Wh_SetFunctionHook(entryPoint, (void*)EntryPoint_Hook, nullptr);
         return TRUE;
     }
-    g_isToolModProcessLauncher = true; return TRUE;
+
+    if (isToolModProcess) {
+        return FALSE;
+    }
+
+    g_isToolModProcessLauncher = true;
+    return TRUE;
 }
 
 void Wh_ModAfterInit() {
-    if (!g_isToolModProcessLauncher) return;
-    WCHAR path[MAX_PATH], cmd[MAX_PATH + 100];
-    GetModuleFileName(nullptr, path, MAX_PATH);
-    path[MAX_PATH - 1] = L'\0';
-    swprintf_s(cmd, L"\"%s\" -tool-mod \"%s\"", path, WH_MOD_ID);
-    STARTUPINFO si = { sizeof(si) }; PROCESS_INFORMATION pi;
-    if (CreateProcess(nullptr, cmd, nullptr, nullptr, FALSE, NORMAL_PRIORITY_CLASS, nullptr, nullptr, &si, &pi)) {
-        CloseHandle(pi.hProcess); CloseHandle(pi.hThread);
+    if (!g_isToolModProcessLauncher) {
+        return;
     }
+
+    WCHAR currentProcessPath[MAX_PATH];
+    switch (GetModuleFileName(nullptr, currentProcessPath,
+                              ARRAYSIZE(currentProcessPath))) {
+        case 0:
+        case ARRAYSIZE(currentProcessPath):
+            Wh_Log(L"GetModuleFileName failed");
+            return;
+    }
+
+    WCHAR commandLine[MAX_PATH + 2 +
+                (sizeof(L" -tool-mod \"" WH_MOD_ID "\"") / sizeof(WCHAR)) - 1];
+    swprintf_s(commandLine, L"\"%s\" -tool-mod \"%s\"", currentProcessPath,
+               WH_MOD_ID);
+
+    HMODULE kernelModule = GetModuleHandle(L"kernelbase.dll");
+    if (!kernelModule) {
+        kernelModule = GetModuleHandle(L"kernel32.dll");
+        if (!kernelModule) {
+            Wh_Log(L"No kernelbase.dll/kernel32.dll");
+            return;
+        }
+    }
+
+    using CreateProcessInternalW_t = BOOL(WINAPI*)(
+        HANDLE hUserToken, LPCWSTR lpApplicationName, LPWSTR lpCommandLine,
+        LPSECURITY_ATTRIBUTES lpProcessAttributes,
+        LPSECURITY_ATTRIBUTES lpThreadAttributes, WINBOOL bInheritHandles,
+        DWORD dwCreationFlags, LPVOID lpEnvironment, LPCWSTR lpCurrentDirectory,
+        LPSTARTUPINFOW lpStartupInfo,
+        LPPROCESS_INFORMATION lpProcessInformation,
+        PHANDLE hRestrictedUserToken);
+    CreateProcessInternalW_t pCreateProcessInternalW =
+        (CreateProcessInternalW_t)GetProcAddress(kernelModule,
+                                                 "CreateProcessInternalW");
+    if (!pCreateProcessInternalW) {
+        Wh_Log(L"No CreateProcessInternalW");
+        return;
+    }
+
+    STARTUPINFO si{
+        .cb = sizeof(STARTUPINFO),
+        .dwFlags = STARTF_FORCEOFFFEEDBACK,
+    };
+    PROCESS_INFORMATION pi;
+    if (!pCreateProcessInternalW(nullptr, currentProcessPath, commandLine,
+                                 nullptr, nullptr, FALSE, NORMAL_PRIORITY_CLASS,
+                                 nullptr, nullptr, &si, &pi, nullptr)) {
+        Wh_Log(L"CreateProcess failed");
+        return;
+    }
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
 }
 
-void Wh_ModSettingsChanged() { if (!g_isToolModProcessLauncher) WhTool_ModSettingsChanged(); }
-void Wh_ModUninit() { if (!g_isToolModProcessLauncher) { WhTool_ModUninit(); ExitProcess(0); } }
+void Wh_ModSettingsChanged() {
+    if (g_isToolModProcessLauncher) {
+        return;
+    }
+
+    WhTool_ModSettingsChanged();
+}
+
+void Wh_ModUninit() {
+    if (g_isToolModProcessLauncher) {
+        return;
+    }
+
+    WhTool_ModUninit();
+    ExitProcess(0);
+}
+
+#pragma endregion  // ^windhawk_exports
