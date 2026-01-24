@@ -1,5 +1,3 @@
-#pragma region Windhawk
-
 // ==WindhawkMod==
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
@@ -300,8 +298,6 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
   $description: Configure mouse/keyboard triggers and the actions they execute.
 */
 // ==/WindhawkModSettings==
-
-#pragma endregion Windhawk // ^Windhawk Readme/Metadata/Settings
 
 //! =====================================================================
 
