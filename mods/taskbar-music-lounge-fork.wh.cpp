@@ -13,7 +13,7 @@
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.9.1)
+# Taskbar Music Lounge (v4.9.2)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
