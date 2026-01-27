@@ -1,6 +1,3 @@
-#include <cstddef>
-#include <minwindef.h>
-#include <windhawk_api.h>
 #pragma region Windhawk
 
 // ==WindhawkMod==
@@ -284,15 +281,15 @@ for best experience!
         - AdditionalArgs: ""
           $name: Arguments
           $description: >-
-                    Syntax: xINSTANCE:yDELAY:zARGUMENT   (e.g. 1:4.5:Firefox or 5.5:Calc.exe)
+                    Syntax: xINSTANCE:yDELAY:zARGUMENT   (e.g. 1:4.5:Firefox | 5.5:Calc.exe | Chrome | Direct paths )
 
                      • x: 1=Force New | 0=Prevent Duplicates (Default)
-                     • y: Seconds to wait (0=Default - Has Presedence e.g., `##:` = Seconds Whilst `##:##:` = xINSTANCE:yDELAY)
+                     • y: Seconds to wait (0=Default - Has Presedence e.g., `##:arg` = Delay whilst `##:##:` = xINSTANCE:yDELAY)
                      • z: Command/App + Params (e.g. firefox --new-window)
 
                     - Arguments by action:
-                            •       Open App / Run File:            calc.exe | notepad | Direct paths | ` "C:\Scripts\Mycoolscript.py" `
-                             May include additional Args ie `firefox --new-window` | Checks if running unless prefixed with `1:`
+                            •       Open App / Run File:            calc.exe | notepad | Direct paths | "C:\Scripts\Mycoolscript.py" | Quotes optional
+                             May include additional Args ie `firefox --new-window` | Checks if running unless prefixed with `1:` | .type Optional
 
                             •   Switch to Audible Window:       Firefox | Chrome | Spotify, etc
                         Fallback App/File if `No Media` Present - Uses same logic as above  ▲
@@ -327,6 +324,8 @@ for best experience!
 //      ~-- Windows Core
 #include <windows.h>
 #include <windef.h>
+#include <cstddef>
+#include <minwindef.h>
 // #include <winerror.h>       // * Possibly unnecessary *
 // #include <winuser.h>        // * Possibly unnecessary *
 //      ~-- Windows Shell & UI
@@ -365,7 +364,7 @@ for best experience!
 #include <winrt/Windows.Storage.Streams.h>
 //      ~-- Windhawk
 #include <windhawk_utils.h>
-// #include <windhawk_api.h>   // * Possibly unnecessary *
+#include <windhawk_api.h>
 
 // Standard Library (common types used throughout)
 using namespace std;
@@ -1122,18 +1121,18 @@ BOOL CALLBACK FindWindowByAUMIDOrExe(HWND hwnd, LPARAM lParam) {
 // Forward declaration
 void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds, const std::wstring& actionName);
 
-// Helper to execute the fallback command (find existing or launch new)
-void ExecuteFallbackCommand(const std::wstring& fallbackCmd, bool bypassSingleInstanceCheck) {
-     if (fallbackCmd.empty()) return;
+// Helper to execute a command (find existing or launch new) with custom logging
+void ExecuteProcessOrWindow(const std::wstring& cmd, bool bypassSingleInstanceCheck, const std::wstring& logPrefix) {
+     if (cmd.empty()) return;
 
     if (bypassSingleInstanceCheck) {
-            Wh_Log(L"[SwitchToAudibleWindow] Bypassing instance check - Launching: %s", fallbackCmd.c_str());
-            StartProcess(fallbackCmd);
+            Wh_Log(L"%s Bypassing instance check - Launching: %s", logPrefix.c_str(), cmd.c_str());
+            StartProcess(cmd);
             return;
     }
 
     // Parsing: Isolate the executable/script path from arguments (quotes or spaces)
-    std::wstring executable = fallbackCmd;
+    std::wstring executable = cmd;
     if (executable.size() > 0 && (executable[0] == L'"' || executable[0] == L'\'')) {
         size_t close = executable.find(executable[0], 1);
         if (close != std::wstring::npos) executable = executable.substr(1, close - 1);
@@ -1159,7 +1158,7 @@ void ExecuteFallbackCommand(const std::wstring& fallbackCmd, bool bypassSingleIn
             if (filenameLower.find(L".") == std::wstring::npos) filenameLower += L".exe";
             
             exeSearch.targetExe = filenameLower;
-            Wh_Log(L"[SwitchToAudibleWindow] Checking process: %s (Raw: %s)", filenameLower.c_str(), fallbackCmd.c_str());
+            Wh_Log(L"%s Checking process: %s (Raw: %s)", logPrefix.c_str(), filenameLower.c_str(), cmd.c_str());
     } else {
             // Strategy 2: Script/File
             // If input looks like a path, search for the full path in window titles.
@@ -1170,7 +1169,7 @@ void ExecuteFallbackCommand(const std::wstring& fallbackCmd, bool bypassSingleIn
                 exeSearch.targetTitle = filenameLower;   // Loose: "MyScript.ahk"
             }
             exeSearch.checkHidden = true; // Essential for scripts (AHK, etc)
-            Wh_Log(L"[SwitchToAudibleWindow] Checking script/title: %s (Raw: %s)", exeSearch.targetTitle.c_str(), fallbackCmd.c_str());
+            Wh_Log(L"%s Checking script/title: %s (Raw: %s)", logPrefix.c_str(), exeSearch.targetTitle.c_str(), cmd.c_str());
     }
     
     EnumWindows(FindWindowByAUMIDOrExe, (LPARAM)&exeSearch);
@@ -1179,10 +1178,10 @@ void ExecuteFallbackCommand(const std::wstring& fallbackCmd, bool bypassSingleIn
         // Already running - focus it
         if (IsIconic(exeSearch.foundHwnd)) ShowWindow(exeSearch.foundHwnd, SW_RESTORE);
         SetForegroundWindow(exeSearch.foundHwnd);
-        Wh_Log(L"[SwitchToAudibleWindow] %s already running - focused", fallbackCmd.c_str());
+        Wh_Log(L"%s %s already running - focused", logPrefix.c_str(), cmd.c_str());
     } else {
-        StartProcess(fallbackCmd);
-        Wh_Log(L"[SwitchToAudibleWindow] Launched fallback: %s", fallbackCmd.c_str());
+        StartProcess(cmd);
+        Wh_Log(L"%s Launched: %s", logPrefix.c_str(), cmd.c_str());
     }
 }
 
@@ -1211,10 +1210,10 @@ void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSin
             if (delaySeconds > 0) {
                 // Execute fallback with delay
                 ExecuteActionWithDelay([=]() { 
-                    ExecuteFallbackCommand(fallbackCmd, bypassSingleInstanceCheck); 
+                    ExecuteProcessOrWindow(fallbackCmd, bypassSingleInstanceCheck, L"[SwitchToAudibleWindow]"); 
                 }, delaySeconds, L"Fallback Command: " + fallbackCmd);
             } else {
-                ExecuteFallbackCommand(fallbackCmd, bypassSingleInstanceCheck);
+                ExecuteProcessOrWindow(fallbackCmd, bypassSingleInstanceCheck, L"[SwitchToAudibleWindow]");
             }
         } else {
             Wh_Log(L"[SwitchToAudibleWindow] ERROR: No media playing and no Fallback Command configured. Nothing to do.");
@@ -1584,7 +1583,7 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
         {L"ACTION_TASK_MANAGER", Simple([]() { ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); })},
         {L"ACTION_VOLUME_UP", Simple([]() { SendKeypress({VK_VOLUME_UP}); })},
         {L"ACTION_VOLUME_DOWN", Simple([]() { SendKeypress({VK_VOLUME_DOWN}); })},
-        {L"ACTION_START_PROCESS", ArgAction(StartProcess)},
+        {L"ACTION_START_PROCESS", [](const ParsedArgs& a) { return [s=a.actualArgs, b=a.bypassSingleInstance]() { ExecuteProcessOrWindow(s, b, L"[StartProcess]"); }; }},
         {L"ACTION_SEND_KEYPRESS", [](const ParsedArgs& input) {
             const auto keys = BuildKeypressSequence(input.actualArgs);
             return [keys]() { SendKeypress(keys); };
