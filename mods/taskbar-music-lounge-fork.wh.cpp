@@ -1,23 +1,24 @@
 #pragma region Windhawk
 
 // ==WindhawkMod==
-// @id              taskbar-music-lounge-fork
-// @name            Taskbar Music Lounge - Fork
+// @id              taskbar-music-lounge-pro
+// @name            Taskbar Music Lounge Pro
 // @description     A native-style music ticker with media controls and custom Action Triggers with delay support.
 // @version         4.9.2
-// @author          Hashah2311 | Cinabutts
-// @github          https://github.com/Hashah2311
+// @author          Cinabutts
+// @github          https://github.com/Cinabutts
 // @include         explorer.exe
 // @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi -lcomctl32 -loleaut32 -lversion -lpropsys -ladvapi32
 // ==/WindhawkMod==
 
 // ==WindhawkModReadme==
 /*
-# Taskbar Music Lounge (v4.9.2)
+# Taskbar Music Lounge Pro (v4.9.2)
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
 ##                                                                 ✨ Features
+              [@Hashah2311](https://github.com/Hashah2311)'s OG [Taskbar Music Lounge](https://github.com/ramensoftware/windhawk-mods/blob/53d96781b3215f0a082908a2539cafe178e8895a/mods/taskbar-music-lounge.wh.cpp):
 * **Universal Support:** Works with any media player via GSMTC.
 * **Album Art:** Displays current track cover art.
 * **Native Look:** Uses Windows 11 hardware-accelerated rounding and acrylic blur.
@@ -72,7 +73,7 @@ Available `Actions`:
 
             Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBINE_* states that should be applied (see the settings description).
 
-                                                            Use the opensource Firefox/Chrome extension [Switch to audible tab](https://github.com/klntsky/switch-to-audible-tab)
+                                                            Use the Open-Source Firefox/Chrome extension [Switch to audible tab](https://github.com/klntsky/switch-to-audible-tab)
 for best experience!
 
 ----
@@ -283,7 +284,7 @@ for best experience!
           $description: >-
                     Syntax: xINSTANCE:yDELAY:zARGUMENT   (e.g. 1:4.5:Firefox | 5.5:Calc.exe | Chrome | Direct paths )
 
-                     • x: 1=Force New | 0=Prevent Duplicates (Default)
+                     • x: 1=Force New | 0=Prevent Duplicates (Default | Doesn't need to be present)
                      • y: Seconds to wait (0=Default - Has Presedence e.g., `##:arg` = Delay whilst `##:##:` = xINSTANCE:yDELAY)
                      • z: Command/App + Params (e.g. firefox --new-window)
 
@@ -552,36 +553,35 @@ struct ModSettings {
 //^ GLOBAL STATE
 //! ============================================================================
 // Registry configuration for advanced debug logging
-// Note: Hardcoded path as requested. This overrides mod settings if present.
-constexpr wchar_t kWindhawkModRegPath[] = L"SOFTWARE\\Windhawk\\Engine\\Mods\\local@taskbar-music-lounge-fork";
 constexpr wchar_t kAdvancedLogValueName[] = L"DebugLoggingEnabled";
 
 // Check if advanced debug logging is enabled via registry
-// Logic: 1. Check if key exists (assume 0 if not). 2. Check if value == 1.
+// Logic: Checks both local (dev) and official registry paths for the debug flag.
 BOOL CheckRegistryDebugLog() {
-    HKEY key = nullptr;
-    Wh_Log(L"[INIT] Checking Registry for Advanced Log Key: HKLM\\%s", kWindhawkModRegPath);
+    const wchar_t* registryPaths[] = {
+        L"SOFTWARE\\Windhawk\\Engine\\Mods\\local@" WH_MOD_ID,
+        L"SOFTWARE\\Windhawk\\Engine\\Mods\\" WH_MOD_ID
+    };
 
-    // Check HKLM for the Windhawk mod key
-    LONG status = RegOpenKeyExW(HKEY_LOCAL_MACHINE, kWindhawkModRegPath, 0, KEY_READ, &key);
-    if (status != ERROR_SUCCESS) {
-        Wh_Log(L"[INIT] Failed to open key. Status: %ld", status);
-        return FALSE;
+    for (const auto& path : registryPaths) {
+        HKEY key = nullptr;
+        if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &key) == ERROR_SUCCESS) {
+            Wh_Log(L"[INIT] Checking Registry Path: HKLM\\%s", path);
+            
+            DWORD value = 0;
+            DWORD size = sizeof(value);
+            LONG status = RegQueryValueExW(key, kAdvancedLogValueName, nullptr, nullptr, 
+                                     reinterpret_cast<LPBYTE>(&value), &size);
+            RegCloseKey(key);
+
+            if (status == ERROR_SUCCESS) {
+                Wh_Log(L"[INIT] Registry Value found: %d", value);
+                return (value != 0);
+            }
+        }
     }
-
-    DWORD value = 0;
-    DWORD size = sizeof(value);
-    status = RegQueryValueExW(key, kAdvancedLogValueName, nullptr, nullptr, 
-                             reinterpret_cast<LPBYTE>(&value), &size);
-    RegCloseKey(key);
-
-    if (status == ERROR_SUCCESS) {
-        Wh_Log(L"[INIT] Registry Value found. Value: %d", value);
-        return (value == 1);
-    } else {
-        Wh_Log(L"[INIT] Failed to query value '%s'. Status: %ld", kAdvancedLogValueName, status);
-        return FALSE;
-    }
+    
+    return FALSE;
 }
 
 #define Wh_LogAdvanced(fmt, ...) \
