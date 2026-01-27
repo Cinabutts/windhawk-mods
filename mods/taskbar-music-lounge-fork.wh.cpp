@@ -1,12 +1,17 @@
+#include <cstddef>
+#include <minwindef.h>
+#include <windhawk_api.h>
+#pragma region Windhawk
+
 // ==WindhawkMod==
 // @id              taskbar-music-lounge-fork
 // @name            Taskbar Music Lounge - Fork
 // @description     A native-style music ticker with media controls and custom Action Triggers with delay support.
-// @version         4.9.1
+// @version         4.9.2
 // @author          Hashah2311 | Cinabutts
 // @github          https://github.com/Hashah2311
 // @include         explorer.exe
-// @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi -lcomctl32 -loleaut32 -lversion -lpropsys
+// @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lshcore -lgdiplus -lshell32 -lpsapi -lcomctl32 -loleaut32 -lversion -lpropsys -ladvapi32
 // ==/WindhawkMod==
 
 // ==WindhawkModReadme==
@@ -15,7 +20,7 @@
 
 A media controller that uses Windows 11 native DWM styling for a seamless look.
 
-##                                                 ✨ Features
+##                                                                 ✨ Features
 * **Universal Support:** Works with any media player via GSMTC.
 * **Album Art:** Displays current track cover art.
 * **Native Look:** Uses Windows 11 hardware-accelerated rounding and acrylic blur.
@@ -33,8 +38,11 @@ A media controller that uses Windows 11 native DWM styling for a seamless look.
 
 &nbsp;
 
-##                                                 🔧 Mouse Action Engine
-Inspired by [@m1lhaus](https://github.com/m1lhaus)'s mod [taskbar-empty-space-clicks](https://github.com/ramensoftware/windhawk-mods/blob/main/mods/taskbar-empty-space-clicks.wh.cpp)
+##                                                             🔧 Mouse Action Engine
+
+                                                                  **`Work In Progress!` Some actions may not work as expected.**
+
+                                          Inspired by [@m1lhaus](https://github.com/m1lhaus)'s mod [taskbar-empty-space-clicks](https://github.com/ramensoftware/windhawk-mods/blob/main/mods/taskbar-empty-space-clicks.wh.cpp)
 as well as [@m417z](https://github.com/m417z)'s mod [keyboard-shortcut-actions](https://github.com/ramensoftware/windhawk-mods/blob/f016abc733a47b45faa02a0d8501a95304d96587/mods/keyboard-shortcut-actions.wh.cpp)
 
 Trigger custom Actions via Mouse Clicks + optional Modifiers.
@@ -61,12 +69,14 @@ Available `Actions`:
 - Open Start Menu
 - Open Task Manager
 
-                                      **`Work In Progress!` Some actions may not work as expected.**
 
-Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBINE_* states that should be applied (see the settings description).
+###                                       🚧 Volume Note: You **TYPICALLY** need to Left Click the widget first to focus it before scrolling. 🚧
+                                         **Tips:** Avoid assigning "Left Click" as a trigger if you use volume scrolling, as it will prevent the widget from gaining focus.
 
-###                         🚧 Volume Note: You **TYPICALLY** need to Left Click the widget first to focus it before scrolling.
-                        **Tip:** Avoid assigning "Left Click" as a trigger if you use volume scrolling, as it will prevent the widget from gaining focus.
+            Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBINE_* states that should be applied (see the settings description).
+
+                                                            Use the opensource Firefox/Chrome extension [Switch to audible tab](https://github.com/klntsky/switch-to-audible-tab)
+for best experience!
 
 ----
 
@@ -78,11 +88,11 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 
 &nbsp;
 
-###                                                                  *Maintained with the help of AI and careful babysitting*
+###                                                                  📌*Maintained with the help of AI and careful babysitting* 💩🤖
 
 &nbsp;
 
-                                                                                                                        🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
+                                                                                                                                  🧪 Tested on Windows 11 25H2 (26220.7535) - 4096x2160 125% Scale
 */
 // ==/WindhawkModReadme==
 
@@ -247,11 +257,11 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
       - ralt: Right Alt
       - win: Win Key
     - Actions:
-      - - Action: ACTION_ACTIVATE_SOURCE_APP
+      - - Action: ACTION_SWITCH_TO_AUDIBLE_WINDOW
           $name: Action
           $description: The command to execute.
           $options:
-          - ACTION_ACTIVATE_SOURCE_APP: Switch to Audible Window
+          - ACTION_SWITCH_TO_AUDIBLE_WINDOW: Switch to Audible Window
           - ACTION_VOLUME_UP: Volume Up
           - ACTION_VOLUME_DOWN: Volume Down
           - ACTION_START_PROCESS: Open App / Run File
@@ -270,18 +280,28 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
           - ACTION_TASK_MANAGER: Open Task Manager
           - ACTION_TOGGLE_AUDIO_REACTIVE: Toggle Audio Reactive Rainbow
           - ACTION_TOGGLE_RAINBOW_ZORDER: Toggle Rainbow Z-Order (Above/Below)
+          - ACTION_TOGGLE_ADVANCED_DEBUG_LOG: Toggle Advanced Debug Logging
         - AdditionalArgs: ""
           $name: Arguments
           $description: >-
-                    Delay (optional): Prefix with seconds followed by colon (max 9999 seconds)
-                        2:calc.exe → waits 2 seconds  |  calc.exe → instant
-                        Syntax: SECONDS:argument (e.g., "5.5:calc.exe" or "10:Ctrl+V")
-                    
-                    Arguments by action:
-                        Open App: 2:calc.exe or notepad.exe
-                        Keystrokes: 0.5:Ctrl+C or Win+Tab (use + or ;)
-                        Combine Buttons: 1:COMBINE_ALWAYS;COMBINE_NEVER (2 or 4 states)
-                        Volume/Media/Desktop/Taskbar: 3: (delay only, no args needed)
+                    Syntax: xINSTANCE:yDELAY:zARGUMENT   (e.g. 1:4.5:Firefox or 5.5:Calc.exe)
+
+                     • x: 1=Force New | 0=Prevent Duplicates (Default)
+                     • y: Seconds to wait (0=Default - Has Presedence e.g., `##:` = Seconds Whilst `##:##:` = xINSTANCE:yDELAY)
+                     • z: Command/App + Params (e.g. firefox --new-window)
+
+                    - Arguments by action:
+                            •       Open App / Run File:            calc.exe | notepad | Direct paths | ` "C:\Scripts\Mycoolscript.py" `
+                             May include additional Args ie `firefox --new-window` | Checks if running unless prefixed with `1:`
+
+                            •   Switch to Audible Window:       Firefox | Chrome | Spotify, etc
+                        Fallback App/File if `No Media` Present - Uses same logic as above  ▲
+
+                            •     Send Keystrokes (macro):        0.5:Alt+Shift+A | Win+Tab (use + or ;)
+                            •     Combine Taskbar Buttons:       1:COMBINE_ALWAYS;COMBINE_NEVER (2 or 4 states)
+                        States Available: COMBINE_ALWAYS, COMBINE_WHEN_FULL, COMBINE_NEVER
+
+                                    •   Volume/Media/Desktop/Taskbar: Delay only, No args needed
       $name: Actions
       $description: Add multiple actions to execute when this trigger fires. Actions run in order.
   - - MouseTrigger: ScrollUp
@@ -299,49 +319,53 @@ Use AdditionalArgs with the Combine Taskbar Buttons action to provide the COMBIN
 */
 // ==/WindhawkModSettings==
 
+#pragma endregion Windhawk // ^Windhawk Readme/Metadata/Settings
+
 //! =====================================================================
 
 #pragma region includes
-// Windows Core
+//      ~-- Windows Core
 #include <windows.h>
 #include <windef.h>
-#include <winerror.h>
-#include <winuser.h>
-// Windows Shell & UI
-#include <shellapi.h>
+// #include <winerror.h>       // * Possibly unnecessary *
+// #include <winuser.h>        // * Possibly unnecessary *
+//      ~-- Windows Shell & UI
 #include <shlobj.h>
-#include <shobjidl.h>
-#include <commctrl.h>
 #include <dwmapi.h>
 #include <shcore.h>
-// Windows Media & Audio
+// #include <shellapi.h>       // * Possibly unnecessary *
+// #include <shobjidl.h>       // * Possibly unnecessary *
+// #include <commctrl.h>       // * Possibly unnecessary * 
+//      ~-- Windows Media & Audio
 #include <mmdeviceapi.h>
 #include <endpointvolume.h>
-#include <propsys.h>
-#include <propkey.h>
-// Graphics
+// #include <propsys.h>        // * Possibly unnecessary *
+// #include <propkey.h>        // * Possibly unnecessary *
+//      ~-- Graphics
 #include <gdiplus.h>
-// Process & System
+//      ~-- Process & System
 #include <psapi.h>
-// C++ Standard Library
-#include <algorithm>
-#include <cstdio>
-#include <cwctype>
+//      ~-- C++ Standard Library
 #include <functional>
+#include <limits>
 #include <mutex>
-#include <sstream>
-#include <string>
-#include <string_view>
-#include <thread>
-#include <tuple>
-#include <unordered_map>
-#include <vector>
-// WinRT (Windows Runtime for GSMTC media control)
+// #include <algorithm>         // * Possibly unnecessary *
+// #include <cstdio>            // * Possibly unnecessary *
+// #include <cwctype>           // * Possibly unnecessary *
+// #include <sstream>           // * Possibly unnecessary *
+// #include <string>            // * Possibly unnecessary *
+// #include <string_view>       // * Possibly unnecessary *
+// #include <thread>            // * Possibly unnecessary *
+// #include <tuple>             // * Possibly unnecessary *
+// #include <unordered_map>     // * Possibly unnecessary *
+// #include <vector>            // * Possibly unnecessary *
+//      ~-- WinRT (Windows Runtime for GSMTC media control)
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Media.Control.h>
 #include <winrt/Windows.Storage.Streams.h>
-// Windhawk
+//      ~-- Windhawk
 #include <windhawk_utils.h>
+// #include <windhawk_api.h>   // * Possibly unnecessary *
 
 // Standard Library (common types used throughout)
 using namespace std;
@@ -371,10 +395,14 @@ void ForceDockedState();
 void LoadSettings();
 void ValidateSettings();
 void UpdateAppearance(HWND hwnd);
+void LoadPersistentState();
+void SaveWindowState(int x, int y, int w, int h);
+void SaveLastMediaInfo(const std::wstring& title, const std::wstring& artist);
+void ApplyPersistedMediaFallback();
 
 // Action Engine
 void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds);
-bool OnMouseClick(const std::wstring& detectedTriggerName);
+bool OnMouseClick(const std::wstring& detectedTriggerName, int zDelta = 0);
 
 // --- Timer IDs ---
 #define IDT_POLL_MEDIA      1001  // Media state polling
@@ -385,7 +413,7 @@ bool OnMouseClick(const std::wstring& detectedTriggerName);
 
 // --- Timer Intervals (milliseconds) ---
 #define TIMER_ANIMATION_MS       16   // ~60 FPS for smooth animations
-#define TIMER_MEDIA_POLL_MS      1000 // 1 second media state poll
+#define TIMER_MEDIA_POLL_MS      200  // 200ms media state poll (event-driven updates more important)
 #define TIMER_TEXT_ANIM_MS       16   // ~60 FPS text scroll
 #define TIMER_DELAYED_ACTIONS_MS 50   // Delayed action check interval
 
@@ -493,6 +521,7 @@ struct ModSettings {
     bool EnableTextScroll = true; // Enable text scrolling for long titles
     bool enableSlide = true;      // Enable slide animation
     bool enableGameDetect = true; // Detect fullscreen apps
+    bool enableAdvancedDebugLog = false; // Toggle advanced debug logging
     wstring ignoredApps;          // Comma-separated list of ignored apps
     
     // --- Rainbow Border ---
@@ -523,6 +552,43 @@ struct ModSettings {
 //! ============================================================================
 //^ GLOBAL STATE
 //! ============================================================================
+// Registry configuration for advanced debug logging
+// Note: Hardcoded path as requested. This overrides mod settings if present.
+constexpr wchar_t kWindhawkModRegPath[] = L"SOFTWARE\\Windhawk\\Engine\\Mods\\local@taskbar-music-lounge-fork";
+constexpr wchar_t kAdvancedLogValueName[] = L"DebugLoggingEnabled";
+
+// Check if advanced debug logging is enabled via registry
+// Logic: 1. Check if key exists (assume 0 if not). 2. Check if value == 1.
+BOOL CheckRegistryDebugLog() {
+    HKEY key = nullptr;
+    Wh_Log(L"[INIT] Checking Registry for Advanced Log Key: HKLM\\%s", kWindhawkModRegPath);
+
+    // Check HKLM for the Windhawk mod key
+    LONG status = RegOpenKeyExW(HKEY_LOCAL_MACHINE, kWindhawkModRegPath, 0, KEY_READ, &key);
+    if (status != ERROR_SUCCESS) {
+        Wh_Log(L"[INIT] Failed to open key. Status: %ld", status);
+        return FALSE;
+    }
+
+    DWORD value = 0;
+    DWORD size = sizeof(value);
+    status = RegQueryValueExW(key, kAdvancedLogValueName, nullptr, nullptr, 
+                             reinterpret_cast<LPBYTE>(&value), &size);
+    RegCloseKey(key);
+
+    if (status == ERROR_SUCCESS) {
+        Wh_Log(L"[INIT] Registry Value found. Value: %d", value);
+        return (value == 1);
+    } else {
+        Wh_Log(L"[INIT] Failed to query value '%s'. Status: %ld", kAdvancedLogValueName, status);
+        return FALSE;
+    }
+}
+
+#define Wh_LogAdvanced(fmt, ...) \
+    if (g_Settings.enableAdvancedDebugLog) { \
+        Wh_Log(fmt, ##__VA_ARGS__); \
+    }
 
 // --- Window Handles ---
 HWND g_hMediaWindow = NULL;      // Main media widget window
@@ -566,8 +632,18 @@ struct MediaState {
     bool hasMedia = false;
     Bitmap* albumArt = nullptr;
     wstring sourceId = L"";
+    wstring lastValidSourceId = L""; // Cache for transient empty IDs
     mutex lock;
 } g_MediaState;
+
+struct PersistedState {
+    int lastX = std::numeric_limits<int>::min();
+    int lastY = std::numeric_limits<int>::min();
+    int lastW = 0;
+    int lastH = 0;
+    std::wstring lastTitle;
+    std::wstring lastArtist;
+} g_PersistedState;
 
 // --- Text Scrolling State ---
 int g_ScrollOffset = 0;          // Current scroll position
@@ -606,6 +682,24 @@ namespace stringtools {
         return result;
     }
 }
+
+// --- Scoped helpers for settings strings ---
+class ScopedSettingString {
+public:
+    explicit ScopedSettingString(PCWSTR name) : m_value(Wh_GetStringSetting(name)) {}
+    ~ScopedSettingString() {
+        if (m_value) {
+            Wh_FreeStringSetting(m_value);
+        }
+    }
+
+    bool empty() const { return !m_value || m_value[0] == L'\0'; }
+    PCWSTR get() const { return m_value; }
+    std::wstring str() const { return m_value ? std::wstring(m_value) : std::wstring(); }
+
+private:
+    PCWSTR m_value;
+};
 
 // --- Audio COM API Wrapper ---
 
@@ -838,23 +932,66 @@ void SendKeypress(const std::vector<int>& keys) {
 
 void StartProcess(std::wstring command) {
     if (command.empty()) return;
+
     std::thread([command](){
         std::wstring cmd = command;
+        // Basic split for "RunAs" check
         auto args = stringtools::split(cmd, L';');
         std::wstring verb = L"open";
-        if (!args.empty() && stringtools::toLower(args[0]) == L"uac") { verb = L"runas"; cmd = cmd.substr(4); }
-        std::wstring executable = cmd, parameters;
-        if (cmd.size() > 0 && (cmd[0] == L'"' || cmd[0] == L'\'')) {
-            size_t close = cmd.find(cmd[0], 1);
-            if (close != std::wstring::npos) { executable = cmd.substr(1, close - 1); if (cmd.length() > close + 1) parameters = cmd.substr(close + 1); }
-        } else {
-            auto parts = stringtools::split(cmd, L' ');
-            if (parts.size() > 1) { executable = parts[0]; parameters = cmd.substr(executable.length()); }
+        if (!args.empty() && stringtools::toLower(args[0]) == L"uac") { 
+            verb = L"runas"; 
+            cmd = cmd.length() > 4 ? cmd.substr(4) : L""; 
         }
+        
+        std::wstring executable, parameters;
+        
+        // --- Robust Argument Parsing (Matches SwitchToAudibleWindow logic) ---
+        // 1. Check for quoted executable: "C:\Path\To App.exe" /arg
+        if (cmd.size() > 0 && (cmd[0] == L'"' || cmd[0] == L'\'')) {
+            wchar_t quote = cmd[0];
+            size_t close = cmd.find(quote, 1);
+            if (close != std::wstring::npos) {
+                executable = cmd.substr(1, close - 1);
+                if (cmd.length() > close + 1) {
+                    parameters = cmd.substr(close + 1);
+                }
+            } else {
+                // Mismatched quote, treat whole as exec
+                executable = cmd.substr(1); 
+            }
+        } 
+        // 2. Check for Space-delimited: C:\App.exe /arg
+        else {
+            size_t space = cmd.find(L' ');
+            if (space != std::wstring::npos) {
+                executable = cmd.substr(0, space);
+                parameters = cmd.substr(space + 1);
+            } else {
+                executable = cmd;
+            }
+        }
+
+        // Trim parameters
+        size_t firstParamChar = parameters.find_first_not_of(L" ");
+        if (firstParamChar != std::wstring::npos) {
+            parameters = parameters.substr(firstParamChar);
+        } else {
+            parameters.clear();
+        }
+        
+        Wh_Log(L"[StartProcess] Launching: Exec='%s' Params='%s' (Raw='%s')", 
+               executable.c_str(), parameters.c_str(), command.c_str());
+
         SHELLEXECUTEINFO sei = {sizeof(sei)};
-        sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI; sei.lpVerb = verb.c_str(); sei.lpFile = executable.c_str();
-        sei.lpParameters = parameters.empty() ? nullptr : parameters.c_str(); sei.nShow = SW_SHOWNORMAL;
-        ShellExecuteEx(&sei);
+        sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI; 
+        sei.lpVerb = verb.c_str(); 
+        sei.lpFile = executable.c_str();
+        sei.lpParameters = parameters.empty() ? nullptr : parameters.c_str(); 
+        sei.nShow = SW_SHOWNORMAL;
+        
+        if (!ShellExecuteEx(&sei)) {
+            Wh_Log(L"[StartProcess] Failed to execute: %s (Error: %d)", executable.c_str(), GetLastError());
+        }
     }).detach();
 }
 
@@ -902,62 +1039,212 @@ void ToggleVolMuted() {
 
 // Helper: get AUMID from a window  - used to identify source app
 std::wstring GetWindowAUMID(HWND hwnd) {
-    IPropertyStore* pps = nullptr;
+    IPropertyStore* pps;
     if (FAILED(SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps)))) return L"";
     
-    PROPVARIANT var;
-    PropVariantInit(&var);
-    std::wstring aumid;
-
-    // Local PROPERTYKEY for AppUserModelID to avoid linking issues with PKEY_AppUserModel_ID
-    static const PROPERTYKEY kPKEY_AppUserModel_ID = { { 0x9F4C2855, 0x9F79, 0x4B39, { 0xA8, 0xD0, 0xE1, 0xD4, 0x2D, 0xE1, 0xD5, 0xF3 } }, 5 };
+    std::wstring aumid; PROPVARIANT var; PropVariantInit(&var);
+    static const PROPERTYKEY kKey = { { 0x9F4C2855, 0x9F79, 0x4B39, { 0xA8, 0xD0, 0xE1, 0xD4, 0x2D, 0xE1, 0xD5, 0xF3 } }, 5 };
+    if (SUCCEEDED(pps->GetValue(kKey, &var)) && var.vt == VT_LPWSTR && var.pwszVal) aumid = var.pwszVal;
     
-    if (SUCCEEDED(pps->GetValue(kPKEY_AppUserModel_ID, &var)) && var.vt == VT_LPWSTR && var.pwszVal) {
-        aumid = var.pwszVal;
-    }
-    
-    PropVariantClear(&var);
-    pps->Release();
+    PropVariantClear(&var); pps->Release();
     return aumid;
 }
 
 struct WinSearchData {
-    std::wstring targetAUMID;
-    HWND foundHwnd;
+    std::wstring targetAUMID;   // For AUMID-based search
+    std::wstring targetExe;     // For exe name search (lowercase)
+    HWND foundHwnd;             // Found window handle used for switch-to-audible-window - NULL if not found
+    bool foundProcess;          // Found process flag used for switch-to-audible-window -exe search
+    std::wstring targetTitle;   // New: Search for substring in window title (lowercase)
+    bool checkHidden;           // New: If true, checks hidden windows too
 };
 
-BOOL CALLBACK FindMusicWindowEnum(HWND hwnd, LPARAM lParam) {
+BOOL CALLBACK FindWindowByAUMIDOrExe(HWND hwnd, LPARAM lParam) {
     WinSearchData* search = (WinSearchData*)lParam;
     
-    // Skip invisible windows
-    if (!IsWindowVisible(hwnd)) return TRUE;
-    
-    // Skip windows that have owners (we want top-level apps)
-    if (GetWindow(hwnd, GW_OWNER) != NULL) return TRUE;
+    // Visibility check - skipped if explicitly checking hidden windows (e.g. for scripts)
+    if (!search->checkHidden) {
+        if (!IsWindowVisible(hwnd)) return TRUE;
+        if (GetWindow(hwnd, GW_OWNER) != NULL) return TRUE;
+    }
 
-    // Check if this window belongs to the Music Source
-    std::wstring winId = GetWindowAUMID(hwnd);
-    if (!winId.empty() && winId == search->targetAUMID) {
-        // Found it!
-        search->foundHwnd = hwnd;
-        return FALSE; // Stop searching
+    // AUMID search mode
+    if (!search->targetAUMID.empty()) {
+        std::wstring winId = GetWindowAUMID(hwnd);
+        if (!winId.empty() && winId == search->targetAUMID) {
+            search->foundHwnd = hwnd;
+            return FALSE;
+        }
+    }
+
+    // Title search mode (Scripts/Hidden windows)
+    if (!search->targetTitle.empty()) {
+        int length = GetWindowTextLength(hwnd);
+        if (length > 0) {
+            std::wstring title(length + 1, L'\0');
+            GetWindowText(hwnd, &title[0], length + 1);
+            // Case-insensitive substring search
+            if (stringtools::toLower(title).find(search->targetTitle) != std::wstring::npos) {
+                search->foundHwnd = hwnd;
+                search->foundProcess = true;
+                return FALSE;
+            }
+        }
+    }
+
+    // Exe name search mode
+    if (!search->targetExe.empty()) {
+        DWORD pid = 0;
+        GetWindowThreadProcessId(hwnd, &pid);
+        if (pid) {
+            HANDLE hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+            if (hProc) {
+                WCHAR path[MAX_PATH] = {0};
+                DWORD size = MAX_PATH;
+                if (QueryFullProcessImageNameW(hProc, 0, path, &size)) {
+                    std::wstring fullPath(path);
+                    size_t pos = fullPath.find_last_of(L"\\/");
+                    std::wstring exe = (pos != std::wstring::npos) ? fullPath.substr(pos + 1) : fullPath;
+                    if (stringtools::toLower(exe) == search->targetExe) {
+                        search->foundProcess = true;
+                        search->foundHwnd = hwnd;
+                        CloseHandle(hProc);
+                        return FALSE;
+                    }
+                }
+                CloseHandle(hProc);
+            }
+        }
     }
     return TRUE;
 }
 
-// Reworked ActivateSourceApp: hunt for an existing window for the AUMID, focus/restore it; fallback to ShellExecute
-void ActivateSourceApp() {
+// Forward declaration
+void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds, const std::wstring& actionName);
+
+// Helper to execute the fallback command (find existing or launch new)
+void ExecuteFallbackCommand(const std::wstring& fallbackCmd, bool bypassSingleInstanceCheck) {
+     if (fallbackCmd.empty()) return;
+
+    if (bypassSingleInstanceCheck) {
+            Wh_Log(L"[SwitchToAudibleWindow] Bypassing instance check - Launching: %s", fallbackCmd.c_str());
+            StartProcess(fallbackCmd);
+            return;
+    }
+
+    // Parsing: Isolate the executable/script path from arguments (quotes or spaces)
+    std::wstring executable = fallbackCmd;
+    if (executable.size() > 0 && (executable[0] == L'"' || executable[0] == L'\'')) {
+        size_t close = executable.find(executable[0], 1);
+        if (close != std::wstring::npos) executable = executable.substr(1, close - 1);
+    } else {
+        size_t space = executable.find(L' ');
+        if (space != std::wstring::npos) executable = executable.substr(0, space);
+    }
+    
+    // Prepare comparison strings
+    std::wstring exeName = executable;
+    size_t slash = exeName.find_last_of(L"\\/");
+    std::wstring filenameOnly = (slash != std::wstring::npos) ? exeName.substr(slash + 1) : exeName;
+    
+    std::wstring filenameLower = stringtools::toLower(filenameOnly);
+    std::wstring fullPathLower = stringtools::toLower(executable);
+
+    WinSearchData exeSearch = { L"", L"", NULL, false, L"", false }; // targetAUMID, targetExe, foundHwnd, foundProcess, targetTitle, checkHidden
+
+    // Determine search strategy
+    if (filenameLower.find(L".exe") != std::wstring::npos || filenameLower.find(L".") == std::wstring::npos) {
+            // Strategy 1: Standard Executable
+            // If no extension, append .exe
+            if (filenameLower.find(L".") == std::wstring::npos) filenameLower += L".exe";
+            
+            exeSearch.targetExe = filenameLower;
+            Wh_Log(L"[SwitchToAudibleWindow] Checking process: %s (Raw: %s)", filenameLower.c_str(), fallbackCmd.c_str());
+    } else {
+            // Strategy 2: Script/File
+            // If input looks like a path, search for the full path in window titles.
+            // Otherwise, search for just the filename.
+            if (fullPathLower.find(L"\\") != std::wstring::npos) {
+                exeSearch.targetTitle = fullPathLower;   // Strict: "C:\Scripts\MyScript.ahk"
+            } else {
+                exeSearch.targetTitle = filenameLower;   // Loose: "MyScript.ahk"
+            }
+            exeSearch.checkHidden = true; // Essential for scripts (AHK, etc)
+            Wh_Log(L"[SwitchToAudibleWindow] Checking script/title: %s (Raw: %s)", exeSearch.targetTitle.c_str(), fallbackCmd.c_str());
+    }
+    
+    EnumWindows(FindWindowByAUMIDOrExe, (LPARAM)&exeSearch);
+    
+    if (exeSearch.foundHwnd) {
+        // Already running - focus it
+        if (IsIconic(exeSearch.foundHwnd)) ShowWindow(exeSearch.foundHwnd, SW_RESTORE);
+        SetForegroundWindow(exeSearch.foundHwnd);
+        Wh_Log(L"[SwitchToAudibleWindow] %s already running - focused", fallbackCmd.c_str());
+    } else {
+        StartProcess(fallbackCmd);
+        Wh_Log(L"[SwitchToAudibleWindow] Launched fallback: %s", fallbackCmd.c_str());
+    }
+}
+
+// Reworked SwitchToAudibleWindow: hunt for an existing window for the AUMID, focus/restore it; fallback to ShellExecute
+void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSingleInstanceCheck = false, float delaySeconds = 0.0f) {
+    bool hasMedia;
     std::wstring targetId;
     {
         lock_guard<mutex> guard(g_MediaState.lock);
+        hasMedia = g_MediaState.hasMedia;
         targetId = g_MediaState.sourceId;
+
+        // Try to recover TargetID from last known good state if empty but media is present
+        if (targetId.empty() && hasMedia && !g_MediaState.lastValidSourceId.empty()) {
+            targetId = g_MediaState.lastValidSourceId;
+            Wh_Log(L"[SwitchToAudibleWindow] Recovered TargetID from cache: '%s'", targetId.c_str());
+        }
+    }
+
+    Wh_Log(L"[ActionEngine] SwitchToAudibleWindow: Media=%d, TargetID='%s', Fallback='%s', Bypass=%d, Delay=%.2f", 
+           hasMedia, targetId.c_str(), fallbackCmd.c_str(), bypassSingleInstanceCheck, delaySeconds);
+    
+    // No media playing - use fallback command if provided
+    if (!hasMedia) {
+        if (!fallbackCmd.empty()) {
+            if (delaySeconds > 0) {
+                // Execute fallback with delay
+                ExecuteActionWithDelay([=]() { 
+                    ExecuteFallbackCommand(fallbackCmd, bypassSingleInstanceCheck); 
+                }, delaySeconds, L"Fallback Command: " + fallbackCmd);
+            } else {
+                ExecuteFallbackCommand(fallbackCmd, bypassSingleInstanceCheck);
+            }
+        } else {
+            Wh_Log(L"[SwitchToAudibleWindow] ERROR: No media playing and no Fallback Command configured. Nothing to do.");
+        }
+        return;
     }
     
-    if (targetId.empty()) return;
+    // Explicitly log that we are ignoring the fallback because media is active
+    if (!fallbackCmd.empty()) {
+        Wh_Log(L"[SwitchToAudibleWindow] Media Source Present - Opening `%s` instead", targetId.c_str());
+    }
+
+    // Media is active, but we requested a delay?
+    if (delaySeconds > 0.0f) {
+         Wh_Log(L"[SwitchToAudibleWindow] Deferring - switching to Media Source in: %.2f seconds", delaySeconds);
+         // Recurse with delay=0 to execute the switch execution phase
+         ExecuteActionWithDelay([=]() { 
+            SwitchToAudibleWindow(fallbackCmd, bypassSingleInstanceCheck, 0.0f); 
+         }, delaySeconds, L"Delayed SwitchToAudibleWindow");
+         return;
+    }
+
+    if (targetId.empty()) {
+         Wh_Log(L"[SwitchToAudibleWindow] ERROR: Media active but TargetID is empty. Cannot switch.");
+         return;
+    }
 
     // Phase 1: Try to find the existing window
-    WinSearchData search = { targetId, NULL };
-    EnumWindows(FindMusicWindowEnum, (LPARAM)&search);
+    WinSearchData search = { targetId, L"", NULL, false, L"", false };
+    EnumWindows(FindWindowByAUMIDOrExe, (LPARAM)&search);
 
     if (search.foundHwnd) {
         // Window found! Restore and Focus.
@@ -967,15 +1254,24 @@ void ActivateSourceApp() {
         SetForegroundWindow(search.foundHwnd);
     } else {
         // Phase 2: Window not found (maybe minimized to tray), fallback to Shell Activation
+        Wh_Log(L"[SwitchToAudibleWindow] Window not found for AUMID: %s. Attempting Shell Activation...", targetId.c_str());
         std::wstring cmd = L"shell:AppsFolder\\" + targetId;
-        ShellExecute(NULL, L"open", cmd.c_str(), NULL, NULL, SW_SHOWNORMAL);
+        try {
+            ShellExecute(NULL, L"open", cmd.c_str(), NULL, NULL, SW_SHOWNORMAL);
+        } catch (...) {
+            Wh_Log(L"[SwitchToAudibleWindow] Failed Media Fallback: | Failed to switch to audible window via ShellExecute");
+        }
     }
 }
+
+
+
+
 
 struct ConfiguredTrigger {
     std::wstring mouseTriggerName;
     uint32_t expectedModifiers;
-    std::vector<std::function<void()>> actions;  // Multiple actions per trigger
+    std::vector<std::pair<std::wstring, std::function<void()>>> actions;  // (actionName, function)
 };
 
 std::vector<ConfiguredTrigger> g_triggers;
@@ -986,6 +1282,7 @@ std::vector<ConfiguredTrigger> g_triggers;
 struct PendingAction {
     std::function<void()> action;
     DWORD executeAtTick;
+    std::wstring description; // Metadata for logging
 };
 
 std::vector<PendingAction> g_pendingActions;
@@ -993,13 +1290,16 @@ std::mutex g_pendingActionsMutex;
 
 // --- Taskbar & Desktop Helpers ---
 
+// Global execution context for triggers
+thread_local std::wstring g_currentTriggerContext;
+
 void SendWinTabKeypress() {
-    Wh_Log(L"Sending Win+Tab");
+    Wh_Log(L"[Action] Sending Win+Tab");
     SendKeypress({VK_LWIN, VK_TAB});
 }
 
 void OpenStartMenu() {
-    Wh_Log(L"Sending Win keypress for Start menu");
+    Wh_Log(L"[Action] Sending Win keypress for Start menu");
     SendKeypress({VK_LWIN});
 }
 
@@ -1034,10 +1334,10 @@ void ToggleTaskbarAutohide() {
     HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar != NULL) {
         const bool isEnabled = GetTaskbarAutohideState();
-        Wh_Log(L"Setting taskbar autohide to %s", isEnabled ? L"disabled" : L"enabled");
+        Wh_Log(L"[Action] Setting taskbar autohide to %s", isEnabled ? L"disabled" : L"enabled");
         SetTaskbarAutohide(!isEnabled);
     } else {
-        Wh_Log(L"Failed to toggle taskbar autohide - taskbar not found");
+        Wh_Log(L"[Action] Failed to toggle taskbar autohide - taskbar not found");
     }
 }
 
@@ -1045,10 +1345,10 @@ void ToggleTaskbarAutohide() {
 void ShowDesktopViaTaskbar() {
     HWND hTaskbar = EnsureTaskbarHandle();
     if (hTaskbar) {
-        Wh_Log(L"Sending ShowDesktop message");
+        Wh_Log(L"[Action] Sending ShowDesktop message");
         SendMessage(hTaskbar, WM_COMMAND, MAKELONG(407, 0), 0);
     } else {
-        Wh_Log(L"Failed to show desktop - taskbar not found");
+        Wh_Log(L"[Action] Failed to show desktop - taskbar not found");
     }
 }
 
@@ -1068,10 +1368,10 @@ HWND FindDesktopShellView() {
 void ToggleDesktopIcons() {
     HWND hDesktopWnd = FindDesktopShellView();
     if (hDesktopWnd != NULL) {
-        Wh_Log(L"Toggling desktop icons");
+        Wh_Log(L"[Action] Toggling desktop icons");
         PostMessage(hDesktopWnd, WM_COMMAND, 0x7402, 0);
     } else {
-        Wh_Log(L"Failed to find desktop window");
+        Wh_Log(L"[Action] Failed to find desktop window");
     }
 }
 
@@ -1116,9 +1416,9 @@ HWND EnsureTaskbarHandle() {
     g_hTaskbar = FindWindowW(L"Shell_TrayWnd", NULL);
     
     if (g_hTaskbar) {
-        Wh_Log(L"Taskbar handle acquired: 0x%p", g_hTaskbar);
+        Wh_Log(L"[Action] Taskbar handle acquired: 0x%p", g_hTaskbar);
     } else {
-        Wh_Log(L"WARNING: Failed to find taskbar window");
+        Wh_Log(L"[Action] WARNING: Failed to find taskbar window");
     }
     
     return g_hTaskbar;  // May be NULL
@@ -1128,7 +1428,7 @@ HWND EnsureTaskbarHandle() {
 void ToggleTaskbarAlignment() {
     DWORD current = GetExplorerAdvancedSetting(L"TaskbarAl", 1);
     DWORD newAlign = (current == 0) ? 1 : 0;
-    Wh_Log(L"Toggling taskbar alignment from %d to %d", current, newAlign);
+    Wh_Log(L"[Action] Toggling taskbar alignment from %d to %d", current, newAlign);
     if (SetExplorerAdvancedSetting(L"TaskbarAl", newAlign)) {
         SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)TEXT("TraySettings"), SMTO_ABORTIFHUNG, 100, NULL);
     }
@@ -1197,44 +1497,42 @@ void CombineTaskbarButtons(const std::wstring& args) {
 // --- Argument Parsing with Delay Support ---
 struct ParsedArgs {
     float delaySeconds;
+    bool bypassSingleInstance;
     std::wstring actualArgs;
 };
 
 ParsedArgs ParseArgumentsWithDelay(const std::wstring& rawArgs) {
-    ParsedArgs result{0.0f, rawArgs};
-    if (rawArgs.empty()) return result;
+    ParsedArgs res{0.0f, false, rawArgs};
+    if (rawArgs.empty()) return res;
 
-    // Only split if colon appears within first 5 characters (prevents accidental splits)
-    // e.g. "2.5:..." or "9999:..." are valid, but "path:file:with:colons" is not
-    size_t colonPos = rawArgs.find(L':');
-    if (colonPos == std::wstring::npos || colonPos > 5) return result;
+    auto isF = [](const std::wstring& s) { try { size_t i; std::stof(s, &i); return i == s.length(); } catch(...) { return false; } };
+    size_t c1 = rawArgs.find(L':');
 
-    std::wstring prefix = stringtools::trim(rawArgs.substr(0, colonPos));
-    
-    // Quick validation: prefix should only contain digits and optional decimal point
-    if (prefix.find_first_not_of(L"0123456789.") != std::wstring::npos) {
-        return result; // Not a clean number, treat as normal arg
-    }
-
-    try {
-        size_t processed = 0;
-        float delay = std::stof(prefix, &processed);
-        // Ensure the entire prefix was consumed (valid number)
-        if (processed == prefix.length()) {
-            result.delaySeconds = std::max(0.0f, delay);
-            result.actualArgs = rawArgs.substr(colonPos + 1);
+    if (c1 != std::wstring::npos && c1 <= 1) { // 1:2.5:arg
+        std::wstring p1 = rawArgs.substr(0, c1);
+        if (p1 == L"0" || p1 == L"1") {
+            size_t c2 = rawArgs.find(L':', c1 + 1);
+            if (c2 != std::wstring::npos) {
+                std::wstring p2 = rawArgs.substr(c1 + 1, c2 - c1 - 1);
+                if (isF(p2)) {
+                    res.bypassSingleInstance = (p1 == L"1");
+                    res.delaySeconds = std::max(0.0f, std::stof(p2));
+                    res.actualArgs = (c2 + 1 < rawArgs.length()) ? rawArgs.substr(c2 + 1) : L"";
+                    return res;
+                }
+            }
         }
-    } catch (...) {
-        // Conversion failed, fallback: treat entire string as argument
     }
-    return result;
+
+    if (c1 != std::wstring::npos && c1 < 10) { // 2.5:arg
+        std::wstring p = rawArgs.substr(0, c1);
+        if (isF(p)) {
+             res.delaySeconds = std::max(0.0f, std::stof(p));
+             res.actualArgs = (c1 + 1 < rawArgs.length()) ? rawArgs.substr(c1 + 1) : L"";
+        }
+    }
+    return res;
 }
-
-void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds);
-
-// Forward Declarations for Z-Order Helpers
-HWND GetMediaZOrderInsertAfter();
-HWND GetRainbowZOrderInsertAfter();
 
 std::vector<int> BuildKeypressSequence(const std::wstring& args) {
     std::vector<int> keys;
@@ -1257,92 +1555,122 @@ std::vector<int> BuildKeypressSequence(const std::wstring& args) {
 }
 
 std::function<void()> ParseAction(const std::wstring& actionName, const std::wstring& rawArgs) {
+    // SPECIAL HANDLING for SwitchToAudibleWindow:
+    // It consumes the delay internally during FALLBACK ONLY.
+    // If we wrap it in ExecuteActionWithDelay here, it delays the PRIMARY check too.
+    if (actionName == L"ACTION_SWITCH_TO_AUDIBLE_WINDOW") {
+         ParsedArgs parsed = ParseArgumentsWithDelay(rawArgs);
+         return [parsed]() { 
+            SwitchToAudibleWindow(parsed.actualArgs, parsed.bypassSingleInstance, parsed.delaySeconds); 
+         };
+    }
+
     ParsedArgs parsed = ParseArgumentsWithDelay(rawArgs);
     const std::wstring& args = parsed.actualArgs;
     const float delay = parsed.delaySeconds;
-    using ActionFactory = std::function<std::function<void()>(const std::wstring&)>;
-
+    using ActionFactory = std::function<std::function<void()>(const ParsedArgs&)>;
+    auto Simple = [](auto f) -> ActionFactory { return [f](const ParsedArgs&) { return f; }; };
+    auto ArgAction = [](auto f) -> ActionFactory { return [f](const ParsedArgs& a) { return [f, s=a.actualArgs](){ f(s); }; }; };
+    
     static const std::unordered_map<std::wstring_view, ActionFactory> kActionFactories = {
-        {L"ACTION_SHOW_DESKTOP", [](const std::wstring&) { return []() { ShowDesktopViaTaskbar(); }; }},
-        {L"ACTION_TOGGLE_DESKTOP_ICONS", [](const std::wstring&) { return []() { ToggleDesktopIcons(); }; }},
-        {L"ACTION_TOGGLE_TASKBAR_AUTOHIDE", [](const std::wstring&) { return []() { ToggleTaskbarAutohide(); }; }},
-        {L"ACTION_TOGGLE_TASKBAR_ALIGNMENT", [](const std::wstring&) { return []() { ToggleTaskbarAlignment(); }; }},
-        {L"ACTION_WIN_TAB", [](const std::wstring&) { return []() { SendWinTabKeypress(); }; }},
-        {L"ACTION_OPEN_START_MENU", [](const std::wstring&) { return []() { OpenStartMenu(); }; }},
-        {L"ACTION_COMBINE_TASKBAR_BUTTONS", [](const std::wstring& input) { return [input]() { CombineTaskbarButtons(input); }; }},
-        {L"ACTION_MUTE", [](const std::wstring&) { return []() { ToggleVolMuted(); }; }},
-        {L"ACTION_TASK_MANAGER", [](const std::wstring&) { return []() { ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); }; }},
-        {L"ACTION_ACTIVATE_SOURCE_APP", [](const std::wstring&) { return []() { ActivateSourceApp(); }; }},
-        {L"ACTION_VOLUME_UP", [](const std::wstring&) { return []() { SendKeypress({VK_VOLUME_UP}); }; }},
-        {L"ACTION_VOLUME_DOWN", [](const std::wstring&) { return []() { SendKeypress({VK_VOLUME_DOWN}); }; }},
-        {L"ACTION_START_PROCESS", [](const std::wstring& input) { return [input]() { StartProcess(input); }; }},
-        {L"ACTION_SEND_KEYPRESS", [](const std::wstring& input) {
-            const auto keys = BuildKeypressSequence(input);
+        {L"ACTION_SHOW_DESKTOP", Simple(ShowDesktopViaTaskbar)},
+        {L"ACTION_TOGGLE_DESKTOP_ICONS", Simple(ToggleDesktopIcons)},
+        {L"ACTION_TOGGLE_TASKBAR_AUTOHIDE", Simple(ToggleTaskbarAutohide)},
+        {L"ACTION_TOGGLE_TASKBAR_ALIGNMENT", Simple(ToggleTaskbarAlignment)},
+        {L"ACTION_WIN_TAB", Simple(SendWinTabKeypress)},
+        {L"ACTION_OPEN_START_MENU", Simple(OpenStartMenu)},
+        {L"ACTION_COMBINE_TASKBAR_BUTTONS", ArgAction(CombineTaskbarButtons)},
+        {L"ACTION_MUTE", Simple(ToggleVolMuted)},
+        {L"ACTION_TASK_MANAGER", Simple([]() { ShellExecute(0, L"open", L"taskmgr.exe", 0, 0, SW_SHOW); })},
+        {L"ACTION_VOLUME_UP", Simple([]() { SendKeypress({VK_VOLUME_UP}); })},
+        {L"ACTION_VOLUME_DOWN", Simple([]() { SendKeypress({VK_VOLUME_DOWN}); })},
+        {L"ACTION_START_PROCESS", ArgAction(StartProcess)},
+        {L"ACTION_SEND_KEYPRESS", [](const ParsedArgs& input) {
+            const auto keys = BuildKeypressSequence(input.actualArgs);
             return [keys]() { SendKeypress(keys); };
         }},
-        {L"ACTION_MEDIA_PLAY_PAUSE", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_PLAY_PAUSE}); }; }},
-        {L"ACTION_MEDIA_NEXT", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_NEXT_TRACK}); }; }},
-        {L"ACTION_MEDIA_PREV", [](const std::wstring&) { return []() { SendKeypress({VK_MEDIA_PREV_TRACK}); }; }},
-        {L"ACTION_TOGGLE_AUDIO_REACTIVE", [](const std::wstring&) { return []() {
+        {L"ACTION_MEDIA_PLAY_PAUSE", Simple([]() { SendKeypress({VK_MEDIA_PLAY_PAUSE}); })},
+        {L"ACTION_MEDIA_NEXT", Simple([]() { SendKeypress({VK_MEDIA_NEXT_TRACK}); })},
+        {L"ACTION_MEDIA_PREV", Simple([]() { SendKeypress({VK_MEDIA_PREV_TRACK}); })},
+        {L"ACTION_TOGGLE_AUDIO_REACTIVE", Simple([]() {
             g_AudioReactiveRuntimeEnabled = !g_AudioReactiveRuntimeEnabled;
             g_AudioPeakSmoothed = 0.0f;
             Wh_Log(L"[Audio Reactive] Toggled: %s", g_AudioReactiveRuntimeEnabled ? L"ON" : L"OFF");
-        }; }},
-        {L"ACTION_TOGGLE_RAINBOW_ZORDER", [](const std::wstring&) { return []() {
+        })},
+        {L"ACTION_TOGGLE_RAINBOW_ZORDER", Simple([]() {
             g_Settings.rainbowAboveWidget = !g_Settings.rainbowAboveWidget;
             Wh_Log(L"[Rainbow] Z-Order Toggled: %s", g_Settings.rainbowAboveWidget ? L"Above" : L"Below");
             if (g_hMediaWindow && g_hRainbowWindow) {
-                HWND mediaInsert = GetMediaZOrderInsertAfter();
-                HWND rainbowInsert = GetRainbowZOrderInsertAfter();
                 UINT flags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW;
-                // Force update both
-                SetWindowPos(g_hRainbowWindow, rainbowInsert, 0,0,0,0, flags);
-                SetWindowPos(g_hMediaWindow, mediaInsert, 0,0,0,0, flags);
+                SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0,0,0,0, flags);
+                SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), 0,0,0,0, flags);
             }
-        }; }}
+        })},
+        {L"ACTION_TOGGLE_ADVANCED_DEBUG_LOG", Simple([]() { 
+            g_Settings.enableAdvancedDebugLog = !g_Settings.enableAdvancedDebugLog;
+            Wh_Log(L"[Action] Advanced Debug Logging Toggled: %s", g_Settings.enableAdvancedDebugLog ? L"ENABLED" : L"DISABLED");
+        })}
     };
 
     const std::wstring_view actionView = actionName;
     if (const auto it = kActionFactories.find(actionView); it != kActionFactories.end()) {
-        auto baseAction = it->second(args);
-
-        // Wrap with delay if specified
+        auto baseAction = it->second(parsed);
         if (delay > 0) {
-            return [baseAction, delay]() {
-                ExecuteActionWithDelay(baseAction, delay);
+            std::wstring fullActionName = std::wstring(actionName) + (args.empty() ? L"" : L" " + args);
+            return [baseAction, delay, fullActionName]() {
+                ExecuteActionWithDelay(baseAction, delay, fullActionName);
             };
         }
-
         return baseAction;
     }
 
     return []() {};
 }
 
-void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds) {
-    Wh_Log(L"[DELAY] Queueing action with %.2f second delay", delaySeconds);
+void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds, const std::wstring& actionName) {
+    Wh_LogAdvanced(L"[DELAY] Queueing action with %.2f second delay", delaySeconds);
     std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+    
+    // Construct description for logging
+    std::wstring desc = actionName;
+    if (!g_currentTriggerContext.empty()) {
+        desc = L"[MusicLounge] " + g_currentTriggerContext + L" '" + actionName + L"' executed (DELAYED)";
+    }
+
     g_pendingActions.push_back({
         action,
-        GetTickCount() + (DWORD)(delaySeconds * 1000)
+        GetTickCount() + (DWORD)(delaySeconds * 1000),
+        desc
     });
-    Wh_Log(L"[DELAY] Queue size: %d", (int)g_pendingActions.size());
+    Wh_LogAdvanced(L"[DELAY] Queue size: %d", (int)g_pendingActions.size());
     SetTimer(g_hMediaWindow, IDT_DELAYED_ACTIONS, TIMER_DELAYED_ACTIONS_MS, NULL);
 }
 
-bool OnMouseClick(const std::wstring& detectedTriggerName) {
+bool OnMouseClick(const std::wstring& detectedTriggerName, int zDelta) {
     uint32_t currentMods = GetKeyModifiersState();
     bool handled = false;
     for(const auto& t : g_triggers) {
         if (t.mouseTriggerName == detectedTriggerName) {
             if (t.expectedModifiers == currentMods) {
+                Wh_Log(L"[ActionEngine] Trigger Matched: '%s' (Action Count: %d)", detectedTriggerName.c_str(), (int)t.actions.size());
                 // Execute all actions for this trigger in order
                 for (size_t i = 0; i < t.actions.size(); i++) {
-                    if (t.actions[i]) {
-                        t.actions[i]();
-                        Wh_Log(L"[MusicLounge] Trigger '%s' Action %d/%d executed", 
-                               detectedTriggerName.c_str(), (int)(i+1), (int)t.actions.size());
+                    const auto& [actionName, actionFunc] = t.actions[i];
+                    if (actionFunc) {
+                        // Set context for delayed actions
+                        g_currentTriggerContext = L"Trigger '" + detectedTriggerName + L"' Action " + std::to_wstring(i+1) + L"/" + std::to_wstring(t.actions.size());
+
+                        actionFunc();
+                        
+                        Wh_LogAdvanced(L"[MusicLounge] %s '%s' executed", g_currentTriggerContext.c_str(), actionName.c_str());
+                        
+                        if (zDelta != 0 && actionName.find(L"VOLUME") != std::wstring::npos) {
+                            Wh_LogAdvanced(L"[INPUT] Sending volume command, zDelta=%d", zDelta);
+                        }
+
+                        g_currentTriggerContext.clear();
                     }
+
                 }
                 if (!t.actions.empty()) {
                     handled = true;
@@ -1356,44 +1684,26 @@ bool OnMouseClick(const std::wstring& detectedTriggerName) {
 // --- Helper: Whitelist Check ---
 bool IsAppIgnored(HWND hFg) {
     if (!hFg) return false;
-    
-    static DWORD s_lastPid = 0;
-    static bool s_lastResult = false;
+    static DWORD s_lPid = 0; static bool s_lRes = false;
+    DWORD pid = 0; GetWindowThreadProcessId(hFg, &pid);
+    if (!pid) return false;
+    if (pid == s_lPid) return s_lRes;
 
-    DWORD pid = 0;
-    GetWindowThreadProcessId(hFg, &pid);
-    if (pid == 0) return false;
-
-    // Cache hit: same PID as last check, return cached result
-    if (pid == s_lastPid) return s_lastResult;
-
-    HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-    if (!hProcess) {
-        s_lastPid = pid;
-        s_lastResult = false;
-        return false;
-    }
-
-    WCHAR buffer[MAX_PATH];
     bool match = false;
-    if (GetModuleFileNameExW(hProcess, NULL, buffer, MAX_PATH)) {
-        buffer[MAX_PATH - 1] = L'\0';
-        wstring fullPath = buffer;
-        size_t lastSlash = fullPath.find_last_of(L"\\");
-        wstring exeName = (lastSlash == wstring::npos) ? fullPath : fullPath.substr(lastSlash + 1);
-        
-        exeName = stringtools::toLower(exeName);
-        wstring list = stringtools::toLower(g_Settings.ignoredApps);
-        
-        if (list.find(exeName) != wstring::npos) match = true;
+    if (HANDLE hP = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid)) {
+        WCHAR buf[MAX_PATH];
+        if (GetModuleFileNameExW(hP, NULL, buf, MAX_PATH)) {
+            std::wstring path = buf;
+            size_t idx = path.find_last_of(L"\\");
+            std::wstring name = stringtools::toLower(idx == std::wstring::npos ? path : path.substr(idx + 1));
+            match = stringtools::toLower(g_Settings.ignoredApps).find(name) != std::wstring::npos;
+        }
+        CloseHandle(hP);
     }
-    CloseHandle(hProcess);
-    
-    // Update cache
-    s_lastPid = pid;
-    s_lastResult = match;
-    return match;
+    return (s_lPid = pid, s_lRes = match);
 }
+
+
 
 // --- Sync Logic ---
 
@@ -1426,16 +1736,8 @@ void UpdateScaleFactor() {
     g_ScaleFactor = dpi / 96.0f;
 }
 
-HWND GetMediaZOrderInsertAfter() {
-    if (g_Settings.rainbowAboveWidget && g_hRainbowWindow) return g_hRainbowWindow;
-    return HWND_TOPMOST;
-}
-
-HWND GetRainbowZOrderInsertAfter() {
-    if (g_Settings.rainbowAboveWidget) return HWND_TOPMOST;
-    if (g_hMediaWindow) return g_hMediaWindow;
-    return HWND_TOPMOST;
-}
+HWND GetMediaZOrderInsertAfter() { return (g_Settings.rainbowAboveWidget && g_hRainbowWindow) ? g_hRainbowWindow : HWND_TOPMOST; }
+HWND GetRainbowZOrderInsertAfter() { return (g_Settings.rainbowAboveWidget || !g_hMediaWindow) ? HWND_TOPMOST : g_hMediaWindow; }
 
 void ForceDockedState() {
     int screenH = GetSystemMetrics(SM_CYSCREEN);
@@ -1571,6 +1873,7 @@ void SyncPositionWithTaskbar() {
             int y = rc.top + (taskbarHeight / 2) - (scaledH / 2) + scaledOffY;
 
             SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), x, y, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
+            SaveWindowState(x, y, scaledW, scaledH);
             g_AnimState = 0; // Synced
             // Sync rainbow window position
             if (g_hRainbowWindow && g_Settings.enableRainbow) {
@@ -1654,6 +1957,71 @@ void ValidateSettings() {
 
 #pragma region settings
 
+void LoadPersistentState() {
+    g_PersistedState.lastX = Wh_GetIntValue(L"LastX", std::numeric_limits<int>::min());
+    g_PersistedState.lastY = Wh_GetIntValue(L"LastY", std::numeric_limits<int>::min());
+    g_PersistedState.lastW = Wh_GetIntValue(L"LastW", 0);
+    g_PersistedState.lastH = Wh_GetIntValue(L"LastH", 0);
+
+    wchar_t buffer[256] = {0};
+    size_t len = Wh_GetStringValue(L"LastTitle", buffer, ARRAYSIZE(buffer));
+    g_PersistedState.lastTitle = (len > 0) ? std::wstring(buffer, len) : std::wstring();
+
+    std::fill(std::begin(buffer), std::end(buffer), 0);
+    len = Wh_GetStringValue(L"LastArtist", buffer, ARRAYSIZE(buffer));
+    g_PersistedState.lastArtist = (len > 0) ? std::wstring(buffer, len) : std::wstring();
+
+    Wh_LogAdvanced(L"[STATE] Loaded persisted window state (%d,%d,%d,%d)",
+           g_PersistedState.lastX, g_PersistedState.lastY,
+           g_PersistedState.lastW, g_PersistedState.lastH);
+}
+
+void SaveWindowState(int x, int y, int w, int h) {
+    // Only log and save if values actually changed
+    if (g_PersistedState.lastX != x || g_PersistedState.lastY != y ||
+        g_PersistedState.lastW != w || g_PersistedState.lastH != h) {
+        Wh_SetIntValue(L"LastX", x);
+        Wh_SetIntValue(L"LastY", y);
+        Wh_SetIntValue(L"LastW", w);
+        Wh_SetIntValue(L"LastH", h);
+        g_PersistedState.lastX = x;
+        g_PersistedState.lastY = y;
+        g_PersistedState.lastW = w;
+        g_PersistedState.lastH = h;
+        Wh_LogAdvanced(L"[STATE] Saved window state (%d,%d,%dx%d)", x, y, w, h);
+    }
+}
+
+void SaveLastMediaInfo(const std::wstring& title, const std::wstring& artist) {
+    // Only log and save if values actually changed
+    if (g_PersistedState.lastTitle != title || g_PersistedState.lastArtist != artist) {
+        Wh_SetStringValue(L"LastTitle", title.c_str());
+        Wh_SetStringValue(L"LastArtist", artist.c_str());
+        g_PersistedState.lastTitle = title;
+        g_PersistedState.lastArtist = artist;
+        Wh_LogAdvanced(L"[STATE] Saved media info: '%s' by '%s'", 
+               title.empty() ? L"<empty>" : title.c_str(),
+               artist.empty() ? L"<empty>" : artist.c_str());
+    }
+}
+
+void ApplyPersistedMediaFallback() {
+    if (g_PersistedState.lastTitle.empty() && g_PersistedState.lastArtist.empty()) {
+        Wh_Log(L"[STATE] No persisted media info to apply");
+        return;
+    }
+
+    Wh_Log(L"[STATE] Applying persisted media fallback: '%s' by '%s'",
+           g_PersistedState.lastTitle.empty() ? L"<empty>" : g_PersistedState.lastTitle.c_str(),
+           g_PersistedState.lastArtist.empty() ? L"<empty>" : g_PersistedState.lastArtist.c_str());
+
+    std::lock_guard<std::mutex> guard(g_MediaState.lock);
+    g_MediaState.title = g_PersistedState.lastTitle;
+    g_MediaState.artist = g_PersistedState.lastArtist;
+    g_MediaState.hasMedia = !g_PersistedState.lastTitle.empty();
+    g_MediaState.isPlaying = false;
+}
+
 /// Load all settings from Windhawk configuration
 void LoadSettings() {
     // --- Dimensions & Position ---
@@ -1669,29 +2037,29 @@ void LoadSettings() {
     g_Settings.bgOpacity = Wh_GetIntSetting(L"BgOpacity");
 
     // --- Manual Text Color ---
-    PCWSTR textColorStr = Wh_GetStringSetting(L"TextColor");
-    if (textColorStr) {
+    ScopedSettingString textColor(L"TextColor");
+    Wh_Log(L"[SETTINGS] Text color string: '%s'", textColor.empty() ? L"<empty>" : textColor.get());
+    if (!textColor.empty()) {
         int r, g, b, a;
-        if (ParseColorComponents(textColorStr, r, g, b, a)) {
-             g_Settings.manualTextColor = ((DWORD)a << 24) | ((DWORD)r << 16) | ((DWORD)g << 8) | (DWORD)b;
+        if (ParseColorComponents(textColor.get(), r, g, b, a)) {
+            g_Settings.manualTextColor = ((DWORD)a << 24) | ((DWORD)r << 16) | ((DWORD)g << 8) | (DWORD)b;
         } else {
-             g_Settings.manualTextColor = 0xFFFFFFFF;
+            g_Settings.manualTextColor = 0xFFFFFFFF;
         }
-        Wh_FreeStringSetting(textColorStr);
     } else {
         g_Settings.manualTextColor = 0xFFFFFFFF;
     }
 
     // --- Manual Background Color ---
-    PCWSTR bgColorStr = Wh_GetStringSetting(L"BgColor");
-    if (bgColorStr) {
+    ScopedSettingString bgColor(L"BgColor");
+    Wh_Log(L"[SETTINGS] Background color string: '%s'", bgColor.empty() ? L"<empty>" : bgColor.get());
+    if (!bgColor.empty()) {
         int r, g, b, a;
-        if (ParseColorComponents(bgColorStr, r, g, b, a) && !(r==0 && g==0 && b==0)) {
+        if (ParseColorComponents(bgColor.get(), r, g, b, a) && !(r==0 && g==0 && b==0)) {
             g_Settings.manualBgColorRGB = ((DWORD)b << 16) | ((DWORD)g << 8) | (DWORD)r;
         } else {
             g_Settings.manualBgColorRGB = 0; 
         }
-        Wh_FreeStringSetting(bgColorStr);
     } else {
         g_Settings.manualBgColorRGB = 0;
     }
@@ -1709,10 +2077,10 @@ void LoadSettings() {
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     g_Settings.enableGameDetect = Wh_GetIntSetting(L"EnableGameDetection") != 0;
 
-    PCWSTR apps = Wh_GetStringSetting(L"IgnoredApps");
-    if (apps) {
-        g_Settings.ignoredApps = apps;
-        Wh_FreeStringSetting(apps);
+    ScopedSettingString apps(L"IgnoredApps");
+    Wh_Log(L"[SETTINGS] Ignored apps string: '%s'", apps.empty() ? L"<default>" : apps.get());
+    if (!apps.empty()) {
+        g_Settings.ignoredApps = apps.get();
     } else {
         g_Settings.ignoredApps = L"firefox.exe;chrome.exe;msedge.exe";
     }
@@ -1764,6 +2132,11 @@ void LoadSettings() {
     if (g_Settings.width < 100) g_Settings.width = 400;
     if (g_Settings.height < 24) g_Settings.height = 48;
 
+    // Load persisted state after settings (so we know scaling and ranges)
+    LoadPersistentState();
+    ApplyPersistedMediaFallback();
+    Wh_LogAdvanced(L"[STATE] Persistent state loaded and applied");
+
     // Initialize audio meter if audio reactive is enabled
     if (g_Settings.enableAudioReactive && g_audioCOM.IsInitialized()) {
         g_audioCOM.InitMeter();
@@ -1801,7 +2174,7 @@ void LoadSettings() {
             auto argsStr = std::wstring(StringSetting::make(L"Triggers[%d].Actions[%d].AdditionalArgs", i, k).get());
             auto parsedAction = ParseAction(actionStr, argsStr);
             if (parsedAction) {
-                ct.actions.push_back(parsedAction);
+                ct.actions.push_back({actionStr, parsedAction});
             }
         }
         
@@ -1817,6 +2190,21 @@ void LoadSettings() {
 
 // --- WinRT / GSMTC ---
 GlobalSystemMediaTransportControlsSessionManager g_SessionManager = nullptr;
+GlobalSystemMediaTransportControlsSession g_CachedSession = nullptr;
+
+// Custom message for async media info results
+#define WM_MEDIA_INFO_READY (WM_APP + 1)
+
+// Struct to pass async results back to UI thread
+struct MediaInfoResult {
+    wstring title;
+    wstring artist;
+    wstring sourceId;
+    bool isPlaying;
+    bool hasMedia;
+    Bitmap* albumArt;
+};
+static MediaInfoResult* g_PendingMediaInfo = nullptr;
 
 Bitmap* StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
     if (!stream) return nullptr;
@@ -1830,73 +2218,110 @@ Bitmap* StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
     return nullptr;
 }
 
-void UpdateMediaInfo() {
-    if (!g_SessionManager) {
-        try {
-            g_SessionManager = GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
-            if (!g_SessionManager) {
-                Wh_Log(L"WARNING: Failed to acquire GSMTC manager");
-                return;
-            }
-        } catch (const std::exception& e) {
-            Wh_Log(L"ERROR: Exception acquiring GSMTC manager");
-            return;
-        } catch (...) {
-            Wh_Log(L"ERROR: Unknown exception acquiring GSMTC manager");
-            return;
+/// Async fire-and-forget media info update - does NOT block UI thread
+void UpdateMediaInfoAsync() {
+    static int s_NoSessionRetryCount = 0;
+
+    // Early exit if no session available
+    if (!g_CachedSession) {
+        // Grace Period: Don't clear immediately to allow for transient session loss
+        bool wasHavingMedia = false;
+        {
+            lock_guard<mutex> guard(g_MediaState.lock);
+            wasHavingMedia = g_MediaState.hasMedia;
         }
+
+        if (wasHavingMedia && s_NoSessionRetryCount < 8) { // ~1.5 second grace (200ms * 8)
+            s_NoSessionRetryCount++;
+            return; 
+        }
+
+        s_NoSessionRetryCount = 0;
+        lock_guard<mutex> guard(g_MediaState.lock);
+        g_MediaState.hasMedia = false;
+        g_MediaState.title = L"No Media";
+        g_MediaState.artist = L"";
+        g_MediaState.sourceId = L"";
+        if (g_MediaState.albumArt) { 
+            delete g_MediaState.albumArt; 
+            g_MediaState.albumArt = nullptr; 
+        }
+        return;
     }
+
+    s_NoSessionRetryCount = 0;
     
     try {
-        auto session = g_SessionManager.GetCurrentSession();
-        if (!session) {
-            lock_guard<mutex> guard(g_MediaState.lock);
-            g_MediaState.hasMedia = false;
-            g_MediaState.title = L"No Media";
-            g_MediaState.artist = L"";
-            g_MediaState.sourceId = L"";
-            if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
-            return;
-        }
+        // Get source ID and playback state synchronously (fast operations)
+        wstring sourceId = g_CachedSession.SourceAppUserModelId().c_str();
+        auto info = g_CachedSession.GetPlaybackInfo();
+        bool isPlaying = (info.PlaybackStatus() == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing);
         
-        auto props = session.TryGetMediaPropertiesAsync().get();
-        if (!props) {
-            Wh_Log(L"WARNING: Failed to get media properties");
-            lock_guard<mutex> guard(g_MediaState.lock);
-            g_MediaState.hasMedia = false;
-            return;
-        }
-        
-        auto info = session.GetPlaybackInfo();
-
-        lock_guard<mutex> guard(g_MediaState.lock);
-        
-        wstring newId = session.SourceAppUserModelId().c_str();
-        if (newId != g_MediaState.sourceId) {
-            Wh_Log(L"[MusicLounge] New Source: %s", newId.c_str());
-            g_MediaState.sourceId = newId;
-        }
-        
-        wstring newTitle = props.Title().c_str();
-        if (newTitle != g_MediaState.title || g_MediaState.albumArt == nullptr) {
-            if (g_MediaState.albumArt) { delete g_MediaState.albumArt; g_MediaState.albumArt = nullptr; }
-            auto thumbRef = props.Thumbnail();
-            if (thumbRef) {
-                auto stream = thumbRef.OpenReadAsync().get();
-                g_MediaState.albumArt = StreamToBitmap(stream);
-            }
-        }
-        g_MediaState.title = newTitle;
-        g_MediaState.artist = props.Artist().c_str();
-        g_MediaState.isPlaying = (info.PlaybackStatus() == GlobalSystemMediaTransportControlsSessionPlaybackStatus::Playing);
-        g_MediaState.hasMedia = true;
+        // Fire off async media properties chain - does NOT block
+        g_CachedSession.TryGetMediaPropertiesAsync().Completed(
+            [sourceId, isPlaying](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
+                if (status != Windows::Foundation::AsyncStatus::Completed) {
+                    Wh_Log(L"WARNING: Media properties async failed");
+                    return;
+                }
+                
+                auto props = propsOp.GetResults();
+                if (!props) {
+                    Wh_Log(L"WARNING: No media properties returned");
+                    return;
+                }
+                
+                // Build result on background thread
+                auto* result = new MediaInfoResult();
+                result->title = props.Title().c_str();
+                result->artist = props.Artist().c_str();
+                result->sourceId = sourceId;
+                result->isPlaying = isPlaying;
+                result->hasMedia = true;
+                result->albumArt = nullptr;
+                
+                // Log source changes
+                if (sourceId != g_MediaState.sourceId) {
+                    Wh_Log(L"[MusicLounge] New Source: %s", sourceId.c_str());
+                }
+                
+                // Chain: fetch thumbnail async
+                auto thumbRef = props.Thumbnail();
+                if (thumbRef) {
+                    thumbRef.OpenReadAsync().Completed(
+                        [result](auto const& streamOp, Windows::Foundation::AsyncStatus status) {
+                            if (status == Windows::Foundation::AsyncStatus::Completed) {
+                                result->albumArt = StreamToBitmap(streamOp.GetResults());
+                            }
+                            // Post to UI thread with result
+                            g_PendingMediaInfo = result;
+                            if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                            } else {
+                                // Cleanup if window destroyed
+                                if (result->albumArt) delete result->albumArt;
+                                delete result;
+                                g_PendingMediaInfo = nullptr;
+                            }
+                        });
+                } else {
+                    // No thumbnail - post result immediately
+                    g_PendingMediaInfo = result;
+                    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                        PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                    } else {
+                        delete result;
+                        g_PendingMediaInfo = nullptr;
+                    }
+                }
+            });
     } catch (const std::exception& e) {
-        Wh_Log(L"ERROR: Exception in UpdateMediaInfo");
+        Wh_Log(L"ERROR: Exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
     } catch (...) {
-        Wh_Log(L"ERROR: Unknown exception in UpdateMediaInfo");
+        Wh_Log(L"ERROR: Unknown exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
@@ -1905,19 +2330,24 @@ void UpdateMediaInfo() {
 
 void SendMediaCommand(int cmd) {
     try {
-        if (!g_SessionManager) {
-            Wh_Log(L"WARNING: GSMTC manager not available for media command");
-            return;
-        }
-        auto session = g_SessionManager.GetCurrentSession();
-        if (!session) {
-            Wh_Log(L"WARNING: No active media session for command");
+        // Use cached session - no blocking GetCurrentSession() call
+        if (!g_CachedSession) {
+            Wh_Log(L"WARNING: No cached media session for command");
             return;
         }
         
-        if (cmd == 1) session.TrySkipPreviousAsync();
-        else if (cmd == 2) session.TryTogglePlayPauseAsync();
-        else if (cmd == 3) session.TrySkipNextAsync();
+        // OPTIMIZATION: Optimistic UI update for play/pause - instant visual feedback
+        if (cmd == 2) {
+            lock_guard<mutex> guard(g_MediaState.lock);
+            g_MediaState.isPlaying = !g_MediaState.isPlaying;
+            if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                InvalidateRect(g_hMediaWindow, NULL, FALSE);
+            }
+        }
+        
+        if (cmd == 1) g_CachedSession.TrySkipPreviousAsync();
+        else if (cmd == 2) g_CachedSession.TryTogglePlayPauseAsync();
+        else if (cmd == 3) g_CachedSession.TrySkipNextAsync();
     } catch (const std::exception& e) {
         Wh_Log(L"ERROR: Exception sending media command %d", cmd);
     } catch (...) {
@@ -2275,22 +2705,25 @@ float CalculateAudioPeak(float rawPeak) {
 LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
         case WM_CREATE: {
+            Wh_Log(L"-- WM_CREATE received - initializing RainbowWndProc");
             // Make window transparent to mouse events
             SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TRANSPARENT);
             if (g_Settings.enableRainbow) {
                 SetTimer(hwnd, IDT_RAINBOW_ANIM, TIMER_ANIMATION_MS, NULL);
+                Wh_Log(L"Rainbow animation timer started (ID: %d, interval: %dms)", IDT_RAINBOW_ANIM, TIMER_ANIMATION_MS);
             }
             // Apply corner rounding to match main window
             DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
             DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
+            Wh_Log(L"Window corner rounding: %s", g_Settings.enableRoundedCorners ? L"enabled" : L"disabled");
             return 0;
         }
         case WM_ERASEBKGND: return 1;
         case APP_WM_CLOSE: DestroyWindow(hwnd); return 0;
         case WM_DESTROY:
-            Wh_Log(L"RainbowWndProc WM_DESTROY");
+            Wh_Log(L"-- RainbowWndProc WM_DESTROY");
             KillTimer(hwnd, IDT_RAINBOW_ANIM);
-            Wh_Log(L"Rainbow timer killed");
+            Wh_Log(L"-- Rainbow timer killed");
             return 0;
         case WM_TIMER:
             if (wParam == IDT_RAINBOW_ANIM) {
@@ -2402,12 +2835,41 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-/// Helper: Check if click is in the "background" area (right of the art/controls)
+/// Helper: Check if click is on album art or buttons (returns true if on background/text area)
 bool IsClickOnBackground(LPARAM lParam) {
-    int x = (int)(LOWORD(lParam) / g_ScaleFactor);
-    int artSize = g_Settings.height - 12;
-    int artRightEdge = 6 + artSize + 5;
-    return (x > artRightEdge);
+    int rawX = (int)LOWORD(lParam);
+    int rawY = (int)HIWORD(lParam);
+    int x = (int)(rawX / g_ScaleFactor);
+    int y = (int)(rawY / g_ScaleFactor);
+    int logicalH = g_Settings.height;
+    int artSize = logicalH - 12;
+    
+    Wh_LogAdvanced(L"[HIT] Raw coords: (%d, %d), ScaleFactor: %.2f, Logical: (%d, %d)", 
+           rawX, rawY, g_ScaleFactor, x, y);
+    
+    // Album art region (from DrawMediaPanel: artX=6, artY=6, size=artSize)
+    int artX = 6, artY = 6;
+    if (x >= artX && x <= artX + artSize && y >= artY && y <= artY + artSize) {
+        Wh_LogAdvanced(L"[HIT] ON ALBUM ART - artX=%d, artY=%d, artSize=%d -> Result: FALSE", 
+               artX, artY, artSize);
+        return false;  // On album art
+    }
+    
+    // Button region (from WM_MOUSEMOVE hover detection logic)
+    int startControlX = 6 + artSize + 12;
+    Wh_LogAdvanced(L"[HIT] artSize=%d, startControlX=%d", artSize, startControlX);
+    
+    if (y > 10 && y < logicalH - 10) {
+        Wh_LogAdvanced(L"[HIT] In Y button range (10 < %d < %d)", y, logicalH - 10);
+        if (x >= startControlX - 10 && x < startControlX + 66) {
+            Wh_LogAdvanced(L"[HIT] ON BUTTONS - range: [%d, %d) -> Result: FALSE", 
+                   startControlX - 10, startControlX + 66);
+            return false;  // On buttons (prev, play, next combined)
+        }
+    }
+    
+    Wh_LogAdvanced(L"[HIT] ON BACKGROUND -> Result: TRUE");
+    return true;  // On background/text
 }
 
 /// Media widget window procedure
@@ -2415,18 +2877,54 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     switch (msg) {
         case WM_CREATE: 
+            Wh_Log(L"-- WM_CREATE received - initializing MediaWndProc");
             UpdateAppearance(hwnd);
-            SetTimer(hwnd, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL); 
+            SetTimer(hwnd, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL);
+            Wh_Log(L"-- Media poll timer started (ID: %d, interval: %dms)", IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS);
             return 0;
+        case WM_MEDIA_INFO_READY: {
+            // Process async media info result on UI thread
+            if (g_PendingMediaInfo) {
+                lock_guard<mutex> guard(g_MediaState.lock);
+                
+                // Clean up old album art
+                if (g_MediaState.albumArt) {
+                    delete g_MediaState.albumArt;
+                }
+                
+                // Update state with new data
+                g_MediaState.title = g_PendingMediaInfo->title;
+                g_MediaState.artist = g_PendingMediaInfo->artist;
+                g_MediaState.sourceId = g_PendingMediaInfo->sourceId;
+
+                if (!g_MediaState.sourceId.empty()) {
+                    g_MediaState.lastValidSourceId = g_MediaState.sourceId;
+                }
+
+                g_MediaState.isPlaying = g_PendingMediaInfo->isPlaying;
+                g_MediaState.hasMedia = g_PendingMediaInfo->hasMedia;
+                g_MediaState.albumArt = g_PendingMediaInfo->albumArt;
+
+                SaveLastMediaInfo(g_MediaState.title, g_MediaState.artist);
+                
+                // Cleanup pending result struct
+                delete g_PendingMediaInfo;
+                g_PendingMediaInfo = nullptr;
+                
+                // Trigger redraw with new media info
+                InvalidateRect(hwnd, NULL, FALSE);
+            }
+            return 0;
+        }
         case WM_ERASEBKGND: return 1;
         case APP_WM_CLOSE: DestroyWindow(hwnd); return 0;
         case WM_DESTROY:
-            Wh_Log(L"MediaWndProc WM_DESTROY");
+            Wh_Log(L"-- MediaWndProc WM_DESTROY");
             KillTimer(hwnd, IDT_VIS_ANIM);
             KillTimer(hwnd, IDT_TEXT_ANIM);
             KillTimer(hwnd, IDT_POLL_MEDIA);
             KillTimer(hwnd, IDT_DELAYED_ACTIONS);
-            Wh_Log(L"All timers killed");
+            Wh_Log(L" --All timers killed-- ");
             // NOTE: g_SessionManager cleanup moved to MediaThread cleanup lambda
             // to ensure proper shutdown order (before winrt::uninit_apartment)
             PostQuitMessage(0);
@@ -2481,7 +2979,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case WM_TIMER:
             if (wParam == IDT_POLL_MEDIA) {
-                UpdateMediaInfo();
+                UpdateMediaInfoAsync();
                 bool isPlaying = false;
                 {
                     lock_guard<mutex> guard(g_MediaState.lock);
@@ -2559,13 +3057,19 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
                 DWORD now = GetTickCount();
                 
-                Wh_Log(L"[DELAY] Timer tick - checking %d pending actions", (int)g_pendingActions.size());
+                Wh_LogAdvanced(L"[DELAY] Timer tick - checking %d pending actions", (int)g_pendingActions.size());
 
                 // Execute ready actions
                 auto it = g_pendingActions.begin();
                 while (it != g_pendingActions.end()) {
                     if (now >= it->executeAtTick) {
-                        Wh_Log(L"[DELAY] Executing delayed action");
+                        // Log the specific action description instead of generic message
+                        if (!it->description.empty()) {
+                            Wh_Log(L"%s", it->description.c_str());
+                        } else {
+                            Wh_LogAdvanced(L"[DELAY] Executing delayed action (no desc)");
+                        }
+                        
                         it->action();
                         it = g_pendingActions.erase(it);
                     } else {
@@ -2575,7 +3079,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
                 // Stop timer if no pending actions
                 if (g_pendingActions.empty()) {
-                    Wh_Log(L"[DELAY] Queue empty - stopping timer");
+                    Wh_LogAdvanced(L"[DELAY] Queue empty - stopping timer");
                     KillTimer(hwnd, IDT_DELAYED_ACTIONS);
                 }
             }
@@ -2598,30 +3102,71 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
         case WM_MOUSELEAVE: g_HoverState = 0; InvalidateRect(hwnd, NULL, FALSE); break;
-        case WM_LBUTTONUP:
-            if (g_HoverState > 0) {
+        case WM_LBUTTONUP: {
+            Wh_LogAdvanced(L"[INPUT] WM_LBUTTONUP");
+            if (g_HoverState >= 1 && g_HoverState <= 3) {
+                Wh_LogAdvanced(L"[INPUT] Clicked button state: %d", g_HoverState);
                 SendMediaCommand(g_HoverState);
             } else if (IsClickOnBackground(lParam)) {
+                Wh_LogAdvanced(L"[INPUT] Left click on background - triggering action");
                 OnMouseClick(L"Left");
             }
             return 0;
-        case WM_RBUTTONUP:
-            if (IsClickOnBackground(lParam)) OnMouseClick(L"Right");
+        }
+        case WM_RBUTTONUP: {
+            Wh_LogAdvanced(L"[INPUT] WM_RBUTTONUP");
+            if (IsClickOnBackground(lParam)) {
+                Wh_LogAdvanced(L"[INPUT] Right click on background - triggering action");
+                OnMouseClick(L"Right");
+            }
             return 0;
-        case WM_MBUTTONUP:
-            if (IsClickOnBackground(lParam)) OnMouseClick(L"Middle");
+        }
+        case WM_MBUTTONUP: {
+            Wh_LogAdvanced(L"[INPUT] WM_MBUTTONUP");
+            if (IsClickOnBackground(lParam)) {
+                Wh_LogAdvanced(L"[INPUT] Middle click on background - triggering action");
+                OnMouseClick(L"Middle");
+            }
             return 0;
-        case WM_LBUTTONDBLCLK:
-            if (IsClickOnBackground(lParam)) OnMouseClick(L"Double");
+        }
+        case WM_LBUTTONDBLCLK: {
+            Wh_LogAdvanced(L"[INPUT] WM_LBUTTONDBLCLK");
+            if (IsClickOnBackground(lParam)) {
+                Wh_LogAdvanced(L"[INPUT] Double click on background - triggering action");
+                OnMouseClick(L"Double");
+            }
             return 0;
+        }
         case WM_MOUSEWHEEL: {
             short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
             bool handled = false;
-            if (zDelta > 0) handled = OnMouseClick(L"ScrollUp");
-            else handled = OnMouseClick(L"ScrollDown");
             
-            if (!handled) {
+            // WM_MOUSEWHEEL sends screen coordinates, convert to client-relative
+            POINT pt;
+            pt.x = (int)(short)LOWORD(lParam);
+            pt.y = (int)(short)HIWORD(lParam);
+            ScreenToClient(hwnd, &pt);
+            LPARAM clientLParam = MAKELPARAM(pt.x, pt.y);
+            
+            bool isOnBackground = IsClickOnBackground(clientLParam);
+
+            if (isOnBackground) {
+                Wh_LogAdvanced(L"[INPUT] WM_MOUSEWHEEL at client coords (%d, %d), delta=%d", pt.x, pt.y, zDelta);
+
+                if (zDelta > 0) {
+                    Wh_LogAdvanced(L"[INPUT] ScrollUp on background - triggering action");
+                    handled = OnMouseClick(L"ScrollUp", zDelta);
+                } else {
+                    Wh_LogAdvanced(L"[INPUT] ScrollDown on background - triggering action");
+                    handled = OnMouseClick(L"ScrollDown", zDelta);
+                }
+            } else {
+                Wh_LogAdvanced(L"[INPUT] Scroll BLOCKED - not on background");
+            }
+            
+            if (!handled && isOnBackground) {
                 // Fallback to System Volume Control
+                Wh_LogAdvanced(L"[INPUT] Sending volume command, zDelta=%d", zDelta);
                 SendMessage(hwnd, WM_APPCOMMAND, 0, zDelta > 0 ? APPCOMMAND_VOLUME_UP << 16 : APPCOMMAND_VOLUME_DOWN << 16);
             }
             return 0;
@@ -2655,7 +3200,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 /// Main media widget thread - runs in dedicated process via tool mod
 void MediaThread() {
-    Wh_Log(L"MediaThread started");
+    Wh_Log(L"---- MediaThread started");
 
     // --- DPI Awareness ---
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
@@ -2686,7 +3231,7 @@ void MediaThread() {
 
     // UPDATE DPI FIRST (independent from any window)
     UpdateScaleFactor();
-    Wh_Log(L"Scale factor updated to %.2f", g_ScaleFactor);
+    Wh_Log(L"-- Scale factor updated to %.2f", g_ScaleFactor);
     
     // ENSURE TASKBAR HANDLE is available
     EnsureTaskbarHandle();
@@ -2698,6 +3243,7 @@ void MediaThread() {
     wc.lpszClassName = TEXT("WindhawkMusicLounge_GSMTC");
     wc.hCursor = LoadCursor(NULL, IDC_HAND);
     RegisterClass(&wc);
+    Wh_Log(L"Media window class registered");
 
     // Register rainbow window class
     WNDCLASS wcRainbow = {0};
@@ -2706,9 +3252,15 @@ void MediaThread() {
     wcRainbow.lpszClassName = TEXT("WindhawkMusicLounge_Rainbow");
     wcRainbow.hCursor = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wcRainbow);
+    Wh_Log(L"Rainbow window class registered");
 
     HMODULE hUser32 = GetModuleHandle(L"user32.dll");
     pCreateWindowInBand CreateWindowInBand = (pCreateWindowInBand)GetProcAddress(hUser32, "CreateWindowInBand");
+    if (CreateWindowInBand) {
+        Wh_Log(L"-- CreateWindowInBand API available (Windows 10+)");
+    } else {
+        Wh_Log(L"-- CreateWindowInBand API not available, will use CreateWindowEx");
+    }
 
     // Pre-calculate scaled dimensions
     int scaledW = (int)(g_Settings.width * g_ScaleFactor);
@@ -2722,14 +3274,35 @@ void MediaThread() {
             g_hVisibilityHook = NULL;
         }
         UnregisterClass(wc.lpszClassName, wc.hInstance);
+        Wh_Log(L"Media window class unregistered");
         UnregisterClass(wcRainbow.lpszClassName, wcRainbow.hInstance);
+        Wh_Log(L"Rainbow window class unregistered");
+        // CRITICAL: Delete albumArt BEFORE GdiplusShutdown
+        // Deleting GDI+ objects after GdiplusShutdown hangs indefinitely
+        {
+            std::lock_guard<std::mutex> guard(g_MediaState.lock);
+            if (g_MediaState.albumArt) {
+                delete g_MediaState.albumArt;
+                g_MediaState.albumArt = nullptr;
+                Wh_Log(L"Album art cleaned up in MediaThread");
+            }
+        }
         if (g_gdiplusToken) {
             GdiplusShutdown(g_gdiplusToken);
             Wh_Log(L"GDI+ shutdown completed");
             g_gdiplusToken = 0;
         }
-        // CRITICAL: Release GSMTC session manager BEFORE uninit_apartment
+        // CRITICAL: Release GSMTC session and manager BEFORE uninit_apartment
         // to properly terminate RPC connections and avoid "RPC server unavailable" errors
+        if (g_CachedSession) {
+            try {
+                g_CachedSession = nullptr;
+                Wh_Log(L"GSMTC cached session released");
+            } catch (...) {
+                Wh_Log(L"WARNING: Exception releasing cached session");
+                g_CachedSession = nullptr;
+            }
+        }
         if (g_SessionManager) {
             try {
                 // Setting to nullptr releases the WinRT COM reference
@@ -2776,8 +3349,10 @@ void MediaThread() {
         cleanup();
         return;
     }
+    Wh_Log(L"Media window created: 0x%p (size: %dx%d)", g_hMediaWindow, scaledW, scaledH);
 
     // Create rainbow window hidden with scaled size
+    Wh_Log(L"Creating rainbow window...");
     if (CreateWindowInBand) {
         g_hRainbowWindow = CreateWindowInBand(
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
@@ -2789,6 +3364,7 @@ void MediaThread() {
             scaledH + (borderOffset * 2),
             NULL, NULL, wcRainbow.hInstance, NULL,
             ZBID_IMMERSIVE_NOTIFICATION);
+        Wh_Log(L"CreateWindowInBand used for rainbow window");
     } else {
         g_hRainbowWindow = CreateWindowEx(
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
@@ -2799,6 +3375,10 @@ void MediaThread() {
             scaledW + (borderOffset * 2),
             scaledH + (borderOffset * 2),
             NULL, NULL, wcRainbow.hInstance, NULL);
+        Wh_Log(L"-- CreateWindowEx used for rainbow window (CreateWindowInBand not available)");
+    }
+    if (g_hRainbowWindow) {
+        Wh_Log(L"-- Rainbow window created: 0x%p", g_hRainbowWindow);
     }
 
     // Apply appearance and transparency while hidden
@@ -2808,14 +3388,41 @@ void MediaThread() {
         SetLayeredWindowAttributes(g_hRainbowWindow, 0, 255, LWA_ALPHA);
     }
 
+    // Position while hidden (use persisted rect if available)
+    if (g_PersistedState.lastX != std::numeric_limits<int>::min() &&
+        g_PersistedState.lastY != std::numeric_limits<int>::min() &&
+        g_PersistedState.lastW > 0 && g_PersistedState.lastH > 0) {
+        SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(),
+                     g_PersistedState.lastX, g_PersistedState.lastY,
+                     g_PersistedState.lastW, g_PersistedState.lastH,
+                     SWP_NOACTIVATE | SWP_SHOWWINDOW);
+        Wh_Log(L" -Applied persisted window rect %d,%d %dx%d", g_PersistedState.lastX, g_PersistedState.lastY, g_PersistedState.lastW, g_PersistedState.lastH);
+    }
+
+    if (g_hRainbowWindow && g_Settings.enableRainbow &&
+        g_PersistedState.lastX != std::numeric_limits<int>::min() &&
+        g_PersistedState.lastY != std::numeric_limits<int>::min()) {
+        int borderOffset = (int)(g_Settings.rainbowBorderOffset * g_ScaleFactor);
+        SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(),
+                     g_PersistedState.lastX - borderOffset,
+                     g_PersistedState.lastY - borderOffset,
+                     (g_PersistedState.lastW > 0 ? g_PersistedState.lastW : scaledW) + (borderOffset * 2),
+                     (g_PersistedState.lastH > 0 ? g_PersistedState.lastH : scaledH) + (borderOffset * 2),
+                     SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    }
+
     // Position while hidden
     g_AnimState = 3; // Docked
     SyncPositionWithTaskbar();
 
     // Show after setup is complete
     ShowWindow(g_hMediaWindow, SW_SHOWNOACTIVATE);
+    Wh_Log(L" -Media window shown-");
     if (g_Settings.enableRainbow && g_hRainbowWindow) {
         ShowWindow(g_hRainbowWindow, SW_SHOWNOACTIVATE);
+        Wh_Log(L" -Rainbow window shown-");
+    } else if (g_hRainbowWindow) {
+        Wh_Log(L" --Rainbow window created but hidden (enableRainbow=%d)-- ", g_Settings.enableRainbow);
     }
 
     g_hVisibilityHook = SetWinEventHook(EVENT_OBJECT_LOCATIONCHANGE, EVENT_OBJECT_LOCATIONCHANGE, NULL, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT);
@@ -2825,19 +3432,74 @@ void MediaThread() {
         Wh_Log(L"WARNING: Failed to install WinEvent hook");
     }
 
+    // Initialize GSMTC session manager and cache current session
+    try {
+        g_SessionManager = GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
+        if (g_SessionManager) {
+            Wh_Log(L"GSMTC session manager acquired");
+            
+            // Cache initial session
+            g_CachedSession = g_SessionManager.GetCurrentSession();
+            if (g_CachedSession) {
+                Wh_Log(L"Initial session cached");
+            } else {
+                Wh_Log(L"No initial session available");
+            }
+            
+            // Register session change event handler
+            g_SessionManager.CurrentSessionChanged([](auto&&, auto&&) {
+                try {
+                    g_CachedSession = g_SessionManager.GetCurrentSession();
+                    if (g_CachedSession) {
+                        Wh_Log(L"[MusicLounge] Session changed - new session cached");
+                    } else {
+                        Wh_Log(L"[MusicLounge] Session changed - no session available");
+                    }
+                    // Trigger immediate update with new session
+                    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                        UpdateMediaInfoAsync();
+                    }
+                } catch (...) {
+                    Wh_Log(L"ERROR: Exception in session change handler");
+                }
+            });
+            Wh_Log(L"Session change event handler registered");
+            
+            // OPTIMIZATION: Register playback info change event for instant state updates
+            if (g_CachedSession) {
+                g_CachedSession.PlaybackInfoChanged([](auto&&, auto&&) {
+                    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                        UpdateMediaInfoAsync();
+                        InvalidateRect(g_hMediaWindow, NULL, FALSE);
+                    }
+                });
+                Wh_Log(L"Playback info change event handler registered");
+            }
+        } else {
+            Wh_Log(L"WARNING: Failed to acquire GSMTC session manager");
+        }
+    } catch (const std::exception& e) {
+        Wh_Log(L"ERROR: Exception during GSMTC initialization");
+    } catch (...) {
+        Wh_Log(L"ERROR: Unknown exception during GSMTC initialization");
+    }
+
     Wh_Log(L"MediaThread entering message loop");
 
-    MSG msg;
-    while (GetMessage(&msg, NULL, 0, 0)) { TranslateMessage(&msg); DispatchMessage(&msg); }
+    MSG msg = {};
+    while (GetMessage(&msg, NULL, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 
-    Wh_Log(L"MediaThread exiting message loop");
-
+    Wh_Log(L" --MediaThread exiting message loop--");
     cleanup();
 }
 
 std::thread* g_pMediaThread = nullptr;
 
 BOOL WhTool_ModInit() {
+    Wh_Log(L" --- START --- ");
     Wh_Log(L"Init " WH_MOD_ID L" version " WH_MOD_VERSION);
     
     // Reset all global state to ensure clean initialization
@@ -2862,7 +3524,7 @@ BOOL WhTool_ModInit() {
     
     // CRITICAL: Initialize taskbar handle FIRST (before thread spawn)
     EnsureTaskbarHandle();
-    
+
     // Initialize Audio COM first so LoadSettings can enable the meter if needed
     if (!g_audioCOM.Init()) {
         Wh_Log(L"ERROR: Failed to initialize audio COM");
@@ -2886,90 +3548,106 @@ BOOL WhTool_ModInit() {
 }
 
 void WhTool_ModUninit() {
-    Wh_Log(L"Uninit " WH_MOD_ID L" starting");
+    Wh_Log(L"[UNINIT] Uninit " WH_MOD_ID L" starting");
 
     // Clear pending actions
     {
         std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+        Wh_Log(L"[UNINIT] Clearing %d pending actions", (int)g_pendingActions.size());
         g_pendingActions.clear();
+        Wh_Log(L"[UNINIT] Pending actions cleared");
     }
     
+    Wh_Log(L"[UNINIT] Clearing triggers");
     g_triggers.clear();
+    Wh_Log(L"[UNINIT] Triggers cleared");
 
     g_Running = false;
-    Wh_Log(L"Signaled media thread to stop");
+    Wh_Log(L"[UNINIT] Signaled media thread to stop");
 
     if (g_hRainbowWindow) {
+        Wh_Log(L"[UNINIT] Sending APP_WM_CLOSE to rainbow window 0x%p", g_hRainbowWindow);
         SendMessage(g_hRainbowWindow, APP_WM_CLOSE, 0, 0);
-        Wh_Log(L"Sent close to rainbow window");
+        Wh_Log(L"[UNINIT] Close sent to rainbow window");
     }
     if (g_hMediaWindow) {
+        Wh_Log(L"[UNINIT] Sending APP_WM_CLOSE to media window 0x%p", g_hMediaWindow);
         SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
-        Wh_Log(L"Sent close to media window");
+        Wh_Log(L"[UNINIT] Close sent to media window");
     }
 
     if (g_pMediaThread) {
-        Wh_Log(L"Waiting for media thread to exit...");
-        if (g_pMediaThread->joinable()) g_pMediaThread->join();
+        Wh_Log(L"[UNINIT] Waiting for media thread to exit...");
+        if (g_pMediaThread->joinable()) {
+            g_pMediaThread->join();
+            Wh_Log(L"[UNINIT] Media thread joined successfully");
+        }
         delete g_pMediaThread;
         g_pMediaThread = nullptr;
-        Wh_Log(L"Media thread joined and cleaned up");
+        Wh_Log(L"[UNINIT] Media thread cleaned up");
+    } else {
+        Wh_Log(L"[UNINIT] WARNING: g_pMediaThread is nullptr");
     }
 
-    {
-        std::lock_guard<std::mutex> guard(g_MediaState.lock);
-        if (g_MediaState.albumArt) {
-            delete g_MediaState.albumArt;
-            g_MediaState.albumArt = nullptr;
-            Wh_Log(L"Album art freed during shutdown");
-        }
-    }
+    // Album art cleanup already handled in MediaThread cleanup lambda
+    // (must be deleted BEFORE GdiplusShutdown, not after)
     
     // Reset audio reactive state
+    Wh_Log(L"[UNINIT] Resetting audio reactive state");
     g_AudioPeakLevel = 0.0f;
     g_AudioPeakSmoothed = 0.0f;
     g_RainbowDirectionReverse = false;
-    Wh_Log(L"Audio reactive state reset");
+    Wh_Log(L"[UNINIT] Audio reactive state reset");
 
+    Wh_Log(L"[UNINIT] Uninitializing audio COM");
     g_audioCOM.Uninit();
-    Wh_Log(L"Audio COM uninitialized");
+    Wh_Log(L"[UNINIT] Audio COM uninitialized");
 
-    Wh_Log(L"Uninit complete");
+    Wh_Log(L"[UNINIT] Uninit complete");
+    Wh_Log(L" --- END --- ");
 }
 
 void WhTool_ModSettingsChanged() {
-    Wh_Log(L"Settings changed, reloading...");
+    Wh_Log(L"[SETTINGS] Change event triggered");
     
     // CRITICAL: Pause any live animation timers
     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        Wh_Log(L"[SETTINGS] Killing media window timers...");
         KillTimer(g_hMediaWindow, IDT_VIS_ANIM);
         KillTimer(g_hMediaWindow, IDT_TEXT_ANIM);
         KillTimer(g_hMediaWindow, IDT_POLL_MEDIA);
         KillTimer(g_hMediaWindow, IDT_DELAYED_ACTIONS);
-        Wh_Log(L"Paused media window timers");
+        Wh_Log(L"[SETTINGS] Media window timers killed");
     }
     
     if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        Wh_Log(L"[SETTINGS] Killing rainbow window timer...");
         KillTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM);
-        Wh_Log(L"Paused rainbow window timer");
+        Wh_Log(L"[SETTINGS] Rainbow window timer killed");
     }
     
     // Reload settings with validation
+    Wh_Log(L"[SETTINGS] Loading settings...");
     LoadSettings();  // Calls ValidateSettings() at end
+    Wh_Log(L"[SETTINGS] Settings loaded and validated");
     
     // Refresh DPI scaling in case system DPI changed
+    Wh_Log(L"[SETTINGS] Updating scale factor...");
     UpdateScaleFactor();
+    Wh_Log(L"[SETTINGS] Scale factor updated to %.2f", g_ScaleFactor);
     
     // Reapply appearance
     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        Wh_Log(L"[SETTINGS] Updating media window appearance...");
         UpdateAppearance(g_hMediaWindow);
         SyncPositionWithTaskbar();
         // Trigger repaint
         InvalidateRect(g_hMediaWindow, NULL, FALSE);
-        Wh_Log(L"Applied new appearance to media window");
+        Wh_Log(L"[SETTINGS] Media window appearance updated");
     }
     
     if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        Wh_Log(L"[SETTINGS] Updating rainbow window...");
         // Apply corner rounding update
         DWM_WINDOW_CORNER_PREFERENCE preference = g_Settings.enableRoundedCorners ? DWMWCP_ROUND : DWMWCP_DONOTROUND;
         DwmSetWindowAttribute(g_hRainbowWindow, DWMWA_WINDOW_CORNER_PREFERENCE, &preference, sizeof(preference));
@@ -2977,6 +3655,7 @@ void WhTool_ModSettingsChanged() {
         if (g_hMediaWindow && g_Settings.enableRainbow) {
             SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            Wh_Log(L"[SETTINGS] Z-order adjusted");
         }
         
         // Reset audio reactive state on settings change
@@ -2985,29 +3664,33 @@ void WhTool_ModSettingsChanged() {
         g_RainbowDirectionReverse = false;
         if (g_Settings.enableAudioReactive && g_audioCOM.IsInitialized()) {
             g_audioCOM.InitMeter();
+            Wh_Log(L"[SETTINGS] Audio reactive enabled");
         }
         
         InvalidateRect(g_hRainbowWindow, NULL, TRUE);
+        Wh_Log(L"[SETTINGS] Rainbow window updated");
     }
     
     // Restart timers with new settings
     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        Wh_Log(L"[SETTINGS] Restarting media window timers...");
         SetTimer(g_hMediaWindow, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL);
-        Wh_Log(L"Restarted media window timers");
+        Wh_Log(L"[SETTINGS] Media window timers restarted");
     }
     
     if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
         if (g_Settings.enableRainbow) {
+            Wh_Log(L"[SETTINGS] Starting rainbow animation timer...");
             SetTimer(g_hRainbowWindow, IDT_RAINBOW_ANIM, TIMER_ANIMATION_MS, NULL);
             ShowWindow(g_hRainbowWindow, SW_SHOWNOACTIVATE);
-            Wh_Log(L"Restarted rainbow timer");
+            Wh_Log(L"[SETTINGS] Rainbow timer restarted and window shown");
         } else {
             ShowWindow(g_hRainbowWindow, SW_HIDE);
-            Wh_Log(L"Rainbow disabled, window hidden");
+            Wh_Log(L"[SETTINGS] Rainbow disabled, window hidden");
         }
     }
     
-    Wh_Log(L"Settings reload complete");
+    Wh_Log(L"[SETTINGS] Settings reload complete");
 }
 
 #pragma endregion  // ^main_thread
@@ -3027,11 +3710,26 @@ bool g_isToolModProcessLauncher;
 HANDLE g_toolModProcessMutex;
 
 void WINAPI EntryPoint_Hook() {
-    Wh_Log(L">");
-    ExitThread(0);
+    Wh_Log(L"Tool mod process entry point hooked. Starting message loop.");
+
+
+    MSG msg;
+    while (GetMessage(&msg, nullptr, 0, 0)) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+
+    Wh_Log(L"Tool mod message loop exited. Process will terminate.");
 }
 
 BOOL Wh_ModInit() {
+    // Initialize Debug Log from Registry immediately
+    g_Settings.enableAdvancedDebugLog = CheckRegistryDebugLog();
+    if (g_Settings.enableAdvancedDebugLog) {
+        Wh_Log(L"[INIT] Advanced Debug Logging Enabled via Registry Override");
+    }
+
     bool isService = false;
     bool isToolModProcess = false;
     bool isCurrentToolModProcess = false;
@@ -3116,7 +3814,8 @@ void Wh_ModAfterInit() {
             return;
     }
 
-    WCHAR commandLine[MAX_PATH + 2 +
+    WCHAR
+    commandLine[MAX_PATH + 2 +
                 (sizeof(L" -tool-mod \"" WH_MOD_ID "\"") / sizeof(WCHAR)) - 1];
     swprintf_s(commandLine, L"\"%s\" -tool-mod \"%s\"", currentProcessPath,
                WH_MOD_ID);
