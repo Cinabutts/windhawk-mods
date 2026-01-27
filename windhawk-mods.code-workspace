@@ -230,6 +230,9 @@
 					"copilot/oswe-vscode-prime"
 				]
 			}
-		}
+        },
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.mouseWheelZoom": true,
+        "editor.defaultFoldingRangeProvider": "ms-vscode.cpptools"
 	}
 }
