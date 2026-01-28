@@ -346,6 +346,8 @@ for best experience!
 //      ~-- Process & System
 #include <psapi.h>
 //      ~-- C++ Standard Library
+#include <atomic>
+#include <memory>
 #include <functional>
 #include <limits>
 #include <mutex>
@@ -934,7 +936,6 @@ void StartProcess(std::wstring command) {
 
     std::thread([command](){
         std::wstring cmd = command;
-        // Basic split for "RunAs" check
         auto args = stringtools::split(cmd, L';');
         std::wstring verb = L"open";
         if (!args.empty() && stringtools::toLower(args[0]) == L"uac") { 
@@ -944,8 +945,6 @@ void StartProcess(std::wstring command) {
         
         std::wstring executable, parameters;
         
-        // --- Robust Argument Parsing (Matches SwitchToAudibleWindow logic) ---
-        // 1. Check for quoted executable: "C:\Path\To App.exe" /arg
         if (cmd.size() > 0 && (cmd[0] == L'"' || cmd[0] == L'\'')) {
             wchar_t quote = cmd[0];
             size_t close = cmd.find(quote, 1);
@@ -955,12 +954,9 @@ void StartProcess(std::wstring command) {
                     parameters = cmd.substr(close + 1);
                 }
             } else {
-                // Mismatched quote, treat whole as exec
                 executable = cmd.substr(1); 
             }
-        } 
-        // 2. Check for Space-delimited: C:\App.exe /arg
-        else {
+        } else {
             size_t space = cmd.find(L' ');
             if (space != std::wstring::npos) {
                 executable = cmd.substr(0, space);
@@ -970,7 +966,6 @@ void StartProcess(std::wstring command) {
             }
         }
 
-        // Trim parameters
         size_t firstParamChar = parameters.find_first_not_of(L" ");
         if (firstParamChar != std::wstring::npos) {
             parameters = parameters.substr(firstParamChar);
@@ -1255,10 +1250,19 @@ void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSin
         // Phase 2: Window not found (maybe minimized to tray), fallback to Shell Activation
         Wh_Log(L"[SwitchToAudibleWindow] Window not found for AUMID: %s. Attempting Shell Activation...", targetId.c_str());
         std::wstring cmd = L"shell:AppsFolder\\" + targetId;
+        
+        SHELLEXECUTEINFO sei = {sizeof(sei)};
+        sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI; 
+        sei.lpVerb = L"open"; 
+        sei.lpFile = cmd.c_str();
+        sei.nShow = SW_SHOWNORMAL;
+        
         try {
-            ShellExecute(NULL, L"open", cmd.c_str(), NULL, NULL, SW_SHOWNORMAL);
+            if (!ShellExecuteEx(&sei)) {
+                Wh_Log(L"[SwitchToAudibleWindow] Shell activation failed: %s (Error: %d)", cmd.c_str(), GetLastError());
+            }
         } catch (...) {
-            Wh_Log(L"[SwitchToAudibleWindow] Failed Media Fallback: | Failed to switch to audible window via ShellExecute");
+            Wh_Log(L"[SwitchToAudibleWindow] Exception during shell activation: %s", targetId.c_str());
         }
     }
 }
@@ -2203,7 +2207,7 @@ struct MediaInfoResult {
     bool hasMedia;
     Bitmap* albumArt;
 };
-static MediaInfoResult* g_PendingMediaInfo = nullptr;
+static std::shared_ptr<MediaInfoResult> g_PendingMediaInfo;
 
 Bitmap* StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
     if (!stream) return nullptr;
@@ -2293,24 +2297,24 @@ void UpdateMediaInfoAsync() {
                                 result->albumArt = StreamToBitmap(streamOp.GetResults());
                             }
                             // Post to UI thread with result
-                            g_PendingMediaInfo = result;
+                            auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
                             if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
                                 PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
                             } else {
-                                // Cleanup if window destroyed
-                                if (result->albumArt) delete result->albumArt;
-                                delete result;
-                                g_PendingMediaInfo = nullptr;
+                                // Cleanup if window destroyed - shared_ptr handles deletion
+                                resultPtr.reset();
                             }
                         });
                 } else {
                     // No thumbnail - post result immediately
-                    g_PendingMediaInfo = result;
+                    auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
                     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                        std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
                         PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
                     } else {
-                        delete result;
-                        g_PendingMediaInfo = nullptr;
+                        // Cleanup if window destroyed - shared_ptr handles deletion
+                        resultPtr.reset();
                     }
                 }
             });
@@ -2883,7 +2887,11 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         case WM_MEDIA_INFO_READY: {
             // Process async media info result on UI thread
-            if (g_PendingMediaInfo) {
+            auto result = std::atomic_exchange_explicit(
+                &g_PendingMediaInfo,
+                std::shared_ptr<MediaInfoResult>{},
+                std::memory_order_acquire);
+            if (result) {
                 lock_guard<mutex> guard(g_MediaState.lock);
                 
                 // Clean up old album art
@@ -2892,23 +2900,19 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 }
                 
                 // Update state with new data
-                g_MediaState.title = g_PendingMediaInfo->title;
-                g_MediaState.artist = g_PendingMediaInfo->artist;
-                g_MediaState.sourceId = g_PendingMediaInfo->sourceId;
+                g_MediaState.title = result->title;
+                g_MediaState.artist = result->artist;
+                g_MediaState.sourceId = result->sourceId;
 
                 if (!g_MediaState.sourceId.empty()) {
                     g_MediaState.lastValidSourceId = g_MediaState.sourceId;
                 }
 
-                g_MediaState.isPlaying = g_PendingMediaInfo->isPlaying;
-                g_MediaState.hasMedia = g_PendingMediaInfo->hasMedia;
-                g_MediaState.albumArt = g_PendingMediaInfo->albumArt;
+                g_MediaState.isPlaying = result->isPlaying;
+                g_MediaState.hasMedia = result->hasMedia;
+                g_MediaState.albumArt = result->albumArt;
 
                 SaveLastMediaInfo(g_MediaState.title, g_MediaState.artist);
-                
-                // Cleanup pending result struct
-                delete g_PendingMediaInfo;
-                g_PendingMediaInfo = nullptr;
                 
                 // Trigger redraw with new media info
                 InvalidateRect(hwnd, NULL, FALSE);
