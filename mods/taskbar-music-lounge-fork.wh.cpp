@@ -395,7 +395,6 @@ void ForceDockedState();
 
 // Settings & Appearance
 void LoadSettings();
-void ValidateSettings();
 void UpdateAppearance(HWND hwnd);
 void LoadPersistentState();
 void SaveWindowState(int x, int y, int w, int h);
@@ -438,10 +437,22 @@ static const float kAudioHueBounceThreshold = 0.65f; // Peak threshold for direc
 
 // --- Template Utilities ---
 
+void LogClampSetting(const wchar_t* name, int oldValue, int newValue);
+
 /// Clamps value v between min and max bounds
 template<typename T>
 T Clamp(T v, T lo, T hi) {
     return (v < lo) ? lo : (v > hi) ? hi : v;
+}
+
+/// Clamps setting value and logs if clamping occurred
+template<typename T>
+T ClampSetting(const wchar_t* name, T value, T lo, T hi) {
+    T clamped = Clamp(value, lo, hi);
+    if (clamped != value) {
+        LogClampSetting(name, (int)value, (int)clamped);
+    }
+    return clamped;
 }
 
 /// Linear interpolation: returns a + f * (b - a)
@@ -590,6 +601,10 @@ BOOL CheckRegistryDebugLog() {
     if (g_Settings.enableAdvancedDebugLog) { \
         Wh_Log(fmt, ##__VA_ARGS__); \
     }
+
+void LogClampSetting(const wchar_t* name, int oldValue, int newValue) {
+    Wh_LogAdvanced(L"[Settings] %s clamped: %d -> %d", name, oldValue, newValue);
+}
 
 // --- Window Handles ---
 HWND g_hMediaWindow = NULL;      // Main media widget window
@@ -1919,38 +1934,40 @@ bool ParseColorComponents(const wchar_t* str, int& r, int& g, int& b, int& a) {
 }
 
 int GetClampedSetting(PCWSTR name, int min, int max) {
-    return Clamp(Wh_GetIntSetting(name), min, max);
+    return ClampSetting(name, Wh_GetIntSetting(name), min, max);
 }
 
 // Clamp and validate all settings after load
 void ValidateSettings() {
     // Size/position
-    g_Settings.width = Clamp(g_Settings.width, 100, 800);
-    g_Settings.height = Clamp(g_Settings.height, 20, 100);
-    g_Settings.fontSize = Clamp(g_Settings.fontSize, 8, 32);
-    
+    g_Settings.width = ClampSetting(L"PanelWidth", g_Settings.width, 100, 800);
+    g_Settings.height = ClampSetting(L"PanelHeight", g_Settings.height, 20, 100);
+    g_Settings.fontSize = ClampSetting(L"FontSize", g_Settings.fontSize, 8, 32);
+    g_Settings.offsetX = ClampSetting(L"OffsetX", g_Settings.offsetX, -10000, 10000);
+    g_Settings.offsetY = ClampSetting(L"OffsetY", g_Settings.offsetY, -10000, 10000);
+
     // Rainbow
-    g_Settings.rainbowSpeed = Clamp(g_Settings.rainbowSpeed, 1, 10);
-    g_Settings.rainbowBrightness = Clamp(g_Settings.rainbowBrightness, 0, 100);
-    g_Settings.rainbowThickness = Clamp(g_Settings.rainbowThickness, 1, 10);
-    g_Settings.rainbowBorderOffset = Clamp(g_Settings.rainbowBorderOffset, 0, 10);
-    
+    g_Settings.rainbowSpeed = ClampSetting(L"RainbowSpeed", g_Settings.rainbowSpeed, 1, 10);
+    g_Settings.rainbowBrightness = ClampSetting(L"RainbowBrightness", g_Settings.rainbowBrightness, 0, 100);
+    g_Settings.rainbowThickness = ClampSetting(L"RainbowThickness", g_Settings.rainbowThickness, 1, 10);
+    g_Settings.rainbowBorderOffset = ClampSetting(L"RainbowBorderOffset", g_Settings.rainbowBorderOffset, 0, 10);
+
     // Audio reactive
-    g_Settings.audioResponsiveness = Clamp(g_Settings.audioResponsiveness, 0, 20);
-    g_Settings.audioThreshold = Clamp(g_Settings.audioThreshold, 0, 100);
-    g_Settings.audioRamp = Clamp(g_Settings.audioRamp, 0, 100);
-    g_Settings.audioFlicker = Clamp(g_Settings.audioFlicker, 0, 100);
-    g_Settings.audioMinValue = Clamp(g_Settings.audioMinValue, 0, 100);
-    g_Settings.audioMaxValue = Clamp(g_Settings.audioMaxValue, 0, 100);
-    g_Settings.audioHueReactiveMode = Clamp(g_Settings.audioHueReactiveMode, 0, 7);
-    
+    g_Settings.audioResponsiveness = ClampSetting(L"AudioResponsiveness", g_Settings.audioResponsiveness, 0, 20);
+    g_Settings.audioThreshold = ClampSetting(L"AudioThreshold", g_Settings.audioThreshold, 0, 100);
+    g_Settings.audioRamp = ClampSetting(L"AudioRamp", g_Settings.audioRamp, 0, 100);
+    g_Settings.audioFlicker = ClampSetting(L"AudioFlicker", g_Settings.audioFlicker, 0, 100);
+    g_Settings.audioMinValue = ClampSetting(L"AudioMinValue", g_Settings.audioMinValue, 0, 100);
+    g_Settings.audioMaxValue = ClampSetting(L"AudioMaxValue", g_Settings.audioMaxValue, 0, 100);
+    g_Settings.audioHueReactiveMode = ClampSetting(L"AudioHueReactiveMode", g_Settings.audioHueReactiveMode, 0, 7);
+
     // Intervals
-    g_Settings.fsInterval = Clamp(g_Settings.fsInterval, 1, 10);
-    g_Settings.idleTimeout = Clamp(g_Settings.idleTimeout, 0, 300);
-    
+    g_Settings.fsInterval = ClampSetting(L"FullscreenCheckInterval", g_Settings.fsInterval, 1, 60);
+    g_Settings.idleTimeout = ClampSetting(L"IdleTimeout", g_Settings.idleTimeout, 0, 3600);
+
     // Opacity
-    g_Settings.bgOpacity = Clamp(g_Settings.bgOpacity, 0, 255);
-    
+    g_Settings.bgOpacity = ClampSetting(L"BgOpacity", g_Settings.bgOpacity, 0, 255);
+
     Wh_Log(L"Settings validated");
 }
 
@@ -2035,8 +2052,8 @@ void LoadSettings() {
     g_Settings.offsetY = Wh_GetIntSetting(L"OffsetY");
     
     // --- Theme Settings ---
-    g_Settings.autoTheme = Wh_GetIntSetting(L"AutoTheme") != 0;
-    g_Settings.invertTheme = Wh_GetIntSetting(L"InvertTheme") != 0;
+    g_Settings.autoTheme = Wh_GetIntSetting(L"AutoTheme");
+    g_Settings.invertTheme = Wh_GetIntSetting(L"InvertTheme");
     g_Settings.bgOpacity = Wh_GetIntSetting(L"BgOpacity");
 
     // --- Manual Text Color ---
@@ -2058,7 +2075,7 @@ void LoadSettings() {
     Wh_Log(L"[SETTINGS] Background color string: '%s'", bgColor.empty() ? L"<empty>" : bgColor.get());
     if (!bgColor.empty()) {
         int r, g, b, a;
-        if (ParseColorComponents(bgColor.get(), r, g, b, a) && !(r==0 && g==0 && b==0)) {
+        if (ParseColorComponents(bgColor.get(), r, g, b, a) && !(r==0 && g==0 && b==0)) {   //condition 2 says 0 = Disabled
             g_Settings.manualBgColorRGB = ((DWORD)b << 16) | ((DWORD)g << 8) | (DWORD)r;
         } else {
             g_Settings.manualBgColorRGB = 0; 
@@ -2066,15 +2083,11 @@ void LoadSettings() {
     } else {
         g_Settings.manualBgColorRGB = 0;
     }
-    
-    g_Settings.fsInterval = Wh_GetIntSetting(L"FullscreenCheckInterval");
-    if (g_Settings.fsInterval < 1) g_Settings.fsInterval = 1;
-
-    g_Settings.idleTimeout = Wh_GetIntSetting(L"IdleTimeout");
-    if (g_Settings.idleTimeout < 0) g_Settings.idleTimeout = 0;
-
     g_IdleSecondsCounter = 0;
     g_IsHiddenByIdle = false;
+    
+    g_Settings.fsInterval = GetClampedSetting(L"FullscreenCheckInterval", 1, 60);
+    g_Settings.idleTimeout = GetClampedSetting(L"IdleTimeout", 0, 3600);    // 1 Hour max
 
     g_Settings.EnableTextScroll = Wh_GetIntSetting(L"EnableTextScroll") !=0;
     g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
@@ -2149,6 +2162,7 @@ void LoadSettings() {
     g_AudioPeakLevel = 0.0f;
     g_AudioPeakSmoothed = 0.0f;
     g_AudioReactiveRuntimeEnabled = true;
+    g_RainbowDirectionReverse = false;
 
     // --- Load Action Engine Triggers ---
     using WindhawkUtils::StringSetting;
@@ -2263,68 +2277,134 @@ void UpdateMediaInfoAsync() {
         // Fire off async media properties chain - does NOT block
         g_CachedSession.TryGetMediaPropertiesAsync().Completed(
             [sourceId, isPlaying](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
-                if (status != Windows::Foundation::AsyncStatus::Completed) {
-                    Wh_Log(L"WARNING: Media properties async failed");
-                    return;
-                }
-                
-                auto props = propsOp.GetResults();
-                if (!props) {
-                    Wh_Log(L"WARNING: No media properties returned");
-                    return;
-                }
-                
-                // Build result on background thread
-                auto* result = new MediaInfoResult();
-                result->title = props.Title().c_str();
-                result->artist = props.Artist().c_str();
-                result->sourceId = sourceId;
-                result->isPlaying = isPlaying;
-                result->hasMedia = true;
-                result->albumArt = nullptr;
-                
-                // Log source changes
-                if (sourceId != g_MediaState.sourceId) {
-                    Wh_Log(L"[MusicLounge] New Source: %s", sourceId.c_str());
-                }
-                
-                // Chain: fetch thumbnail async
-                auto thumbRef = props.Thumbnail();
-                if (thumbRef) {
-                    thumbRef.OpenReadAsync().Completed(
-                        [result](auto const& streamOp, Windows::Foundation::AsyncStatus status) {
-                            if (status == Windows::Foundation::AsyncStatus::Completed) {
-                                result->albumArt = StreamToBitmap(streamOp.GetResults());
-                            }
-                            // Post to UI thread with result
+                try {
+                    if (status != Windows::Foundation::AsyncStatus::Completed) {
+                        Wh_Log(L"[WinRT] Media properties async failed with status: %d", (int)status);
+                        return;
+                    }
+                    
+                    auto props = propsOp.GetResults();
+                    if (!props) {
+                        Wh_Log(L"[WinRT] No media properties returned");
+                        return;
+                    }
+                    
+                    // Build result on background thread
+                    auto* result = new MediaInfoResult();
+                    result->title = props.Title().c_str();
+                    result->artist = props.Artist().c_str();
+                    result->sourceId = sourceId;
+                    result->isPlaying = isPlaying;
+                    result->hasMedia = true;
+                    result->albumArt = nullptr;
+                    
+                    // Log source changes
+                    if (sourceId != g_MediaState.sourceId) {
+                        Wh_Log(L"[MusicLounge] New Source: %s", sourceId.c_str());
+                    }
+                    
+                    // Chain: fetch thumbnail async
+                    auto thumbRef = props.Thumbnail();
+                    if (thumbRef) {
+                        try {
+                            thumbRef.OpenReadAsync().Completed(
+                                [result](auto const& streamOp, Windows::Foundation::AsyncStatus status) {
+                                    try {
+                                        if (status == Windows::Foundation::AsyncStatus::Completed) {
+                                            result->albumArt = StreamToBitmap(streamOp.GetResults());
+                                        }
+                                        // Post to UI thread with result
+                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                                        } else {
+                                            // Cleanup if window destroyed - shared_ptr handles deletion
+                                            resultPtr.reset();
+                                        }
+                                    } catch (const winrt::hresult_error& e) {
+                                        Wh_Log(L"[WinRT] Exception in thumbnail completion: 0x%08X - %s", 
+                                               e.code().value, e.message().c_str());
+                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                                        } else {
+                                            resultPtr.reset();
+                                        }
+                                    } catch (const std::exception& e) {
+                                        Wh_Log(L"[WinRT] STL exception in thumbnail completion");
+                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                                        } else {
+                                            resultPtr.reset();
+                                        }
+                                    } catch (...) {
+                                        Wh_Log(L"[WinRT] Unknown exception in thumbnail completion");
+                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                                        } else {
+                                            resultPtr.reset();
+                                        }
+                                    }
+                                });
+                        } catch (const winrt::hresult_error& e) {
+                            Wh_Log(L"[WinRT] Exception opening thumbnail stream: 0x%08X - %s", 
+                                   e.code().value, e.message().c_str());
+                            // Post result without thumbnail
                             auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
                             if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
                                 std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
                                 PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
                             } else {
-                                // Cleanup if window destroyed - shared_ptr handles deletion
                                 resultPtr.reset();
                             }
-                        });
-                } else {
-                    // No thumbnail - post result immediately
-                    auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                        std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                        PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                        } catch (...) {
+                            Wh_Log(L"[WinRT] Unknown exception opening thumbnail stream");
+                            auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                            if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                                std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                                PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                            } else {
+                                resultPtr.reset();
+                            }
+                        }
                     } else {
-                        // Cleanup if window destroyed - shared_ptr handles deletion
-                        resultPtr.reset();
+                        // No thumbnail - post result immediately
+                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
+                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
+                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
+                        } else {
+                            // Cleanup if window destroyed - shared_ptr handles deletion
+                            resultPtr.reset();
+                        }
                     }
+                } catch (const winrt::hresult_error& e) {
+                    Wh_Log(L"[WinRT] Exception in media properties handler: 0x%08X - %s", 
+                           e.code().value, e.message().c_str());
+                } catch (const std::exception& e) {
+                    Wh_Log(L"[WinRT] STL exception in media properties handler");
+                } catch (...) {
+                    Wh_Log(L"[WinRT] Unknown exception in media properties handler");
                 }
             });
+    } catch (const winrt::hresult_error& e) {
+        Wh_Log(L"[WinRT] Exception in UpdateMediaInfoAsync: 0x%08X - %s", e.code().value, e.message().c_str());
+        lock_guard<mutex> guard(g_MediaState.lock);
+        g_MediaState.hasMedia = false;
+        g_MediaState.sourceId = L"";
     } catch (const std::exception& e) {
-        Wh_Log(L"ERROR: Exception in UpdateMediaInfoAsync");
+        Wh_Log(L"[WinRT] STL exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
     } catch (...) {
-        Wh_Log(L"ERROR: Unknown exception in UpdateMediaInfoAsync");
+        Wh_Log(L"[WinRT] Unknown exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
@@ -3546,7 +3626,7 @@ BOOL WhTool_ModInit() {
         Wh_Log(L"WARNING: Media thread already exists");
     }
 
-    Wh_Log(L"Init complete");
+    Wh_Log(L" ---Init complete");
     return TRUE;
 }
 
@@ -3659,15 +3739,6 @@ void WhTool_ModSettingsChanged() {
             SetWindowPos(g_hRainbowWindow, GetRainbowZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             SetWindowPos(g_hMediaWindow, GetMediaZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             Wh_Log(L"[SETTINGS] Z-order adjusted");
-        }
-        
-        // Reset audio reactive state on settings change
-        g_AudioPeakLevel = 0.0f;
-        g_AudioPeakSmoothed = 0.0f;
-        g_RainbowDirectionReverse = false;
-        if (g_Settings.enableAudioReactive && g_audioCOM.IsInitialized()) {
-            g_audioCOM.InitMeter();
-            Wh_Log(L"[SETTINGS] Audio reactive enabled");
         }
         
         InvalidateRect(g_hRainbowWindow, NULL, TRUE);
