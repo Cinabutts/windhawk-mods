@@ -652,6 +652,7 @@ std::atomic<int> g_AnimState{0};             // 0=Sync, 1=Hiding, 2=Showing, 3=S
 int g_CurrentAnimY = 0;                      // Current Y position during animation
 std::atomic<int> g_IdleSecondsCounter{0};    // Seconds since last activity
 std::atomic<bool> g_IsHiddenByIdle{false};   // Hidden due to idle timeout
+std::atomic<bool> g_EventHandlersActive{false};  // Enable after window creation, disable before cleanup
 
 // --- Rainbow Effect State ---
 // Audio reactive state (C++20 atomic floats)
@@ -2267,6 +2268,16 @@ BitmapPtr StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
 
 /// Async fire-and-forget media info update - does NOT block UI thread
 void UpdateMediaInfoAsync() {
+    // Debounce: Prevent redundant updates within 100ms
+    static std::atomic<DWORD> s_LastUpdateTick{0};
+    DWORD now = GetTickCount();
+    DWORD last = s_LastUpdateTick.load();
+    if (last != 0 && (now - last) < 100) {
+        Wh_LogAdvanced(L"[GSMTC] Update debounced (%dms since last)", now - last);
+        return;
+    }
+    s_LastUpdateTick.store(now);
+    
     static int s_NoSessionRetryCount = 0;
 
     // Early exit if no session available
@@ -2979,8 +2990,15 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_CREATE: 
             Wh_Log(L"-- WM_CREATE received - initializing MediaWndProc");
             UpdateAppearance(hwnd);
-            SetTimer(hwnd, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL);
-            Wh_Log(L"-- Media poll timer started (ID: %d, interval: %dms)", IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS);
+            
+            // Start idle timeout timer only if enabled (media updates now event-driven)
+            if (g_Settings.idleTimeout > 0) {
+                SetTimer(hwnd, IDT_POLL_MEDIA, 1000, NULL);  // Check idle every 1 second
+                Wh_Log(L"-- Idle timeout timer started (interval: 1000ms, timeout: %ds)", g_Settings.idleTimeout);
+            } else {
+                Wh_Log(L"-- Idle timeout disabled, no polling timer needed (events only)");
+            }
+            
             return 0;
         case WM_MEDIA_INFO_READY: {
             // Process async media info result on UI thread
@@ -3083,28 +3101,27 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case WM_TIMER:
             if (wParam == IDT_POLL_MEDIA) {
-                UpdateMediaInfoAsync();
+                // Idle timeout logic only (media updates now event-driven)
                 bool isPlaying = false;
                 {
                     lock_guard<mutex> guard(g_MediaState.lock);
                     isPlaying = g_MediaState.isPlaying;
                 }
-                if (g_Settings.idleTimeout > 0) {
-                    if (isPlaying) {
-                        g_IdleSecondsCounter = 0;
-                        g_IsHiddenByIdle = false;
-                    } else {
-                        g_IdleSecondsCounter++;
-                        if (g_IdleSecondsCounter >= g_Settings.idleTimeout) {
-                            g_IsHiddenByIdle = true;
-                        }
-                    }
-                } else {
-                    g_IsHiddenByIdle = false;
+                
+                if (isPlaying) {
                     g_IdleSecondsCounter = 0;
+                    g_IsHiddenByIdle = false;
+                } else {
+                    g_IdleSecondsCounter++;
+                    if (g_IdleSecondsCounter >= g_Settings.idleTimeout) {
+                        g_IsHiddenByIdle = true;
+                    }
                 }
+                
                 SyncPositionWithTaskbar();
-                InvalidateRect(hwnd, NULL, FALSE);
+                
+                // No need to invalidate unless state changed
+                // Events will trigger invalidation when media actually updates
             }
             else if (wParam == IDT_TEXT_ANIM) {
                 if (g_IsScrolling && g_Settings.EnableTextScroll) {
@@ -3543,6 +3560,10 @@ void MediaThread() {
         Wh_Log(L"WARNING: Failed to install WinEvent hook");
     }
 
+    // Enable event handlers BEFORE GSMTC init so initial fetch works
+    g_EventHandlersActive = true;
+    Wh_Log(L"[INIT] Event handlers activated - media updates now event-driven");
+
     // Initialize GSMTC session manager and cache current session
     try {
         g_SessionManager = GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
@@ -3559,14 +3580,37 @@ void MediaThread() {
             
             // Register session change event handler
             g_SessionManager.CurrentSessionChanged([](auto&&, auto&&) {
+                if (!g_EventHandlersActive.load()) return;
+                
                 try {
                     g_CachedSession = g_SessionManager.GetCurrentSession();
+                    
                     if (g_CachedSession) {
                         Wh_Log(L"[MusicLounge] Session changed - new session cached");
+                        
+                        // Re-register event handlers for the new session
+                        g_CachedSession.PlaybackInfoChanged([](auto&&, auto&&) {
+                            if (!g_EventHandlersActive.load()) return;
+                            if (!g_hMediaWindow || !IsWindow(g_hMediaWindow)) return;
+                            Wh_LogAdvanced(L"[GSMTC] PlaybackInfoChanged event fired");
+                            UpdateMediaInfoAsync();
+                            InvalidateRect(g_hMediaWindow, NULL, FALSE);
+                        });
+                        
+                        g_CachedSession.MediaPropertiesChanged([](auto&&, auto&&) {
+                            if (!g_EventHandlersActive.load()) return;
+                            if (!g_hMediaWindow || !IsWindow(g_hMediaWindow)) return;
+                            Wh_LogAdvanced(L"[GSMTC] MediaPropertiesChanged event fired");
+                            UpdateMediaInfoAsync();
+                            InvalidateRect(g_hMediaWindow, NULL, FALSE);
+                        });
+                        
+                        Wh_Log(L"Event handlers re-registered for new session");
                     } else {
                         Wh_Log(L"[MusicLounge] Session changed - no session available");
                     }
-                    // Trigger immediate update with new session
+                    
+                    // Trigger immediate update
                     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
                         UpdateMediaInfoAsync();
                     }
@@ -3576,15 +3620,33 @@ void MediaThread() {
             });
             Wh_Log(L"Session change event handler registered");
             
-            // OPTIMIZATION: Register playback info change event for instant state updates
+            // Register event handlers for instant state updates
             if (g_CachedSession) {
+                // Playback state changes (play/pause/position)
                 g_CachedSession.PlaybackInfoChanged([](auto&&, auto&&) {
-                    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                        UpdateMediaInfoAsync();
-                        InvalidateRect(g_hMediaWindow, NULL, FALSE);
-                    }
+                    if (!g_EventHandlersActive.load()) return;
+                    if (!g_hMediaWindow || !IsWindow(g_hMediaWindow)) return;
+                    
+                    Wh_LogAdvanced(L"[GSMTC] PlaybackInfoChanged event fired");
+                    UpdateMediaInfoAsync();
+                    InvalidateRect(g_hMediaWindow, NULL, FALSE);
                 });
                 Wh_Log(L"Playback info change event handler registered");
+                
+                // Media properties changes (title/artist/artwork)
+                g_CachedSession.MediaPropertiesChanged([](auto&&, auto&&) {
+                    if (!g_EventHandlersActive.load()) return;
+                    if (!g_hMediaWindow || !IsWindow(g_hMediaWindow)) return;
+                    
+                    Wh_LogAdvanced(L"[GSMTC] MediaPropertiesChanged event fired");
+                    UpdateMediaInfoAsync();
+                    InvalidateRect(g_hMediaWindow, NULL, FALSE);
+                });
+                Wh_Log(L"Media properties change event handler registered");
+                
+                // Fetch initial state now that handlers are ready
+                Wh_Log(L"Fetching initial media state...");
+                UpdateMediaInfoAsync();
             }
         } else {
             Wh_Log(L"WARNING: Failed to acquire GSMTC session manager");
@@ -3624,6 +3686,7 @@ BOOL WhTool_ModInit() {
     g_IsHiddenByIdle = false;
     g_IdleSecondsCounter = 0;
     g_ShutdownMode = false;
+    g_EventHandlersActive = false;  // Will be enabled after window creation
     Wh_Log(L"[INIT] Global state reset");
 
     if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-fork"))) {
@@ -3685,6 +3748,10 @@ BOOL WhTool_ModInit() {
 
 void WhTool_ModUninit() {
     Wh_Log(L"[UNINIT] Starting cleanup...");
+    
+    // Phase 0: Disable event handlers FIRST to prevent race conditions
+    g_EventHandlersActive = false;
+    Wh_Log(L"[UNINIT] Event handlers deactivated");
     
     // Phase 1: Signal shutdown to all threads
     g_Running = false;
@@ -3836,8 +3903,14 @@ void WhTool_ModSettingsChanged() {
     // Restart timers with new settings
     if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
         Wh_Log(L"[SETTINGS] Restarting media window timers...");
-        SetTimer(g_hMediaWindow, IDT_POLL_MEDIA, TIMER_MEDIA_POLL_MS, NULL);
-        Wh_Log(L"[SETTINGS] Media window timers restarted");
+        
+        // Restart idle timer only if enabled (media updates are event-driven)
+        if (g_Settings.idleTimeout > 0) {
+            SetTimer(g_hMediaWindow, IDT_POLL_MEDIA, 1000, NULL);
+            Wh_Log(L"[SETTINGS] Idle timeout timer restarted (timeout: %ds)", g_Settings.idleTimeout);
+        } else {
+            Wh_Log(L"[SETTINGS] Idle timeout disabled, no polling timer needed (events only)");
+        }
     }
     
     if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
