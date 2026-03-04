@@ -14,6 +14,11 @@
         ],
         "twitter": "https://twitter.com/AhmedWalid605"
     },
+    "https://github.com/ahzvenol": {
+        "author": "Hakuuyosei",
+        "github": "https://github.com/ahzvenol",
+        "homepages": []
+    },
     "https://github.com/alchemyyy": {
         "author": "Alchemy",
         "github": "https://github.com/alchemyyy",
@@ -26,6 +31,11 @@
             "https://github.com/almas-cp"
         ]
     },
+    "https://github.com/amat3rassu": {
+        "author": "Amat3rassu",
+        "github": "https://github.com/Amat3rassu",
+        "homepages": []
+    },
     "https://github.com/amrsatrio": {
         "author": "Amrsatrio",
         "github": "https://github.com/Amrsatrio",
@@ -35,6 +45,16 @@
     "https://github.com/anixx": {
         "author": "Anixx",
         "github": "https://github.com/Anixx",
+        "homepages": []
+    },
+    "https://github.com/armaninyow": {
+        "author": "Armaninyow",
+        "github": "https://github.com/armaninyow",
+        "homepages": []
+    },
+    "https://github.com/aromakitsune": {
+        "author": "Kitsune",
+        "github": "https://github.com/AromaKitsune",
         "homepages": []
     },
     "https://github.com/arukateru": {
@@ -65,9 +85,26 @@
         ],
         "twitter": "https://x.com/bcrtvkcs"
     },
+    "https://github.com/bgsteppin": {
+        "author": "BGsteppin",
+        "github": "https://github.com/BGsteppin",
+        "homepages": []
+    },
+    "https://github.com/bo0ii": {
+        "author": "Bo0ii",
+        "github": "https://github.com/Bo0ii",
+        "homepages": [
+            "https://github.com/Bo0ii/windhawk-mods"
+        ]
+    },
     "https://github.com/catmanfan": {
         "author": "CatmanFan / Mr._Lechkar",
         "github": "https://github.com/CatmanFan",
+        "homepages": []
+    },
+    "https://github.com/chenxustu1": {
+        "author": "chenxustu1",
+        "github": "https://github.com/chenxustu1",
         "homepages": []
     },
     "https://github.com/cherrydt": {
@@ -80,6 +117,13 @@
         "github": "https://github.com/chip33",
         "homepages": []
     },
+    "https://github.com/ciizerr": {
+        "author": "ciizerr",
+        "github": "https://github.com/ciizerr",
+        "homepages": [
+            "https://vlc-rpc.vercel.app/"
+        ]
+    },
     "https://github.com/cirn09": {
         "author": "Cirn09",
         "github": "https://github.com/Cirn09",
@@ -90,6 +134,16 @@
     "https://github.com/clemmyn23": {
         "author": "clemmyn23",
         "github": "https://github.com/clemmyn23",
+        "homepages": []
+    },
+    "https://github.com/communism420": {
+        "author": "communism420",
+        "github": "https://github.com/communism420",
+        "homepages": []
+    },
+    "https://github.com/crazyboyybs": {
+        "author": "crazyboyybs",
+        "github": "https://github.com/crazyboyybs",
         "homepages": []
     },
     "https://github.com/cristeigabriela": {
@@ -137,6 +191,11 @@
         "github": "https://github.com/Erizur",
         "homepages": []
     },
+    "https://github.com/fireblade211": {
+        "author": "FireBlade",
+        "github": "https://github.com/FireBlade211",
+        "homepages": []
+    },
     "https://github.com/giedriuslt": {
         "author": "giedriuslt",
         "github": "https://github.com/giedriuslt",
@@ -145,6 +204,11 @@
     "https://github.com/guerra24": {
         "author": "Guerra24",
         "github": "https://github.com/Guerra24",
+        "homepages": []
+    },
+    "https://github.com/hamomagdy724": {
+        "author": "Mohamed Magdy",
+        "github": "https://github.com/hamomagdy724",
         "homepages": []
     },
     "https://github.com/hashah2311": {
@@ -165,6 +229,11 @@
         ],
         "twitter": "https://twitter.com/Ingan121"
     },
+    "https://github.com/insane66613": {
+        "author": "Math Shamenson",
+        "github": "https://github.com/insane66613",
+        "homepages": []
+    },
     "https://github.com/itsprofessional": {
         "author": "ItsProfessional",
         "github": "https://github.com/ItsProfessional",
@@ -183,10 +252,22 @@
         "github": "https://github.com/Jevil7452",
         "homepages": []
     },
+    "https://github.com/jiangfengning": {
+        "author": "Fenig",
+        "github": "https://github.com/JiangFengning",
+        "homepages": []
+    },
     "https://github.com/joeye-233": {
         "author": "Joe Ye",
         "github": "https://github.com/JoeYe-233",
         "homepages": []
+    },
+    "https://github.com/jogai": {
+        "author": "Jogai",
+        "github": "https://github.com/Jogai",
+        "homepages": [
+            "https://www.scott-software.nl/"
+        ]
     },
     "https://github.com/kawapure": {
         "author": "Isabella Lulamoon (kawapure)",
@@ -225,6 +306,14 @@
             "https://www.simplify.ee/"
         ]
     },
+    "https://github.com/leymonaide": {
+        "author": "Leymonaide",
+        "github": "https://github.com/Leymonaide",
+        "homepages": [
+            "https://leymonaide.github.io/"
+        ],
+        "twitter": "https://twitter.com/Leym0naide"
+    },
     "https://github.com/lieyanbang": {
         "author": "lieyanbang",
         "github": "https://github.com/lieyanbang",
@@ -232,9 +321,19 @@
             "https://lieyanbang.com/"
         ]
     },
+    "https://github.com/lockframe": {
+        "author": "Lockframe",
+        "github": "https://github.com/Lockframe",
+        "homepages": []
+    },
     "https://github.com/lorenzoc01": {
         "author": "lorenzoc01",
         "github": "https://github.com/lorenzoc01",
+        "homepages": []
+    },
+    "https://github.com/lukvbp": {
+        "author": "Lukvbp",
+        "github": "https://github.com/lukvbp",
         "homepages": []
     },
     "https://github.com/m1lhaus": {
@@ -253,6 +352,11 @@
     "https://github.com/mggsk": {
         "author": "Mgg Sk",
         "github": "https://github.com/MGGSK",
+        "homepages": []
+    },
+    "https://github.com/mode0192": {
+        "author": "mode0192",
+        "github": "https://github.com/mode0192",
         "homepages": []
     },
     "https://github.com/n1d3v": {
@@ -280,6 +384,11 @@
     "https://github.com/orthodoxwindows": {
         "author": "OrthodoxWin32",
         "github": "https://github.com/OrthodoxWindows",
+        "homepages": []
+    },
+    "https://github.com/osmanonurkoc": {
+        "author": "osmanonurkoc",
+        "github": "https://github.com/osmanonurkoc",
         "homepages": []
     },
     "https://github.com/ph0en1x-dev": {
@@ -325,6 +434,23 @@
         "github": "https://github.com/sanskarprasad",
         "homepages": []
     },
+    "https://github.com/sb4ssman": {
+        "author": "sb4ssman",
+        "github": "https://github.com/sb4ssman",
+        "homepages": []
+    },
+    "https://github.com/steffandonal": {
+        "author": "Steffan Donal",
+        "github": "https://github.com/SteffanDonal",
+        "homepages": []
+    },
+    "https://github.com/swiftexplorer567": {
+        "author": "SwiftExplorer567",
+        "github": "https://github.com/SwiftExplorer567",
+        "homepages": [
+            "https://v0.hasanjws.com/user/hasanjws"
+        ]
+    },
     "https://github.com/teknixstuff": {
         "author": "teknixstuff",
         "github": "https://github.com/teknixstuff",
@@ -353,6 +479,11 @@
         "github": "https://github.com/tinodin",
         "homepages": []
     },
+    "https://github.com/tobbelino": {
+        "author": "Tobias Lind",
+        "github": "https://github.com/TobbeLino",
+        "homepages": []
+    },
     "https://github.com/torutheredfox": {
         "author": "Toru the Red Fox",
         "github": "https://github.com/TorutheRedFox",
@@ -378,6 +509,16 @@
     "https://github.com/vashermc": {
         "author": "Vasher",
         "github": "https://github.com/VasherMC",
+        "homepages": []
+    },
+    "https://github.com/vinsanity24": {
+        "author": "ViNSaNiTY24",
+        "github": "https://github.com/ViNSaNiTY24",
+        "homepages": []
+    },
+    "https://github.com/webberlv": {
+        "author": "webberlv",
+        "github": "https://github.com/webberLV",
         "homepages": []
     },
     "https://github.com/wily-coyote": {
