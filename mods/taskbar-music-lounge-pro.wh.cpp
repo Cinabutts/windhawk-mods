@@ -6,7 +6,12 @@
 // @version         0.0.1
 // @author          Cinabutts
 // @github          https://github.com/Cinabutts
-// @include         windhawk.exe
+// @include         explorer.exe
+// NOTE: explorer.exe is intentional — the launcher must run in the explorer.exe process to access
+//       CreateWindowInBand, a private Shell API that places windows above the taskbar without
+//       z-order fighting. windhawk.exe does not have this capability.
+//       The tool process itself spawns as a separate windhawk.exe child via Wh_ModAfterInit.
+//       See: https://github.com/ramensoftware/windhawk/wiki/Mods-as-tools:-Running-mods-in-a-dedicated-process
 // @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lgdiplus -lshell32 -lpsapi -lpropsys -ladvapi32
 // ==/WindhawkMod==
 
