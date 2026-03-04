@@ -6,7 +6,7 @@
 // @version         0.0.1
 // @author          Cinabutts
 // @github          https://github.com/Cinabutts
-// @include         explorer.exe
+// @include         windhawk.exe
 // @compilerOptions -lole32 -ldwmapi -lgdi32 -luser32 -lwindowsapp -lgdiplus -lshell32 -lpsapi -lpropsys -ladvapi32
 // ==/WindhawkMod==
 
@@ -483,10 +483,6 @@ bool OnTriggerEvent(const std::wstring& detectedTriggerName, int zDelta = 0);
 
 // --- Timer Intervals (milliseconds) ---
 #define TIMER_ANIMATION_MS       16   // ~ 60 FPS for smooth animations   -   FOR `MASTER_TICK`
-#define ANIMATION_SMOOTH_FACTOR  0.5f // Animation speed: 0.1=slow, 0.5=medium, 0.9=fast                 // ! UNUSED - DEAD CODE
-#define TIMER_MEDIA_POLL_MS      200  // 200ms media state poll (event-driven updates more important)    // ! UNUSED - DEAD CODE
-#define TIMER_TEXT_ANIM_MS       16   // 60 FPS text scroll                                              // ! UNUSED - DEAD CODE
-#define TIMER_DELAYED_ACTIONS_MS 50   // Delayed action check interval                                   // ! UNUSED - DEAD CODE
 
 // --- Docking Configuration ---
 #define DOCK_PEEK_PIXELS         2    // ~ Pixels visible when docked at edge
@@ -497,7 +493,6 @@ bool OnTriggerEvent(const std::wstring& detectedTriggerName, int zDelta = 0);
 
 // --- Audio Reactive Mode Flags ---
 #define kAudioReactiveMode     3  // 1=Brightness, 2=Thickness, 3=Both
-#define kAudioHueReactiveMode  0  // 0=Off, 1-7=Various combos (see settings)                           // ! UNUSED - DEAD CODE
 
 // --- UI Constants ---
 static const WCHAR* kFontName = L"Segoe UI Variable Display";
@@ -3159,41 +3154,6 @@ void SetupMediaWindowTimers() {
     }
 }
 
-// Centralized layout settings change detection and invalidation
-// Layout = position (offsets) + dimensions (width/height)
-// ! DEAD CODE! - DEAD CODE! - DEAD CODE!    - Now this resides in the func: WhTool_ModSettingsChanged
-void InvalidatePersistedStateIfLayoutChanged() {
-    bool layoutChanged = (
-        g_Ctx.Persisted.lastSettingsW != g_Settings.width ||
-        g_Ctx.Persisted.lastSettingsH != g_Settings.height ||
-        g_Ctx.Persisted.lastOffsetX != g_Settings.offsetX ||
-        g_Ctx.Persisted.lastOffsetY != g_Settings.offsetY
-    );
-    
-    if (layoutChanged) {
-        Wh_Log(L"[STATE] Layout settings changed - using default layout calculations");
-        // Clear persisted position to force recalculation with new layout settings
-        g_Ctx.Persisted.lastX = kInvalidCoordinate;
-        g_Ctx.Persisted.lastY = kInvalidCoordinate;
-        g_Ctx.Persisted.lastW = 0;
-        g_Ctx.Persisted.lastH = 0;
-        // Clear snapshot values
-        g_Ctx.Persisted.lastSettingsW = 0;
-        g_Ctx.Persisted.lastSettingsH = 0;
-        g_Ctx.Persisted.lastOffsetX = 0;
-        g_Ctx.Persisted.lastOffsetY = 0;
-        // Clean up registry
-        Wh_DeleteValue(L"LastX");
-        Wh_DeleteValue(L"LastY");
-        Wh_DeleteValue(L"LastW");
-        Wh_DeleteValue(L"LastH");
-        Wh_DeleteValue(L"LastSettingsW");
-        Wh_DeleteValue(L"LastSettingsH");
-        Wh_DeleteValue(L"LastOffsetX");
-        Wh_DeleteValue(L"LastOffsetY");
-    }
-}
-
 #pragma endregion  // ^ Window Management
 
 // ! ====================================================================================================================================================================================================
@@ -5564,7 +5524,7 @@ void CleanupMediaThread(const WNDCLASS& wc, const WNDCLASS& wcRainbow, bool winr
 void MediaThread() {
     Wh_Log(L"[MEDIA] ------ Media Thread Initiated -----   [ThreadID: %u]", GetCurrentThreadId());
 
-    if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-fork"))) {
+    if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-pro"))) {
         Wh_Log(L"[WARNING] SetCurrentProcessExplicitAppUserModelID failed (non-critical)");
     }
 
@@ -5931,9 +5891,6 @@ void WhTool_ModUninit() {
 
 void WhTool_ModSettingsChanged() {
     Wh_Log(L"[SETTINGS] --- CHANGE EVENT TRIGGERED ---  [ThreadID: %u]", GetCurrentThreadId());
-    // UINT testdpi = GetDpiForSystem();
-    Wh_Log(L"Testing GetDpiForSystem(): %.2f", g_Ctx.Sys.scaleFactor);  // !sDEBUG
-
 
     // Persist current window rect before reload
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
@@ -6148,10 +6105,6 @@ BOOL Wh_ModInit() {
 
         if (GetLastError() == ERROR_ALREADY_EXISTS) {
             Wh_Log(L"[CreateMutex] INFO: Tool mod already running (%s)", WH_MOD_ID);
-            ExitProcess(1);
-        }
-        else if (GetLastError() != 0 && GetLastError() != ERROR_ALREADY_EXISTS) {     // ! DEBUG | Check for unexpected errors (besides already exists) to improve reliability and debugging
-            Wh_Log(L"[CreateMutex] ERROR: %u", GetLastError());
             ExitProcess(1);
         }
 
