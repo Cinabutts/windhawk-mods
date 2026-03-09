@@ -106,10 +106,10 @@ for best experience!
 
 // ==WindhawkModSettings==
 /*
-- PanelWidth: 600
+- PanelWidth: 700
   $name: Panel Width
 - PanelHeight: 35
-  $name: Panel Height
+  $name: Panel Height ⮐
 - MaxArtSize: 300
   $name: Max Album Art Size
   $description: >-
@@ -120,10 +120,10 @@ for best experience!
 - TextScale: 100
   $name: Text Scale %
   $description: Scales the text size relative to album art (50-200).
-- OffsetX: 140
-  $name: X Offset
-- OffsetY: 0
-  $name: Y Offset
+- OffsetX: 180
+  $name: X Offset ⮐
+- OffsetY: -3
+  $name: Y Offset ⮐
 - ColorTheme: System Colors (Auto Light/Dark)
   $name: Color Theme
   $description: Choose color source for widget appearance
@@ -155,7 +155,7 @@ for best experience!
     ✓ Rounded | Native Windows 11 rounded corners.
 
     ✕ Square | Traditional square corners.
-- BgColor: "0, 0, 0, 0"
+- BgColor: "0, 0, 0, 180"
   $name: Background Color (R, G, B, [A])
   $description: >-
        Set 0,0,0,A to keep default/System color.
@@ -167,7 +167,7 @@ for best experience!
        Color for ALL text and media buttons.
     
     Enter RGB or RGBA values separated by commas (e.g; "102, 255, 255" or "255, 0, 0, 128")
-- Centered: false
+- Centered: true
   $name: Center Text
   $description: >-
     ✓ Enabled | Text centers between media buttons and right edge when it fits - Otherwise, Scrolls if enabled.
@@ -195,7 +195,7 @@ for best experience!
   $name: Rainbow Border Thickness (1-100 pixels)
   $description: Controls how thick the rainbow border appears.
 - RainbowBorderOffset: 3
-  $name: Rainbow Border Offset (0-7 pixels)
+  $name: Rainbow Border Offset (0-7 pixels) ⮐
   $description: Distance between main widget and rainbow border.
 - kAudioHueReactiveMode: Pulse (Color Jump)
   $name: 🎵 Audio Reactive Rainbow 🪄
@@ -290,13 +290,13 @@ for best experience!
           - ACTION_SWITCH_TO_AUDIBLE_WINDOW: Switch to Audible Window
           - ACTION_VOLUME_UP: Volume Up
           - ACTION_VOLUME_DOWN: Volume Down
-          - ACTION_START_PROCESS: Open App / Run File
-          - ACTION_SEND_KEYPRESS: Send Keystrokes (Macro)
           - ACTION_MUTE: Toggle Mute
           - ACTION_TOGGLE_VOLUME_TARGET: Toggle Volume Target (System/App)
           - ACTION_MEDIA_PLAY_PAUSE: Media Play/Pause
           - ACTION_MEDIA_NEXT: Media Next Track
           - ACTION_MEDIA_PREV: Media Prev Track
+          - ACTION_START_PROCESS: Open App / Run File
+          - ACTION_SEND_KEYPRESS: Send Keystrokes (Macro)
           - ACTION_SHOW_DESKTOP: Show Desktop
           - ACTION_TOGGLE_DESKTOP_ICONS: Toggle Desktop Icons
           - ACTION_TOGGLE_TASKBAR_AUTOHIDE: Toggle Taskbar Auto-Hide
@@ -309,7 +309,7 @@ for best experience!
           - ACTION_TOGGLE_RAINBOW_ZORDER: Toggle Rainbow Z-Order (Above/Below)
           - ACTION_OPACITY_INCREASE: Opacity Increase
           - ACTION_OPACITY_DECREASE: Opacity Decrease
-          - ACTION_FORCE_DOCKED: Force Docked State (Test)
+          - ACTION_TOGGLE_DOCKED: Toggle Docked State
           - ACTION_PALETTE_SAVE: Save Current Palette
           - ACTION_PALETTE_CYCLE_NEXT: Cycle Palette Forward
           - ACTION_PALETTE_CYCLE_PREV: Cycle Palette Backward
@@ -327,6 +327,31 @@ for best experience!
     - KeyboardTriggers: [none]
     - Actions:
       - - Action: ACTION_VOLUME_DOWN
+        - AdditionalArgs: ""
+  - - TriggerType: ScrollUp
+    - KeyboardTriggers: [lshift]
+    - Actions:
+      - - Action: ACTION_OPACITY_INCREASE
+        - AdditionalArgs: ""
+  - - TriggerType: ScrollDown
+    - KeyboardTriggers: [lshift]
+    - Actions:
+      - - Action: ACTION_OPACITY_DECREASE
+        - AdditionalArgs: ""
+  - - TriggerType: Middle
+    - KeyboardTriggers: [lctrl]
+    - Actions:
+      - - Action: ACTION_PALETTE_SAVE
+        - AdditionalArgs: ""
+  - - TriggerType: ScrollUp
+    - KeyboardTriggers: [lctrl]
+    - Actions:
+      - - Action: ACTION_PALETTE_CYCLE_NEXT
+        - AdditionalArgs: ""
+  - - TriggerType: ScrollDown
+    - KeyboardTriggers: [lctrl]
+    - Actions:
+      - - Action: ACTION_PALETTE_CYCLE_PREV
         - AdditionalArgs: ""
   $name: Triggers
   $description: >- 
@@ -480,13 +505,10 @@ bool OnTriggerEvent(const std::wstring& detectedTriggerName, int zDelta = 0);
 // --- Timer IDs ---
 #define IDT_POLL_MEDIA      1001  // ~ Media state polling (1000ms)
 #define IDT_MASTER_TICK     1002  // .. Unified 60fps Game Loop timer
+#define IDT_CLICK_WAIT      1003  // .. Single click delay timer
 
 // --- Timer Intervals (milliseconds) ---
 #define TIMER_ANIMATION_MS       16   // ~ 60 FPS for smooth animations   -   FOR `MASTER_TICK`
-#define ANIMATION_SMOOTH_FACTOR  0.5f // Animation speed: 0.1=slow, 0.5=medium, 0.9=fast                 // ! UNUSED - DEAD CODE
-#define TIMER_MEDIA_POLL_MS      200  // 200ms media state poll (event-driven updates more important)    // ! UNUSED - DEAD CODE
-#define TIMER_TEXT_ANIM_MS       16   // 60 FPS text scroll                                              // ! UNUSED - DEAD CODE
-#define TIMER_DELAYED_ACTIONS_MS 50   // Delayed action check interval                                   // ! UNUSED - DEAD CODE
 
 // --- Docking Configuration ---
 #define DOCK_PEEK_PIXELS         2    // ~ Pixels visible when docked at edge
@@ -497,7 +519,6 @@ bool OnTriggerEvent(const std::wstring& detectedTriggerName, int zDelta = 0);
 
 // --- Audio Reactive Mode Flags ---
 #define kAudioReactiveMode     3  // 1=Brightness, 2=Thickness, 3=Both
-#define kAudioHueReactiveMode  0  // 0=Off, 1-7=Various combos (see settings)                           // ! UNUSED - DEAD CODE
 
 // --- UI Constants ---
 static const WCHAR* kFontName = L"Segoe UI Variable Display";
@@ -536,16 +557,20 @@ T ClampSetting(const wchar_t* name, T value, T lo, T hi) {
     return clamped;
 }
 
-int CalculateElementOpacity(int bgOpacity, int knee) {
-    if (bgOpacity >= knee) return 255;  // TODO: SHOULD RETURN DEFAULT, NOT HARDCODED VALUE!
+int GetClampedSetting(PCWSTR name, int min, int max) {
+    return ClampSetting(name, Wh_GetIntSetting(name), min, max);
+}
+
+BYTE CalculateElementOpacity(BYTE bgOpacity, BYTE knee) {
+    if (bgOpacity >= knee) return 255;
     if (bgOpacity <= 10) return 1;
 
     // Exponential Ease-Out curve: Drops rapidly right after the knee, 
     // then slows down dramatically to glide smoothly into 10.
     float progress = (knee - bgOpacity) / (float)(knee - 10);
     int element = 10 + (int)(245.0f * std::pow(1.0f - progress, 3.0f));
-    
-    return Clamp(element, 1, 255);  // NOTE: Keep 255 max | 1 min as to prevent mod breakage
+
+    return static_cast<BYTE>(Clamp(element, 1, 255));  // NOTE: Keep 255 max | 1 min as to prevent mod breakage
 }
 
 // | Converts an integer percentage (0-100) to a float ratio (0.0-1.0)
@@ -555,7 +580,7 @@ T PercentToRatio(int percent, int minPercent = 0, int maxPercent = 100) {
     // Clamp the percentage to valid range
     if (percent < minPercent) percent = minPercent;
     if (percent > maxPercent) percent = maxPercent;
-    
+
     // Convert to ratio
     return static_cast<T>(percent) / static_cast<T>(100);
 }
@@ -567,17 +592,17 @@ T PercentToRatioScaled(int percent, T minValue, T maxValue, int minPercent = 0, 
     // Clamp percentage
     if (percent < minPercent) percent = minPercent;
     if (percent > maxPercent) percent = maxPercent;
-    
+
     // Normalize to 0.0-1.0
     T normalized = static_cast<T>(percent - minPercent) / static_cast<T>(maxPercent - minPercent);
-    
+
     // Scale to desired range
     return minValue + (normalized * (maxValue - minValue));
 }
 
 // | Linear interpolation: returns a + f * (b - a)
 template<typename T>
-T Lerp(T a, T b, T f) {
+T Lerp(T a, T b, T f) {                                                              // .. (LIVE)
     return a + f * (b - a);
 }
 
@@ -588,7 +613,7 @@ void HSVtoRGB(float h, float s, float v, BYTE& r, BYTE& g, BYTE& b) {
     float p = v * (1 - s);
     float q = v * (1 - f * s);
     float t = v * (1 - (1 - f) * s);
-    
+
     float rf, gf, bf;
     switch(hi) {
         case 0: rf = v; gf = t; bf = p; break;
@@ -599,7 +624,7 @@ void HSVtoRGB(float h, float s, float v, BYTE& r, BYTE& g, BYTE& b) {
         case 5: rf = v; gf = p; bf = q; break;
         default: rf = gf = bf = 0; break;
     }
-    
+
     r = (BYTE)(rf * 255);
     g = (BYTE)(gf * 255);
     b = (BYTE)(bf * 255);
@@ -611,7 +636,7 @@ bool ParseColorComponents(const wchar_t* str, int& r, int& g, int& b, int& a) {
     int ri = 0, gi = 0, bi = 0, ai = 255;
     int count = swscanf_s(str, L"%d,%d,%d,%d", &ri, &gi, &bi, &ai);
     if (count < 3) return false;
-    
+
     r = Clamp(ri, 0, 255);
     g = Clamp(gi, 0, 255);
     b = Clamp(bi, 0, 255);
@@ -643,7 +668,7 @@ namespace stringtools {
         auto wsback = std::find_if_not(s.rbegin(), s.rend(), [](int c) { return std::iswspace(c); }).base();
         return (wsback <= wsfront) ? std::wstring() : std::wstring(wsfront, wsback);
     }
-    
+
     // | Split string by delimiter and trim each token
     inline std::vector<std::wstring> split(const std::wstring& s, wchar_t delimiter) {
         std::vector<std::wstring> tokens;
@@ -657,17 +682,13 @@ namespace stringtools {
         }
         return tokens;
     }
-    
+
     // | Convert string to lowercase
     inline std::wstring toLower(const std::wstring& s) {
         std::wstring result = s;
         std::transform(result.begin(), result.end(), result.begin(), ::towlower);
         return result;
     }
-}
-
-int GetClampedSetting(PCWSTR name, int min, int max) {
-    return ClampSetting(name, Wh_GetIntSetting(name), min, max);
 }
 
 #pragma endregion // Helper Functions
@@ -812,17 +833,13 @@ enum ZBID { ZBID_IMMERSIVE_NOTIFICATION = 4 };
 static pCreateWindowInBand s_CreateWindowInBand = nullptr;
 
 // --- DPI Awareness Context API ---
-typedef BOOL(WINAPI* pLogicalToPhysical)(HWND, LPPOINT);
-typedef BOOL(WINAPI* pPhysicalToLogical)(HWND, LPPOINT);
-
-static pLogicalToPhysical s_LogicalToPhysical = nullptr;
-static pPhysicalToLogical s_PhysicalToLogical = nullptr;
+// Removed LogicalToPhysical because rendering uses float math scaling exclusively
 
 #pragma endregion // Windows API Extensions
 
 // * ==============================================================================
 
-#pragma region // ^ Settings Structure
+#pragma region // ^ Settings Structure ----
 
 // .. LIVE SETTINGS - Values are read from Windhawk settings and stored here for easy access throughout the code.
 // Changes to settings at runtime should update this struct and apply changes immediately where possible. (Default values set above^ in `WindhawkModSettings` struct definition)
@@ -835,14 +852,14 @@ struct ModSettings {
     int textScale;          // Text scale % (50-200)
     int offsetX;            // Horizontal offset from taskbar edge
     int offsetY;            // Vertical offset from taskbar center
-    
+
     // --- Theme & Colors ---
     ColorTheme colorTheme;  // Color theme: System/Custom/Artwork
     bool invertColors;      // Invert RGB values for background
     DWORD interfaceColor;   // Interface color (ARGB) - controls Text & Buttons
     DWORD manualBgColorRGB; // Manual background color (BGR for DWM)
-    int currentOpacity;     // Current opacity value (0-255)
-    
+    BYTE currentOpacity;    // Current opacity value (0-255)
+
     // --- Behavior ---
     // Game detection removed
     int idleTimeout;        // Hide after N seconds idle (0=disabled)
@@ -851,7 +868,7 @@ struct ModSettings {
     bool enableSlide;       // Enable slide animation
     // Game detection removed
     // Game detection removed
-    
+
     // --- Rainbow Border ---
     bool enableRainbow;         // Enable rainbow border effect
     bool rainbowAboveWidget;    // Render rainbow above media widget    // !  Removed - This setting is now controlled by a trigger action for dynamic toggling
@@ -861,7 +878,7 @@ struct ModSettings {
     int rainbowBorderOffset;    // Border position offset
     bool enableRoundedCorners;  // Rounded corners on border
     bool centered;              // Center text when not scrolling
-    
+
     // Internal state (not user-configurable)
     bool storedRainbowAboveWidget = false;      // For the Rainbow Z-Order Action
 
@@ -889,12 +906,14 @@ struct ModContext {
 
     // Core System flags
     struct {
-        bool isRunning = true;
-        bool isShutdown = false;
+        std::atomic<bool> isRunning{ true };   // Atomic: read by AudioMeterThread
+        std::atomic<bool> isShutdown{ false }; // Atomic: read across threads during shutdown
+        std::atomic<uint32_t> asyncGeneration{0}; // Incremented on each update to prevent stale async callbacks
         float scaleFactor = 1.0f;
         UINT lastSysDPI = 0;            // cache of GetDpiForSystem() for SETTINGS broadcasts
         std::atomic<bool> eventHandlersActive{ false };
         ULONG_PTR gdiplusToken = 0;
+        HANDLE audioMeterThread = NULL; // Dedicated MTA COM thread for audio meter
     } Sys;
 
     // Visibility & Animations
@@ -911,8 +930,16 @@ struct ModContext {
         std::atomic<int> idleSecondsCounter{ 0 };
         std::atomic<bool> isHiddenByIdle{ false };
         std::atomic<bool> mediaStateInitialized{ false }; // Track if we've gotten initial GSMTC state
-        int currentOpacity = 255;        // Window opacity (0-255, 255=fully opaque)
+        BYTE currentOpacity = 255;       // Window opacity (0-255, 255=fully opaque)
     } Vis;
+
+    // Input State Machine (Click vs Drag disambiguation)
+    struct {
+        bool isPendingDrag = false;     // LButton down, not yet committed to drag or click
+        int startX = 0;                 // Mouse X at LButton down
+        int startY = 0;                 // Mouse Y at LButton down
+        UINT_PTR clickTimerId = 0;      // Non-zero = waiting to fire single click
+    } Input;
 
     // Rainbow Effect State
     struct {
@@ -972,13 +999,13 @@ struct ModContext {
     struct PersistedState {
         int lastX = kInvalidCoordinate;
         int lastY = kInvalidCoordinate;
-        int lastW = 0;
-        int lastH = 0;
+        int lastW = 0;           // Panel width
+        int lastH = 0;           // Panel height
         int lastSettingsW = 0;   // PanelWidth when LastW was saved
         int lastSettingsH = 0;   // PanelHeight when LastH was saved
         int lastOffsetX = 0;     // OffsetX when LastX was saved
         int lastOffsetY = 0;     // OffsetY when LastY was saved
-        int lastOpacity = 255; // Persisted opacity for consistency across sessions (updated on change, used on load aka default for EffectiveOpacity)
+        BYTE lastOpacity = 255;  // Persisted opacity for consistency across sessions (updated on change, used on load aka default for EffectiveOpacity)
         int64_t lastLaunchTime = 0;
         int crashCount = 0;
         std::wstring lastTitle;
@@ -1000,9 +1027,9 @@ struct ModContext {
     }
 
     if (flags & RESET_SYS) {
-        Sys.isRunning = true;
-        Sys.isShutdown = false;
-        Sys.eventHandlersActive = false;
+        Sys.isRunning.store(true);
+        Sys.isShutdown.store(false);
+        Sys.eventHandlersActive.store(false);
     }
 
     if (flags & RESET_VISUAL) {
@@ -1030,6 +1057,10 @@ struct ModContext {
         Text.stripHeight = 0;
         Text.stripBitmap.reset();
         Text.dirty = true;
+        Input.isPendingDrag = false;
+        Input.startX = 0;
+        Input.startY = 0;
+        Input.clickTimerId = 0;
     }
 
     if (flags & RESET_ART) {
@@ -1061,7 +1092,7 @@ struct ModContext {
 }
 } g_Ctx;
 
-#pragma endregion // Settings Structure
+#pragma endregion // Settings Structure ----
 
 // * ==============================================================================
 
@@ -1070,106 +1101,99 @@ struct ModContext {
 
 // | Apply DPI scale factor to any value
 inline int Scale(int value) {
-    return (int)(value * g_Ctx.Sys.scaleFactor);
+    return (int)std::lround(value * g_Ctx.Sys.scaleFactor);
 }
 
 // | Effective dimensions: persisted override (AltSnap'd) if valid AND settings unchanged, else scaled settings
-inline int EffectiveW() {
+inline int EffectiveW() {                                                        // .. (LIVE)
     // Check if width setting has changed since position was saved
     bool widthChanged = (g_Ctx.Persisted.lastSettingsW != g_Settings.width);
     bool hasSavedWidth = (g_Ctx.Persisted.lastW > 0);
-    
+
     // Use saved width only if setting hasn't changed
     if (hasSavedWidth && !widthChanged) {
         return g_Ctx.Persisted.lastW;
     }
-    
+
     // Default: use current scaled setting
     return Scale(g_Settings.width);
 }
 
 // Effective H with additional logic to prevent excessive height if user manually resized to a very short height (e.g., for a thin taskbar) - Clamps to either persisted height or scaled setting, whichever is smaller
-inline int EffectiveH() {
+inline int EffectiveH() {                                                        // .. (LIVE)
     // Check if height setting has changed since position was saved
     bool heightChanged = (g_Ctx.Persisted.lastSettingsH != g_Settings.height);
     bool hasSavedHeight = (g_Ctx.Persisted.lastH > 0);
-    
+
     // Use saved height only if setting hasn't changed
     if (hasSavedHeight && !heightChanged) {
         return g_Ctx.Persisted.lastH;
     }
-    
+
     // Default: use current scaled setting
     return Scale(g_Settings.height);
 }
 
-// Helper for inline functions to avoid dependency on global WindowManager instance
-inline HWND InlineGetTaskbar() {
-    if (g_Ctx.Wnd.taskbar && IsWindow(g_Ctx.Wnd.taskbar)) {
-        return g_Ctx.Wnd.taskbar;
-    }
 
-    HWND taskbar = FindWindowW(L"Shell_TrayWnd", NULL);
-    if (taskbar) {
-        g_Ctx.Wnd.taskbar = taskbar;
-        return taskbar;
-    }
-
-    return GetDesktopWindow();
-}
-
-inline int EffectiveOpacity() {
+inline BYTE EffectiveOpacity() {                                                 // .. (LIVE)
     // Prefer a valid persisted opacity (>0); otherwise fall back to current settings value.
     if (g_Ctx.Persisted.lastOpacity > 0) return g_Ctx.Persisted.lastOpacity;
     return g_Settings.currentOpacity;
 }
 
-static int g_opacityElementThreshold = 50;  // Opacity knee: below this, UI elements begin fading
+static BYTE g_opacityElementThreshold = 50;  // Opacity knee: below this, UI elements begin fading
 // | Opacity knee: returns alpha for UI elements, fading linearly below threshold
-inline BYTE GetElementAlpha() {
-    int opacity = EffectiveOpacity();
+inline BYTE GetElementAlpha() {                                                   // .. (LIVE)
+    BYTE opacity = EffectiveOpacity();
     if (opacity >= g_opacityElementThreshold) return 255;  // Fully opaque above threshold
     // Linear fade from threshold to 0: at threshold=255, at 0=0
     return (BYTE)((opacity * 255) / g_opacityElementThreshold);
 }
 
-inline int EffectiveX() {
+inline int EffectiveX() {                                                        // .. (LIVE)
     // Check if offsets have changed since position was saved
     bool offsetsChanged = (g_Ctx.Persisted.lastOffsetX != g_Settings.offsetX || 
                           g_Ctx.Persisted.lastOffsetY != g_Settings.offsetY);
-    bool hasSavedPosition = (g_Ctx.Persisted.lastX != kInvalidCoordinate && 
-                            g_Ctx.Persisted.lastY != kInvalidCoordinate);
-    
-    // Use saved position only if offsets haven't changed
-    if (hasSavedPosition && !offsetsChanged) {
+    bool hasSavedX = (g_Ctx.Persisted.lastX != kInvalidCoordinate);
+
+    // Use saved X only if offsets haven't changed
+    if (hasSavedX && !offsetsChanged) {
         return g_Ctx.Persisted.lastX;
     }
-    
+
     // Default: taskbar-relative positioning with current offsets
     RECT taskbarRect;
-    GetWindowRect(InlineGetTaskbar(), &taskbarRect);
+    GetWindowRect(g_Ctx.Wnd.taskbar, &taskbarRect);
     return taskbarRect.left + Scale(g_Settings.offsetX);
 }
 
-inline int EffectiveY() {
+inline int EffectiveY() {                                                        // .. (LIVE)
     // Check if offsets have changed since position was saved
     bool offsetsChanged = (g_Ctx.Persisted.lastOffsetX != g_Settings.offsetX || 
                           g_Ctx.Persisted.lastOffsetY != g_Settings.offsetY);
-    bool hasSavedPosition = (g_Ctx.Persisted.lastX != kInvalidCoordinate && 
-                            g_Ctx.Persisted.lastY != kInvalidCoordinate);
-    
-    // Use saved position only if offsets haven't changed
-    if (hasSavedPosition && !offsetsChanged) {
+    bool hasSavedY = (g_Ctx.Persisted.lastY != kInvalidCoordinate);
+
+    // Use saved Y only if offsets haven't changed
+    if (hasSavedY && !offsetsChanged) {
         return g_Ctx.Persisted.lastY;
     }
-    
+
     // Default: taskbar-relative positioning with current offsets
     RECT taskbarRect;
-    HWND hTaskbar = InlineGetTaskbar();
-    GetWindowRect(hTaskbar, &taskbarRect);
-    int taskbarHeight = taskbarRect.bottom - taskbarRect.top;
-    int taskbarCenterY = taskbarRect.top + (taskbarHeight / 2);
-    return taskbarCenterY - (EffectiveH() / 2) + Scale(g_Settings.offsetY);
+    GetWindowRect(g_Ctx.Wnd.taskbar, &taskbarRect);
+    
+    // Bottom-anchored layout:
+    // 1. Start at the absolute bottom of the taskbar
+    int absoluteBottom = taskbarRect.bottom;
+    
+    // 2. We must leave room for the rainbow border so it doesn't clip off the bottom of the screen
+    int borderOffset = g_Settings.enableRainbow ? Scale(g_Settings.rainbowBorderOffset) : 0;
+    
+    // 3. Anchor the bottom of the panel taking into account the border, then subtract the panel height to grow upwards
+    int finalY = absoluteBottom - borderOffset - EffectiveH();
+    
+    // 4. Apply manual Y offset override (negative moves up, positive moves down)
+    return finalY + Scale(g_Settings.offsetY);
 }
 
 // | Decode Windows event types for logging
@@ -1189,10 +1213,10 @@ inline std::wstring GetForegroundAppName(HWND hFg) {
     DWORD pid = 0;
     GetWindowThreadProcessId(hFg, &pid);
     if (!pid) return L"Unknown";
-    
+
     HANDLE hProc = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
     if (!hProc) return L"Unknown";
-    
+
     WCHAR exePath[MAX_PATH];
     DWORD size = MAX_PATH;
     if (QueryFullProcessImageNameW(hProc, 0, exePath, &size)) {
@@ -1249,7 +1273,7 @@ namespace PaletteStorage {
         if (palette.empty()) return L"FFFFFF";
         std::wstring result;
         for (int i = 0; i < targetSamples; ++i) {
-            float index = (float)i / targetSamples * (float)palette.size();
+            float index = static_cast<float>(i) / targetSamples * static_cast<float>(palette.size());
             Gdiplus::Color c = SamplePaletteSmooth(palette, index);
             result += ColorToHex(c);
             if (i < targetSamples - 1) result += L",";
@@ -1288,6 +1312,7 @@ class RegistryManager {
 private:
     std::thread m_autoHideListenerThread;
     std::atomic<bool> m_stopListener{false};
+    HANDLE m_stopEvent = NULL;
     std::function<void()> m_autoHideChangedCallback;
     static constexpr const wchar_t* kExplorerAdvancedPath = L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced";
 
@@ -1298,20 +1323,39 @@ private:
             return;
         }
 
+        HANDLE hNotifyEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+        if (!hNotifyEvent) {
+            RegCloseKey(hKey);
+            Wh_Log(L"[Registry] ERROR: Failed to create notify event");
+            return;
+        }
+
         Wh_Log(L"[Registry] Auto-hide listener thread started");
         while (!m_stopListener) {       // Wait for changes to the Explorer Advanced key | Unless stop signal is set
-            if (RegNotifyChangeKeyValue(hKey, FALSE, REG_NOTIFY_CHANGE_LAST_SET, NULL, FALSE) == ERROR_SUCCESS) {
-                if (m_stopListener) break;
-                
-                Wh_Log(L"[Registry] Explorer Advanced key changed, checking auto-hide state");
-                
-                // Invoke callback to trigger recheck   LEAVE ALONE
-                if (m_autoHideChangedCallback) {
-                    m_autoHideChangedCallback();
-                }
+            if (RegNotifyChangeKeyValue(hKey, FALSE, REG_NOTIFY_CHANGE_LAST_SET, hNotifyEvent, TRUE) != ERROR_SUCCESS) {
+                Wh_Log(L"[Registry] ERROR: RegNotifyChangeKeyValue failed");
+                break;
+            }
+
+            HANDLE waitHandles[2] = {hNotifyEvent, m_stopEvent};
+            DWORD waitResult = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+            if (waitResult == WAIT_OBJECT_0 + 1 || m_stopListener) {
+                break;
+            }
+            if (waitResult != WAIT_OBJECT_0) {
+                Wh_Log(L"[Registry] ERROR: WaitForMultipleObjects failed in listener");
+                break;
+            }
+
+            Wh_Log(L"[Registry] Explorer Advanced key changed, checking auto-hide state");
+
+            // Invoke callback to trigger recheck   LEAVE ALONE
+            if (m_autoHideChangedCallback) {
+                m_autoHideChangedCallback();
             }
         }
-        
+
+        CloseHandle(hNotifyEvent);
         RegCloseKey(hKey);
         Wh_Log(L"[CLEANUP] Auto-hide listener thread stopped");
     }
@@ -1347,24 +1391,32 @@ public:
         if (m_autoHideListenerThread.joinable()) return; // Already running
         m_autoHideChangedCallback = callback;
         m_stopListener = false;
+        if (!m_stopEvent) {
+            m_stopEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+            if (!m_stopEvent) {
+                Wh_Log(L"[Registry] ERROR: Failed to create stop event");
+                return;
+            }
+        } else {
+            ResetEvent(m_stopEvent);
+        }
         m_autoHideListenerThread = std::thread(&RegistryManager::AutoHideListenerThreadProc, this);
     }
 
     void StopAutoHideListener() {
-        if (!m_autoHideListenerThread.joinable()) return;
         m_stopListener = true;
-        
-        // Wake up the thread by triggering a dummy registry change
-        HKEY hKey = NULL;
-        if (RegOpenKeyEx(HKEY_CURRENT_USER, kExplorerAdvancedPath, 0, KEY_SET_VALUE, &hKey) == ERROR_SUCCESS) {
-            DWORD dummy = 0;
-            RegSetValueEx(hKey, L"_WindhawkWakeup", 0, REG_DWORD, (BYTE*)&dummy, sizeof(dummy));
-            RegDeleteValue(hKey, L"_WindhawkWakeup");
-            RegCloseKey(hKey);
+
+        if (m_stopEvent) {
+            SetEvent(m_stopEvent);
         }
-        
+
         if (m_autoHideListenerThread.joinable()) {
             m_autoHideListenerThread.join();
+        }
+
+        if (m_stopEvent) {
+            CloseHandle(m_stopEvent);
+            m_stopEvent = NULL;
         }
     }
 
@@ -1381,10 +1433,11 @@ static RegistryManager g_RegistryManager;
 #pragma region // ^ -- Window Manager
 
 // Manages the main media widget window, including creation, painting, and state updates
+// Contains: 
 class WindowManager {
 public:
     WindowManager() = default;
-    
+
     // NEW: Cleanup cached memory when the mod unloads
     ~WindowManager() {
         if (m_memBitmap) DeleteObject(m_memBitmap);
@@ -1404,7 +1457,7 @@ public:
     void OnPaint(HWND hwnd) {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
-        
+
         // NEW: Uses the cached paint method
         ExecuteCachedBufferedPaint(hwnd, hdc, [&](Graphics& graphics) {
             graphics.Clear(Color(0, 0, 0, 0)); 
@@ -1415,8 +1468,8 @@ public:
         EndPaint(hwnd, &ps);
     }
 
-    void OnTimer(HWND hwnd, UINT_PTR timerId);
-    void OnMasterTick(HWND hwnd); // Unified 60fps game loop
+    void OnTimer(HWND hwnd, UINT_PTR timerId);                                    // .. (LIVE)
+    void OnMasterTick(HWND hwnd); // Unified 60fps game loop                        // .. (LIVE)
     void OnMouseWheel(HWND hwnd, WPARAM wParam, LPARAM lParam);
 
     // State & Visual Updates
@@ -1427,10 +1480,10 @@ public:
 
     // Helper: Determining visibility logic
     bool ShouldWindowBeHidden();
-   
+
 private:
     // Drawing Implementation (Internal)
-    void DrawMediaPanel(Graphics& graphics);
+    void DrawMediaPanel(Graphics& graphics);                                   // .. (LIVE)
 
     // NEW: Cached GDI Buffers
     HDC m_memDC = NULL;
@@ -1461,8 +1514,8 @@ private:
 
         Graphics graphics(m_memDC);
         graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-        graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-        
+        graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+
         paintFunc(graphics);
 
         BitBlt(hdc, 0, 0, width, height, m_memDC, 0, 0, SRCCOPY);
@@ -1490,9 +1543,9 @@ public:
         , m_pAudioMeter(nullptr)
         , m_meterInitialized(false) 
     {}
-    
+
     // | Initialize COM and device enumerator
-    bool Init() {
+    bool InitAudioCOM() {
         if (!m_isCOMInitialized) {
             HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
             if (hr == S_OK || hr == S_FALSE) {
@@ -1507,7 +1560,7 @@ public:
                 return false;
             }
         }
-        
+
         if (!m_isInitialized) {
             const GUID XIID_IMMDeviceEnumerator = {
                 0xA95664D2, 0x9614, 0x4F35, 
@@ -1517,7 +1570,7 @@ public:
                 0xBCDE0395, 0xE52F, 0x467C, 
                 {0x8E, 0x3D, 0xC4, 0x57, 0x92, 0x91, 0x69, 0x2E}
             };
-            
+
             if (FAILED(CoCreateInstance(
                     XIID_MMDeviceEnumerator, NULL, CLSCTX_INPROC_SERVER, 
                     XIID_IMMDeviceEnumerator, m_pDeviceEnumerator.put_void())) 
@@ -1531,25 +1584,25 @@ public:
     bool InitMeter() {
         if (m_meterInitialized) return true;
         if (!m_isInitialized) return false;
-        
+
         com_ptr<IMMDevice> pDevice;
         if (FAILED(m_pDeviceEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, pDevice.put()))) {
             Wh_Log(L"[Audio Meter] Failed to get default audio endpoint");
             return false;
         }
-        
+
         if (FAILED(pDevice->Activate(IID_IAudioMeterInformation, CLSCTX_INPROC_SERVER, NULL, m_pAudioMeter.put_void()))) {
             Wh_Log(L"[Audio Meter] Failed to activate IAudioMeterInformation");
             return false;
         }
-        
+
         m_meterInitialized = true;
         Wh_Log(L"[Audio Meter] Successfully initialized");
         return true;
     }
-    
+
     // | Get current audio peak level (0.0-1.0)
-    float GetPeakLevel() {
+    float GetPeakLevel() {                                                           // .. (LIVE)
         if (!m_meterInitialized || !m_pAudioMeter) return 0.0f;
         float peak = 0.0f;
         if (SUCCEEDED(m_pAudioMeter->GetPeakValue(&peak))) {
@@ -1557,9 +1610,9 @@ public:
         }
         return 0.0f;
     }
-    
+
     // | Release all COM resources
-    void Uninit() {
+    void UninitAudioCOM() {
         if (m_pAudioMeter) {
             m_pAudioMeter = nullptr;
             m_meterInitialized = false;
@@ -1576,7 +1629,7 @@ public:
             Wh_Log(L"[CLEANUP] COM uninitialized");
         }
     }
-    
+
     bool IsInitialized() const { return m_isInitialized; }
     const com_ptr<IMMDeviceEnumerator>& GetDeviceEnumerator() const { return m_pDeviceEnumerator; }
 
@@ -1589,6 +1642,27 @@ private:
 };
 
 static AudioCOMAPI g_audioCOM;
+
+// Dedicated audio meter thread — MTA COM
+DWORD WINAPI AudioMeterThreadProc(LPVOID) {
+    // MTA COM initialization and device enumerator setup are safely handled by InitAudioCOM
+    if (!g_audioCOM.InitAudioCOM() || !g_audioCOM.InitMeter()) {
+        Wh_Log(L"[AudioMeter] Init failed — audio reactive disabled");
+        g_audioCOM.UninitAudioCOM(); // Safely undoes any partial initialization
+        return 1;
+    }
+
+    Wh_Log(L"[AudioMeter] Thread running");
+    while (g_Ctx.Sys.isRunning) {
+        float peak = g_audioCOM.GetPeakLevel();
+        g_Ctx.Audio.peakLevel.store(peak, std::memory_order_relaxed);
+        Sleep(16); // ~60 fps polling
+    }
+
+    g_audioCOM.UninitAudioCOM();
+    Wh_Log(L"[CLEANUP] AudioMeter thread exited");
+    return 0;
+}
 
 #pragma endregion  // ^ Audio COM API Wrapper
 
@@ -1649,7 +1723,7 @@ inline void SetBit(uint32_t& value, uint32_t bit) {
 static uint32_t GetKeyModifiersState() {
     BYTE keyState[256] = {0};
     if (!GetKeyboardState(keyState)) return 0U;
-    
+
     uint32_t currentKeyModifiersState = 0U;
     if (keyState[VK_LCONTROL] & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LCTRL);
     if (keyState[VK_LSHIFT]   & 0x80) SetBit(currentKeyModifiersState, KEY_MODIFIER_LSHIFT);
@@ -1681,7 +1755,7 @@ std::wstring GetModifierNamesFromBitmask(uint32_t modMask) {
             names.push_back(buf);
         }
     }
-    
+
     if (names.empty()) return L"None";
     std::wstring result = names[0];
     for (size_t i = 1; i < names.size(); i++) {
@@ -1704,7 +1778,7 @@ KeyModifier GetKeyModifierFromName(const std::wstring& keyName) {
 bool FromStringHotKey(std::wstring_view hotkeyString, UINT* modifiersOut, UINT* vkOut) {
     // Use centralized modifier mapping
     const auto& modifiersMap = ModifierMapping::kGenericModifiersMap;
-    
+
     static const std::unordered_map<std::wstring_view, UINT> vkMap = {
         {L"A", 0x41}, {L"B", 0x42}, {L"C", 0x43}, {L"D", 0x44}, {L"E", 0x45}, {L"F", 0x46}, {L"G", 0x47}, {L"H", 0x48},
         {L"I", 0x49}, {L"J", 0x4A}, {L"K", 0x4B}, {L"L", 0x4C}, {L"M", 0x4D}, {L"N", 0x4E}, {L"O", 0x4F}, {L"P", 0x50},
@@ -1740,9 +1814,9 @@ void StartProcess(std::wstring command) {
             verb = L"runas"; 
             cmd = cmd.length() > 4 ? cmd.substr(4) : L""; 
         }
-        
+
         std::wstring executable, parameters;
-        
+
         if (cmd.size() > 0 && (cmd[0] == L'"' || cmd[0] == L'\'')) {
             wchar_t quote = cmd[0];
             size_t close = cmd.find(quote, 1);
@@ -1770,7 +1844,7 @@ void StartProcess(std::wstring command) {
         } else {
             parameters.clear();
         }
-        
+
         Wh_Log(L"[StartProcess] Launching: Exec='%s' Params='%s' (Raw='%s')", 
                executable.c_str(), parameters.c_str(), command.c_str());
 
@@ -1780,7 +1854,7 @@ void StartProcess(std::wstring command) {
         sei.lpFile = executable.c_str();
         sei.lpParameters = parameters.empty() ? nullptr : parameters.c_str(); 
         sei.nShow = SW_SHOWNORMAL;
-        
+
         if (!ShellExecuteEx(&sei)) {
             Wh_Log(L"[StartProcess] Failed to execute: %s (Error: %d)", executable.c_str(), GetLastError());
         }
@@ -1792,11 +1866,11 @@ void StartProcess(std::wstring command) {
 std::wstring GetWindowAUMID(HWND hwnd) {
     IPropertyStore* pps;
     if (FAILED(SHGetPropertyStoreForWindow(hwnd, IID_PPV_ARGS(&pps)))) return L"";
-    
+
     std::wstring aumid; PROPVARIANT var; PropVariantInit(&var);
     static const PROPERTYKEY kKey = { { 0x9F4C2855, 0x9F79, 0x4B39, { 0xA8, 0xD0, 0xE1, 0xD4, 0x2D, 0xE1, 0xD5, 0xF3 } }, 5 };
     if (SUCCEEDED(pps->GetValue(kKey, &var)) && var.vt == VT_LPWSTR && var.pwszVal) aumid = var.pwszVal;
-    
+
     PropVariantClear(&var); pps->Release();
     return aumid;
 }
@@ -1813,7 +1887,7 @@ struct WinSearchData {
 // | Responsible for finding windows based on AUMID, executable name, or title substring. Used by the switch-to-audible-window feature and script targeting. Returns FALSE to stop enumeration when a match is found.
 BOOL CALLBACK FindWindowByAUMIDOrExe(HWND hwnd, LPARAM lParam) {
     WinSearchData* search = (WinSearchData*)lParam;
-    
+
     // Visibility check - skipped if explicitly checking hidden windows (e.g. for scripts)
     if (!search->checkHidden) {
         if (!IsWindowVisible(hwnd)) return TRUE;
@@ -1925,12 +1999,12 @@ void ExecuteProcessOrWindow(const std::wstring& cmd, bool bypassSingleInstanceCh
         size_t space = executable.find(L' ');
         if (space != std::wstring::npos) executable = executable.substr(0, space);
     }
-    
+
     // Prepare comparison strings
     std::wstring exeName = executable;
     size_t slash = exeName.find_last_of(L"\\/");
     std::wstring filenameOnly = (slash != std::wstring::npos) ? exeName.substr(slash + 1) : exeName;
-    
+
     std::wstring filenameLower = stringtools::toLower(filenameOnly);
     std::wstring fullPathLower = stringtools::toLower(executable);
 
@@ -1941,7 +2015,7 @@ void ExecuteProcessOrWindow(const std::wstring& cmd, bool bypassSingleInstanceCh
             // Strategy 1: Standard Executable
             // If no extension, append .exe
             if (filenameLower.find(L".") == std::wstring::npos) filenameLower += L".exe";
-            
+
             exeSearch.targetExe = filenameLower;
             Wh_Log(L"[ACTION] %s Checking process: %s (Raw: %s)", logPrefix.c_str(), filenameLower.c_str(), cmd.c_str());
     } else {
@@ -1956,9 +2030,9 @@ void ExecuteProcessOrWindow(const std::wstring& cmd, bool bypassSingleInstanceCh
             exeSearch.checkHidden = true; // Essential for scripts (AHK, etc)
             Wh_Log(L"[ACTION] %s Checking script/title: %s (Raw: %s)", logPrefix.c_str(), exeSearch.targetTitle.c_str(), cmd.c_str());
     }
-    
+
     EnumWindows(FindWindowByAUMIDOrExe, (LPARAM)&exeSearch);
-    
+
     if (exeSearch.foundHwnd) {
         // Already running - focus it
         if (IsIconic(exeSearch.foundHwnd)) ShowWindow(exeSearch.foundHwnd, SW_RESTORE);
@@ -1998,7 +2072,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
 
     void ExecuteWithDelay(std::function<void()> action, float delaySeconds, const std::wstring& actionName) {
         Wh_Log(L"[DELAY] Queueing action with %.2f second delay", delaySeconds);
-        
+
         std::wstring desc = actionName;
         if (!g_currentTriggerContext.empty()) {
             desc = L"[MusicLounge] " + g_currentTriggerContext + L" '" + actionName + L"' executed (DELAYED)";
@@ -2014,11 +2088,11 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
         m_pendingActions.push_back({action, GetTickCount() + (DWORD)(delaySeconds * 1000), desc});
         Wh_Log(L"[DELAY] Queue size: %d/%d", (int)m_pendingActions.size(), kMaxPendingActions);
     }
-    
+
     // --- Helper for SendKeypressInternal (moved to private method) ---
     void InternalSendInput(const std::vector<int>& keys) {
         if (keys.empty()) return;
-        
+
         // Optimization: Use WM_APPCOMMAND for single media/volume keys
         if (keys.size() == 1) {
             int cmd = 0;
@@ -2039,7 +2113,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
                 return;
             }
         }
-        
+
         const int NUM_KEYS = static_cast<int>(keys.size());
         auto input = std::make_unique<INPUT[]>(NUM_KEYS * 2);
         for (int i = 0; i < NUM_KEYS; i++) {
@@ -2069,7 +2143,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
         }
     }
 
-    void ProcessDelayedActions() {
+    void ProcessDelayedActions() {                                                    // .. (LIVE)
         // Check pending keypress retry (waits for modifier release or timeout)
         if (!m_pendingKeypressKeys.empty()) {
             if (!AreModifierKeysPressed() || ++m_keypressRetryCount >= kMaxKeypressRetryCount) {
@@ -2079,11 +2153,11 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
                 m_keypressRetryCount = 0;
             }
         }
-        
+
         if (m_pendingActions.empty()) return;
 
         Wh_Log(L"[DELAY] Timer tick - checking %d pending actions", (int)m_pendingActions.size());
-        
+
         DWORD now = GetTickCount();
         auto it = m_pendingActions.begin();
         while (it != m_pendingActions.end()) {
@@ -2101,7 +2175,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
                 ++it;
             }
         }
-        
+
     }
 
     void ClearPendingActions() {
@@ -2110,7 +2184,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
 
     bool DispatchTrigger(const std::wstring& detectedTriggerName, int zDelta = 0) {
         // Game detection removed - only input triggers now
-        
+
         // Log entry
         uint32_t currentMods = GetKeyModifiersState();
         if (currentMods != 0) {
@@ -2118,7 +2192,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
         } else {
             Wh_Log(L"[ActionEngine] Dispatching INPUT Trigger: '%s' (Active Total Triggers: %zu)", detectedTriggerName.c_str(), triggers.size());
         }
-        
+
         bool handled = false;
         for(const auto& t : triggers) {
             // 1. Strict Name Match
@@ -2130,7 +2204,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
             // 3. Execution Phase
             if (!t.actions.empty()) {
                 Wh_Log(L"[ActionEngine] >> MATCH MATCHED: '%s' (%zu actions)", detectedTriggerName.c_str(), t.actions.size());
-                
+
                 for (size_t i = 0; i < t.actions.size(); i++) {
                     const auto& [actionName, actionFunc] = t.actions[i];
                     if (!actionFunc) continue;
@@ -2157,7 +2231,7 @@ public:     // |-- ActionDispatcher | Responsible for executing actions with opt
 private:
     std::vector<int> m_pendingKeypressKeys;  // Keys deferred while modifiers held
     int m_keypressRetryCount = 0;            // Current retry attempt count
-    
+
     std::vector<PendingAction> m_pendingActions;
 };
 
@@ -2184,7 +2258,7 @@ void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSin
 
     Wh_Log(L"[ActionEngine] SwitchToAudibleWindow: Media=%d, TargetID='%s', Fallback='%s', Bypass=%d, Delay=%.2f", 
            hasMedia, targetId.c_str(), fallbackCmd.c_str(), bypassSingleInstanceCheck, delaySeconds);
-    
+
     // No media playing OR ghost session (empty ID) - use fallback command if provided
     if (!hasMedia || targetId.empty()) {
         if (!fallbackCmd.empty()) {
@@ -2201,7 +2275,7 @@ void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSin
         }
         return;
     }
-    
+
     // Explicitly log that we are ignoring the fallback because media is active
     if (!fallbackCmd.empty()) {
         Wh_Log(L"[SwitchToAudibleWindow] Media Source Present - Opening `%s` instead", targetId.c_str());
@@ -2235,13 +2309,13 @@ void SwitchToAudibleWindow(const std::wstring& fallbackCmd = L"", bool bypassSin
         // Phase 2: Window not found (maybe minimized to tray), fallback to Shell Activation
         Wh_Log(L"[SwitchToAudibleWindow] Window not found for AUMID: %s. Attempting Shell Activation...", targetId.c_str());
         std::wstring cmd = L"shell:AppsFolder\\" + targetId;
-        
+
         SHELLEXECUTEINFO sei = {sizeof(sei)};
         sei.fMask = SEE_MASK_NOASYNC | SEE_MASK_FLAG_NO_UI; 
         sei.lpVerb = L"open"; 
         sei.lpFile = cmd.c_str();
         sei.nShow = SW_SHOWNORMAL;
-        
+
         try {
             if (!ShellExecuteEx(&sei)) {
                 Wh_Log(L"[SwitchToAudibleWindow] Shell activation failed: %s (Error: %d)", cmd.c_str(), GetLastError());
@@ -2273,6 +2347,9 @@ bool GetTaskbarAutohideState() {
         LPARAM state = SHAppBarMessage(ABM_GETSTATE, &msgData);
         return (state & ABS_AUTOHIDE) != 0;
     }
+    else {
+        Wh_Log(L"[Action] ERROR: Failed to get taskbar autohide state - Taskbar not found");
+    }
     return false;
 }
 
@@ -2284,6 +2361,8 @@ void SetTaskbarAutohide(bool enabled) {
         msgData.hWnd = hTaskbar;
         msgData.lParam = enabled ? ABS_AUTOHIDE : ABS_ALWAYSONTOP;
         SHAppBarMessage(ABM_SETSTATE, &msgData);
+    } else {
+        Wh_Log(L"[Action] ERROR: Failed to set taskbar autohide - Taskbar not found");
     }
 }
 
@@ -2310,7 +2389,7 @@ void ToggleShowDesktop() {
     }
 }
 
-// Grabs the SHELLDLL_DefView window which is the parent of desktop icons - Used for toggling desktop icons visibility.
+// Grabs the SHELLDLL_DefView window which is the parent of desktop icons - // /-- Used for toggling desktop icons visibility.
 HWND FindDesktopShellView() {
     HWND hParentWnd = FindWindow(L"Progman", NULL);
     if (!hParentWnd) return NULL;
@@ -2334,7 +2413,7 @@ void ToggleDesktopIcons() {
     }
 }
 
-// --- Registry Helpers (now using RegistryManager) --- DEAD CODE
+// --- Registry Helpers (now using RegistryManager) --- // ! DEAD CODE - DEAD CODE
 DWORD GetExplorerAdvancedSetting(const wchar_t* valueName, DWORD defaultValue = 0) {
     Wh_Log(L" | DIRECT | TESTING - Running: `GetExplorerAdvancedSetting(%s, %d)`", valueName, defaultValue);
     return g_RegistryManager.GetExplorerAdvanced(valueName, defaultValue);
@@ -2346,15 +2425,13 @@ bool SetExplorerAdvancedSetting(const wchar_t* valueName, DWORD value) {
 
 // Centralized taskbar handle acquisition (Consolidated into WindowManager)
 HWND WindowManager::GetTaskbar() {
-    // Return cached if valid
-    if (g_Ctx.Wnd.taskbar && IsWindow(g_Ctx.Wnd.taskbar)) {
+    if (g_Ctx.Wnd.taskbar && IsWindow(g_Ctx.Wnd.taskbar)) {     // Return cached if valid
         return g_Ctx.Wnd.taskbar;
     }
-    
-    // Cache invalid or lost - find new one
-    g_Ctx.Wnd.taskbar = FindWindowW(L"Shell_TrayWnd", NULL);
+
+    g_Ctx.Wnd.taskbar = FindWindowW(L"Shell_TrayWnd", NULL);    // Cache invalid or lost - find new one
     if (g_Ctx.Wnd.taskbar) {
-        Wh_Log(L"[WindowManager] Taskbar handle acquired: 0x%p", g_Ctx.Wnd.taskbar);
+        Wh_Log(L"[WindowManager] ------------ Taskbar handle acquired | HWND: 0x%p", g_Ctx.Wnd.taskbar);
         return g_Ctx.Wnd.taskbar;
     } else {
         Wh_Log(L"[WindowManager] ERROR: Failed to find taskbar window, Possibly finding a new one on next attempt. Error: %d", GetLastError());
@@ -2435,7 +2512,15 @@ void CombineTaskbarButtons(const std::wstring& args) {
     CombineTaskbarButtonsInternal(primary1, primary2, secondary1, secondary2);
 }
 
-void Action_PaletteSave(const std::wstring& args) {
+
+
+
+
+
+
+
+
+void A_PaletteSave(const std::wstring& args) {
     static const int kMaxUserPalettes = 15;
     auto& saved = g_Ctx.PaletteEngine.savedPalettes;
 
@@ -2505,6 +2590,7 @@ void Action_PaletteSave(const std::wstring& args) {
     Wh_Log(L"[Palette] Saved to slot %d / %d", newCount, kMaxUserPalettes);
 }
 
+// Responsible for triggering a palette crossfade to the specified target mode // .. (-1=art, 0=rainbow, 1..n=user saved), with safety checks and snapshotting for smooth transitions.
 void TriggerPaletteCrossfade(int targetMode) {
     if (!g_Ctx.Wnd.main || !IsWindow(g_Ctx.Wnd.main)) return;
     if (g_Settings.enableRainbow && g_Settings.colorTheme != ColorTheme::Artwork) {
@@ -2517,7 +2603,7 @@ void TriggerPaletteCrossfade(int targetMode) {
     }
     // Snapshot current colors for smooth cross-fade
     std::vector<Gdiplus::Color> currentColors;
-    if (g_Ctx.PaletteEngine.activeMode == -1 || g_Ctx.PaletteEngine.savedPalettes.empty()) {    // If no saved palettes or currently in art mode, snapshot from current palette (could be mid-transition)
+    if (g_Ctx.PaletteEngine.activeMode == -1) {    // Currently in art mode, snapshot from current palette (could be mid-transition)
         currentColors = g_Ctx.ArtCache.palette;
     } else if (g_Ctx.PaletteEngine.activeMode > 0) {  // 0=rainbow: no palette to snapshot
         int safeIdx = Clamp(g_Ctx.PaletteEngine.activeMode - 1, 0, (int)g_Ctx.PaletteEngine.savedPalettes.size() - 1);
@@ -2534,14 +2620,14 @@ void TriggerPaletteCrossfade(int targetMode) {
 }
 
 // .. Cycle order: -1 (art) → 0 (rainbow) → 1..total (user saved) → wrap back to -1
-void Action_PaletteCycleNext() {
+void A_PaletteCycleNext() {
     int total = (int)g_Ctx.PaletteEngine.savedPalettes.size();
     int next = g_Ctx.PaletteEngine.activeMode + 1;
     if (next > total) next = -1;
     TriggerPaletteCrossfade(next);
 }
 
-void Action_PaletteCyclePrev() {
+void A_PaletteCyclePrev() {
     int total = (int)g_Ctx.PaletteEngine.savedPalettes.size();
     int prev = g_Ctx.PaletteEngine.activeMode - 1;
     if (prev < -1) prev = total;
@@ -2708,7 +2794,7 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
     if (actionName == L"ACTION_OPACITY_INCREASE" || actionName == L"ACTION_OPACITY_DECREASE") {
         int increment = 10; // Default scroll increment
         int knee = 100;     // Default knee point for element opacity curve (0-255, where lower = more aggressive dimming of elements as BG gets darker)
-        
+
         size_t colon = rawArgs.find(L':');
         if (colon != std::wstring::npos) {
             try {
@@ -2721,7 +2807,7 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
 
         return [increment, knee, isIncrease]() {
             int currentBg = g_Ctx.Vis.currentOpacity;
-            
+
             // Gear 1 (≤30): hard snap to 1 for precision.
             // Knee zone: smooth ease — closer to knee → increment fades toward 1.
             int activeIncrement = increment;
@@ -2735,13 +2821,13 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
                 int distToKnee = abs(currentBg - knee);
                 if (distToKnee < kneeBand) {
                     // t=0 at knee (increment→1), t=1 at band edge (increment→full)
-                    float t = (float)distToKnee / (float)kneeBand;
+                    float t = static_cast<float>(distToKnee) / static_cast<float>(kneeBand);
                     activeIncrement = std::max(1, (int)(1.0f + (increment - 1) * t));
                 }
             }
 
             int nextBg = isIncrease ? (currentBg + activeIncrement) : (currentBg - activeIncrement);
-            
+
             // Snap cleanly to 30 when crossing the boundary going up
             if (isIncrease && currentBg < 30 && nextBg > 30) {
                 nextBg = 30;
@@ -2749,14 +2835,14 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
 
             nextBg = Clamp(nextBg, 1, 255);
 
-            g_Ctx.Vis.currentOpacity = nextBg;
-            g_Settings.currentOpacity = nextBg;
+            g_Ctx.Vis.currentOpacity = static_cast<BYTE>(nextBg);
+            g_Settings.currentOpacity = static_cast<BYTE>(nextBg);
 
             // Calculate the curved Elements Opacity
-            int elementOp = CalculateElementOpacity(nextBg, knee);
+            BYTE elementOp = CalculateElementOpacity(g_Ctx.Vis.currentOpacity, static_cast<BYTE>(knee));
 
             // Set physical limit to elements so they stay solid
-            SetWindowOpacity(g_Ctx.Wnd.main, static_cast<BYTE>(elementOp));
+            SetWindowOpacity(g_Ctx.Wnd.main, elementOp);
 
             // Force updates to Acrylic tint and Rainbow to reflect the new BG state
             g_WindowManager.UpdateAppearance(g_Ctx.Wnd.main);
@@ -2765,9 +2851,9 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
             }
             InvalidateRect(g_Ctx.Wnd.main, NULL, FALSE);
 
-            Wh_Log(L"[Opacity] BG: %d (Step: %d) | Elements: %d (Knee: %d)", 
-                   nextBg, activeIncrement, elementOp, knee);
-                   
+            Wh_Log(L"[Opacity] BG: %u (Step: %d) | Elements: %u (Knee: %d)", 
+                   g_Ctx.Vis.currentOpacity, activeIncrement, elementOp, knee);
+
             SaveWindowState(kInvalidCoordinate, kInvalidCoordinate, 0, 0, true);
         };
     }
@@ -2778,7 +2864,7 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
     using ActionFactory = std::function<std::function<void()>(const ParsedArgs&)>;
     auto Simple = [](auto f) -> ActionFactory { return [f](const ParsedArgs&) { return f; }; };     // | For simple actions with no arguments, we ignore the input and return the function directly.
     auto ArgAction = [](auto f) -> ActionFactory { return [f](const ParsedArgs& a) { return [f, s=a.actualArgs](){ f(s); }; }; };   // | For actions that require arguments, we pass the raw argument string to the factory, which can parse it as needed.
-    
+
     // NOTE: For actions that require arguments, the factory will receive the raw argument string and is responsible for parsing it.
     // This allows for maximum flexibility in argument formats (e.g. delimiters, multiple parameters, etc.) without complicating the central dispatch logic.
     static const std::unordered_map<std::wstring_view, ActionFactory> kActionFactories = {
@@ -2819,13 +2905,13 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
                 SetWindowPos(g_Ctx.Wnd.main, GetMediaZOrderInsertAfter(), 0,0,0,0, flags);
             }
         })},
-        {L"ACTION_FORCE_DOCKED", Simple([]() {
+        {L"ACTION_TOGGLE_DOCKED", Simple([]() {
             Wh_Log(L"[Test] ToggleDockedMode triggered via action");
             g_WindowManager.ToggleDockedMode();
         })},
-        {L"ACTION_PALETTE_SAVE",       ArgAction(Action_PaletteSave)},
-        {L"ACTION_PALETTE_CYCLE_NEXT", Simple(Action_PaletteCycleNext)},
-        {L"ACTION_PALETTE_CYCLE_PREV", Simple(Action_PaletteCyclePrev)},
+        {L"ACTION_PALETTE_SAVE",       ArgAction(A_PaletteSave)},
+        {L"ACTION_PALETTE_CYCLE_NEXT", Simple(A_PaletteCycleNext)},
+        {L"ACTION_PALETTE_CYCLE_PREV", Simple(A_PaletteCyclePrev)},
     };
 
     const std::wstring_view actionView = actionName;
@@ -2839,7 +2925,7 @@ std::function<void()> ParseAction(const std::wstring& actionName, const std::wst
         }
         return baseAction;
     }
-    
+
     return []() {};
 }
 
@@ -2882,9 +2968,9 @@ bool IsAppIgnored(HWND hFg) {
 }
 
 // ^ Returns the monitor rectangle for a given window or fallback rect. Handles multi-monitor safely.
-RECT GetMonitorRect(HWND hwnd, const RECT* fallbackRect = nullptr) {
+RECT GetMonitorRect(HWND hwnd, const RECT* fallbackRect = nullptr) {            // .. (LIVE)
     HMONITOR hMon = nullptr;
-    
+
     if (hwnd && IsWindow(hwnd)) {
         hMon = MonitorFromWindow(hwnd, MONITOR_DEFAULTTOPRIMARY);
     } else if (fallbackRect) {
@@ -2898,29 +2984,29 @@ RECT GetMonitorRect(HWND hwnd, const RECT* fallbackRect = nullptr) {
     if (GetMonitorInfo(hMon, &mi)) {
         return mi.rcMonitor;
     }
-    
+
     // * Fallback to primary monitor metrics
     return {0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)};
 }
 
 // ^ Determines which screen edge a window is closest to (for smart edge animations)
 // ! Uses "Vertical Bias Priority": Bottom -> Top -> Right -> Left
-ScreenEdge DetermineAnimationEdge(HWND hwnd, int x, int y, int w, int h) {
+ScreenEdge DetermineAnimationEdge(HWND hwnd, int x, int y, int w, int h) {     // .. (LIVE)
     // Build target rectangle and get monitor bounds
     RECT targetRect{ x, y, x + w, y + h };
     RECT mon = GetMonitorRect(hwnd, &targetRect);
-    
+
     // Calculate center of the window
     int centerX = x + (w / 2);
     int centerY = y + (h / 2);
-    
+
     // Distance to each edge
     int dTop    = abs(centerY - mon.top);
     int dBottom = abs(mon.bottom - centerY);
     int dLeft   = abs(centerX - mon.left);
     int dRight  = abs(mon.right - centerX);
     int minDist = min({dTop, dBottom, dLeft, dRight});
-    
+
     // ^ Vertical Bias Priority: Bottom -> Top -> Right -> Left
     // ! This prioritizes vertical movement (taskbars are usually top/bottom)
     if (minDist == dBottom) return ScreenEdge::BOTTOM;
@@ -2974,12 +3060,12 @@ void WindowManager::ApplyRainbowPos(int x, int y, int w, int h) {
 // Toggles between docked (peek/offscreen) and normal state, owning all slide and instant transitions.
 // offScreen: true=fully hidden, false=peek or restore to normal
 // targetX/Y/W/H: destination coords for show transitions (passed from SyncPositionWithTaskbar); kInvalidCoordinate = use saved normalX/Y
-void WindowManager::ToggleDockedMode(bool offScreen, int targetX, int targetY, int targetW, int targetH) {
+void WindowManager::ToggleDockedMode(bool offScreen, int targetX, int targetY, int targetW, int targetH) {    // .. (LIVE)
     if (!g_Ctx.Wnd.main) return;
-    
+
     int scaledW = (targetW > 0) ? targetW : EffectiveW();
     int scaledH = (targetH > 0) ? targetH : EffectiveH();
-    
+
     if (g_Ctx.Vis.dockedMode == 0) {
         // NORMAL → DOCKED (peek or off-screen)
         RECT rcMe;
@@ -2987,11 +3073,11 @@ void WindowManager::ToggleDockedMode(bool offScreen, int targetX, int targetY, i
         g_Ctx.Vis.normalX = rcMe.left;
         g_Ctx.Vis.normalY = rcMe.top;
         g_Ctx.Vis.dockedMode = offScreen ? 2 : 1;  // 1=peek, 2=off-screen
-        
+
         ScreenEdge edge = DetermineAnimationEdge(g_Ctx.Wnd.main, rcMe.left, rcMe.top, scaledW, scaledH);
         RECT mon = GetMonitorRect(g_Ctx.Wnd.main);
         g_Ctx.Vis.animEdge = edge;
-        
+
         if (g_Settings.enableSlide) {
             // Start slide-HIDE: animate from current position toward screen edge
             g_Ctx.Vis.currentAnimX = rcMe.left;
@@ -3025,7 +3111,7 @@ void WindowManager::ToggleDockedMode(bool offScreen, int targetX, int targetY, i
         int restoreY = (targetY != kInvalidCoordinate) ? targetY : g_Ctx.Vis.normalY;
         Wh_Log(L"[Dock] <- RESTORING to (%d,%d)", restoreX, restoreY);
         g_Ctx.Vis.dockedMode = 0;
-        
+
         if (g_Settings.enableSlide) {
             if (targetX != kInvalidCoordinate && (!IsWindowVisible(g_Ctx.Wnd.main) || g_Ctx.Vis.animState == 3)) {
                 // Window was hidden - place at off-screen start before animating in
@@ -3093,7 +3179,7 @@ void WindowManager::SyncPositionWithTaskbar() {
     int y = EffectiveY();
 
                                                                         // .. CASE: HIDE
-    if (!isTaskbarVisible || ShouldWindowBeHidden()) {
+    if (!isTaskbarVisible || ShouldWindowBeHidden()) {      // Idle Timeout or Taskbar Hidden // TODO: eventually re-add Game detection here as another reason to hide
         if (g_Ctx.Vis.animState != 1 && g_Ctx.Vis.animState != 3)
             ToggleDockedMode(true);
         return;
@@ -3111,7 +3197,23 @@ void WindowManager::SyncPositionWithTaskbar() {
     if (g_Ctx.Vis.animState == 0) {
         RECT rc;
         if (GetWindowRect(g_Ctx.Wnd.taskbar, &rc)) {
+
             if ((rc.bottom - rc.top) <= 0) return;
+            // Skip forced reposition if widget is already at the expected position/size.
+            // This prevents WinEventProc-triggered syncs (e.g. from taskbar repaints during
+            // AltSnap resize) from stomping a mid-resize state before WM_WINDOWPOSCHANGED
+            // has saved the new size to lastW/H.
+            RECT curRc;
+            if (GetWindowRect(g_Ctx.Wnd.main, &curRc)) {
+                int curX = curRc.left, curY = curRc.top;
+                int curW = curRc.right - curRc.left, curH = curRc.bottom - curRc.top;
+                if (curX == x && curY == y && curW == scaledW && curH == scaledH) {
+                    ApplyRainbowPos(x, y, scaledW, scaledH);
+                    if (g_Ctx.Wnd.rainbow && g_Settings.enableRainbow) g_Ctx.Rainbow.animState = 0;
+                    else if (g_Ctx.Wnd.rainbow) ShowWindow(g_Ctx.Wnd.rainbow, SW_HIDE);
+                    return;
+                }
+            }
 
             SetWindowPos(g_Ctx.Wnd.main, GetMediaZOrderInsertAfter(), x, y, scaledW, scaledH, SWP_NOACTIVATE | SWP_SHOWWINDOW);
             SaveWindowState(x, y, scaledW, scaledH);
@@ -3142,7 +3244,7 @@ void CALLBACK WinEventProc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND hwnd, 
 // --- Timer Management Helpers ---
 void SetupMediaWindowTimers() {
     if (!g_Ctx.Wnd.main || !IsWindow(g_Ctx.Wnd.main)) return;
-    
+
     // Game Detection Timer
     // Game detection removed
 
@@ -3156,41 +3258,6 @@ void SetupMediaWindowTimers() {
         }
     } else {
         Wh_Log(L"[Timer] Idle timeout disabled, no polling timer");
-    }
-}
-
-// Centralized layout settings change detection and invalidation
-// Layout = position (offsets) + dimensions (width/height)
-// ! DEAD CODE! - DEAD CODE! - DEAD CODE!    - Now this resides in the func: WhTool_ModSettingsChanged
-void InvalidatePersistedStateIfLayoutChanged() {
-    bool layoutChanged = (
-        g_Ctx.Persisted.lastSettingsW != g_Settings.width ||
-        g_Ctx.Persisted.lastSettingsH != g_Settings.height ||
-        g_Ctx.Persisted.lastOffsetX != g_Settings.offsetX ||
-        g_Ctx.Persisted.lastOffsetY != g_Settings.offsetY
-    );
-    
-    if (layoutChanged) {
-        Wh_Log(L"[STATE] Layout settings changed - using default layout calculations");
-        // Clear persisted position to force recalculation with new layout settings
-        g_Ctx.Persisted.lastX = kInvalidCoordinate;
-        g_Ctx.Persisted.lastY = kInvalidCoordinate;
-        g_Ctx.Persisted.lastW = 0;
-        g_Ctx.Persisted.lastH = 0;
-        // Clear snapshot values
-        g_Ctx.Persisted.lastSettingsW = 0;
-        g_Ctx.Persisted.lastSettingsH = 0;
-        g_Ctx.Persisted.lastOffsetX = 0;
-        g_Ctx.Persisted.lastOffsetY = 0;
-        // Clean up registry
-        Wh_DeleteValue(L"LastX");
-        Wh_DeleteValue(L"LastY");
-        Wh_DeleteValue(L"LastW");
-        Wh_DeleteValue(L"LastH");
-        Wh_DeleteValue(L"LastSettingsW");
-        Wh_DeleteValue(L"LastSettingsH");
-        Wh_DeleteValue(L"LastOffsetX");
-        Wh_DeleteValue(L"LastOffsetY");
     }
 }
 
@@ -3210,12 +3277,13 @@ void LoadPersistentState() {
     g_Ctx.Persisted.lastOffsetX = Wh_GetIntValue(L"LastOffsetX", 0);
     g_Ctx.Persisted.lastOffsetY = Wh_GetIntValue(L"LastOffsetY", 0);
 
-    g_Ctx.Persisted.lastOpacity = Wh_GetIntValue(L"LastOpacity", 255);
-    if (g_Ctx.Persisted.lastOpacity <= 0) {
-        Wh_Log(L"[STATE] WARNING: Detected invalid persisted opacity (%d). Resetting to default.", g_Ctx.Persisted.lastOpacity);
-        g_Ctx.Persisted.lastOpacity = 255;
+    int loadedOpacity = Wh_GetIntValue(L"LastOpacity", 255);
+    if (loadedOpacity <= 0) {
+        Wh_Log(L"[STATE] WARNING: Detected invalid persisted opacity (%d). Resetting to default.", loadedOpacity);
+        loadedOpacity = 255;
         Wh_SetIntValue(L"LastOpacity", 255);
     }
+    g_Ctx.Persisted.lastOpacity = static_cast<BYTE>(loadedOpacity);
     g_Settings.currentOpacity = g_Ctx.Persisted.lastOpacity;
     g_Ctx.Vis.currentOpacity  = g_Ctx.Persisted.lastOpacity;
 
@@ -3244,26 +3312,29 @@ void LoadPersistentState() {
     PaletteStorage::LoadPalettesFromRegistry();
 }
 
-void SaveWindowState(int x, int y, int w, int h, bool saveOpacity) {
+static bool s_invalidCoords = false; // Set when 0,0 coords are rejected; WM_EXITSIZEMOVE consumes it to re-sync.
+
+void SaveWindowState(int x, int y, int w, int h, bool saveOpacity) {          // .. (LIVE)
     if (g_Ctx.Vis.animState != 0 || g_Ctx.Sys.isShutdown) return;
 
     // Snapshot Opacity separately
     if (saveOpacity && g_Ctx.Persisted.lastOpacity != g_Settings.currentOpacity) {
-        if (g_Ctx.Vis.currentOpacity <= 0) {
-            Wh_Log(L"[STATE] WARNING: Attempted to save invalid opacity (%d). Ignoring.", g_Ctx.Vis.currentOpacity);
+        if (g_Ctx.Vis.currentOpacity <= 1) {
+            Wh_Log(L"[STATE] WARNING: Attempted to save invalid opacity (%u). Ignoring.", g_Ctx.Vis.currentOpacity);
             // skip saving opacity, do NOT return
         } else {
             Wh_Log(L"[STATE] Saving opacity...");
-            Wh_SetIntValue(L"LastOpacity", g_Settings.currentOpacity);
+            Wh_SetIntValue(L"LastOpacity", static_cast<int>(g_Settings.currentOpacity));
             g_Ctx.Persisted.lastOpacity = g_Settings.currentOpacity;
-            Wh_Log(L"[STATE] Saved opacity: %d", g_Settings.currentOpacity);
+            Wh_Log(L"[STATE] Saved opacity: %u", g_Settings.currentOpacity);
         }
     }
 
     // VALIDATION: Never save garbage coordinates to registry
     if (x == kInvalidCoordinate || y == kInvalidCoordinate) return; // opacity-only call
-    if (x <= -10000 || y <= -10000) {
+    if (x <= -10000 || y <= -10000 || (x == 0 && y == 0)) {
         Wh_Log(L"[STATE] WARNING: Attempted to save invalid coordinates (%d,%d). Ignoring.", x, y);
+        s_invalidCoords = true;
         return;
     }
 
@@ -3285,8 +3356,8 @@ void SaveWindowState(int x, int y, int w, int h, bool saveOpacity) {
         g_Ctx.Persisted.lastSettingsH = g_Settings.height;
         g_Ctx.Persisted.lastOffsetX = g_Settings.offsetX;
         g_Ctx.Persisted.lastOffsetY = g_Settings.offsetY;
-        Wh_Log(L"[STATE] Saved window state (%d,%d,%dx%d) with offsets (%d,%d)",
-               x, y, w, h, g_Settings.offsetX, g_Settings.offsetY);
+        Wh_Log(L"[STATE] Saved window state Offsets: (%d,%d) | Bounds: (x:%d,y:%d | W:%d px, H:%d px)",
+               g_Settings.offsetX, g_Settings.offsetY, x, y, w, h);
     }
 }
 
@@ -3305,31 +3376,30 @@ void SaveLastMediaInfo(const std::wstring& title, const std::wstring& artist) {
 }
 
 void LoadSettings() {
-    #define LOAD_INT(var, name) g_Settings.var = Wh_GetIntSetting(name)
-    #define LOAD_STR(var, name) g_Settings.var = Wh_GetStringSetting(name)
-    #define LOAD_BOOL(var, name) g_Settings.var = Wh_GetIntSetting(name) != 0
-    #define LOAD_CLAMP(var, name, min, max) g_Settings.var = GetClampedSetting(name, min, max)
+    bool oldEnableRainbow = g_Settings.enableRainbow;
+    int oldRainbowBorderOffset = g_Settings.rainbowBorderOffset;
+
     // Screen size in logical pixels (pre-Scale) so clamp max matches the coordinate space Scale() expects
     float dpiScale = GetDpiForSystem() / 96.0f;
     int primarymonitorWidth (GetSystemMetrics(SM_CXSCREEN) / dpiScale);
     int primarymonitorHeight (GetSystemMetrics(SM_CYSCREEN) / dpiScale);
 
-    LOAD_CLAMP(width, L"PanelWidth", 10, primarymonitorWidth);
-    LOAD_CLAMP(height, L"PanelHeight", 10, primarymonitorHeight);
-    LOAD_CLAMP(maxArtSize, L"MaxArtSize", 10, 1000);
-    LOAD_CLAMP(buttonSize, L"ButtonSize", 10, 120);
-    LOAD_CLAMP(textScale, L"TextScale", 5, 200);
-    LOAD_INT(offsetX, L"OffsetX");
-    LOAD_INT(offsetY, L"OffsetY");
-    
+    g_Settings.width = GetClampedSetting(L"PanelWidth", 10, primarymonitorWidth);
+    g_Settings.height = GetClampedSetting(L"PanelHeight", 10, primarymonitorHeight);
+    g_Settings.maxArtSize = GetClampedSetting(L"MaxArtSize", 10, 1000);
+    g_Settings.buttonSize = GetClampedSetting(L"ButtonSize", 10, 120);
+    g_Settings.textScale = GetClampedSetting(L"TextScale", 5, 200);
+    g_Settings.offsetX = Wh_GetIntSetting(L"OffsetX");
+    g_Settings.offsetY = Wh_GetIntSetting(L"OffsetY");
+
     // .. ColorTheme (string dropdown → enum)
     auto strColorTheme = WindhawkUtils::StringSetting(Wh_GetStringSetting(L"ColorTheme"));
     if (0 == wcscmp(strColorTheme, L"system")) g_Settings.colorTheme = ColorTheme::System;
     else if (0 == wcscmp(strColorTheme, L"custom")) g_Settings.colorTheme = ColorTheme::Custom;
     else if (0 == wcscmp(strColorTheme, L"artwork")) g_Settings.colorTheme = ColorTheme::Artwork;
     else g_Settings.colorTheme = ColorTheme::System; // Fallback
-    
-    LOAD_BOOL(invertColors, L"InvertColors");
+
+    g_Settings.invertColors = Wh_GetIntSetting(L"InvertColors") != 0;
 
     // .. Colors
     auto loadColor = [](const wchar_t* name, DWORD& target, DWORD def, bool isBg) {
@@ -3346,39 +3416,39 @@ void LoadSettings() {
     loadColor(L"BgColor", g_Settings.manualBgColorRGB, 0, true);
 
     // Game detection removed
-    LOAD_CLAMP(idleTimeout, L"IdleTimeout", 0, 3600);
+    g_Settings.idleTimeout = GetClampedSetting(L"IdleTimeout", 0, 3600);
 
-    LOAD_BOOL(EnableTextScroll, L"EnableTextScroll");
-    LOAD_CLAMP(scaleEasing, L"ScaleEasing", -5, 50);
-    LOAD_BOOL(enableSlide, L"EnableSlide");
-    // Game detection removed
-    
+    g_Settings.EnableTextScroll = Wh_GetIntSetting(L"EnableTextScroll") != 0;
+    g_Settings.scaleEasing = GetClampedSetting(L"ScaleEasing", -5, 50);
+    g_Settings.enableSlide = Wh_GetIntSetting(L"EnableSlide") != 0;
     // Game detection removed
 
-    LOAD_BOOL(enableRainbow, L"EnableRainbow");
-    
+    // Game detection removed
+
+    g_Settings.enableRainbow = Wh_GetIntSetting(L"EnableRainbow") != 0;
+
     bool newRainbowAbove = Wh_GetIntSetting(L"RainbowAboveWidget") != 0;
-    
+
     // Only apply the rainbow z-order setting on load if we're not running yet (initial load) or if the setting changed (user update) - prevents unnecessary SetWindowPos calls on every settings reload
     if (!g_Ctx.Sys.isRunning || newRainbowAbove != g_Settings.storedRainbowAboveWidget) {
         g_Settings.rainbowAboveWidget = g_Settings.storedRainbowAboveWidget = newRainbowAbove;
     }
 
-    LOAD_CLAMP(rainbowSpeed, L"RainbowSpeed", 1, 10);
-    LOAD_CLAMP(rainbowBrightness, L"RainbowBrightness", 0, 100);
-    LOAD_CLAMP(rainbowThickness, L"RainbowThickness", 1, 100);
-    LOAD_CLAMP(rainbowBorderOffset, L"RainbowBorderOffset", 0, 7);
-    LOAD_BOOL(enableRoundedCorners, L"EnableRoundedCorners");
-    LOAD_BOOL(centered, L"Centered");
-    
-    LOAD_CLAMP(audioResponsiveness, L"AudioResponsiveness", 0, 20);
-    LOAD_CLAMP(audioThreshold, L"AudioThreshold", 0, 100);
-    LOAD_CLAMP(audioRamp, L"AudioRamp", 0, 100);
-    LOAD_BOOL(audioBinary, L"AudioBinary");
-    LOAD_CLAMP(audioFlicker, L"AudioFlicker", 0, 100);
-    LOAD_BOOL(audioDynamicRange, L"AudioDynamicRange");
-    LOAD_CLAMP(audioMinValue, L"AudioMinValue", 0, 100);
-    LOAD_CLAMP(audioMaxValue, L"AudioMaxValue", 0, 100);
+    g_Settings.rainbowSpeed = GetClampedSetting(L"RainbowSpeed", 1, 10);
+    g_Settings.rainbowBrightness = GetClampedSetting(L"RainbowBrightness", 0, 100);
+    g_Settings.rainbowThickness = GetClampedSetting(L"RainbowThickness", 0, 100);
+    g_Settings.rainbowBorderOffset = GetClampedSetting(L"RainbowBorderOffset", 0, 7);
+    g_Settings.enableRoundedCorners = Wh_GetIntSetting(L"EnableRoundedCorners") != 0;
+    g_Settings.centered = Wh_GetIntSetting(L"Centered") != 0;
+
+    g_Settings.audioResponsiveness = GetClampedSetting(L"AudioResponsiveness", 0, 20);
+    g_Settings.audioThreshold = GetClampedSetting(L"AudioThreshold", 0, 100);
+    g_Settings.audioRamp = GetClampedSetting(L"AudioRamp", 0, 100);
+    g_Settings.audioBinary = Wh_GetIntSetting(L"AudioBinary") != 0;
+    g_Settings.audioFlicker = GetClampedSetting(L"AudioFlicker", 0, 100);
+    g_Settings.audioDynamicRange = Wh_GetIntSetting(L"AudioDynamicRange") != 0;
+    g_Settings.audioMinValue = GetClampedSetting(L"AudioMinValue", 0, 100);
+    g_Settings.audioMaxValue = GetClampedSetting(L"AudioMaxValue", 0, 100);
 
     // Audio Hue Reactive Mode (string dropdown → int)
     auto rawHueMode = Wh_GetStringSetting(L"kAudioHueReactiveMode");  // match your YAML key exactly
@@ -3395,39 +3465,68 @@ void LoadSettings() {
     else if (strHueMode == L"all")              g_Settings.audioHueReactiveMode = 7;
     else                                        g_Settings.audioHueReactiveMode = 2; // default: pulse
 
+    // KILLSWITCH: If rainbow thickness is 0, the border is invisible.
+    // Force audio reactivity off to prevent audio threads/math from running pointlessly.
+    if (g_Settings.rainbowThickness == 0) {
+        g_Settings.audioHueReactiveMode = 0;
+        Wh_Log(L"[WARNING:] Rainbow thickness is 0 - Audio Reactive Mode disabled to save resources.");
+    }
+
     LoadPersistentState();
 
     // ^ Invalidate persisted state if any layout settings changed
-    
-    bool changedDims    = (g_Ctx.Persisted.lastW > 0 && g_Ctx.Persisted.lastH > 0
-                            && g_Ctx.Persisted.lastSettingsW > 0 && g_Ctx.Persisted.lastSettingsH > 0
-                            && (g_Settings.width != g_Ctx.Persisted.lastSettingsW || g_Settings.height != g_Ctx.Persisted.lastSettingsH));
-    bool changedOffsets = (g_Ctx.Persisted.lastX != kInvalidCoordinate && g_Ctx.Persisted.lastY != kInvalidCoordinate
-                            && (g_Settings.offsetX != g_Ctx.Persisted.lastOffsetX || g_Settings.offsetY != g_Ctx.Persisted.lastOffsetY));
 
-    if (changedDims || changedOffsets) {
-        Wh_Log(L"[STATE] Layout settings changed (dims:%d offsets:%d) - clearing affected persisted state",
-                changedDims, changedOffsets);
-        if (changedDims) {
-            g_Ctx.Persisted.lastW = 0; g_Ctx.Persisted.lastH = 0;
-            Wh_DeleteValue(L"LastW");         Wh_DeleteValue(L"LastH");
-            Wh_DeleteValue(L"LastSettingsW"); Wh_DeleteValue(L"LastSettingsH");
-        }
-        if (changedOffsets) {
+    bool changedRainbow = (g_Ctx.Sys.isRunning && oldEnableRainbow != g_Settings.enableRainbow);
+    bool changedRainbowOffset = (g_Ctx.Sys.isRunning && oldRainbowBorderOffset != g_Settings.rainbowBorderOffset);
+    bool needsReanchor = changedRainbow || changedRainbowOffset;
+
+    // Check if the width dimension has changed
+    bool changedWidth = (g_Ctx.Persisted.lastSettingsW > 0  // Ensure last known settings width is valid
+                        && g_Settings.width != g_Ctx.Persisted.lastSettingsW);  // Check if current width differs from last known settings width
+
+    // Check if the height dimension has changed
+    bool changedHeight = (g_Ctx.Persisted.lastSettingsH > 0  // Ensure last known settings height is valid
+                        && g_Settings.height != g_Ctx.Persisted.lastSettingsH);  // Check if current height differs from last known settings height
+
+    // Check if the offsets have changed
+    bool changedOffsets = (g_Ctx.Persisted.lastX != kInvalidCoordinate && g_Ctx.Persisted.lastY != kInvalidCoordinate  // Ensure last known coordinates are valid
+                        && (g_Settings.offsetX != g_Ctx.Persisted.lastOffsetX || g_Settings.offsetY != g_Ctx.Persisted.lastOffsetY));  // Check if current offsets differ from last known offsets
+
+    if (changedWidth || changedHeight || changedOffsets || needsReanchor) {
+        Wh_Log(L"[STATE] Layout settings changed (width:%d height:%d offsets:%d rainbow_reanchor:%d) - clearing affected persisted state",
+                changedWidth, changedHeight, changedOffsets, needsReanchor);
+
+        auto clearLocationPersistence = [&]() {
             g_Ctx.Persisted.lastX = kInvalidCoordinate; g_Ctx.Persisted.lastY = kInvalidCoordinate;
             Wh_DeleteValue(L"LastX");       Wh_DeleteValue(L"LastY");
+        };
+
+        if (changedWidth || changedHeight) {
+            g_Ctx.Persisted.lastW = 0; g_Ctx.Persisted.lastH = 0;
+            if (changedWidth) {
+                Wh_DeleteValue(L"LastSettingsW");       Wh_DeleteValue(L"LastW");
+            }
+            if (changedHeight) {
+                clearLocationPersistence();
+                Wh_DeleteValue(L"LastSettingsH");       Wh_DeleteValue(L"LastH");
+                Wh_Log(L"[STATE] HEIGHT CHANGED - re-anchoring to taskbar with offsets");
+            }
+        }
+        if (changedOffsets) {
+            clearLocationPersistence();
             Wh_DeleteValue(L"LastOffsetX"); Wh_DeleteValue(L"LastOffsetY");
+        }
+        if (needsReanchor) {
+            clearLocationPersistence();
+            Wh_Log(L"[STATE] RAINBOW/OFFSET CHANGED - recalculating anchor");
         }
     } else {
         Wh_Log(L"[STATE] Layout settings unchanged - keeping persisted state");
     }
-    
 
     // ApplyPersistedMediaFallback(); // REMOVED: Do not reset media state on settings load.
     // This allows the live media state to persist across settings reloads, preventing "No Media" flash.
     // Startup state is handled by ModContext::Reset() which defaults to "No Media".
-
-    if (g_Settings.audioHueReactiveMode > 0 && g_audioCOM.IsInitialized()) g_audioCOM.InitMeter();
 
     g_Ctx.Reset(RESET_AUDIO);
     g_Ctx.Audio.runtimeEnabled = true;
@@ -3465,10 +3564,6 @@ void LoadSettings() {
         }
         if (!ct.actions.empty()) g_ActionDispatcher.triggers.push_back(ct);
     }
-
-    #undef LOAD_INT
-    #undef LOAD_BOOL
-    #undef LOAD_CLAMP
 }
 
 #pragma endregion  // ^ Settings Handling
@@ -3513,6 +3608,9 @@ void UpdateMediaInfoAsync() {
     static std::atomic<int> s_NoSessionRetryCount{ 0 };
 
 
+    // Increment generation token so any currently executing background fetches are ignored
+    uint32_t currentGen = ++g_Ctx.Sys.asyncGeneration;
+
     // Early exit if no session available
     if (!g_CachedSession) {
         // Grace Period: Don't clear immediately to allow for transient session loss
@@ -3529,7 +3627,9 @@ void UpdateMediaInfoAsync() {
             payload->title = L"No Media";
             payload->artist = L"";
             payload->sourceId = L"";
-            PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+            if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                delete payload;  // Window gone - clean up to prevent leak
+            }
         }
         return;
     }
@@ -3547,9 +3647,11 @@ void UpdateMediaInfoAsync() {
         payload->isPlaying = isPlaying;
         payload->hasMedia = hasMedia;
         payload->albumArt = std::move(albumArt);
-        PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+        if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+            delete payload;  // Window gone - clean up to prevent leak
+        }
     };
-    
+
     try {
         // Get source ID and playback state synchronously (fast operations)
         wstring sourceId = g_CachedSession.SourceAppUserModelId().c_str();
@@ -3562,7 +3664,9 @@ void UpdateMediaInfoAsync() {
                 payload->title = L"No Media";
                 payload->artist = L"";
                 payload->sourceId = L"";
-                PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+                if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                    delete payload;  // Window gone - clean up to prevent leak
+                }
             }
             return;
         }
@@ -3572,7 +3676,10 @@ void UpdateMediaInfoAsync() {
 
         // Fire off async media properties chain - does NOT block
         g_CachedSession.TryGetMediaPropertiesAsync().Completed(
-            [sourceId, isPlaying, updateState](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
+            [sourceId, isPlaying, updateState, currentGen](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
+                // Abort if a newer update was triggered while we were waiting
+                if (currentGen != g_Ctx.Sys.asyncGeneration.load()) return;
+
                 try {
                     if (status != Windows::Foundation::AsyncStatus::Completed) {
                         Wh_Log(L"[WARNING] [WinRT] Media properties async failed with status: %d", (int)status);
@@ -3593,7 +3700,10 @@ void UpdateMediaInfoAsync() {
                     if (thumbRef) {
                         try {
                             thumbRef.OpenReadAsync().Completed(
-                                [updateState, title, artist, sourceId, isPlaying](auto const& streamOp, Windows::Foundation::AsyncStatus status) mutable {
+                                [updateState, title, artist, sourceId, isPlaying, currentGen](auto const& streamOp, Windows::Foundation::AsyncStatus status) mutable {
+                                    // Final check before sending data to UI
+                                    if (currentGen != g_Ctx.Sys.asyncGeneration.load()) return;
+
                                     BitmapPtr albumArt = nullptr;
                                     try {
                                         if (status == Windows::Foundation::AsyncStatus::Completed) {
@@ -3623,7 +3733,9 @@ void UpdateMediaInfoAsync() {
             payload->title = L"No Media";
             payload->artist = L"";
             payload->sourceId = L"";
-            PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+            if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                delete payload;
+            }
         }
     } catch (const std::exception&) {
         Wh_Log(L"[ERROR] [WinRT] STL exception in UpdateMediaInfoAsync");
@@ -3633,7 +3745,9 @@ void UpdateMediaInfoAsync() {
             payload->title = L"No Media";
             payload->artist = L"";
             payload->sourceId = L"";
-            PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+            if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                delete payload;
+            }
         }
     } catch (...) {
         Wh_Log(L"[ERROR] [WinRT] Unknown exception in UpdateMediaInfoAsync");
@@ -3643,7 +3757,9 @@ void UpdateMediaInfoAsync() {
             payload->title = L"No Media";
             payload->artist = L"";
             payload->sourceId = L"";
-            PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+            if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                delete payload;
+            }
         }
     }
 }
@@ -3655,15 +3771,8 @@ void SendMediaCommand(int cmd) {
             Wh_Log(L"INFO: No cached media session for command");
             return;
         }
-        
-        // OPTIMIZATION: Optimistic UI update for play/pause - instant visual feedback
-        if (cmd == 2) {
-            g_Ctx.Media.isPlaying = !g_Ctx.Media.isPlaying;
-            if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
-                InvalidateRect(g_Ctx.Wnd.main, NULL, FALSE);
-            }
-        }
-        
+
+        // Commands trigger GSMTC callbacks which will update state via proper message-passing
         if (cmd == 1) g_CachedSession.TrySkipPreviousAsync();
         else if (cmd == 2) g_CachedSession.TryTogglePlayPauseAsync();
         else if (cmd == 3) g_CachedSession.TrySkipNextAsync();
@@ -3685,14 +3794,14 @@ bool IsSystemLightMode() {
     return false;
 }
 
-DWORD GetCurrentTextColor() {
+DWORD GetCurrentTextColor() {                                                     // .. (LIVE)
     DWORD color;
     if (g_Settings.colorTheme == ColorTheme::System) {
         color = IsSystemLightMode() ? 0xFF000000 : 0xFFFFFFFF;
     } else {
         color = g_Settings.interfaceColor;
     }
-    
+
     // Apply color inversion if enabled (flip RGB: 255-R, 255-G, 255-B)
     if (g_Settings.invertColors) {
         BYTE a = (color >> 24) & 0xFF;
@@ -3701,20 +3810,20 @@ DWORD GetCurrentTextColor() {
         BYTE b = color & 0xFF;
         color = ((DWORD)a << 24) | ((DWORD)(255 - r) << 16) | ((DWORD)(255 - g) << 8) | (255 - b);
     }
-    
+
     return color;
 }
 
 // | Set window opacity using layered window attributes
 void SetWindowOpacity(HWND hwnd, BYTE opacity) {
     if (!hwnd || !IsWindow(hwnd)) return;
-    
+
     // Add WS_EX_LAYERED flag if not present
     LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
     if (!(exStyle & WS_EX_LAYERED)) {
         SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
     }
-    
+
     // Set opacity (0 = fully transparent, 255 = fully opaque)
     SetLayeredWindowAttributes(hwnd, 0, opacity, LWA_ALPHA);
 }
@@ -3726,30 +3835,29 @@ void ApplyCornerPreference(HWND hwnd, bool enableRounded) {
 }
 
 // | Apply acrylic blur and tint using composition attributes
-// Automatically switches to simpler blur for large windows to improve performance
 void ApplyAcrylicTint(HWND hwnd) {
     HMODULE hUser = GetModuleHandle(L"user32.dll");
     if (!hUser) return;
-    
+
     auto SetComp = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
     if (!SetComp) return;
-    
+
     DWORD tint = 0;
     DWORD manual = g_Settings.manualBgColorRGB;
-    
+
 // 1. Determine Alpha
     BYTE baseAlpha = 0x14; // Default: 20
     if (manual != 0) {
         baseAlpha = (manual >> 24) & 0xFF;
     }
-    
+
     // Scale the acrylic tint using the Background Opacity (0.0 to 1.0 ratio)
     float bgRatio = (float)g_Ctx.Vis.currentOpacity / 255.0f;
     BYTE alpha = (BYTE)(baseAlpha * bgRatio);
 
     // 2. Determine Color (RGB)
     DWORD rgb = 0;
-    
+
     // ColorTheme::System takes priority over manual RGB (acts as a bypass)
     bool useManualRGB = (manual != 0) && ((manual & 0xFFFFFF) != 0) && (g_Settings.colorTheme != ColorTheme::System) && (g_Settings.colorTheme != ColorTheme::Artwork);
 
@@ -3760,7 +3868,7 @@ void ApplyAcrylicTint(HWND hwnd) {
         bool systemLight = IsSystemLightMode();
         rgb = systemLight ? 0xFFFFFF : 0x000000;
     }
-    
+
     // Apply color inversion if enabled (flip RGB: 255-R, 255-G, 255-B)
     if (g_Settings.invertColors) {
         BYTE r = (rgb >> 16) & 0xFF;
@@ -3770,32 +3878,8 @@ void ApplyAcrylicTint(HWND hwnd) {
     }
 
     tint = ((DWORD)alpha << 24) | rgb;
-    
-    // 3. Adaptive Blur: Switch to simpler blur for large windows to improve DWM performance
-    // Acrylic blur (state 4) is GPU-intensive and scales poorly with window area
-    // Simple blur (state 3) maintains visual effect with significantly better performance
-    ACCENT_STATE blurState = ACCENT_ENABLE_ACRYLICBLURBEHIND;
-    
-    RECT rc;
-    if (GetClientRect(hwnd, &rc)) {
-        int logicalW = rc.right;
-        int logicalH = rc.bottom;
-        
-        // Convert to logical pixels if DPI scaling is active
-        if (g_Ctx.Sys.scaleFactor > 0.0f && g_Ctx.Sys.scaleFactor != 1.0f) {
-            logicalW = (int)(logicalW / g_Ctx.Sys.scaleFactor);
-            logicalH = (int)(logicalH / g_Ctx.Sys.scaleFactor);
-        }
-        
-        // Threshold: 700px width triggers simple blur mode
-        // This provides ~3-5x performance improvement for DWM compositor
-        const int ADAPTIVE_BLUR_THRESHOLD = 700;
-        if (logicalW >= ADAPTIVE_BLUR_THRESHOLD) {
-            blurState = ACCENT_ENABLE_BLURBEHIND;
-        }
-    }
-    
-    ACCENT_POLICY policy = { blurState, 0, tint, 0 };
+
+    ACCENT_POLICY policy = { ACCENT_ENABLE_ACRYLICBLURBEHIND, 0, tint, 0 };
     WINDOWCOMPOSITIONATTRIBDATA data = { WCA_ACCENT_POLICY, &policy, sizeof(ACCENT_POLICY) };
     SetComp(hwnd, &data);
 }
@@ -3806,8 +3890,8 @@ void WindowManager::UpdateAppearance(HWND hwnd) {
     ApplyAcrylicTint(hwnd);
 }
 
-// Check if palette is mostly uniform (low variance)
-bool IsPaletteUniform(const std::vector<Gdiplus::Color>& palette, float threshold = 20.0f) {
+// Check if palette is mostly uniform
+bool IsPaletteUniform(const std::vector<Gdiplus::Color>& palette, float threshold = 60.0f) {
     if (palette.empty()) return true;
     float sumR = 0, sumG = 0, sumB = 0;
     for (const auto& c : palette) {
@@ -3838,8 +3922,8 @@ void GeneratePaletteFromBitmap(Gdiplus::Bitmap* artClone, int physW, int physH, 
     }
 
     // Match DrawRainbowBorder's segmentCount — use logical dims for segment math
-    int logicalW = (g_Ctx.Sys.scaleFactor > 0.0f) ? (int)(physW / g_Ctx.Sys.scaleFactor) : physW;
-    int logicalH = (g_Ctx.Sys.scaleFactor > 0.0f) ? (int)(physH / g_Ctx.Sys.scaleFactor) : physH;
+    int logicalW = (g_Ctx.Sys.scaleFactor > 0.0f) ? (int)std::lround(physW / g_Ctx.Sys.scaleFactor) : physW;
+    int logicalH = (g_Ctx.Sys.scaleFactor > 0.0f) ? (int)std::lround(physH / g_Ctx.Sys.scaleFactor) : physH;
     int stepSize     = std::max(2, g_Settings.rainbowSpeed / 2);
     int segmentCount = std::min(360 / stepSize, (logicalW + logicalH) * 2);
 
@@ -3849,7 +3933,7 @@ void GeneratePaletteFromBitmap(Gdiplus::Bitmap* artClone, int physW, int physH, 
     // Walk perimeter of art image: top → right → bottom (reversed) → left (reversed)
     UINT perimeter = 2 * (srcW + srcH);
     for (int s = 0; s < segmentCount; s++) {
-        UINT pos = (UINT)((float)s / segmentCount * perimeter);
+        UINT pos = (UINT)((static_cast<float>(s) / segmentCount) * perimeter);
         UINT x, y;
         if (pos < srcW) {
             x = pos;          y = 0;          // Top edge: left → right
@@ -3876,7 +3960,7 @@ void GeneratePaletteFromBitmap(Gdiplus::Bitmap* artClone, int physW, int physH, 
 
 // Regenerate ArtCache: reads albumArt and writes ArtCache — MediaThread only.
 // Called from IDT_ART_FADE timer (never from WM_PAINT).
-void RegenerateArtworkCache(int physW, int physH) {
+void RegenerateArtworkCache(int physW, int physH) {                              // .. (LIVE)
     // --- Clone art ---
     std::unique_ptr<Gdiplus::Bitmap> artClone;
     if (!g_Ctx.Media.albumArt) {
@@ -3905,7 +3989,8 @@ void RegenerateArtworkCache(int physW, int physH) {
         int srcH = (int)artClone->GetHeight();
 
         // Scale to fill full width, maintain aspect ratio
-        float scale = (srcW > 0) ? (float)physW / srcW : 1.0f;  // if srcW=0 (shouldn't happen) → skip scaling to avoid div-by-zero
+        // Make sure both are explicitly cast to float to prevent accidental integer division if order changes
+        float scale = (srcW > 0) ? static_cast<float>(physW) / static_cast<float>(srcW) : 1.0f;  // if srcW=0 (shouldn't happen) → skip scaling to avoid div-by-zero
         int drawW = physW;
         int drawH = (int)(srcH * scale);           // >= physH for square art in wide window
         int drawX = 0;
@@ -3930,7 +4015,7 @@ void RegenerateArtworkCache(int physW, int physH) {
 
     // Check if palette is mostly uniform; if so, resample from center area to avoid border dominance
     if (IsPaletteUniform(palette)) {
-        Wh_Log(L"Info: Palette is uniform (low variance) - resampling from center area to improve color diversity");
+        Wh_Log(L"[Palette] Info: Palette is uniform (low color variance) - resampling from center area to improve color diversity");
         UINT fullW = artClone->GetWidth();
         UINT fullH = artClone->GetHeight();
         RECT crop = { (LONG)(fullW * 0.25f), (LONG)(fullH * 0.25f), (LONG)(fullW * 0.75f), (LONG)(fullH * 0.75f) };
@@ -3954,21 +4039,21 @@ static void DrawBitmapWithOpacity(Graphics& gfx, Gdiplus::Bitmap* bmp, int x, in
 // ^      --------------------------------------------------------------------------------------     RAINBOW BORDER     --------------------------------------------------------------------------------------
 // ~      --------------------------------------------------------------------------------------     RAINBOW BORDER     --------------------------------------------------------------------------------------
 
-void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PAINT, runs on UI thread, must be efficient to avoid paint lag    // .. (LIVE)
+void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PAINT, runs on UI thread, must be efficient to avoid paint lag                                        // .. (LIVE)
     // static UINT count = 0;
     // count++;
     Graphics graphics(hdc);
     graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias8x8);
     graphics.Clear(Color(0, 0, 0, 0));
     graphics.ScaleTransform(g_Ctx.Sys.scaleFactor, g_Ctx.Sys.scaleFactor);
-    
-    int logicalW = (int)(width / g_Ctx.Sys.scaleFactor);
-    int logicalH = (int)(height / g_Ctx.Sys.scaleFactor);
-    
+
+    float logicalW = (g_Ctx.Sys.scaleFactor > 0.0f) ? (width / g_Ctx.Sys.scaleFactor) : (float)width;
+    float logicalH = (g_Ctx.Sys.scaleFactor > 0.0f) ? (height / g_Ctx.Sys.scaleFactor) : (float)height;
+
     float baseHue = g_Ctx.Rainbow.hue;
     float brightness = g_Settings.rainbowBrightness / 100.0f;
     float thickness = (float)g_Settings.rainbowThickness;
-    
+
     // Apply audio reactivity if enabled and running
     if (g_Settings.audioHueReactiveMode > 0 && g_Ctx.Audio.runtimeEnabled) {
         if (kAudioReactiveMode == 1 || kAudioReactiveMode == 3) {
@@ -3993,41 +4078,41 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
             //     count = 0;
             // }
     }
-    
+
     // Create 4 corner gradients with offset hues
     for (int corner = 0; corner < 4; corner++) {
         float cornerHue = fmodf(baseHue + (corner * 90.0f), 360.0f);    // | This is for non-artwork themes: it creates a pure rainbow effect by offsetting each corner's hue by 90°.
         BYTE r, g, b;
         HSVtoRGB(cornerHue, 1.0f, brightness, r, g, b);
         Color cornerColor(r, g, b);
-        
+
         // Calculate gradient positions based on corner
         PointF pt1, pt2;
         RectF gradRect;
-        
+
         switch(corner) {
             case 0: // Top-left
                 pt1 = PointF(0, 0);
-                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
-                gradRect = RectF(0, 0, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                pt2 = PointF(logicalW / 2.0f, logicalH / 2.0f);
+                gradRect = RectF(0, 0, logicalW / 2.0f, logicalH / 2.0f);
                 break;
             case 1: // Top-right
-                pt1 = PointF((float)logicalW, 0);
-                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
-                gradRect = RectF((float)logicalW / 2.0f, 0, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                pt1 = PointF(logicalW, 0);
+                pt2 = PointF(logicalW / 2.0f, logicalH / 2.0f);
+                gradRect = RectF(logicalW / 2.0f, 0, logicalW / 2.0f, logicalH / 2.0f);
                 break;
             case 2: // Bottom-left
-                pt1 = PointF(0, (float)logicalH);
-                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
-                gradRect = RectF(0, (float)logicalH / 2.0f, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                pt1 = PointF(0, logicalH);
+                pt2 = PointF(logicalW / 2.0f, logicalH / 2.0f);
+                gradRect = RectF(0, logicalH / 2.0f, logicalW / 2.0f, logicalH / 2.0f);
                 break;
             case 3: // Bottom-right
-                pt1 = PointF((float)logicalW, (float)logicalH);
-                pt2 = PointF((float)logicalW / 2.0f, (float)logicalH / 2.0f);
-                gradRect = RectF((float)logicalW / 2.0f, (float)logicalH / 2.0f, (float)logicalW / 2.0f, (float)logicalH / 2.0f);
+                pt1 = PointF(logicalW, logicalH);
+                pt2 = PointF(logicalW / 2.0f, logicalH / 2.0f);
+                gradRect = RectF(logicalW / 2.0f, logicalH / 2.0f, logicalW / 2.0f, logicalH / 2.0f);
                 break;
         }
-        
+
         //& Only draw gradients in non-artwork mode - artwork mode uses pre-rendered background instead
         if (g_Settings.colorTheme != ColorTheme::Artwork) {
             LinearGradientBrush gradBrush(pt1, pt2, cornerColor, Color(0, r, g, b));
@@ -4057,11 +4142,14 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
             DrawBitmapWithOpacity(rawGfx, curr, 0, 0, width, height, alphaCurr);
         }
     }
-    
+
     // --- THE FIX: Distance-Mapped Rectangular Path ---
     // We trace a sharp rectangle so the paint completely fills the physical corners (burying the background).
     // Then Windows 11 DWM naturally chops it into its perfect native squircle.
     // Because we map colors by PERIMETER DISTANCE, the flow remains flawless and unstretched.
+
+    // GDI+ Quirk: A pen thickness of exactly 0 draws a 1-pixel hairline. If thickness is practically 0, skip drawing.
+    if (thickness < 0.1f) return;
 
     float inset = thickness / 2.0f;
     float pathW = std::max(1.0f, logicalW - thickness);
@@ -4078,15 +4166,15 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
         // Top edge (Left to Right)
         if (d <= pathW) return PointF(inset + d, inset);
         d -= pathW;
-        
+
         // Right edge (Top to Bottom)
         if (d <= pathH) return PointF(inset + pathW, inset + d);
         d -= pathH;
-        
+
         // Bottom edge (Right to Left)
         if (d <= pathW) return PointF(inset + pathW - d, inset + pathH);
         d -= pathW;
-        
+
         // Left edge (Bottom to Top)
         return PointF(inset, inset + pathH - d);
     };
@@ -4103,7 +4191,7 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
     float frameTp = 0.0f;
     if (g_Settings.colorTheme == ColorTheme::Artwork) {
         // PaletteEngine: use saved palette if one is active, else live art palette
-        if (g_Ctx.PaletteEngine.activeMode == -1 || g_Ctx.PaletteEngine.savedPalettes.empty()) {
+        if (g_Ctx.PaletteEngine.activeMode == -1) {
             framePalette = g_Ctx.ArtCache.palette;
         } else if (g_Ctx.PaletteEngine.activeMode > 0) {  // 0=rainbow: leave framePalette empty → falls through to HSV
             int safeIdx = Clamp(g_Ctx.PaletteEngine.activeMode - 1, 0, (int)g_Ctx.PaletteEngine.savedPalettes.size() - 1);
@@ -4123,10 +4211,10 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
         if (g_Settings.colorTheme == ColorTheme::Artwork && !framePalette.empty()) {
             int frameSize = (int)framePalette.size();
             float hueOffset  = baseHue / 360.0f * frameSize;
-            
+
             // Decouple rendering segments from palette size for uniform stretching
-            float mappedSeg = ((float)seg / segmentCount) * frameSize;
-            float palettePos = fmodf(mappedSeg + hueOffset, (float)frameSize);
+            float mappedSeg = (static_cast<float>(seg) / segmentCount) * frameSize;
+            float palettePos = fmodf(mappedSeg + hueOffset, static_cast<float>(frameSize));
             if (palettePos < 0) palettePos += frameSize;
 
             Gdiplus::Color target = SamplePaletteSmooth(framePalette, palettePos);
@@ -4136,8 +4224,8 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
                 result = target;
             } else if (!framePrevPalette.empty()) {
                 int prevSize = (int)framePrevPalette.size();
-                float prevMappedSeg = ((float)seg / segmentCount) * prevSize;
-                float prevPos = fmodf(prevMappedSeg + hueOffset, (float)prevSize);
+                float prevMappedSeg = (static_cast<float>(seg) / segmentCount) * prevSize;
+                float prevPos = fmodf(prevMappedSeg + hueOffset, static_cast<float>(prevSize));
                 if (prevPos < 0) prevPos += prevSize;
                 Gdiplus::Color prev = SamplePaletteSmooth(framePrevPalette, prevPos);
                 result = TransitionToTargetColor(prev.GetR(), prev.GetG(), prev.GetB(), target, frameTp);
@@ -4152,7 +4240,7 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
                 (BYTE)(result.GetG() * brightness),
                 (BYTE)(result.GetB() * brightness));
         }
-        return Gdiplus::Color(g_Ctx.Vis.currentOpacity, r, g, b);
+        return Gdiplus::Color(255, r, g, b);
     };
 
     // Overlap each segment slightly to eliminate sub-pixel gaps from float rounding
@@ -4169,7 +4257,7 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
     }
 
     for (int s = 0; s < segmentCount; ++s) {
-        float t1 = (float)s / segmentCount;
+        float t1 = static_cast<float>(s) / segmentCount;
         float t2 = t1 + (1.0f / segmentCount) + tOverlap;
 
         // Gradient from this segment's color to the next
@@ -4196,7 +4284,7 @@ void DrawRainbowBorder(HDC hdc, int width, int height) {    // Called from WM_PA
 
         LinearGradientBrush brush(p1, p2, col1, col2);
         Pen pen(&brush, thickness);
-        
+
         // CRITICAL: LineCapSquare ensures the thick segments blast completely into the sharp 90-degree corners, 
         // covering the background so DWM has a solid block of color to clip perfectly.
         pen.SetLineCap(LineCapSquare, LineCapSquare, DashCapFlat); 
@@ -4246,7 +4334,7 @@ struct LayoutMetrics {
 #pragma region // ^ Rendering
 
 // Main layout function - computes all positions/sizes based on current window dimensions and settings
-LayoutMetrics GetLayout() {
+LayoutMetrics GetLayout() {                                                      // .. (LIVE)
     // 1. Actual client dimensions (must match OnPaint coordinate space)
     int W = g_Settings.width, H = g_Settings.height;
     RECT rc;
@@ -4259,7 +4347,7 @@ LayoutMetrics GetLayout() {
     }
 
     // 2. Aspect Ratio Soft Cap
-    float aspectRatio = (H > 0) ? (float)W / H : 1.0f;
+    float aspectRatio = (H > 0) ? static_cast<float>(W) / static_cast<float>(H) : 1.0f;
     const float kMinLandscapeRatio = 3.5f; 
     int layoutH = H;
     if (aspectRatio < kMinLandscapeRatio) {
@@ -4340,7 +4428,7 @@ static void DrawBitmapWithOpacity(Graphics& gfx, Gdiplus::Bitmap* bmp, int x, in
     gfx.DrawImage(bmp, Rect(x, y, w, h), 0, 0, bmp->GetWidth(), bmp->GetHeight(), UnitPixel, &attrs);
 }
 
-void WindowManager::DrawMediaPanel(Graphics& graphics) {
+void WindowManager::DrawMediaPanel(Graphics& graphics) {                                                // .. (LIVE)
     Color mainColor{GetCurrentTextColor()};
     auto L = GetLayout();
 
@@ -4422,7 +4510,7 @@ void WindowManager::DrawMediaPanel(Graphics& graphics) {
     SolidBrush textBrush{Color(elemAlpha, mainColor.GetRed(), mainColor.GetGreen(), mainColor.GetBlue())};
 
     TextRenderingHint oldTextHint = graphics.GetTextRenderingHint();
-    graphics.SetTextRenderingHint(TextRenderingHintSingleBitPerPixelGridFit);
+    graphics.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
 
     int clipX = std::max(0, L.textX);
     int clipW = std::max(0, std::min(L.textMaxW, L.W - clipX));
@@ -4493,7 +4581,7 @@ void WindowManager::DrawMediaPanel(Graphics& graphics) {
 #pragma region // * Audio Processing
 
 // | Calculate smoothed audio peak level with optional dynamic range processing
-float CalculateAudioPeak(float rawPeak) {
+float CalculateAudioPeak(float rawPeak) {                                                           // .. (LIVE)
     if (!g_Settings.audioDynamicRange) {
         // Simple Lerp-based smoothing
         float currentSmoothed = g_Ctx.Audio.peakSmoothed.load();
@@ -4508,21 +4596,21 @@ float CalculateAudioPeak(float rawPeak) {
     float sRamp = (float)g_Settings.audioRamp / 100.0f;
     float sThresh = (float)g_Settings.audioThreshold / 100.0f;
     float sFlicker = (float)g_Settings.audioFlicker / 100.0f;
-    
+
     float valDelta = sMax + sRamp - sMin;
-    
+
     // Normalize responsiveness to a lerp factor (higher responsiveness = faster response)
     // Responsiveness range 0-20, map to lerp range [0.01, 1.0]
     float lerpFactor = Clamp((float)g_Settings.audioResponsiveness / 20.0f, 0.01f, 1.0f);
-    
+
     // Apply smoothing via Lerp
     float currentSmoothed = g_Ctx.Audio.peakSmoothed.load();
     float smoothed = Lerp(currentSmoothed, rawPeak, lerpFactor);
     smoothed = Clamp(smoothed, 0.0f, 1.0f);
     g_Ctx.Audio.peakSmoothed.store(smoothed);
-    
+
     float audioValue = (smoothed * valDelta) + sMin;
-    
+
     float finalValue = 0.0f;
     if (audioValue >= sThresh) {
         finalValue = audioValue - sRamp;
@@ -4530,9 +4618,9 @@ float CalculateAudioPeak(float rawPeak) {
     } else {
         finalValue = 0.0f;
     }
-    
+
     if (finalValue <= sFlicker) finalValue = 0.0f;
-    
+
     return Clamp(finalValue, 0.0f, 1.0f);
 }
 
@@ -4547,11 +4635,9 @@ float CalculateAudioPeak(float rawPeak) {
 // | Check if click is on album art or buttons (returns true if on background/text area)
 bool IsClickOnBackground(LPARAM lParam) {
     POINT pt = { (int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam) };
-    if (s_PhysicalToLogical && g_Ctx.Wnd.main)
-        s_PhysicalToLogical(g_Ctx.Wnd.main, &pt);
-    else { pt.x = (int)(pt.x / g_Ctx.Sys.scaleFactor); pt.y = (int)(pt.y / g_Ctx.Sys.scaleFactor); }
-    int x = pt.x;
-    int y = pt.y;
+    float sf = (g_Ctx.Sys.scaleFactor > 0.0f) ? g_Ctx.Sys.scaleFactor : 1.0f;
+    int x = (int)std::lround((double)pt.x / sf);
+    int y = (int)std::lround((double)pt.y / sf);
 
     auto L = GetLayout();
 
@@ -4573,11 +4659,11 @@ bool IsClickOnBackground(LPARAM lParam) {
 
 // | Game Detection/Idle Timeout Logic: Determines if the widget should hide based on fullscreen apps or idle state
 // TODO: SHOULD recieve event msgs maybe? | Re-add Game Detection
-bool WindowManager::ShouldWindowBeHidden() {
+bool WindowManager::ShouldWindowBeHidden() {                                     // .. (LIVE)
     return g_Ctx.Vis.isHiddenByIdle;
 }
 
-void WindowManager::OnTimer(HWND hwnd, UINT_PTR timerId) {
+void WindowManager::OnTimer(HWND hwnd, UINT_PTR timerId) {                                                            // .. (LIVE)
     if (timerId == IDT_POLL_MEDIA) {
         // Idle timeout logic
         if (g_Ctx.Media.isPlaying) {
@@ -4589,6 +4675,7 @@ void WindowManager::OnTimer(HWND hwnd, UINT_PTR timerId) {
                 g_Ctx.Vis.isHiddenByIdle = true;
             }
         }
+        if (g_Ctx.Vis.animState != 0 && g_Ctx.Vis.animState != 3) return;
         SyncPositionWithTaskbar();
     }
     else if (timerId == IDT_MASTER_TICK) {
@@ -4596,7 +4683,7 @@ void WindowManager::OnTimer(HWND hwnd, UINT_PTR timerId) {
     }
 }
 
-void WindowManager::OnMasterTick(HWND hwnd) {
+void WindowManager::OnMasterTick(HWND hwnd) {                                                            // .. (LIVE)
     bool repaintMain = false;       // Flag to indicate if main window needs repaint (e.g. for text scroll or other dynamic elements)
     bool repaintRainbow = false;    // Flag to indicate if rainbow needs repaint (e.g. for color changes or animations)
     bool LiveAudioDebug = false;   // Set to true to enable real-time audio peak level display in logs for debugging
@@ -4604,10 +4691,10 @@ void WindowManager::OnMasterTick(HWND hwnd) {
     // 1. Process Delayed Actions
     g_ActionDispatcher.ProcessDelayedActions();
 
-    // 2. Audio Peak Sampling
+    // 2. Audio Peak Sampling (read from AudioMeterThread via atomic)
     if (g_Settings.audioHueReactiveMode > 0 && g_Ctx.Audio.runtimeEnabled) {
-        float peak = g_audioCOM.GetPeakLevel();
-        g_Ctx.Audio.peakLevel = CalculateAudioPeak(peak);
+        float peak = g_Ctx.Audio.peakLevel.load(std::memory_order_relaxed);
+        g_Ctx.Audio.peakLevel.store(CalculateAudioPeak(peak), std::memory_order_relaxed);
     }
 
     // .. 3. Rainbow Animation & Artwork Palette Sync
@@ -4746,7 +4833,7 @@ void WindowManager::OnMasterTick(HWND hwnd) {
                 if (g_Ctx.Text.stripBitmap && g_Ctx.Text.stripBitmap->GetLastStatus() == Ok) {
                     Graphics stripG(g_Ctx.Text.stripBitmap.get());
                     stripG.SetCompositingMode(CompositingModeSourceOver);
-                    stripG.SetTextRenderingHint(TextRenderingHintSingleBitPerPixelGridFit);
+                    stripG.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
 
                     SolidBrush clearBrush(Color(0, 0, 0, 0));
                     stripG.FillRectangle(&clearBrush, 0, 0, stripW, measuredH);
@@ -4807,7 +4894,7 @@ void WindowManager::OnMasterTick(HWND hwnd) {
         int scaledW = EffectiveW();
         int scaledH = EffectiveH();
         bool hasRainbow = g_Ctx.Wnd.rainbow && g_Settings.enableRainbow && IsWindow(g_Ctx.Wnd.rainbow);
-        const float smoothFactor = 0.5f;
+        const float smoothFactor = 0.15f;
 
         int currX = g_Ctx.Vis.currentAnimX;
         int currY = g_Ctx.Vis.currentAnimY;
@@ -4843,16 +4930,20 @@ void WindowManager::OnMasterTick(HWND hwnd) {
 
         g_Ctx.Vis.currentAnimX = xDone ? targetX : (int)Lerp((float)currX, (float)targetX, smoothFactor);
         g_Ctx.Vis.currentAnimY = yDone ? targetY : (int)Lerp((float)currY, (float)targetY, smoothFactor);
+        if (!xDone && g_Ctx.Vis.currentAnimX == currX) g_Ctx.Vis.currentAnimX = targetX;
+        if (!yDone && g_Ctx.Vis.currentAnimY == currY) g_Ctx.Vis.currentAnimY = targetY;
 
         SetWindowPos(hwnd, GetMediaZOrderInsertAfter(), g_Ctx.Vis.currentAnimX, g_Ctx.Vis.currentAnimY, scaledW, scaledH, SWP_NOACTIVATE | (g_Ctx.Vis.animState == 2 ? SWP_SHOWWINDOW : 0));
-        
+
         if (hasRainbow) {
             int bo = Scale(g_Settings.rainbowBorderOffset);
             SetWindowPos(g_Ctx.Wnd.rainbow, GetRainbowZOrderInsertAfter(), g_Ctx.Vis.currentAnimX - bo, g_Ctx.Vis.currentAnimY - bo, scaledW + bo * 2, scaledH + bo * 2, SWP_NOACTIVATE | (g_Ctx.Vis.animState == 2 ? SWP_SHOWWINDOW : 0));
         }
 
         if (xDone && yDone) {
+            Wh_Log(L"[ANIM] Animation complete. animState=%d isShutdown=%d dockedMode=%d", (int)g_Ctx.Vis.animState, (int)g_Ctx.Sys.isShutdown, (int)g_Ctx.Vis.dockedMode);
             if (g_Ctx.Vis.animState == 1) { // Done Hiding
+                Wh_Log(L"[ANIM] Hide complete - calling DestroyWindow");
                 if (g_Ctx.Sys.isShutdown) {
                     if (hasRainbow) DestroyWindow(g_Ctx.Wnd.rainbow);
                     DestroyWindow(hwnd);
@@ -4892,16 +4983,19 @@ void WindowManager::OnMasterTick(HWND hwnd) {
 void WindowManager::OnMouseWheel(HWND hwnd, WPARAM wParam, LPARAM lParam) {
     short zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
     bool handled = false;
-    
+
     POINT pt;
         pt.x = (int)(short)LOWORD(lParam);
         pt.y = (int)(short)HIWORD(lParam);
         ScreenToClient(hwnd, &pt);
-        if (s_PhysicalToLogical && hwnd) s_PhysicalToLogical(hwnd, &pt);
-        else { pt.x = (int)(pt.x / g_Ctx.Sys.scaleFactor); pt.y = (int)(pt.y / g_Ctx.Sys.scaleFactor); }
-        LPARAM clientLParam = MAKELPARAM(pt.x, pt.y);
+        LPARAM physicalClientLParam = MAKELPARAM(pt.x, pt.y); // Pass physical coords to IsClickOnBackground
 
-    bool isOnBackground = IsClickOnBackground(clientLParam);
+    bool isOnBackground = IsClickOnBackground(physicalClientLParam);
+
+    // Now convert to logical for our own use
+    float sf = (g_Ctx.Sys.scaleFactor > 0.0f) ? g_Ctx.Sys.scaleFactor : 1.0f;
+    pt.x = (int)std::lround((double)pt.x / sf);
+    pt.y = (int)std::lround((double)pt.y / sf);
 
     if (isOnBackground) {
         Wh_Log(L"[INPUT] WM_MOUSEWHEEL at client coords (%d, %d), Delta: %+d", pt.x, pt.y, zDelta);
@@ -4916,7 +5010,7 @@ void WindowManager::OnMouseWheel(HWND hwnd, WPARAM wParam, LPARAM lParam) {
     } else {
         Wh_Log(L"[INPUT] Scroll BLOCKED - not on background");
     }
-    
+
     if (!handled && isOnBackground) {
         Wh_Log(L"[INPUT] Sending volume command, Delta: %+d", zDelta);
         SendMessage(hwnd, WM_APPCOMMAND, 0, zDelta > 0 ? APPCOMMAND_VOLUME_UP << 16 : APPCOMMAND_VOLUME_DOWN << 16);
@@ -4970,7 +5064,7 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
             POINT ptDst = { rc.left, rc.top };
             SIZE  szWnd = { w, h };
             POINT ptSrc = { 0, 0 };
-            BLENDFUNCTION blend = { AC_SRC_OVER, 0, (BYTE)g_Ctx.Vis.currentOpacity, AC_SRC_ALPHA };
+            BLENDFUNCTION blend = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
             ClientToScreen(hwnd, &ptDst);
             UpdateLayeredWindow(hwnd, screenDC, &ptDst, &szWnd, memDC, &ptSrc, 0, &blend, ULW_ALPHA);
 
@@ -5008,8 +5102,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     (g_Ctx.Media.sourceId != payload->sourceId) ||
                     (g_Ctx.Media.title != payload->title) ||
                     (g_Ctx.Media.artist != payload->artist);
-                bool shouldTransition = (g_Settings.colorTheme == ColorTheme::Artwork) &&
-                    (mediaIdentityChanged || oldHasArt != newHasArt);
+                bool shouldTransition = (g_Settings.colorTheme == ColorTheme::Artwork) && (mediaIdentityChanged || oldHasArt != newHasArt);
 
                 // Block 1: snapshot previous art for crossfade (only when previous art exists)
                 if (shouldTransition && oldHasArt) {
@@ -5082,6 +5175,33 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         case WM_APPCOMMAND: { return DefWindowProc(hwnd, msg, wParam, lParam); }
 
+        case WM_GETMINMAXINFO: {
+            // Override system minimum track size — DefWindowProc defaults to SM_CXMINTRACK/SM_CYMINTRACK
+            // (~136x39 physical px), which AltSnap hits immediately and produces a visible snap.
+            // This is a WS_POPUP with no title bar so there is no meaningful system minimum.
+            auto* mmi = reinterpret_cast<MINMAXINFO*>(lParam);
+            
+            // Since AltSnap injects into our thread, InSendMessage() fails. 
+            // Instead, we check if the ALT key is physically held down.
+            bool isAltSnap = (GetAsyncKeyState(VK_MENU) & 0x8000) != 0;
+
+            mmi->ptMinTrackSize.x = 125;
+            if (g_Settings.enableRainbow && g_Settings.rainbowThickness != 0) {
+                mmi->ptMinTrackSize.y = g_Settings.rainbowThickness * 2 * g_Ctx.Sys.scaleFactor; // divide by scale factor to get physical pixels
+                
+                if (!isAltSnap) {
+                    Wh_Log(L"[BOUNDS]   thickness: %d | scale: %0.2f | min track y: %d", g_Settings.rainbowThickness, g_Ctx.Sys.scaleFactor, mmi->ptMinTrackSize.y);
+                }
+            } else {
+                mmi->ptMinTrackSize.y = 25;
+                
+                if (!isAltSnap) {
+                    Wh_Log(L"[BOUNDS]   thickness: %d | scale: %0.2f | min track y: %d | Rainbow disabled or thickness 0, using default min track y of 25", g_Settings.rainbowThickness, g_Ctx.Sys.scaleFactor, mmi->ptMinTrackSize.y);
+                }
+            }
+            return 0;
+        }
+
         case WM_ERASEBKGND: { return 1; }
 
         case APP_WM_CLOSE: {
@@ -5090,15 +5210,15 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 RECT rcMe; GetWindowRect(hwnd, &rcMe);
                 int w = rcMe.right - rcMe.left;
                 int h = rcMe.bottom - rcMe.top;
-                
+
                 // ^ Seed animation start position
                 g_Ctx.Vis.currentAnimX = rcMe.left;
                 g_Ctx.Vis.currentAnimY = rcMe.top;
-                
+
                 // ^ Detect which edge to animate toward
                 ScreenEdge edge = DetermineAnimationEdge(hwnd, rcMe.left, rcMe.top, w, h);
                 g_Ctx.Vis.animEdge = edge;
-                
+
                 Wh_Log(L"[SHUTDOWN] Animating toward edge: %s", 
                        edge == ScreenEdge::TOP ? L"TOP" : edge == ScreenEdge::BOTTOM ? L"BOTTOM" : 
                        edge == ScreenEdge::LEFT ? L"LEFT" : L"RIGHT");
@@ -5120,18 +5240,75 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_DESTROY: {
             Wh_Log(L"[SHUTDOWN] -- MediaWndProc WM_DESTROY");
 
-            MSG queueMsg;
-            while (PeekMessage(&queueMsg, hwnd, APP_WM_MEDIA_UPDATED, APP_WM_MEDIA_UPDATED, PM_REMOVE)) {
-                auto* leakedPayload = reinterpret_cast<MediaUpdatePayload*>(queueMsg.lParam);
-                if (leakedPayload) delete leakedPayload;
-            }
-
+            // Kill all timers immediately to stop further callbacks
             KillTimer(hwnd, IDT_MASTER_TICK);
             KillTimer(hwnd, IDT_POLL_MEDIA);
-            Wh_Log(L"[SHUTDOWN] --All timers killed-- ");
-            if (g_Ctx.Sys.isShutdown) {
-                PostQuitMessage(0);
+            if (g_Ctx.Input.clickTimerId != 0) {
+                KillTimer(hwnd, IDT_CLICK_WAIT);
+                g_Ctx.Input.clickTimerId = 0;
             }
+            Wh_Log(L"[SHUTDOWN] All timers killed");
+
+            // Revoke WinRT event tokens natively on the MediaThread
+            Wh_Log(L"[SHUTDOWN] Revoking WinRT event tokens...");
+            if (g_CachedSession) {
+                try {
+                    if (g_playbackInfoToken) {
+                        g_CachedSession.PlaybackInfoChanged(g_playbackInfoToken);
+                        g_playbackInfoToken = winrt::event_token{};
+                        Wh_Log(L"[SHUTDOWN] Playback info token revoked");
+                    }
+                    if (g_mediaPropertiesToken) {
+                        g_CachedSession.MediaPropertiesChanged(g_mediaPropertiesToken);
+                        g_mediaPropertiesToken = winrt::event_token{};
+                        Wh_Log(L"[SHUTDOWN] Media properties token revoked");
+                    }
+                } catch (...) {
+                    Wh_Log(L"[SHUTDOWN] WARNING: Exception revoking session tokens");
+                }
+            }
+            
+            if (g_SessionManager) {
+                try {
+                    if (g_sessionChangedToken) {
+                        g_SessionManager.CurrentSessionChanged(g_sessionChangedToken);
+                        g_sessionChangedToken = winrt::event_token{};
+                        Wh_Log(L"[SHUTDOWN] Session changed token revoked");
+                    }
+                } catch (...) {
+                    Wh_Log(L"[SHUTDOWN] WARNING: Exception revoking manager token");
+                }
+            }
+
+            // Drain any queued APP_WM_MEDIA_UPDATED messages to prevent orphaned payloads
+            MSG queueMsg;
+            int drained = 0;
+            while (PeekMessage(&queueMsg, hwnd, APP_WM_MEDIA_UPDATED, APP_WM_MEDIA_UPDATED, PM_REMOVE)) {
+                auto* payload = reinterpret_cast<MediaUpdatePayload*>(queueMsg.lParam);
+                if (payload) { delete payload; drained++; }
+            }
+            if (drained > 0) Wh_Log(L"[SHUTDOWN] Drained %d orphaned media payloads", drained);
+
+            // Clean up input state
+            if (g_Ctx.Input.isPendingDrag) {
+                ReleaseCapture();
+                g_Ctx.Input.isPendingDrag = false;
+            }
+
+            // Exit message loop if this is a controlled shutdown
+            if (g_Ctx.Sys.isShutdown.load()) {
+                PostQuitMessage(0);
+                Wh_Log(L"[SHUTDOWN] PostQuitMessage sent");
+            } else {
+                Wh_Log(L"[SHUTDOWN] WARNING: WM_DESTROY but isShutdown=false");
+            }
+            return 0;
+        }
+
+        case WM_NCDESTROY: {
+            // Final cleanup: invalidate handle after all message processing complete
+            g_Ctx.Wnd.main = NULL;
+            Wh_Log(L"[SHUTDOWN] WM_NCDESTROY - HWND invalidated");
             return 0;
         }
 
@@ -5147,6 +5324,17 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
             SaveWindowState(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
             InvalidateRect(hwnd, NULL, FALSE);
+            break;
+        }
+
+        case WM_EXITSIZEMOVE: {
+            if (s_invalidCoords) {
+                TriggerErrorFlash();
+                s_invalidCoords = false;
+                g_Ctx.Persisted.lastX = kInvalidCoordinate; // Force EffectiveX/Y to recalculate from taskbar geometry
+                g_Ctx.Persisted.lastY = kInvalidCoordinate;
+                g_WindowManager.SyncPositionWithTaskbar();
+            }
             break;
         }
 
@@ -5201,7 +5389,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
             return 0;
         }
-        
+
         case WM_QUERYENDSESSION: {
             g_Ctx.Sys.isShutdown = true;
             return TRUE;
@@ -5210,12 +5398,9 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         case WM_SETCURSOR: {
             POINT pt; GetCursorPos(&pt);
             ScreenToClient(hwnd, &pt);
-            if (s_PhysicalToLogical && hwnd) {
-                s_PhysicalToLogical(hwnd, &pt);
-            } else {
-                pt.x = (int)(pt.x / g_Ctx.Sys.scaleFactor);
-                pt.y = (int)(pt.y / g_Ctx.Sys.scaleFactor);
-            }
+            float sf = (g_Ctx.Sys.scaleFactor > 0.0f) ? g_Ctx.Sys.scaleFactor : 1.0f;
+            pt.x = (int)std::lround((double)pt.x / sf);
+            pt.y = (int)std::lround((double)pt.y / sf);
             auto L = GetLayout();
             int artRightEdge = L.artX + L.artSize + 5;
             SetCursor(LoadCursor(NULL, (pt.x < artRightEdge) ? IDC_ARROW : IDC_HAND));
@@ -5229,13 +5414,53 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
         case WM_TIMER: {
-            g_WindowManager.OnTimer(hwnd, wParam);
+            if (wParam == IDT_CLICK_WAIT) {
+                // Execute deferred single click
+                KillTimer(hwnd, IDT_CLICK_WAIT);
+                g_Ctx.Input.clickTimerId = 0;
+                OnTriggerEvent(L"Left");
+                Wh_Log(L"[INPUT] Deferred single click executed");
+            } else {
+                g_WindowManager.OnTimer(hwnd, wParam);
+            }
+            return 0;
+        }
+
+        case WM_LBUTTONDOWN: {
+            POINT pt = { (int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam) };
+            float sf = (g_Ctx.Sys.scaleFactor > 0.0f) ? g_Ctx.Sys.scaleFactor : 1.0f;
+            pt.x = (int)std::lround((double)pt.x / sf);
+            pt.y = (int)std::lround((double)pt.y / sf);
+            
+            if (IsClickOnBackground(lParam)) {
+                g_Ctx.Input.isPendingDrag = true;
+                g_Ctx.Input.startX = pt.x;
+                g_Ctx.Input.startY = pt.y;
+                SetCapture(hwnd);
+                Wh_Log(L"[INPUT] WM_LBUTTONDOWN on background - prepared for drag at (%d, %d)", pt.x, pt.y);
+            }
             return 0;
         }
 
         case WM_MOUSEMOVE: {
-            int x = (int)(LOWORD(lParam) / g_Ctx.Sys.scaleFactor);
-            int y = (int)(HIWORD(lParam) / g_Ctx.Sys.scaleFactor);
+            POINT pt = { (int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam) };
+            float sf = (g_Ctx.Sys.scaleFactor > 0.0f) ? g_Ctx.Sys.scaleFactor : 1.0f;
+            int x = (int)std::lround((double)pt.x / sf);
+            int y = (int)std::lround((double)pt.y / sf);
+
+            // Check for drag-to-move if we have a pending drag
+            if (g_Ctx.Input.isPendingDrag) {
+                int deltaX = abs(x - g_Ctx.Input.startX);
+                int deltaY = abs(y - g_Ctx.Input.startY);
+                if (deltaX > 4 || deltaY > 4) {
+                    // Movement threshold exceeded - start drag
+                    ReleaseCapture();
+                    g_Ctx.Input.isPendingDrag = false;
+                    Wh_Log(L"[INPUT] Drag threshold exceeded - starting move operation");
+                    SendMessage(hwnd, WM_SYSCOMMAND, SC_MOVE | 2, 0);
+                    return 0;
+                }
+            }
 
             auto L = GetLayout();
 
@@ -5259,14 +5484,28 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
         case WM_MOUSELEAVE: { g_Ctx.Vis.hoverState = 0; InvalidateRect(hwnd, NULL, FALSE); break; }
-        
+
         case WM_LBUTTONUP: {        // Left Button
-            Wh_Log(L"[INPUT] WM_LBUTTONUP received | Sending to background click check with lParam: (%d, %d)", LOWORD(lParam), HIWORD(lParam));
+            Wh_Log(L"[INPUT] WM_LBUTTONUP received | lParam: (%d, %d)", LOWORD(lParam), HIWORD(lParam));
+            
+            // Handle pending drag state
+            if (g_Ctx.Input.isPendingDrag) {
+                ReleaseCapture();
+                g_Ctx.Input.isPendingDrag = false;
+                
+                // This was a click without movement - defer single click to handle double-click
+                if (IsClickOnBackground(lParam)) {
+                    DWORD doubleClickTime = GetDoubleClickTime();
+                    g_Ctx.Input.clickTimerId = SetTimer(hwnd, IDT_CLICK_WAIT, doubleClickTime, NULL);
+                    Wh_Log(L"[INPUT] WM_LBUTTONUP received | Click deferred for %d ms (double-click check)", doubleClickTime);
+                }
+                return 0;
+            }
+            
+            // Standard button handling when not in drag mode
             if (g_Ctx.Vis.hoverState >= 1 && g_Ctx.Vis.hoverState <= 3) {
-                Wh_Log(L"[INPUT] WM_LBUTTONUP Clicked button state: %d", g_Ctx.Vis.hoverState);
+                Wh_Log(L"[INPUT] WM_LBUTTONUP received | Clicked button state: %d", g_Ctx.Vis.hoverState);
                 SendMediaCommand(g_Ctx.Vis.hoverState);
-            } else if (IsClickOnBackground(lParam)) {
-                OnTriggerEvent(L"Left");
             }
             return 0;
         }
@@ -5285,7 +5524,15 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
         case WM_LBUTTONDBLCLK: {    // Left Button Double Click
-            Wh_Log(L"[INPUT] WM_LBUTTONDBLCLK received | Sending to background click check with lParam: (%d, %d)", LOWORD(lParam), HIWORD(lParam));
+            Wh_Log(L"[INPUT] WM_LBUTTONDBLCLK received | lParam: (%d, %d)", LOWORD(lParam), HIWORD(lParam));
+            
+            // Cancel pending single click timer if it exists
+            if (g_Ctx.Input.clickTimerId != 0) {
+                KillTimer(hwnd, IDT_CLICK_WAIT);
+                g_Ctx.Input.clickTimerId = 0;
+                Wh_Log(L"[INPUT] WM_LBUTTONDBLCLK received | Single click timer canceled for double-click");
+            }
+            
             if (IsClickOnBackground(lParam)) {
                 OnTriggerEvent(L"Double");
             }
@@ -5296,7 +5543,7 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             g_WindowManager.OnMouseWheel(hwnd, wParam, lParam);
             return 0;
         }
-            
+
         case WM_PAINT: {
             g_WindowManager.OnPaint(hwnd);
             return 0;
@@ -5310,24 +5557,17 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 // |-- Create Mod windows 
 void CreateModWindows() {
     Wh_Log(L"[INIT] Creating mod windows...");
-    
-    // CRITICAL: Update DPI scaling BEFORE calculating window sizes
-    HMODULE hUser32 = GetModuleHandle(L"user32.dll");
-        if (hUser32) {
-            s_LogicalToPhysical = (pLogicalToPhysical)GetProcAddress(hUser32, "LogicalToPhysicalPointForPerMonitorDPI");
-            s_PhysicalToLogical = (pPhysicalToLogical)GetProcAddress(hUser32, "PhysicalToLogicalPointForPerMonitorDPI");
-        }
-    
+
     UpdateScaleFactor();
     Wh_Log(L"[INIT] Scale factor ensured: %.2f", g_Ctx.Sys.scaleFactor);
-    
+
     // Ensure taskbar handle
     g_WindowManager.GetTaskbar();
 
     int scaledW = Scale(g_Settings.width);
     int scaledH = Scale(g_Settings.height);
     int borderOffset = Scale(g_Settings.rainbowBorderOffset);
-    
+
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
     // * ----------------------------------------Create Media Window----------------------------------------
@@ -5340,12 +5580,12 @@ void CreateModWindows() {
             0, 0, scaledW, scaledH,
             NULL, NULL, hInstance, NULL,
             ZBID_IMMERSIVE_NOTIFICATION);
-        
+
         if (!g_Ctx.Wnd.main) {
             Wh_Log(L"[INIT] CreateWindowInBand failed, falling back to CreateWindowEx");
         }
     }
-    
+
     if (!g_Ctx.Wnd.main) {  // ! Fallback: either CreateWindowInBand unavailable OR it failed
         g_Ctx.Wnd.main = CreateWindowEx(    // | FALLBACK Meida Window
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
@@ -5359,7 +5599,7 @@ void CreateModWindows() {
     }
 
     if (g_Ctx.Wnd.main) {
-        Wh_Log(L"[INIT] ================== Media window created: 0x%p", g_Ctx.Wnd.main);
+        Wh_Log(L"[INIT] ================== Media window created | HWND: 0x%p", g_Ctx.Wnd.main);
     }
 
     // * ----------------------------------------Create Rainbow Window----------------------------------------
@@ -5378,7 +5618,7 @@ void CreateModWindows() {
             NULL, NULL, hInstance, NULL,
             ZBID_IMMERSIVE_NOTIFICATION);
     }
-    
+
     if (!g_Ctx.Wnd.rainbow) {  // ! Fallback: either CreateWindowInBand unavailable OR it failed
         g_Ctx.Wnd.rainbow = CreateWindowEx(    // | FALLBACK Rainbow Window
             WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_TRANSPARENT | WS_EX_TOPMOST,
@@ -5390,16 +5630,16 @@ void CreateModWindows() {
             rainbowH,
             NULL, NULL, hInstance, NULL);
     }
-    
+
     if (g_Ctx.Wnd.rainbow) {
-        Wh_Log(L"[INIT] ================== Rainbow window created: 0x%p", g_Ctx.Wnd.rainbow);
+        Wh_Log(L"[INIT] ================== Rainbow window created | HWND: 0x%p", g_Ctx.Wnd.rainbow);
     }
 
     // Apply Attributes
     SetLayeredWindowAttributes(g_Ctx.Wnd.main, 0, static_cast<BYTE>(EffectiveOpacity()), LWA_ALPHA);
-    
+
     // Rainbow uses UpdateLayeredWindow (per-pixel alpha) — SetLayeredWindowAttributes is incompatible and must NOT be called on it.
-    
+
     g_WindowManager.UpdateAppearance(g_Ctx.Wnd.main);
 
     // Initial Position (Hidden - will show during first sync)
@@ -5424,135 +5664,96 @@ void CreateModWindows() {
 
 #pragma region // ^ MediaThread Cleanup
 
+// CleanupMediaThread: Called after message loop exits, performs final resource teardown.
+// NOTE: WinRT event tokens are already revoked in WhTool_ModUninit BEFORE window destruction.
+// This function handles: window classes, GDI+ objects, GdiplusShutdown, GSMTC release, WinRT uninit.
 void CleanupMediaThread(const WNDCLASS& wc, const WNDCLASS& wcRainbow, bool winrtInitialized) {
-    g_Ctx.Sys.eventHandlersActive = false;
+    Wh_Log(L"[CLEANUP] CleanupMediaThread start");
 
-    Wh_Log(L"[CLEANUP] Stopping registry auto-hide listener...");
+    // Step 1: Stop background listeners and unhook events
+    Wh_Log(L"[CLEANUP] Step 1 - stopping listeners");
     g_RegistryManager.StopAutoHideListener();
-
     if (g_Ctx.Wnd.visibilityHook) {
         UnhookWinEvent(g_Ctx.Wnd.visibilityHook);
         Wh_Log(L"[CLEANUP] WinEvent hook unhooked");
         g_Ctx.Wnd.visibilityHook = NULL;
     }
+
+    // Step 2: Unregister window classes
+    Wh_Log(L"[CLEANUP] Step 2 - unregistering window classes");
     UnregisterClass(wc.lpszClassName, wc.hInstance);
-    Wh_Log(L"[CLEANUP] Media window class unregistered");
     UnregisterClass(wcRainbow.lpszClassName, wcRainbow.hInstance);
-    Wh_Log(L"[CLEANUP] Rainbow window class unregistered");
-    // CRITICAL: Delete ALL GDI+ Bitmap objects BEFORE GdiplusShutdown
-    // Deleting GDI+ objects after GdiplusShutdown hangs indefinitely
-    {
-        try {
-            if (g_Ctx.Media.albumArt) {
-                g_Ctx.Media.albumArt.reset();
-                Wh_Log(L"[CLEANUP] Album art bitmap freed");
-            }
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception freeing album art bitmap during cleanup");
+
+    // Step 3: Free all GDI+ objects BEFORE GdiplusShutdown (prevents hang)
+    Wh_Log(L"[CLEANUP] Step 3 - freeing GDI+ objects");
+    try {
+        if (g_Ctx.Media.albumArt) {
+            g_Ctx.Media.albumArt.reset();
+            Wh_Log(L"[CLEANUP] Album art bitmap freed");
         }
-    }
-    {
-        try {
-            if (g_Ctx.ArtCache.bgBitmap) {
-                g_Ctx.ArtCache.bgBitmap.reset();
-                Wh_Log(L"[CLEANUP] ArtCache bitmap freed");
-            }
-            if (g_Ctx.ArtCache.previousBgBitmap) {
-                g_Ctx.ArtCache.previousBgBitmap.reset();
-                Wh_Log(L"[CLEANUP] Previous ArtCache bitmap freed");
-            }
-            if (g_Ctx.ArtCache.previousAlbumArt) {
-                g_Ctx.ArtCache.previousAlbumArt.reset();
-                Wh_Log(L"[CLEANUP] Previous album art freed");
-            }
-            g_Ctx.ArtCache.palette.clear();
-            g_Ctx.ArtCache.previousPalette.clear();
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception freeing ArtCache bitmap during cleanup");
+        if (g_Ctx.ArtCache.bgBitmap) {
+            g_Ctx.ArtCache.bgBitmap.reset();
+            Wh_Log(L"[CLEANUP] ArtCache bitmap freed");
         }
-    }
-    {
-        try {
-            if (g_Ctx.Text.stripBitmap) {
-                g_Ctx.Text.stripBitmap.reset();
-                Wh_Log(L"[CLEANUP] Text cache bitmap freed");
-            }
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception freeing text cache bitmap during cleanup");
+        if (g_Ctx.ArtCache.previousBgBitmap) {
+            g_Ctx.ArtCache.previousBgBitmap.reset();
         }
+        if (g_Ctx.ArtCache.previousAlbumArt) {
+            g_Ctx.ArtCache.previousAlbumArt.reset();
+        }
+        g_Ctx.ArtCache.palette.clear();
+        g_Ctx.ArtCache.previousPalette.clear();
+        if (g_Ctx.Text.stripBitmap) {
+            g_Ctx.Text.stripBitmap.reset();
+            Wh_Log(L"[CLEANUP] Text cache bitmap freed");
+        }
+    } catch (...) {
+        Wh_Log(L"[WARNING] Exception freeing GDI+ objects");
     }
+
+    // Step 4: Shutdown GDI+
+    Wh_Log(L"[CLEANUP] Step 4 - GdiplusShutdown");
     if (g_Ctx.Sys.gdiplusToken) {
         GdiplusShutdown(g_Ctx.Sys.gdiplusToken);
-        Wh_Log(L"[CLEANUP] GDI+ shutdown completed");
         g_Ctx.Sys.gdiplusToken = 0;
-    }
-    // CRITICAL: Unsubscribe from WinRT events BEFORE releasing session/manager
-    // This prevents in-flight callbacks from running after window destruction
-    Wh_Log(L"[CLEANUP] Unsubscribing from WinRT events...");
-    if (g_CachedSession) {
-        try {
-            if (g_playbackInfoToken) {
-                g_CachedSession.PlaybackInfoChanged(g_playbackInfoToken);
-                g_playbackInfoToken = winrt::event_token{};
-                Wh_Log(L"[CLEANUP] Playback info handler unsubscribed");
-            }
-            if (g_mediaPropertiesToken) {
-                g_CachedSession.MediaPropertiesChanged(g_mediaPropertiesToken);
-                g_mediaPropertiesToken = winrt::event_token{};
-                Wh_Log(L"[CLEANUP] Media properties handler unsubscribed");
-            }
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception unsubscribing session handlers");
-        }
-    }
-    
-    if (g_SessionManager) {
-        try {
-            if (g_sessionChangedToken) {
-                g_SessionManager.CurrentSessionChanged(g_sessionChangedToken);
-                g_sessionChangedToken = winrt::event_token{};
-                Wh_Log(L"[CLEANUP] Session change handler unsubscribed");
-            }
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception unsubscribing session manager handler");
-        }
-    }
-    
-    // Give any in-flight callbacks time to see g_Ctx.Sys.eventHandlersActive=false and exit
-    Sleep(100);
-    Wh_Log(L"[CLEANUP] Waited for in-flight callbacks to exit");
-    
-    // CRITICAL: Release GSMTC session and manager BEFORE uninit_apartment
-    // to properly terminate RPC connections and avoid "RPC server unavailable" errors
-    if (g_CachedSession) {
-        try {
-            g_CachedSession = nullptr;
-            Wh_Log(L"[CLEANUP] GSMTC cached session released");
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception releasing cached session");
-            g_CachedSession = nullptr;
-        }
-    }
-    if (g_SessionManager) {
-        try {
-            g_SessionManager = nullptr;
-            Wh_Log(L"[CLEANUP] GSMTC session manager released");
-        } catch (...) {
-            Wh_Log(L"[WARNING] Exception releasing GSMTC session manager");
-            g_SessionManager = nullptr;
-        }
+        Wh_Log(L"[CLEANUP] GDI+ shutdown completed");
     }
 
-    if (g_audioCOM.IsInitialized()) {
-        Wh_Log(L"[CLEANUP] Shutting down audio COM...");
-        g_audioCOM.Uninit();
+    // Step 5: Release GSMTC session and manager
+    Wh_Log(L"[CLEANUP] Step 5 - releasing GSMTC objects (tokens already revoked in WM_DESTROY)");
+    
+    try {
+        if (g_CachedSession) {
+            g_CachedSession = nullptr;
+            Wh_Log(L"[CLEANUP] GSMTC session released");
+        }
+        if (g_SessionManager) {
+            g_SessionManager = nullptr;
+            Wh_Log(L"[CLEANUP] GSMTC manager released");
+        }
+    } catch (...) {
+        Wh_Log(L"[WARNING] Exception releasing GSMTC objects");
+        g_CachedSession = nullptr;
+        g_SessionManager = nullptr;
     }
 
+    // Step 6: Join audio meter thread (likely already exited when isRunning became false)
+    Wh_Log(L"[CLEANUP] Step 6 - joining audio thread");
+    if (g_Ctx.Sys.audioMeterThread) {
+        WaitForSingleObject(g_Ctx.Sys.audioMeterThread, 2000); // 2s timeout
+        CloseHandle(g_Ctx.Sys.audioMeterThread);
+        g_Ctx.Sys.audioMeterThread = NULL;
+        Wh_Log(L"[CLEANUP] Audio meter thread joined");
+    }
+
+    // Step 7: Uninitialize WinRT apartment (must be last COM operation)
+    Wh_Log(L"[CLEANUP] Step 7 - uninit_apartment");
     if (winrtInitialized) {
         winrt::uninit_apartment();
         Wh_Log(L"[CLEANUP] WinRT apartment uninitialized");
     }
-    Wh_Log(L"[CLEANUP] MediaThread exiting");
+
+    Wh_Log(L"[CLEANUP] CleanupMediaThread complete");
 }
 
 #pragma endregion // MediaThread Cleanup
@@ -5562,9 +5763,10 @@ void CleanupMediaThread(const WNDCLASS& wc, const WNDCLASS& wcRainbow, bool winr
 #pragma region // ^ Media Thread
 // | Media widget thread - runs in dedicated process via tool mod and manages the media window's lifecycle, including creation, message loop, and destruction. This separation allows for more robust handling of media-related resources and ensures that the media widget remains responsive even if the main process encounters issues.
 void MediaThread() {
+    Wh_Log(L"[MEDIA] MediaThread entry - ThreadID: %d", GetCurrentThreadId());
     Wh_Log(L"[MEDIA] ------ Media Thread Initiated -----   [ThreadID: %u]", GetCurrentThreadId());
 
-    if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-fork"))) {
+    if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-pro"))) {
         Wh_Log(L"[WARNING] SetCurrentProcessExplicitAppUserModelID failed (non-critical)");
     }
 
@@ -5579,37 +5781,33 @@ void MediaThread() {
     try {
         winrt::init_apartment();
         winrtInitialized = true;
-        Wh_Log(L"[INIT] WinRT apartment initialized");
+        Wh_Log(L"[INIT] WinRT apartment initialized (MTA defaults to GSMTC)");
     } catch (...) {
         Wh_Log(L"[ERROR] Failed to initialize WinRT apartment");
         return;
     }
 
-    // Initialize Audio COM first so settings can enable meter at startup
-    const bool audioComOk = g_audioCOM.Init();
-    if (!audioComOk) {
-        Wh_Log(L"[WARNING] Audio COM initialization failed (audio reactive disabled)");
+    // Spawn dedicated audio meter thread with MTA COM (separate from this thread's STA)
+    g_Ctx.Sys.audioMeterThread = CreateThread(NULL, 0, AudioMeterThreadProc, NULL, 0, NULL);
+    if (g_Ctx.Sys.audioMeterThread) {
+        Wh_Log(L"[AudioMeter] Thread spawned (MTA COM, separate from MediaThread)");
     } else {
-        Wh_Log(L"[AUDIO] Audio COM initialized");
+        Wh_Log(L"[WARNING] Failed to spawn audio meter thread (audio reactive disabled)");
     }
 
     Wh_Log(L"[INIT] Loading Settings...");
     LoadSettings();
     Wh_Log(L"[INIT] Settings loaded");
 
-    if (!audioComOk) {
-        g_Settings.audioHueReactiveMode = 0;
-    } else if (g_Settings.audioHueReactiveMode > 0 && !g_audioCOM.InitMeter()) {
-        Wh_Log(L"[WARNING] Audio meter initialization failed (audio reactive disabled)");
-        g_Settings.audioHueReactiveMode = 0;
-    }
-
     // CRITICAL: Initialize DPI scaling FIRST (independent of taskbar)
     UpdateScaleFactor();
     if (g_Ctx.Sys.scaleFactor <= 0.0f) {
         Wh_Log(L"[ERROR] Failed to initialize DPI scale factor");
-        if (g_audioCOM.IsInitialized()) {
-            g_audioCOM.Uninit();
+        g_Ctx.Sys.isRunning = false;
+        if (g_Ctx.Sys.audioMeterThread) {
+            WaitForSingleObject(g_Ctx.Sys.audioMeterThread, INFINITE);
+            CloseHandle(g_Ctx.Sys.audioMeterThread);
+            g_Ctx.Sys.audioMeterThread = NULL;
         }
         if (winrtInitialized) {
             winrt::uninit_apartment();
@@ -5630,8 +5828,11 @@ void MediaThread() {
     if (GdiplusStartup(&g_Ctx.Sys.gdiplusToken, &gdiplusStartupInput, NULL) != Ok) {
         Wh_Log(L"[ERROR] GDI+ initialization failed");
         g_RegistryManager.StopAutoHideListener();
-        if (g_audioCOM.IsInitialized()) {
-            g_audioCOM.Uninit();
+        g_Ctx.Sys.isRunning = false;
+        if (g_Ctx.Sys.audioMeterThread) {
+            WaitForSingleObject(g_Ctx.Sys.audioMeterThread, INFINITE);
+            CloseHandle(g_Ctx.Sys.audioMeterThread);
+            g_Ctx.Sys.audioMeterThread = NULL;
         }
         if (winrtInitialized) {
             winrt::uninit_apartment();
@@ -5640,7 +5841,7 @@ void MediaThread() {
         return;
     }
     Wh_Log(L"[GDI+] GDI+ initialized");
-    
+
     // WAITING FOR TASKBAR (Fix for Startup Race Condition)
     // Explorer might be slow to start, so we must wait for Shell_TrayWnd
     Wh_Log(L"[INIT] Waiting for Taskbar...");
@@ -5656,8 +5857,8 @@ void MediaThread() {
     } else {
         Wh_Log(L"[INIT] Taskbar found after %d ms", waitRetries * 100);
     }
-    
-    // ENSURE TASKBAR HANDLE is available
+
+    // Tell WindowManager to cache taskbar handle now that it's available, so it can proceed with initial positioning and z-order decisions
     g_WindowManager.GetTaskbar();
     Wh_Log(L"[INIT] Taskbar handle ensured");
     WNDCLASS wc = {0};
@@ -5698,7 +5899,7 @@ void MediaThread() {
         g_SessionManager = GlobalSystemMediaTransportControlsSessionManager::RequestAsync().get();
         if (g_SessionManager) {
             Wh_Log(L"[GSMTC] Session manager acquired");
-            
+
             // Cache initial session
             g_CachedSession = g_SessionManager.GetCurrentSession();
             if (g_CachedSession) {
@@ -5706,11 +5907,11 @@ void MediaThread() {
             } else {
                 Wh_Log(L"[GSMTC] No initial session available");
             }
-            
+
             // Register session change event handler and store token for unsubscription
             g_sessionChangedToken = g_SessionManager.CurrentSessionChanged([](auto&&, auto&&) {
                 if (!g_Ctx.Sys.eventHandlersActive.load()) return;  // Fast exit if shutting down
-                
+
 try {
                 auto oldSession = g_CachedSession;
                 g_CachedSession = g_SessionManager.GetCurrentSession();
@@ -5727,7 +5928,7 @@ try {
                     }
                     g_playbackInfoToken = winrt::event_token{};
                     g_mediaPropertiesToken = winrt::event_token{};
-                        
+
                         // Re-register event handlers for the new session and store tokens
                         g_playbackInfoToken = g_CachedSession.PlaybackInfoChanged([](auto&&, auto&&) {
                             if (!g_Ctx.Sys.eventHandlersActive.load()) return;
@@ -5737,7 +5938,7 @@ try {
                             UpdateMediaInfoAsync();
                             InvalidateRect(localWindow, NULL, FALSE);
                         });
-                        
+
                         g_mediaPropertiesToken = g_CachedSession.MediaPropertiesChanged([](auto&&, auto&&) {
                             if (!g_Ctx.Sys.eventHandlersActive.load()) return;
                             HWND localWindow = g_Ctx.Wnd.main;  // Atomic snapshot
@@ -5746,7 +5947,7 @@ try {
                             UpdateMediaInfoAsync();
                             InvalidateRect(localWindow, NULL, FALSE);
                         });
-                        
+
                         Wh_Log(L"[INFO] Event handlers re-registered for new session");
                     } else {
                         Wh_Log(L"[MusicLounge] Session gone - clearing media state");
@@ -5757,10 +5958,12 @@ try {
                             payload->title = L"No Media";
                             payload->artist = L"";
                             payload->sourceId = L"";
-                            PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload));
+                            if (!PostMessage(g_Ctx.Wnd.main, APP_WM_MEDIA_UPDATED, 0, reinterpret_cast<LPARAM>(payload))) {
+                                delete payload;
+                            }
                         }
                     }
-                    
+
                     HWND localWindow = g_Ctx.Wnd.main;
                     if (localWindow && IsWindow(localWindow)) {
                         if (g_CachedSession) {
@@ -5773,7 +5976,7 @@ try {
                 }
             });
             Wh_Log(L"[GSMTC] Session change event handler registered");
-            
+
             // Register event handlers for instant state updates and store tokens
             if (g_CachedSession) {
                 // Playback state changes (play/pause/position) - store token
@@ -5781,25 +5984,25 @@ try {
                     if (!g_Ctx.Sys.eventHandlersActive.load()) return;  // Fast exit if shutting down
                     HWND localWindow = g_Ctx.Wnd.main;  // Atomic snapshot (safe even if window destroyed mid-check)
                     if (!localWindow || !IsWindow(localWindow)) return;
-                    
+
                     Wh_Log(L"[GSMTC] PlaybackInfoChanged event fired");
                     UpdateMediaInfoAsync();
                     InvalidateRect(localWindow, NULL, FALSE);
                 });
                 Wh_Log(L"[GSMTC] PlaybackInfoChanged event handler registered");
-                
+
                 // Media properties changes (title/artist/artwork) - store token
                 g_mediaPropertiesToken = g_CachedSession.MediaPropertiesChanged([](auto&&, auto&&) {
                     if (!g_Ctx.Sys.eventHandlersActive.load()) return;  // Fast exit if shutting down
                     HWND localWindow = g_Ctx.Wnd.main;  // Atomic snapshot
                     if (!localWindow || !IsWindow(localWindow)) return;
-                    
+
                     Wh_Log(L"[GSMTC] MediaPropertiesChanged event fired");
                     UpdateMediaInfoAsync();
                     InvalidateRect(localWindow, NULL, FALSE);
                 });
                 Wh_Log(L"[GSMTC] Media properties change event handler registered");
-                
+
                 // Fetch initial state now that handlers are ready
                 Wh_Log(L"[GSMTC] Fetching initial media state...");
                 UpdateMediaInfoAsync();
@@ -5820,7 +6023,7 @@ try {
     //     wchar_t tempPath[MAX_PATH];
     //     GetTempPathW(MAX_PATH, tempPath);
     //     std::wstring fullPath = std::wstring(tempPath) + L"MusicLounge_Boot.log";
-        
+
     //     std::wofstream logFile(fullPath.c_str(), std::ios::app);
     //     if (logFile.is_open()) {
     //          SYSTEMTIME st; GetLocalTime(&st);
@@ -5830,6 +6033,7 @@ try {
     // }
 
     // ALL 
+    Wh_Log(L"[MEDIA] About to enter GetMessage loop - ThreadID: %d", GetCurrentThreadId());
     MSG msg = {};
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
@@ -5837,6 +6041,8 @@ try {
     }
 
 
+    Wh_Log(L"[SHUTDOWN] Message loop exited");
+    Wh_Log(L"[SHUTDOWN] POST-LOOP: entering CleanupMediaThread");
     Wh_Log(L"[CLEANUP] --MediaThread exiting message loop--");
     CleanupMediaThread(wc, wcRainbow, winrtInitialized);
 }
@@ -5854,7 +6060,7 @@ BOOL WhTool_ModInit() {
     Wh_Log(L" Init " WH_MOD_ID L" version " WH_MOD_VERSION);
 
     g_Ctx.Reset(RESET_ALL);
-    
+
     if (!g_pMediaThread) {
         try {
             g_pMediaThread = new std::thread(MediaThread);
@@ -5866,7 +6072,7 @@ BOOL WhTool_ModInit() {
     } else {
         Wh_Log(L"[WARNING] Media thread already exists");
     }
-    
+
     // --- [DIAGNOSTIC TEST] Persistent Log ---
     // This logs to user temp to survive reboot visibility gap.
     // auto LogToFile = [](const wchar_t* msg) {
@@ -5889,22 +6095,23 @@ BOOL WhTool_ModInit() {
 }
 
 void WhTool_ModUninit() {
-    Wh_Log(L"[UNINIT] ----- Cleanup Inititiated -----   [ThreadID: %u]", GetCurrentThreadId());
-    
-    // Disable event handlers FIRST to prevent race conditions
-    g_Ctx.Sys.eventHandlersActive = false;
+    Wh_Log(L"[UNINIT] ----- Cleanup Initiated -----   [ThreadID: %u]", GetCurrentThreadId());
+
+    // Step 1: Disable event handlers FIRST to prevent new callbacks from firing
+    g_Ctx.Sys.eventHandlersActive.store(false);
     Wh_Log(L"[UNINIT] Event handlers deactivated");
-    
-    // Signal shutdown to all threads
-    g_Ctx.Sys.isRunning = false;
-    g_Ctx.Sys.isShutdown = true;
-    
-    // Post close message to media window to trigger slide-out animation
+
+    // Step 2: Signal shutdown to all threads (atomic writes)
+    g_Ctx.Sys.isRunning.store(false);
+    g_Ctx.Sys.isShutdown.store(true);
+
+    // Step 3: Post close message to media window to trigger slide-out animation
+    // (WinRT tokens will be safely unsubscribed by the MediaThread itself)
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
         Wh_Log(L"[UNINIT] Posting APP_WM_CLOSE to media window (will animate if enabled)...");
         PostMessage(g_Ctx.Wnd.main, APP_WM_CLOSE, 0, 0);
     }
-    
+
     // Wait for media thread to exit (it will destroy its own windows)
     if (g_pMediaThread) {
         Wh_Log(L"[UNINIT] Waiting for media thread to exit...");
@@ -5915,39 +6122,36 @@ void WhTool_ModUninit() {
         g_pMediaThread = nullptr;
         Wh_Log(L"[UNINIT] Media thread joined");
     }
-    
+
     // Reset all context state (bitmaps already freed by CleanupMediaThread)
     g_Ctx.Reset(RESET_ALL);
     g_Ctx.Audio.runtimeEnabled = true;
     g_Ctx.Sys.gdiplusToken = 0;
-    
+
     // Clear action dispatcher state
     g_ActionDispatcher.ClearPendingActions();
     g_ActionDispatcher.triggers.clear();
-    
+
     Wh_Log(L"[UNINIT] Cleanup complete, exiting");
     Wh_Log(L" ------ END ------   [ThreadID: %u]", GetCurrentThreadId());
 }
 
 void WhTool_ModSettingsChanged() {
     Wh_Log(L"[SETTINGS] --- CHANGE EVENT TRIGGERED ---  [ThreadID: %u]", GetCurrentThreadId());
-    // UINT testdpi = GetDpiForSystem();
-    Wh_Log(L"Testing GetDpiForSystem(): %.2f", g_Ctx.Sys.scaleFactor);  // !sDEBUG
-
 
     // Persist current window rect before reload
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
         RECT rc; GetWindowRect(g_Ctx.Wnd.main, &rc);
         SaveWindowState(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
     }
-    
+
     // CRITICAL: Pause any live animation timers
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
         Wh_Log(L"[SETTINGS] Killing media window timers...");
         KillTimer(g_Ctx.Wnd.main, IDT_POLL_MEDIA);
         // ! Note: We DO NOT kill IDT_MASTER_TICK. It must survive settings changes.    // ^ test
         Wh_Log(L"[SETTINGS] Media window timers killed");
-        
+
         // RESET STATES to prevent lockups or stuck timers
         g_Ctx.Text.isScrolling = false;
         g_Ctx.Text.dirty = true;
@@ -5956,15 +6160,22 @@ void WhTool_ModSettingsChanged() {
             g_Ctx.Vis.animState = 0;      // Forces SyncPositionWithTaskbar to act
         }
     }
-    
+
     g_Ctx.Rainbow.animState = 0;
-    
+
     // Reload settings
     Wh_Log(L"[SETTINGS] Loading settings...");
     LoadSettings();
     Wh_Log(L"[SETTINGS] Settings loaded");
     g_Ctx.Text.dirty = true;
-    
+
+        // If switched to Artwork theme and album art is already loaded, trigger immediate cache regen | AKA "force refresh"
+        if (g_Settings.colorTheme == ColorTheme::Artwork && g_Ctx.Media.albumArt && g_Ctx.Media.albumArt->GetLastStatus() == Gdiplus::Ok) {
+            g_Ctx.ArtCache.dirty = true;
+            g_Ctx.ArtCache.transitionProgress = 0.0f;
+            Wh_Log(L"[SETTINGS] Switched to Artwork theme with existing art - marking cache dirty for immediate regen");
+        }
+
     // did the user change anything that affects our layout?
     bool widthChanged  = g_Ctx.Persisted.lastSettingsW != g_Settings.width;
     bool heightChanged = g_Ctx.Persisted.lastSettingsH != g_Settings.height;
@@ -6003,11 +6214,11 @@ void WhTool_ModSettingsChanged() {
             Wh_DeleteValue(L"LastY");
         }
     }
-    
+
     // Refresh DPI scaling in case system DPI changed
     UpdateScaleFactor();
     Wh_Log(L"[SETTINGS] Scale factor updated to %.2f", g_Ctx.Sys.scaleFactor);
-    
+
     // Reapply appearance
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
         Wh_Log(L"[SETTINGS] Updating media window appearance...");
@@ -6029,18 +6240,18 @@ void WhTool_ModSettingsChanged() {
         }
 
         g_WindowManager.SyncPositionWithTaskbar();
-        
+
         // Force the Media Thread to re-fetch the *real* live status from GSMTC
         // to overwrite the "Offline/Paused" fallback state set by LoadSettings.
         // This fixes the Play/Pause button reverting to Play.
         PostMessage(g_Ctx.Wnd.main, APP_WM_REFRESH_MEDIA, 0, 0);
-        
+
         // Trigger repaint to refresh media display immediately
         InvalidateRect(g_Ctx.Wnd.main, NULL, FALSE);
         UpdateWindow(g_Ctx.Wnd.main);
         Wh_Log(L"[SETTINGS] Media window appearance updated");
     }
-    
+
     if (g_Ctx.Wnd.rainbow && IsWindow(g_Ctx.Wnd.rainbow)) {
         Wh_Log(L"[SETTINGS] Updating rainbow window...");
         // Apply corner rounding update
@@ -6051,15 +6262,15 @@ void WhTool_ModSettingsChanged() {
             SetWindowPos(g_Ctx.Wnd.main, GetMediaZOrderInsertAfter(), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             Wh_Log(L"[SETTINGS] Z-order adjusted");
         }
-        
+
         InvalidateRect(g_Ctx.Wnd.rainbow, NULL, TRUE);
         Wh_Log(L"[SETTINGS] Rainbow window updated");
     }
-    
+
     // Restart timers with new settings
     if (g_Ctx.Wnd.main && IsWindow(g_Ctx.Wnd.main)) {
         Wh_Log(L"[SETTINGS] Restarting media window timers...");
-        
+
         // Restart idle timer only if enabled (media updates are event-driven)
         if (g_Settings.idleTimeout > 0) {
             SetTimer(g_Ctx.Wnd.main, IDT_POLL_MEDIA, 1000, NULL);
@@ -6068,7 +6279,7 @@ void WhTool_ModSettingsChanged() {
             Wh_Log(L"[SETTINGS] Idle timeout disabled, no polling timer needed (events only)");
         }
     }
-    
+
     if (g_Ctx.Wnd.rainbow && IsWindow(g_Ctx.Wnd.rainbow)) {
         if (g_Settings.enableRainbow) {
             ShowWindow(g_Ctx.Wnd.rainbow, SW_SHOWNOACTIVATE);
@@ -6078,7 +6289,7 @@ void WhTool_ModSettingsChanged() {
             Wh_Log(L"[SETTINGS] Rainbow disabled, window hidden");
         }
     }
-    
+
     Wh_Log(L"[SETTINGS] Settings reload complete");
 }
 
@@ -6148,10 +6359,6 @@ BOOL Wh_ModInit() {
 
         if (GetLastError() == ERROR_ALREADY_EXISTS) {
             Wh_Log(L"[CreateMutex] INFO: Tool mod already running (%s)", WH_MOD_ID);
-            ExitProcess(1);
-        }
-        else if (GetLastError() != 0 && GetLastError() != ERROR_ALREADY_EXISTS) {     // ! DEBUG | Check for unexpected errors (besides already exists) to improve reliability and debugging
-            Wh_Log(L"[CreateMutex] ERROR: %u", GetLastError());
             ExitProcess(1);
         }
 
