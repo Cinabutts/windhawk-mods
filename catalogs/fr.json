@@ -1690,6 +1690,33 @@
                 "version": "1.2.1"
             }
         },
+        "classic-this-pc-sort-order": {
+            "details": {
+                "defaultSorting": 180,
+                "published": 1773073991000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1773073991000,
+                "users": 18
+            },
+            "metadata": {
+                "author": "xalejandro",
+                "description": "Makes the sort order in \"This PC\" folder like in Windows XP and before",
+                "github": "https://github.com/tetawaves",
+                "include": [
+                    "*"
+                ],
+                "name": "Classic This PC Item Sorting",
+                "version": "1.0"
+            }
+        },
         "classic-uwp-fix": {
             "details": {
                 "defaultSorting": 4610,
@@ -2628,6 +2655,34 @@
                 "version": "1.0.0"
             }
         },
+        "discord-balloon-notifs": {
+            "details": {
+                "defaultSorting": 120,
+                "published": 1773100370000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1773100370000,
+                "users": 12
+            },
+            "metadata": {
+                "author": "repensky",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lshlwapi -lshell32 -lwininet",
+                "description": "Converts Discord toast notifications to classic Windows balloon notifications",
+                "github": "https://github.com/repensky",
+                "include": [
+                    "Discord.exe"
+                ],
+                "name": "Discord Balloon Notifications",
+                "version": "1.0"
+            }
+        },
         "disk-pie-chart": {
             "details": {
                 "defaultSorting": 25380,
@@ -2669,19 +2724,19 @@
                     10
                 ],
                 "ratingUsers": 11,
-                "updated": 1771003357000,
+                "updated": 1773069962000,
                 "users": 269
             },
             "metadata": {
                 "author": "Kitsune",
-                "compilerOptions": "-luxtheme -lgdi32",
+                "compilerOptions": "-lgdi32 -luxtheme",
                 "description": "Replaces the pie/donut chart in drive properties with a usage bar",
                 "github": "https://github.com/AromaKitsune",
                 "include": [
                     "*"
                 ],
                 "name": "Disk Usage Bar in Drive Properties",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "dot-hide": {
@@ -5328,6 +5383,35 @@
                 "version": "1.0.1"
             }
         },
+        "native-brightness": {
+            "details": {
+                "defaultSorting": 60,
+                "published": 1773082808000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1773082808000,
+                "users": 6
+            },
+            "metadata": {
+                "author": "Prash",
+                "compilerOptions": "-lole32 -loleaut32 -lwbemuuid -lgdi32 -luser32 -lshell32",
+                "description": "Use CTRL + ALT + UP/DOWN to change brightness. Runs in a dedicated stable windhawk.exe process (Tool Mode).",
+                "github": "https://github.com/prasmit2410",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "license": "MIT",
+                "name": "Native Brightness Shortcut (Always On Top)",
+                "version": "1.0.0"
+            }
+        },
         "native-titlebars-uwp-lite": {
             "details": {
                 "defaultSorting": 693,
@@ -5551,6 +5635,33 @@
                 "version": "1.0.0"
             }
         },
+        "no-sumatrapdf-drag-cursor": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1773148884000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1773148884000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "ItsProfessional",
+                "description": "Remove the drag cursor which is shown when panning a document by dragging with the cursor.",
+                "github": "https://github.com/ItsProfessional",
+                "include": [
+                    "SumatraPDF.exe"
+                ],
+                "name": "No SumatraPDF Drag Cursor",
+                "version": "1.0.0"
+            }
+        },
         "no-taskbar-item-glow": {
             "details": {
                 "defaultSorting": 1040,
@@ -5754,6 +5865,34 @@
                 "name": "Customize Windows notifications placement",
                 "twitter": "https://twitter.com/m417z",
                 "version": "1.2.2"
+            }
+        },
+        "numbered-taskbar": {
+            "details": {
+                "defaultSorting": 135,
+                "published": 1773076919000,
+                "rating": 9,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    1,
+                    2
+                ],
+                "ratingUsers": 3,
+                "updated": 1773076919000,
+                "users": 15
+            },
+            "metadata": {
+                "author": "maciejlewand72",
+                "compilerOptions": "-luiautomationcore -lcomdlg32 -lole32 -loleaut32 -luser32 -lgdi32 -luuid -ld2d1 -ldwrite",
+                "description": "Adds numbers (1-0) to taskbar icons corresponding to Win + Number shortcut",
+                "github": "https://github.com/maciejlewand72",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Numbered taskbar",
+                "version": "1.0.0"
             }
         },
         "office-ui-reverter": {
@@ -6039,6 +6178,38 @@
                 ],
                 "name": "Per-Application UI Language",
                 "version": "1.0.0"
+            }
+        },
+        "photos-fullscreen": {
+            "details": {
+                "defaultSorting": 126,
+                "published": 1773099992000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1773099992000,
+                "users": 14
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "mak7im01",
+                "compilerOptions": "-luser32",
+                "description": "Forces Windows Photos app to open in fullscreen mode instead of windowed mode",
+                "github": "https://github.com/mak7im01",
+                "include": [
+                    "Microsoft.Photos.exe",
+                    "Photos.exe"
+                ],
+                "name": "Windows Photos Fullscreen Mode",
+                "version": "1.0.3"
             }
         },
         "pinned-items-double-click": {
@@ -6561,6 +6732,37 @@
                 "license": "GPL-3.0",
                 "name": "Restore Explorer \"Exploring\" Mode",
                 "version": "1.2.0"
+            }
+        },
+        "restore-folder-menubar-25h2": {
+            "details": {
+                "defaultSorting": 18,
+                "published": 1773138544000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1773138544000,
+                "users": 2
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Anixx",
+                "compilerOptions": "-lcomctl32",
+                "description": "Restores the menubar in folder windows in 24h2, 25h2 and later",
+                "github": "https://github.com/Anixx",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Restore folder menubar in 24h2, 25h2",
+                "version": "1.0.0"
             }
         },
         "ribbon-caption-icon-fix": {
@@ -7554,6 +7756,38 @@
                 ],
                 "name": "Taskbar ContentPresenter Injector",
                 "version": "1.2"
+            }
+        },
+        "taskbar-desktop-indicator": {
+            "details": {
+                "defaultSorting": 220,
+                "published": 1773076456000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    5
+                ],
+                "ratingUsers": 5,
+                "updated": 1773138607000,
+                "users": 22
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Simon Benedict",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
+                "description": "Displays the current virtual desktop as a number or marker in the Windows 11 taskbar clock area",
+                "github": "https://github.com/simon-ami",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Taskbar Desktop Indicator",
+                "version": "1.2.1"
             }
         },
         "taskbar-disappearing-icon-fix-win11": {
@@ -9531,7 +9765,7 @@
                     3
                 ],
                 "ratingUsers": 4,
-                "updated": 1659090573000,
+                "updated": 1773070854000,
                 "users": 142
             },
             "metadata": {
@@ -9545,7 +9779,7 @@
                 ],
                 "name": "VSCode Tweaker",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.0.1"
+                "version": "1.1"
             }
         },
         "w11-dwm-fix": {
@@ -10500,7 +10734,7 @@
                     4
                 ],
                 "ratingUsers": 4,
-                "updated": 1772421434000,
+                "updated": 1773067950000,
                 "users": 96
             },
             "metadata": {
@@ -10514,7 +10748,7 @@
                     "WINWORD.EXE"
                 ],
                 "name": "Word Local AutoSave",
-                "version": "2.0"
+                "version": "2.1"
             }
         },
         "xs-discord-control-registered-games": {
