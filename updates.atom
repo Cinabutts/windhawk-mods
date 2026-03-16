@@ -2,12 +2,122 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-10T13:21:24.000Z</updated>
+    <updated>2026-03-15T11:07:06.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Tiling Helper 2.0.0]]></title>
+        <id>https://windhawk.net/mods/tiling-helper#b25cbfb1fa555527b71e6c68a5ddedd4816e51b5</id>
+        <link href="https://windhawk.net/mods/tiling-helper"/>
+        <updated>2026-03-15T11:07:06.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Reworked Tiling Helper around a simpler always-on <code>Master+Stack</code> workflow. After tiling a monitor, windows stay managed until automatic tiling is paused.</li>
+<li>Dragging a tiled window now untile it and removes it from the current layout, while the remaining tiled windows are rearranged automatically.</li>
+<li>Removed layout cycling and the extra layouts, and focused the settings on a single configurable <code>Master+Stack</code> layout with horizontal/vertical orientation and adjustable master size.</li>
+<li>Updated hotkeys and controls: the retile toggle now pauses/resumes automatic tiling without disabling manual tiling, and a new shortcut can switch which window is the master.</li>
+</ul>
+<p>Credit to @Meteony for the majority of code changes in this release.</p>]]></content>
+        <author>
+            <name>u2x1</name>
+            <uri>https://github.com/u2x1</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.4]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-styler#7e05bbe573b538403775170df7259a4f434e20f3</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
+        <updated>2026-03-15T00:23:45.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added more layout options to the mod settings. Now the classic layout with Phone Link can be selected, as well as the new (redesigned) layout.</li>
+<li>Added the following themes: SunValley, LiquidGlass, Windows10X, TintedGlass.</li>
+<li>Update the following themes:</li>
+<li>Classic start menu: TranslucentStartMenu, NoRecommendedSection, Down Aero.</li>
+<li>Redesigned start menu: Windows10<em>Minimal, Windows11</em>Metro10, Windows11_Metro10Minimal, SunValley (Legacy, formerly 21996), OnlySearch, WindowGlass, Oversimplified&amp;Accentuated.</li>
+<li>Both variants: SideBySide, SideBySide2, SideBySideMinimal, UniMenu.</li>
+<li>Added the following properties to <code>WindhawkBlur</code>: <code>TintLuminosityOpacity</code>, <code>TintSaturation</code>, <code>NoiseOpacity</code>, and <code>NoiseDensity</code>. The implementation was contributed by <a href="https://github.com/Lockframe">Jhen</a>. For details, refer to <a href="https://github.com/ramensoftware/windows-11-start-menu-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
+<li>Added a way to define theme-aware resources. For example, different colors for an element can be defined for light mode and dark mode.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Disk Usage Bar in Drive Properties 1.2]]></title>
+        <id>https://windhawk.net/mods/disk-usage-bar-in-drive-properties#7749d8190cab3e0f243aed47c317204e64bf21e9</id>
+        <link href="https://windhawk.net/mods/disk-usage-bar-in-drive-properties"/>
+        <updated>2026-03-14T14:14:05.000Z</updated>
+        <content type="html"><![CDATA[<p>Added an option to hide the "Details" (Windows 11) or "Disk Clean-up" (Windows 8.1/10) button, which is recommended for localized systems to prevent a UI collision with a long "Space used" string for the disk usage percentage text.</p>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar: no minimize on click 1.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-no-minimize#4dc3292c7ed8bec555e8ce057dc2e78acfd86e19</id>
+        <link href="https://windhawk.net/mods/taskbar-no-minimize"/>
+        <updated>2026-03-13T10:42:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="taskbarnominimizeonclick">Taskbar: no minimize on click</h1>
+<p>Disable the "minimize window" function when clicking an already active window on
+the taskbar. When you click a taskbar button for a window that is already in the
+foreground, the window will stay in place instead of being minimized.</p>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VLC Discord Rich Presence 1.1.3]]></title>
+        <id>https://windhawk.net/mods/vlc-discord-rpc#9f9bae05d7e71f4194161e0eafabfe182458ff1c</id>
+        <link href="https://windhawk.net/mods/vlc-discord-rpc"/>
+        <updated>2026-03-12T22:16:57.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Fixed slow Discord status updates:</strong></p>
+<ul>
+<li>Your status now updates instantly when a song or video changes. Cover art uploading now runs in the background, so Discord no longer freezes while waiting for images.</li>
+</ul>
+<p><strong>Fixed local album art not showing:</strong></p>
+<ul>
+<li>Some users could not upload local artwork because our previous image host (~~<code>0x0.st</code>~~) was silently blocking certain connections. We have switched to <code>uguu.se</code>, which is more reliable and automatically deletes images after 24 hours.</li>
+</ul>
+<p><strong>New "Minimal Mode" toggle:</strong></p>
+<ul>
+<li>You can now enable Minimal Mode in the settings. Instead of choosing a separate theme, this toggle hides the play/pause/stop badges while keeping your current theme (such as Dark Mode) active. This allows the cover art to fill the entire square.</li>
+</ul>
+<p><strong>Formatting and search improvements:</strong></p>
+<ul>
+<li>Episode formatting now uses proper spacing (e.g., S01 E01 instead of S01E01). This improves readability and makes the Search This button results more accurate.</li>
+</ul>]]></content>
+        <author>
+            <name>ciizerr</name>
+            <uri>https://github.com/ciizerr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Classic Theme 1.2.3]]></title>
+        <id>https://windhawk.net/mods/classic-theme-enable#e1b8e2ff94ab78003a632952e797e356b2b81a76</id>
+        <link href="https://windhawk.net/mods/classic-theme-enable"/>
+        <updated>2026-03-12T13:35:26.000Z</updated>
+        <content type="html"><![CDATA[<p>update readme</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Win10 taskbar on Win11 24H2 or 25H2 0.1.7]]></title>
+        <id>https://windhawk.net/mods/win10-taskbar-on-win11-24h2#5e2b846e45baaa08bd60622c5d694d981ed93f9f</id>
+        <link href="https://windhawk.net/mods/win10-taskbar-on-win11-24h2"/>
+        <updated>2026-03-12T13:32:38.000Z</updated>
+        <content type="html"><![CDATA[<p>update readme</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[No SumatraPDF Drag Cursor 1.0.0]]></title>
         <id>https://windhawk.net/mods/no-sumatrapdf-drag-cursor#df31498aec56f9a9cb1a8944f2120af88ed38b4a</id>
@@ -287,189 +397,6 @@ Restarting Explorer is recommended after installing the mod.</p>
         <author>
             <name>communism420</name>
             <uri>https://github.com/communism420</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[WinUI Context Menu Animation 1.0.1]]></title>
-        <id>https://windhawk.net/mods/winui-context-menu-animation#9af17d490cabe9f9f226b3aa19476b935e64b7ec</id>
-        <link href="https://windhawk.net/mods/winui-context-menu-animation"/>
-        <updated>2026-03-08T22:16:11.000Z</updated>
-        <content type="html"><![CDATA[<p>Migrating to per-pixel alpha compositing via UpdateLayeredWindow to eliminate the flashbang bug and added Translucent Windows compatibility mode</p>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Auto Theme Switcher 1.2.0]]></title>
-        <id>https://windhawk.net/mods/auto-theme-switcher#ecdc1c019b82241836f41cdf8a8ec62c5c91cccd</id>
-        <link href="https://windhawk.net/mods/auto-theme-switcher"/>
-        <updated>2026-03-08T20:18:53.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed issues with Hibernation</li>
-<li>Fixed issues with applying Lock Screen Wallpaper</li>
-<li>Fixed instability issues caused by Location Access not being available before being logged in</li>
-<li>Allows Lock Screen Wallpaper change before logged in</li>
-<li>Allows specifying seconds for "Custom Hours" scheduling mode</li>
-<li>Improved Structure</li>
-</ul>]]></content>
-        <author>
-            <name>tinodin</name>
-            <uri>https://github.com/tinodin</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CEF/Spotify Tweaks 1.7]]></title>
-        <id>https://windhawk.net/mods/cef-titlebar-enabler-universal#fd34fadeb640a2fcee887aa02773f8c66c35f6aa</id>
-        <link href="https://windhawk.net/mods/cef-titlebar-enabler-universal"/>
-        <updated>2026-03-08T12:36:33.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Add support for Spotify 1.2.81 to 1.2.85 (CEF 144)</li>
-<li>Add proper support for the ARM64 version of the Spotify client, including the transparent rendering feature</li>
-</ul>]]></content>
-        <author>
-            <name>Ingan121</name>
-            <uri>https://github.com/Ingan121</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 10 Taskbar Context Menu Fix for Win11 24H2+ 1.2]]></title>
-        <id>https://windhawk.net/mods/win10-taskbar-context-menu-fix-24h2#49305bed9ea78e471a174bc599d3de9d08df0a9a</id>
-        <link href="https://windhawk.net/mods/win10-taskbar-context-menu-fix-24h2"/>
-        <updated>2026-03-05T12:47:19.000Z</updated>
-        <content type="html"><![CDATA[<p>Localize locking the taskbar item</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[WinUI Context Menu Animation 1.0]]></title>
-        <id>https://windhawk.net/mods/winui-context-menu-animation#5de798ced9a02dfd9c48f2728fd11ddf9e4acdfa</id>
-        <link href="https://windhawk.net/mods/winui-context-menu-animation"/>
-        <updated>2026-03-05T10:45:51.000Z</updated>
-        <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/crazyboyybs/assets/refs/heads/main/Menu%20de%20Contexto%20com%20Anima%C3%A7%C3%A3o%20WinUI.gif" alt="Preview" />
-<img src="https://raw.githubusercontent.com/crazyboyybs/assets/refs/heads/main/Menu%20de%20Contexto%202%20com%20Anima%C3%A7%C3%A3o%20WinUI.gif" alt="Preview" /></p>
-<h1 id="winuicontextmenuanimation">WinUI Context Menu Animation</h1>
-<h2 id="english">English</h2>
-<p>This mod brings the smooth vertical slide animation used in modern <strong>WinUI applications</strong>
-to classic <strong>Win32 context menus and popup menus</strong> in Windows 11.</p>
-<p>Instead of appearing instantly, menus smoothly slide into view using a <strong>WinUI-style
-cubic-bezier easing curve</strong> combined with a subtle fade-in.</p>
-<p>Each menu and submenu independently determines whether it should animate <strong>upward or
-downward</strong> based on its actual position on the screen. This ensures consistent behavior
-with how Windows naturally flips menus near screen edges.</p>
-<h3 id="features">Features</h3>
-<p>• Smooth WinUI-style vertical slide animation<br />
-• Configurable animation and fade times<br />
-• Accurate cubic-bezier easing matching modern Windows apps<br />
-• Independent direction detection for menus and submenus<br />
-• Compatible with context menus, menu bars, and nested submenus<br />
-• Lightweight implementation using native Win32 hooks</p>
-<h3 id="credits">Credits</h3>
-<p>This mod is based on the excellent work by <strong>aubymori</strong>:</p>
-<p>Menu/Tooltip Slide Animation<br />
-https://windhawk.net/mods/menu-tooltip-slide-animation</p>
-<p>The original mod restored the classic Windows 98/XP menu animation system.
-This fork adapts the animation engine to replicate the <strong>modern WinUI motion style</strong>
-used throughout Windows 11.</p>
-<p>Changes in this version include:</p>
-<p>• Replacing the classic animation with a WinUI-style vertical easing motion<br />
-• Removing tooltip animation logic<br />
-• Removing horizontal animation<br />
-• Improving submenu direction detection<br />
-• Implementing an accurate cubic-bezier solver for smooth motion</p>
-<hr />
-<h2 id="portugusbrasil">Português (Brasil)</h2>
-<p>Este mod traz a animação suave de <strong>deslizamento vertical usada em aplicativos
-modernos com WinUI</strong> para os <strong>menus de contexto e menus popup clássicos do Win32</strong>
-no Windows 11.</p>
-<p>Em vez de aparecerem instantaneamente, os menus passam a surgir com um movimento
-suave utilizando uma <strong>curva de easing cubic-bezier semelhante à do WinUI</strong>,
-acompanhada por um leve efeito de fade-in.</p>
-<p>Cada menu e submenu determina <strong>de forma independente</strong> se deve animar para cima
-ou para baixo com base em sua posição real na tela. Isso garante um comportamento
-natural quando o menu precisa inverter sua direção próximo às bordas da tela.</p>
-<h3 id="recursos">Recursos</h3>
-<p>• Animação vertical suave inspirada no WinUI<br />
-• Tempo de animação e fade configuráveis<br />
-• Curva de easing cubic-bezier equivalente à usada no Windows moderno<br />
-• Detecção independente de direção para menus e submenus<br />
-• Compatível com menus de contexto, barras de menu e submenus aninhados<br />
-• Implementação leve baseada em hooks nativos do Win32</p>
-<h3 id="crditos">Créditos</h3>
-<p>Este mod é baseado no trabalho de <strong>aubymori</strong>:</p>
-<p>Menu/Tooltip Slide Animation<br />
-https://windhawk.net/mods/menu-tooltip-slide-animation</p>
-<p>O mod original restaurava as animações clássicas de menus do Windows 98/XP.
-Esta versão adapta o mecanismo de animação para reproduzir o <strong>estilo de
-movimento moderno do WinUI presente no Windows 11</strong>.</p>
-<p>Principais mudanças nesta versão:</p>
-<p>• Substituição da animação clássica por movimento vertical estilo WinUI<br />
-• Remoção da animação de tooltips<br />
-• Remoção da animação horizontal<br />
-• Melhoria na detecção de direção de submenus<br />
-• Implementação de um solver cubic-bezier preciso para animação suave</p>
-<hr />
-<h2 id="espaol">Español</h2>
-<p>Este mod añade la animación vertical suave utilizada en las <strong>aplicaciones modernas
-basadas en WinUI</strong> a los <strong>menús de contexto y menús emergentes clásicos de Win32</strong>
-en Windows 11.</p>
-<p>En lugar de aparecer instantáneamente, los menús se deslizan suavemente utilizando
-una <strong>curva de easing cubic-bezier similar a la del WinUI</strong>, combinada con un
-ligero efecto de aparición gradual (fade-in).</p>
-<p>Cada menú y submenú determina <strong>de forma independiente</strong> si debe animarse hacia
-arriba o hacia abajo según su posición real en la pantalla, manteniendo un
-comportamiento natural cuando Windows invierte la dirección cerca de los bordes.</p>
-<h3 id="caractersticas">Características</h3>
-<p>• Animación vertical suave inspirada en WinUI<br />
-• Tiempos de animación y desvanecimiento configurables<br />
-• Curva de easing cubic-bezier equivalente a la usada en Windows moderno<br />
-• Detección independiente de dirección para menús y submenús<br />
-• Compatible con menús de contexto, barras de menú y submenús anidados<br />
-• Implementación ligera basada en hooks nativos de Win32</p>
-<h3 id="crditos-1">Créditos</h3>
-<p>Este mod está basado en el trabajo de <strong>aubymori</strong>:</p>
-<p>Menu/Tooltip Slide Animation<br />
-https://windhawk.net/mods/menu-tooltip-slide-animation</p>
-<p>El mod original restauraba las animaciones clásicas de menús de Windows 98/XP.
-Esta versión adapta el motor de animación para reproducir el <strong>estilo de
-movimiento moderno de WinUI utilizado en Windows 11</strong>.</p>
-<p>Cambios principales en esta versión:</p>
-<p>• Reemplazo de la animación clásica por movimiento vertical estilo WinUI<br />
-• Eliminación de la animación de tooltips<br />
-• Eliminación de la animación horizontal<br />
-• Mejora en la detección de dirección de submenús<br />
-• Implementación precisa de la curva cubic-bezier</p>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remove Context Menu Items 1.7.1]]></title>
-        <id>https://windhawk.net/mods/remove-context-menu-items#5d5ac123fe3725cd883374758ac47def57af8891</id>
-        <link href="https://windhawk.net/mods/remove-context-menu-items"/>
-        <updated>2026-03-04T18:35:00.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Renamed mod from <code>Remove Unwanted Context Menu Items (Classic Menu Only)</code> back to <code>Remove Context Menu Items</code>.</li>
-<li>Renamed <code>Edit in Notepad++</code> to <code>Edit with Notepad++</code> throughout.</li>
-<li>Cleaned up minor description and formatting inconsistencies.</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Legacy (Win32) sound volume flyout 2.0.0]]></title>
-        <id>https://windhawk.net/mods/legacy-sound-flyout#211f737a1a4504166562f3782db20c86eec52a84</id>
-        <link href="https://windhawk.net/mods/legacy-sound-flyout"/>
-        <updated>2026-03-04T17:58:39.000Z</updated>
-        <content type="html"><![CDATA[<p>New method, support for 24h2 and later</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
         </author>
     </entry>
 </feed>

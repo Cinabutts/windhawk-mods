@@ -1534,7 +1534,7 @@
                     8
                 ],
                 "ratingUsers": 10,
-                "updated": 1772049550000,
+                "updated": 1773322526000,
                 "users": 212
             },
             "metadata": {
@@ -1546,7 +1546,7 @@
                     "winlogon.exe"
                 ],
                 "name": "Classic Theme",
-                "version": "1.2.2"
+                "version": "1.2.3"
             }
         },
         "classic-theme-enable-with-extended-compatibility": {
@@ -2724,7 +2724,7 @@
                     13
                 ],
                 "ratingUsers": 14,
-                "updated": 1773069962000,
+                "updated": 1773497645000,
                 "users": 300
             },
             "metadata": {
@@ -2736,7 +2736,7 @@
                     "*"
                 ],
                 "name": "Disk Usage Bar in Drive Properties",
-                "version": "1.1"
+                "version": "1.2"
             }
         },
         "dot-hide": {
@@ -8258,6 +8258,39 @@
                 "version": "3.0"
             }
         },
+        "taskbar-no-minimize": {
+            "details": {
+                "defaultSorting": 230,
+                "published": 1773398540000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    2
+                ],
+                "ratingUsers": 2,
+                "updated": 1773398540000,
+                "users": 23
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "m417z",
+                "compilerOptions": "-lversion",
+                "description": "Disable the minimize window function when clicking an already active window on the taskbar",
+                "github": "https://github.com/m417z",
+                "homepage": "https://m417z.com/",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Taskbar: no minimize on click",
+                "twitter": "https://twitter.com/m417z",
+                "version": "1.0"
+            }
+        },
         "taskbar-notification-icon-spacing": {
             "details": {
                 "defaultSorting": 256040,
@@ -9045,7 +9078,7 @@
                     1
                 ],
                 "ratingUsers": 1,
-                "updated": 1771266574000,
+                "updated": 1773572826000,
                 "users": 28
             },
             "metadata": {
@@ -9057,7 +9090,7 @@
                     "windhawk.exe"
                 ],
                 "name": "Tiling Helper",
-                "version": "1.0.0"
+                "version": "2.0.0"
             }
         },
         "timer-resolution-control": {
@@ -9638,7 +9671,7 @@
                     3
                 ],
                 "ratingUsers": 4,
-                "updated": 1772197351000,
+                "updated": 1773353817000,
                 "users": 127
             },
             "metadata": {
@@ -9655,7 +9688,7 @@
                     "vlc.exe"
                 ],
                 "name": "VLC Discord Rich Presence",
-                "version": "1.1.2"
+                "version": "1.1.3"
             }
         },
         "vmware-disable-upgrade-dialog": {
@@ -9942,7 +9975,7 @@
                     6
                 ],
                 "ratingUsers": 10,
-                "updated": 1772271643000,
+                "updated": 1773322358000,
                 "users": 284
             },
             "metadata": {
@@ -9957,7 +9990,7 @@
                     "userinit.exe"
                 ],
                 "name": "Win10 taskbar on Win11 24H2 or 25H2",
-                "version": "0.1.6"
+                "version": "0.1.7"
             }
         },
         "win10-taskbar-per-app-volume-control": {
@@ -10549,7 +10582,7 @@
                     4456
                 ],
                 "ratingUsers": 5285,
-                "updated": 1761328425000,
+                "updated": 1773534225000,
                 "users": 504710
             },
             "featured": true,
@@ -10569,7 +10602,7 @@
                 ],
                 "name": "Windows 11 Start Menu Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3.3"
+                "version": "1.4"
             }
         },
         "windows-11-taskbar-styler": {
