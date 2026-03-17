@@ -4640,6 +4640,36 @@
                 "version": "1"
             }
         },
+        "keep-rainmeter-always-bottom": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1773693603000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1773693603000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "BCRTVKCS",
+                "compilerOptions": "-luser32 -lkernel32",
+                "description": "Keeps Rainmeter windows to stay on desktop.",
+                "github": "https://github.com/bcrtvkcs",
+                "homepage": "https://grdigital.pro",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Keep Rainmeter Always on Desktop",
+                "twitter": "https://x.com/bcrtvkcs",
+                "version": "1.1.2"
+            }
+        },
         "keyboard-shortcut-actions": {
             "details": {
                 "defaultSorting": 1210,
@@ -7379,7 +7409,7 @@
                     27
                 ],
                 "ratingUsers": 33,
-                "updated": 1752899517000,
+                "updated": 1773707576000,
                 "users": 1010
             },
             "metadata": {
@@ -7387,16 +7417,16 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-ldwmapi -lversion",
-                "description": "When taskbar auto-hide is enabled, the taskbar will only be unhidden with the keyboard, hovering the mouse over the taskbar will not unhide it",
+                "compilerOptions": "-lcomctl32 -ldwmapi -loleaut32 -lruntimeobject -lversion",
+                "description": "Fine-tune taskbar auto-hide: keyboard-only unhide, prevent the taskbar from showing at all, hotkeys and mouse events to show or toggle visibility",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
                 "include": [
                     "explorer.exe"
                 ],
-                "name": "Taskbar keyboard-only auto-hide",
+                "name": "Taskbar auto-hide fine tuning",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.1.2"
+                "version": "2.0"
             }
         },
         "taskbar-auto-hide-per-monitor": {
