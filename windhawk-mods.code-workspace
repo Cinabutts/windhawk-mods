@@ -1,29 +1,61 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"launch": {
-		"version": "0.2.0",
-		"configurations": [
-			{
-				"name": "Attach to Process (Pick)",
-				"type": "lldb",
-				"request": "attach",
-				"pid": "${command:pickMyProcess}"
-			},
-			{
-				"name": "Attach to Explorer",
-				"type": "lldb",
-				"request": "attach",
-				"program": "C:\\Windows\\explorer.exe"
-			}
-		]
-	},
-	"tasks": {
-		"version": "2.0.0",
-		"tasks": [
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Attach to Process (Pick)",
+                "type": "lldb",
+                "request": "attach",
+                "pid": "${command:pickMyProcess}"
+            },
+            {
+                "name": "Attach to Explorer",
+                "type": "lldb",
+                "request": "attach",
+                "program": "C:\\Windows\\explorer.exe"
+            }
+        ]
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Open Github Desktop",
+                "type": "process",
+                "command": "powershell",
+                "args":[
+                    "-WindowStyle", "Hidden",
+                    "-NoProfile",
+                    "-Command",
+                    "if (Get-Process GitHubDesktop -ErrorAction SilentlyContinue) { exit 0 }; Start-Process -FilePath \"${env:LOCALAPPDATA}\\GitHubDesktop\\GitHubDesktop.exe\"; $i=0; while($i -lt 20) { $p = Get-Process GitHubDesktop -ErrorAction SilentlyContinue | Where-Object {$_.MainWindowHandle -ne 0} | Select-Object -First 1; if ($p) { break }; Start-Sleep -Milliseconds 500; $i++ }; if ($p) { $u='[DllImport(\"user32.dll\")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); [DllImport(\"user32.dll\")] public static extern bool SetForegroundWindow(IntPtr hWnd);'; $t = Add-Type -MemberDefinition $u -Name Win32 -Namespace Win32 -PassThru; $t::ShowWindowAsync($p.MainWindowHandle, 7); $v = Get-Process Code | Where-Object {$_.MainWindowTitle -match 'Visual Studio Code'} | Select-Object -First 1; if ($v) { $t::SetForegroundWindow($v.MainWindowHandle) } }"
+                ],
+                "presentation": {
+                    "echo": false,
+                    "reveal": "never",
+                    "focus": false,
+                    "panel": "shared",
+                    "showReuseMessage": false,
+                    "clear": true,
+                    "close": true
+                },
+                "runOptions": {
+                    "runOn": "folderOpen",
+                    "instanceLimit": 1,
+                    "instancePolicy": "silent",
+                    "reevaluateOnRerun": true
+                },
+                "problemMatcher":[],
+                "icon": {
+                    "id": "github"
+                },
+                    "promptOnClose": false,
+                    "isBackground": false
+            },
             {
                 "label": "Deploy Mod Source",
                 "type": "process",
@@ -38,6 +70,35 @@
                     "if ('${fileExtname}' -ne '.cpp' -or '${fileBasename}' -notlike '*.wh.cpp') { Write-Host 'Error: Not a .wh.cpp file' -ForegroundColor Red; exit 1 }; $modId = ('${fileBasenameNoExtension}' -replace '\\.wh$',''); $dest = ('C:/ProgramData/Windhawk/ModsSource/local@' + $modId + '.wh.cpp'); Copy-Item -Path '${file}' -Destination $dest -Force; Write-Host ('Deployed: ' + $dest) -ForegroundColor Green",
                     "-WorkingDirectory",
                     "${workspaceFolder}"
+                ],
+                "presentation": {
+                    "reveal": "always",
+                    "panel": "shared"
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Sync Main from Upstream",
+                "type": "shell",
+                "command": "git fetch upstream main:main && git push origin main",
+                "presentation": {
+                    "reveal": "always",
+                    "panel": "shared",
+                    "clear": false,
+                    "showReuseMessage": false
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Tail Windhawk Mod Log (by mod-id)",
+                "type": "process",
+                "command": "pwsh",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command",
+                    "$logDir = 'C:\\ProgramData\\Windhawk\\UIData\\user-data\\logs'; if (-not (Test-Path $logDir)) { Write-Host 'Log dir not found' -ForegroundColor Yellow; exit 1 }; $modId = '${fileBasenameNoExtension}'; if ($modId -match '\\.wh$') { $modId = ($modId -replace '\\.wh$','') }; $candidates = Get-ChildItem -Path $logDir -Filter '*.log' -File | Sort-Object LastWriteTime -Descending; foreach ($f in $candidates) { $lines = Get-Content -Path $f.FullName -TotalCount 4 -ErrorAction SilentlyContinue; if ($lines -and ($lines -join ' ' -match [regex]::Escape($modId))) { Write-Host ('Tailing: ' + $f.FullName) -ForegroundColor Green; Get-Content -Path $f.FullName -Wait -Tail 0; exit 0 } }; Write-Host 'No matching log found' -ForegroundColor Yellow; exit 1"
                 ],
                 "presentation": {
                     "reveal": "always",
@@ -177,62 +238,253 @@
                     "focus": true
                 },
                 "problemMatcher": []
+            },
+            {
+                "label": "Kill Extra Explorer Processes",
+                "type": "process",
+                "command": "python",
+                "args": [
+                    "${workspaceFolder}/scripts/kill_extra_explorers.py"
+                ],
+                "presentation": {
+                    "reveal": "always",
+                    "panel": "shared",
+                    "focus": true,
+                    "close": true
+                },
+                "problemMatcher": []
+            },
+            {
+                "label": "Compile Mod to References (Verbose)",
+                "type": "shell",
+                "command": "python",
+                "args": [
+                    "${workspaceFolder}/scripts/compile_mod.py",
+                    "--windhawk-dir",
+                    "\"C:/Program Files/Windhawk\"",
+                    "--mod-files",
+                    "\"${file}\"",
+                    "--output-32",
+                    "\"${workspaceFolder}/reference/${fileBasenameNoExtension}-x86.dll\"",
+                    "--output-64",
+                    "\"${workspaceFolder}/reference/${fileBasenameNoExtension}-x64.dll\"",
+                    "--output-arm64",
+                    "\"${workspaceFolder}/reference/${fileBasenameNoExtension}-arm64.dll\"",
+                    "2>&1",
+                    "|",
+                    "Tee-Object",
+                    "-Variable",
+                    "output;",
+                    "Write-Host",
+                    "'Compilation complete!'",
+                    "-ForegroundColor",
+                    "Green"
+                ],
+                "options": {
+                    "shell": {
+                        "executable": "powershell.exe",
+                        "args": [
+                            "-NoProfile",
+                            "-Command"
+                        ]
+                    }
+                },
+                "presentation": {
+                    "reveal": "always",
+                    "panel": "dedicated",
+                    "focus": true,
+                    "echo": true
+                },
+                "problemMatcher": {
+                    "owner": "cpp",
+                    "fileLocation": [
+                        "absolute"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error|note):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                }
             }
         ]
-	},
-	"settings": {
-		"mcp": {
-			"inputs": [],
-			"servers": {}
-		},
-		"files.exclude": {
-			"**/.git": false,
-			"**/.svn": false,
-			"**/.hg": false,
-			"**/.DS_Store": false,
-			"**/Thumbs.db": false,
-			".vscode/record/**/*": false,
-			"**/desktop-icons-toggle.wh.cpp": false,
-			"**/newfile.json": false,
-			"newfile.json": false,
-			".vscode/*.*": false
-		},
-		"outline.showModules": true,
-		"outline.showNamespaces": true,
-		"explorerExclude.backup": {},
-		"chat.mcp.serverSampling": {
-			"windhawk-mods.code-workspace: files": {
-				"allowedModels": [
-					"copilot/claude-sonnet-4.5",
-					"copilot/auto",
-					"copilot/claude-haiku-4.5",
-					"copilot/claude-opus-4.5",
-					"copilot/claude-sonnet-4",
-					"copilot/gemini-2.5-pro",
-					"copilot/gemini-3-flash-preview",
-					"copilot/gemini-3-pro-preview",
-					"openai/gpt-4.1",
-					"copilot/gpt-4.1",
-					"openai/gpt-4.1-mini",
-					"copilot/gpt-4o",
-					"openai/gpt-4o-2024-11-20",
-					"openai/gpt-5",
-					"copilot/gpt-5",
-					"copilot/gpt-5-mini",
-					"openai/gpt-5-mini",
-					"copilot/gpt-5-codex",
-					"copilot/gpt-5.1",
-					"copilot/gpt-5.1-codex",
-					"copilot/gpt-5.1-codex-max",
-					"copilot/gpt-5.1-codex-mini",
-					"copilot/gpt-5.2",
-					"copilot/grok-code-fast-1",
-					"copilot/oswe-vscode-prime"
-				]
-			}
+    },
+    "settings": {
+        "explorer.autoReveal": true,
+        "editor.minimap.scale": 2,
+        "editor.minimap.renderCharacters": true,
+
+        // == Git Configuration ==
+        "git.autofetch": true,
+        "git.autorefresh": true,
+        "git.autofetchPeriod": 1200,
+        "git.branchProtection": [
+            "main",
+            "upstream/main",
+            "upstream/pages",
+            "origin/pages"
+        ],
+        "git.blame.editorDecoration.enabled": true,
+        "git.blame.statusBarItem.enabled": true,
+
+        // === CRITICAL FIX: Disable Microsoft C/C++ IntelliSense to prevent conflicts with clangd ===
+        "C_Cpp.intelliSenseEngine": "disabled",
+        "C_Cpp.autocomplete": "disabled",
+        "C_Cpp.errorSquiggles": "disabled",
+        "C_Cpp.formatting": "disabled",
+        // === clangd Configuration ===
+        "clangd.enable": true,
+        "clangd.enableHover": true,
+        // "clangd.trace": "taskbar-music-lounge-pro.wh.cpp", // Log clangd messages to a file for debugging
+        "clangd.detectExtensionConflicts": true,
+        "clangd.documentation": {
+            "^std::.*": "https://duckduckgo.com/?q=!ducky+site:cppreference.com+{{symbol}}",
+            "^boost::.*": "https://duckduckgo.com/?q=!ducky+site:www.boost.org+{{symbol}}"
         },
+        "clangd.enableCodeCompletion": true,
+        "clangd.serverCompletionRanking": true,
+        "clangd.checkUpdates": false,   // ONLY update once you verify within the Windhawk UI under the Terminal's `Clangd` Output.
+        "clangd.arguments": [
+            // "--log=verbose", // Helps debug issues
+            "--pretty", // Better formatted output
+            "--background-index", // Index files in background for faster search
+            "--completion-style=detailed", // Better autocomplete
+            "--header-insertion=never", // Don't auto-add #includes (can be annoying)
+            "--pch-storage=memory", // Store precompiled headers in RAM (faster)
+            // "--clang-tidy-checks=-misc-include-cleaner",    // Suppress overly aggressive "unused include" warnings from clangd
+            "-j=4" // Use 4 threads for parsing
+        ],
+        // Show inlay hints for parameter names and type deductions
+        "clangd.inactiveRegions.useBackgroundHighlight": true,
+        // Enable semantic highlighting (better syntax coloring)
+        "editor.semanticHighlighting.enabled": true,
+        // === File Associations ===
+        "files.associations": {
+            "*.wh.cpp": "cpp"
+        },
+        // === C++ Editor Settings ===
+        "[cpp]": {
+            "editor.formatOnSave": false,
+            "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+            // "editor.unicodeHighlight.nonBasicASCII": true,
+            "editor.allowVariableLineHeights": true,
+            // "editor.defaultFoldingRangeProvider": "ms-vscode.cpptools"
+            "editor.defaultFoldingRangeProvider": "MohammadBaqer.better-folding"
+        },
+        "[jsonc]": {
+            "editor.defaultFormatter": "vscode.json-language-features"
+        },
+        "workbench.colorCustomizations": {
+            "regionmarker.background": "#ff3b9833",
+            "regionmarker.foreground": "#ff3b98ff",
+            "activityBar.activeBackground": "#022b66",
+            "activityBar.background": "#022b66",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#bc044f",
+            "activityBarBadge.foreground": "#e7e7e7",
+            "commandCenter.border": "#e7e7e799",
+            "sash.hoverBorder": "#022b66",
+            "statusBar.background": "#011634",
+            "statusBar.foreground": "#e7e7e7",
+            "statusBarItem.hoverBackground": "#022b66",
+            "statusBarItem.remoteBackground": "#011634",
+            "statusBarItem.remoteForeground": "#e7e7e7",
+            "titleBar.activeBackground": "#011634",
+            "titleBar.activeForeground": "#e7e7e7",
+            "titleBar.inactiveBackground": "#01163499",
+            "titleBar.inactiveForeground": "#e7e7e799"
+        },
+        "github.copilot.chat.copilotMemory.enabled": true,
+        "github.copilot.chat.enableUserPreferences": true,
+        "github.copilot.nextEditSuggestions.extendedRange": true,
+        "github.copilot.chat.agentHistorySummarizationWithPromptCache": true,
+        "github.copilot.chat.edits.gemini3MultiReplaceString": true,
+        "github.copilot.chat.anthropic.thinking.budgetTokens": 30000,
+        "github.copilot.chat.summarizeAgentConversationHistoryThreshold": 300000,
+        "github.copilot.chat.workspace.maxLocalIndexSize": 2000000, // 2 million tokens
+        "github.copilot.chat.inlineEdits.nextCursorPrediction.currentFileMaxTokens": 10000,
+        "github.copilot.chat.responsesApiReasoningEffort": "high",
+        "github.copilot.chat.reviewSelection.enabled": true,
+        "github.copilot.chat.workspace.enableFullWorkspace": true,
+        "github.copilot.chat.cli.mcp.enabled": true,
+        "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+        "github.copilot.chat.codesearch.agent.enabled": true,
+        "github.copilot.chat.projectLabels.chat": true,
+        "github.copilot.chat.projectLabels.expanded": true,
+        "github.copilot.chat.projectLabels.inline": true,
+        "github.copilot.chat.promptFileContextProvider.enabled": true,
+        "github.copilot.chat.cli.customAgents.enabled": true,
+        "github.copilot.chat.customAgentInSubagent.enabled": true,
+        "githubPullRequests.codingAgent.enabled": true,
+
+        "files.exclude": {
+            "**/.git": false,
+            "**/.svn": false,
+            "**/.hg": false,
+            "**/.DS_Store": false,
+            "**/Thumbs.db": false,
+            ".vscode/record/**/*": false,
+            "**/desktop-icons-toggle.wh.cpp": false,
+            "**/newfile.json": false,
+            "newfile.json": false,
+            "README.md": false,
+            "**/.vscode": false
+        },
+        "outline.showModules": true,
+        "outline.showNamespaces": true,
+        "outline-map.region.enabled": true,
+        "outline-map.region.highlight": true,
+        "outline-map.region.startRegion": "//^",
+        "outline-map.region.endRegion": "endregion",
+        "outline-map.workspace.IncludeSymbols": [
+            "__om_Tag__",
+            "__om_Region__"
+        ],
+        "outline-map.region.tag": "tag",
+        "outline-map.expand": "cursor",
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        // "editor.defaultFoldingRangeProvider": "ms-vscode.cpptools",
         "editor.mouseWheelZoom": true,
-        "editor.defaultFoldingRangeProvider": "ms-vscode.cpptools"
-	}
+        "editor.foldingHighlight": true,
+        "chat.tools.urls.autoApprove": {
+            "https://github.com/ramensoftware/windhawk/wiki/*": {
+                "approveRequest": false,
+                "approveResponse": true
+            },
+            "https://learn.microsoft.com/en-us/windows/*": {
+                "approveRequest": false,
+                "approveResponse": true
+            },
+            "https://windhawk.net/*": {
+                "approveRequest": false,
+                "approveResponse": true
+            },
+            "https://github.com/ramensoftware/windhawk-mods": {
+                "approveRequest": false,
+                "approveResponse": true
+            }
+        },
+        "explorerExclude.backup": {},
+        "peacock.color": "#011634",
+        "editor.tokenColorCustomizations": {
+            "comments": "",
+            "textMateRules": []
+        },
+        // Auto-save to reduce manual saves
+        // "files.autoSave": "afterDelay",
+        // "files.autoSaveDelay": 1000
+    },
+    "extensions": {
+        // "recommendations": [
+        //     "llvm-vs-code-extensions.vscode-clangd",
+        //     "drcika.apc-extension"
+        // ],
+        "unwantedRecommendations": [
+            "ms-vscode.cpptools"
+        ]
+    }
 }
