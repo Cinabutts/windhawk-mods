@@ -2251,7 +2251,6 @@ HWND WindowManager::GetTaskbar() {
 ActionDispatcher g_ActionDispatcher;
 
 // Forward declarations
-void ExecuteActionWithDelay(std::function<void()> action, float delaySeconds, const std::wstring &actionName);
 void A_StartProcess(const std::wstring &cmdString, bool bypassSingleInstanceCheck, const std::wstring &logPrefix = L"[ACTION]");
 
 // Hunt for an existing window for the AUMID, focus/restore it; fallback to ShellExecute
@@ -2669,21 +2668,21 @@ void A_PaletteSave(const std::wstring &args) {
     // 0 = overwrite slot 1 (first/oldest) directly
     // 1 = shift all down by 1 (drop last), new palette lands in slot 1
     // 2 = warn only, do not save
-    int overwriteMode = 0;
+    int cpOverwriteMode = 0;        // TODO: Implement into appropriate action with proper argument parsing and validation | Currently this is a quick hack to allow testing of the different modes without needing to implement the full argument parsing logic in the action handler | The final implementation should have robust parsing and error handling for invalid input, as well as clear `readme` documentation for users on how to specify the overwrite mode when saving palettes
     float successPulseSpeed = 1.5f;
     if (!args.empty()) {
         try {
-            overwriteMode = Clamp(std::stoi(args), 0, 2);
+            cpOverwriteMode = Clamp(std::stoi(args), 0, 2);
         } catch (...) {}
     }
 
     if ((int)saved.size() >= kMaxUserPalettes) {
-        if (overwriteMode == 2) {
+        if (cpOverwriteMode == 2) {
             Wh_Log(L"[Palette] Full (%d/%d) — overwrite suppressed (mode 2), doing nothing", kMaxUserPalettes, kMaxUserPalettes);
             PulseNotify();
             return;
         }
-        if (overwriteMode == 1) {
+        if (cpOverwriteMode == 1) {
             // Shift all entries right: last slot wraps to front, then overwrite front with new palette
             Wh_Log(L"[Palette] Full (%d/%d) — shifting all down, dropping last (mode 1)", kMaxUserPalettes, kMaxUserPalettes);
             PulseNotify(RGB(0, 255, 0), successPulseSpeed, 2);
