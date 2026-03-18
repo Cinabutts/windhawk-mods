@@ -470,10 +470,6 @@
         },
         "explorerExclude.backup": {},
         "peacock.color": "#011634",
-        "editor.tokenColorCustomizations": {
-            "comments": "",
-            "textMateRules": []
-        },
         // Auto-save to reduce manual saves
         // "files.autoSave": "afterDelay",
         // "files.autoSaveDelay": 1000
