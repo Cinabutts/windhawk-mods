@@ -383,6 +383,31 @@ using winrt::com_ptr;
 
 //! =====================================================================
 
+#pragma region raii_helpers
+
+// RAII wrapper for automatic GDI object cleanup
+// Prevents resource leaks when functions exit early or exceptions occur
+struct GDIObjectDeleter {
+    void operator()(HGDIOBJ obj) const { 
+        if (obj) DeleteObject(obj); 
+    }
+};
+using GDIObjectPtr = std::unique_ptr<std::remove_pointer<HGDIOBJ>::type, GDIObjectDeleter>;
+
+// RAII wrapper for Bitmap cleanup
+struct BitmapDeleter {
+    void operator()(Gdiplus::Bitmap* bmp) const {
+        if (bmp) delete bmp;
+    }
+};
+using BitmapPtr = std::unique_ptr<Gdiplus::Bitmap, BitmapDeleter>;
+
+#pragma endregion  // ^raii_helpers
+
+//! =====================================================================
+
+//! =====================================================================
+
 #pragma region types_and_globals
 
 // --- Forward Declarations ---
@@ -565,42 +590,12 @@ struct ModSettings {
 //! ============================================================================
 //^ GLOBAL STATE
 //! ============================================================================
-// Registry configuration for advanced debug logging
-constexpr wchar_t kAdvancedLogValueName[] = L"DebugLoggingEnabled";
-
-// Check if advanced debug logging is enabled via registry
-// Logic: Checks both local (dev) and official registry paths for the debug flag.
-BOOL CheckRegistryDebugLog() {
-    const wchar_t* registryPaths[] = {
-        L"SOFTWARE\\Windhawk\\Engine\\Mods\\local@" WH_MOD_ID,
-        L"SOFTWARE\\Windhawk\\Engine\\Mods\\" WH_MOD_ID
-    };
-
-    for (const auto& path : registryPaths) {
-        HKEY key = nullptr;
-        if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &key) == ERROR_SUCCESS) {
-            Wh_Log(L"[INIT] Checking Registry Path: HKLM\\%s", path);
-            
-            DWORD value = 0;
-            DWORD size = sizeof(value);
-            LONG status = RegQueryValueExW(key, kAdvancedLogValueName, nullptr, nullptr, 
-                                     reinterpret_cast<LPBYTE>(&value), &size);
-            RegCloseKey(key);
-
-            if (status == ERROR_SUCCESS) {
-                Wh_Log(L"[INIT] Registry Value found: %d", value);
-                return (value != 0);
-            }
-        }
-    }
-    
-    return FALSE;
-}
-
 #define Wh_LogAdvanced(fmt, ...) \
-    if (g_Settings.enableAdvancedDebugLog) { \
-        Wh_Log(fmt, ##__VA_ARGS__); \
-    }
+    do { \
+        if (g_Settings.enableAdvancedDebugLog) { \
+            Wh_Log(fmt, ##__VA_ARGS__); \
+        } \
+    } while (0)
 
 void LogClampSetting(const wchar_t* name, int oldValue, int newValue) {
     Wh_LogAdvanced(L"[Settings] %s clamped: %d -> %d", name, oldValue, newValue);
@@ -621,24 +616,27 @@ int g_HoverState = 0;            // Current hover/click state (0=none, 1-3=butto
 float g_ScaleFactor = 1.0f;      // DPI scaling factor
 
 // --- Visibility & Animation State ---
-bool g_IsGameDetected = false;   // Fullscreen game/app detected
-int g_FsCheckTick = 0;           // Fullscreen check counter
-int g_AnimState = 0;             // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Docked
-int g_CurrentAnimY = 0;          // Current Y position during animation
-int g_IdleSecondsCounter = 0;    // Seconds since last activity
-bool g_IsHiddenByIdle = false;   // Hidden due to idle timeout
+// Atomic globals for thread-safe access across UI/polling/timer threads
+std::atomic<bool> g_IsGameDetected{false};   // Fullscreen game/app detected
+int g_FsCheckTick = 0;                       // Fullscreen check counter
+std::atomic<int> g_AnimState{0};             // 0=Sync, 1=Hiding, 2=Showing, 3=Shutdown/Docked
+int g_CurrentAnimY = 0;                      // Current Y position during animation
+std::atomic<int> g_IdleSecondsCounter{0};    // Seconds since last activity
+std::atomic<bool> g_IsHiddenByIdle{false};   // Hidden due to idle timeout
 
 // --- Rainbow Effect State ---
-float g_RainbowHue = 0.0f;       // Current hue angle (0-360)
-int g_RainbowAnimState = 0;      // Rainbow window animation state
-int g_CurrentRainbowAnimY = 0;   // Rainbow Y position during animation
-ULONG_PTR g_gdiplusToken = 0;    // GDI+ initialization token
-bool g_RainbowDirectionReverse = false;  // Direction for bounce effect
+// Audio reactive state (C++20 atomic floats)
+// If compiler errors on atomic<float>, replace with mutex-protected struct
+std::atomic<float> g_RainbowHue{0.0f};   // Current hue angle (0-360)
+std::atomic<int> g_RainbowAnimState{0};  // Rainbow window animation state
+int g_CurrentRainbowAnimY = 0;          // Rainbow Y position during animation
+ULONG_PTR g_gdiplusToken = 0;           // GDI+ initialization token
+std::atomic<bool> g_RainbowDirectionReverse{false};  // Direction for bounce effect
 
 // --- Audio Reactive State ---
-float g_AudioPeakLevel = 0.0f;          // Current audio peak (0.0-1.0)
-float g_AudioPeakSmoothed = 0.0f;       // Smoothed audio peak
-bool g_AudioReactiveRuntimeEnabled = true;  // Runtime enable flag
+std::atomic<float> g_AudioPeakLevel{0.0f};     // Current audio peak (0.0-1.0)
+std::atomic<float> g_AudioPeakSmoothed{0.0f};  // Smoothed audio peak
+bool g_AudioReactiveRuntimeEnabled = true;    // Runtime enable flag
 
 // --- Media State ---
 struct MediaState {
@@ -646,7 +644,7 @@ struct MediaState {
     wstring artist = L"";
     bool isPlaying = false;
     bool hasMedia = false;
-    Bitmap* albumArt = nullptr;
+    BitmapPtr albumArt;
     wstring sourceId = L"";
     wstring lastValidSourceId = L""; // Cache for transient empty IDs
     mutex lock;
@@ -2219,18 +2217,21 @@ struct MediaInfoResult {
     wstring sourceId;
     bool isPlaying;
     bool hasMedia;
-    Bitmap* albumArt;
+    BitmapPtr albumArt;
 };
-static std::shared_ptr<MediaInfoResult> g_PendingMediaInfo;
+// Thread-safe media info pending result (protected by mutex)
+struct {
+    std::mutex lock;
+    std::unique_ptr<MediaInfoResult> pending;
+} g_PendingMediaInfo;
 
-Bitmap* StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
+BitmapPtr StreamToBitmap(IRandomAccessStreamWithContentType const& stream) {
     if (!stream) return nullptr;
     IStream* nativeStream = nullptr;
     if (SUCCEEDED(CreateStreamOverRandomAccessStream(reinterpret_cast<IUnknown*>(winrt::get_abi(stream)), IID_PPV_ARGS(&nativeStream)))) {
-        Bitmap* bmp = Bitmap::FromStream(nativeStream);
+        BitmapPtr bmp(Bitmap::FromStream(nativeStream));
         nativeStream->Release();
         if (bmp && bmp->GetLastStatus() == Ok) return bmp;
-        delete bmp;
     }
     return nullptr;
 }
@@ -2259,14 +2260,34 @@ void UpdateMediaInfoAsync() {
         g_MediaState.title = L"No Media";
         g_MediaState.artist = L"";
         g_MediaState.sourceId = L"";
-        if (g_MediaState.albumArt) { 
-            delete g_MediaState.albumArt; 
-            g_MediaState.albumArt = nullptr; 
-        }
+        g_MediaState.albumArt.reset();
         return;
     }
 
     s_NoSessionRetryCount = 0;
+
+    auto postResult = [](std::unique_ptr<MediaInfoResult> result) {
+        if (!result) return;
+
+        // Validate window exists before posting
+        if (!g_hMediaWindow || !IsWindow(g_hMediaWindow)) {
+            Wh_Log(L"[WARNING] Media window destroyed, discarding async result");
+            return;  // unique_ptr auto-deletes
+        }
+
+        // Thread-safe assignment
+        {
+            std::lock_guard<std::mutex> guard(g_PendingMediaInfo.lock);
+            g_PendingMediaInfo.pending = std::move(result);
+        }
+
+        // Post to UI thread
+        if (!PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0)) {
+            Wh_Log(L"[ERROR] PostMessage failed, clearing pending result");
+            std::lock_guard<std::mutex> guard(g_PendingMediaInfo.lock);
+            g_PendingMediaInfo.pending.reset();
+        }
+    };
     
     try {
         // Get source ID and playback state synchronously (fast operations)
@@ -2276,21 +2297,21 @@ void UpdateMediaInfoAsync() {
         
         // Fire off async media properties chain - does NOT block
         g_CachedSession.TryGetMediaPropertiesAsync().Completed(
-            [sourceId, isPlaying](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
+            [sourceId, isPlaying, postResult](auto const& propsOp, Windows::Foundation::AsyncStatus status) {
                 try {
                     if (status != Windows::Foundation::AsyncStatus::Completed) {
-                        Wh_Log(L"[WinRT] Media properties async failed with status: %d", (int)status);
+                        Wh_Log(L"[WARNING] [WinRT] Media properties async failed with status: %d", (int)status);
                         return;
                     }
                     
                     auto props = propsOp.GetResults();
                     if (!props) {
-                        Wh_Log(L"[WinRT] No media properties returned");
+                        Wh_Log(L"[WARNING] [WinRT] No media properties returned");
                         return;
                     }
                     
                     // Build result on background thread
-                    auto* result = new MediaInfoResult();
+                    auto result = std::make_unique<MediaInfoResult>();
                     result->title = props.Title().c_str();
                     result->artist = props.Artist().c_str();
                     result->sourceId = sourceId;
@@ -2308,103 +2329,55 @@ void UpdateMediaInfoAsync() {
                     if (thumbRef) {
                         try {
                             thumbRef.OpenReadAsync().Completed(
-                                [result](auto const& streamOp, Windows::Foundation::AsyncStatus status) {
+                                [postResult, result = std::move(result)](auto const& streamOp, Windows::Foundation::AsyncStatus status) mutable {
                                     try {
                                         if (status == Windows::Foundation::AsyncStatus::Completed) {
                                             result->albumArt = StreamToBitmap(streamOp.GetResults());
                                         }
-                                        // Post to UI thread with result
-                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                                        } else {
-                                            // Cleanup if window destroyed - shared_ptr handles deletion
-                                            resultPtr.reset();
-                                        }
                                     } catch (const winrt::hresult_error& e) {
-                                        Wh_Log(L"[WinRT] Exception in thumbnail completion: 0x%08X - %s", 
+                                        Wh_Log(L"[WARNING] [WinRT] Exception in thumbnail completion: 0x%08X - %s", 
                                                e.code().value, e.message().c_str());
-                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                                        } else {
-                                            resultPtr.reset();
-                                        }
-                                    } catch (const std::exception& e) {
-                                        Wh_Log(L"[WinRT] STL exception in thumbnail completion");
-                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                                        } else {
-                                            resultPtr.reset();
-                                        }
+                                    } catch (const std::exception&) {
+                                        Wh_Log(L"[WARNING] [WinRT] STL exception in thumbnail completion");
                                     } catch (...) {
-                                        Wh_Log(L"[WinRT] Unknown exception in thumbnail completion");
-                                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                                        } else {
-                                            resultPtr.reset();
-                                        }
+                                        Wh_Log(L"[WARNING] [WinRT] Unknown exception in thumbnail completion");
                                     }
+
+                                    postResult(std::move(result));
                                 });
                         } catch (const winrt::hresult_error& e) {
-                            Wh_Log(L"[WinRT] Exception opening thumbnail stream: 0x%08X - %s", 
+                            Wh_Log(L"[WARNING] [WinRT] Exception opening thumbnail stream: 0x%08X - %s", 
                                    e.code().value, e.message().c_str());
-                            // Post result without thumbnail
-                            auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                            if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                            } else {
-                                resultPtr.reset();
-                            }
+                            postResult(std::move(result));
                         } catch (...) {
-                            Wh_Log(L"[WinRT] Unknown exception opening thumbnail stream");
-                            auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                            if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                                std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                                PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                            } else {
-                                resultPtr.reset();
-                            }
+                            Wh_Log(L"[WARNING] [WinRT] Unknown exception opening thumbnail stream");
+                            postResult(std::move(result));
                         }
                     } else {
                         // No thumbnail - post result immediately
-                        auto resultPtr = std::shared_ptr<MediaInfoResult>(result);
-                        if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
-                            std::atomic_store_explicit(&g_PendingMediaInfo, resultPtr, std::memory_order_release);
-                            PostMessage(g_hMediaWindow, WM_MEDIA_INFO_READY, 0, 0);
-                        } else {
-                            // Cleanup if window destroyed - shared_ptr handles deletion
-                            resultPtr.reset();
-                        }
+                        postResult(std::move(result));
                     }
                 } catch (const winrt::hresult_error& e) {
-                    Wh_Log(L"[WinRT] Exception in media properties handler: 0x%08X - %s", 
+                    Wh_Log(L"[ERROR] [WinRT] Exception in media properties handler: 0x%08X - %s", 
                            e.code().value, e.message().c_str());
-                } catch (const std::exception& e) {
-                    Wh_Log(L"[WinRT] STL exception in media properties handler");
+                } catch (const std::exception&) {
+                    Wh_Log(L"[ERROR] [WinRT] STL exception in media properties handler");
                 } catch (...) {
-                    Wh_Log(L"[WinRT] Unknown exception in media properties handler");
+                    Wh_Log(L"[ERROR] [WinRT] Unknown exception in media properties handler");
                 }
             });
     } catch (const winrt::hresult_error& e) {
-        Wh_Log(L"[WinRT] Exception in UpdateMediaInfoAsync: 0x%08X - %s", e.code().value, e.message().c_str());
+        Wh_Log(L"[ERROR] [WinRT] Exception in UpdateMediaInfoAsync: 0x%08X - %s", e.code().value, e.message().c_str());
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
-    } catch (const std::exception& e) {
-        Wh_Log(L"[WinRT] STL exception in UpdateMediaInfoAsync");
+    } catch (const std::exception&) {
+        Wh_Log(L"[ERROR] [WinRT] STL exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
     } catch (...) {
-        Wh_Log(L"[WinRT] Unknown exception in UpdateMediaInfoAsync");
+        Wh_Log(L"[ERROR] [WinRT] Unknown exception in UpdateMediaInfoAsync");
         lock_guard<mutex> guard(g_MediaState.lock);
         g_MediaState.hasMedia = false;
         g_MediaState.sourceId = L"";
@@ -2650,7 +2623,7 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
     {
         lock_guard<mutex> guard(g_MediaState.lock);
         if (g_MediaState.albumArt && g_MediaState.albumArt->GetLastStatus() == Ok) {
-            graphics.DrawImage(g_MediaState.albumArt, artX, artY, artSize, artSize);
+            graphics.DrawImage(g_MediaState.albumArt.get(), artX, artY, artSize, artSize);
         } else {
             SolidBrush placeBrush{Color(40, 128, 128, 128)};
             graphics.FillRectangle(&placeBrush, artX, artY, artSize, artSize);
@@ -2742,8 +2715,10 @@ void DrawMediaPanel(HDC hdc, int width, int height) {
 float CalculateAudioPeak(float rawPeak) {
     if (!g_Settings.audioDynamicRange) {
         // Simple Lerp-based smoothing
-        g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, kAudioSmoothing);
-        return g_AudioPeakSmoothed;
+        float currentSmoothed = g_AudioPeakSmoothed.load();
+        float smoothed = Lerp(currentSmoothed, rawPeak, kAudioSmoothing);
+        g_AudioPeakSmoothed.store(smoothed);
+        return smoothed;
     }
 
     // Advanced Processing (Script Port)
@@ -2760,10 +2735,12 @@ float CalculateAudioPeak(float rawPeak) {
     float lerpFactor = Clamp((float)g_Settings.audioResponsiveness / 20.0f, 0.01f, 1.0f);
     
     // Apply smoothing via Lerp
-    g_AudioPeakSmoothed = Lerp(g_AudioPeakSmoothed, rawPeak, lerpFactor);
-    g_AudioPeakSmoothed = Clamp(g_AudioPeakSmoothed, 0.0f, 1.0f);
+    float currentSmoothed = g_AudioPeakSmoothed.load();
+    float smoothed = Lerp(currentSmoothed, rawPeak, lerpFactor);
+    smoothed = Clamp(smoothed, 0.0f, 1.0f);
+    g_AudioPeakSmoothed.store(smoothed);
     
-    float audioValue = (g_AudioPeakSmoothed * valDelta) + sMin;
+    float audioValue = (smoothed * valDelta) + sMin;
     
     float finalValue = 0.0f;
     if (audioValue >= sThresh) {
@@ -2903,14 +2880,21 @@ LRESULT CALLBACK RainbowWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
             }
             return 0;
         case WM_PAINT: {
-            PAINTSTRUCT ps; HDC hdc = BeginPaint(hwnd, &ps);
-            RECT rc; GetClientRect(hwnd, &rc);
+            PAINTSTRUCT ps; 
+            HDC hdc = BeginPaint(hwnd, &ps);
+            RECT rc; 
+            GetClientRect(hwnd, &rc);
+            
             HDC memDC = CreateCompatibleDC(hdc);
-            HBITMAP memBitmap = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
-            HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap);
+            GDIObjectPtr memBitmap(CreateCompatibleBitmap(hdc, rc.right, rc.bottom));
+            HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap.get());
+            
             DrawRainbowBorder(memDC, rc.right, rc.bottom);
+            
             BitBlt(hdc, 0, 0, rc.right, rc.bottom, memDC, 0, 0, SRCCOPY);
-            SelectObject(memDC, oldBitmap); DeleteObject(memBitmap); DeleteDC(memDC);
+            SelectObject(memDC, oldBitmap); // Restore before auto-cleanup
+            // memBitmap auto-deleted when GDIObjectPtr goes out of scope
+            DeleteDC(memDC);
             EndPaint(hwnd, &ps);
             return 0;
         }
@@ -2967,22 +2951,19 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         case WM_MEDIA_INFO_READY: {
             // Process async media info result on UI thread
-            auto result = std::atomic_exchange_explicit(
-                &g_PendingMediaInfo,
-                std::shared_ptr<MediaInfoResult>{},
-                std::memory_order_acquire);
+            std::unique_ptr<MediaInfoResult> result;
+            {
+                std::lock_guard<std::mutex> guard(g_PendingMediaInfo.lock);
+                result = std::move(g_PendingMediaInfo.pending);
+            }
+
             if (result) {
                 lock_guard<mutex> guard(g_MediaState.lock);
-                
-                // Clean up old album art
-                if (g_MediaState.albumArt) {
-                    delete g_MediaState.albumArt;
-                }
-                
+
                 // Update state with new data
-                g_MediaState.title = result->title;
-                g_MediaState.artist = result->artist;
-                g_MediaState.sourceId = result->sourceId;
+                g_MediaState.title = std::move(result->title);
+                g_MediaState.artist = std::move(result->artist);
+                g_MediaState.sourceId = std::move(result->sourceId);
 
                 if (!g_MediaState.sourceId.empty()) {
                     g_MediaState.lastValidSourceId = g_MediaState.sourceId;
@@ -2990,13 +2971,20 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
                 g_MediaState.isPlaying = result->isPlaying;
                 g_MediaState.hasMedia = result->hasMedia;
-                g_MediaState.albumArt = result->albumArt;
+                g_MediaState.albumArt = std::move(result->albumArt);
 
                 SaveLastMediaInfo(g_MediaState.title, g_MediaState.artist);
-                
-                // Trigger redraw with new media info
-                InvalidateRect(hwnd, NULL, FALSE);
+
+                Wh_LogAdvanced(L"[MEDIA] Updated: '%s' by '%s' (playing=%d)",
+                               g_MediaState.title.c_str(),
+                               g_MediaState.artist.c_str(),
+                               g_MediaState.isPlaying);
+            } else {
+                Wh_Log(L"[WARNING] WM_MEDIA_INFO_READY with no pending result (race condition avoided)");
             }
+
+            // Trigger redraw with new media info
+            InvalidateRect(hwnd, NULL, FALSE);
             return 0;
         }
         case WM_ERASEBKGND: return 1;
@@ -3255,19 +3243,27 @@ LRESULT CALLBACK MediaWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
         case WM_PAINT: {
-            PAINTSTRUCT ps; HDC hdc = BeginPaint(hwnd, &ps);
-            RECT rc; GetClientRect(hwnd, &rc);
+            PAINTSTRUCT ps; 
+            HDC hdc = BeginPaint(hwnd, &ps);
+            RECT rc; 
+            GetClientRect(hwnd, &rc);
+            
             HDC memDC = CreateCompatibleDC(hdc);
-            HBITMAP memBitmap = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
-            HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap);
+            GDIObjectPtr memBitmap(CreateCompatibleBitmap(hdc, rc.right, rc.bottom));
+            HBITMAP oldBitmap = (HBITMAP)SelectObject(memDC, memBitmap.get());
+            
             DrawMediaPanel(memDC, rc.right, rc.bottom);
+            
             if (g_IsScrolling && g_Settings.EnableTextScroll) {
                 SetTimer(hwnd, IDT_TEXT_ANIM, TIMER_TEXT_ANIM_MS, NULL);
             } else {
                 KillTimer(hwnd, IDT_TEXT_ANIM);
             }
+            
             BitBlt(hdc, 0, 0, rc.right, rc.bottom, memDC, 0, 0, SRCCOPY);
-            SelectObject(memDC, oldBitmap); DeleteObject(memBitmap); DeleteDC(memDC);
+            SelectObject(memDC, oldBitmap); // Restore before auto-cleanup
+            // memBitmap auto-deleted when GDIObjectPtr goes out of scope
+            DeleteDC(memDC);
             EndPaint(hwnd, &ps);
             return 0;
         }
@@ -3365,8 +3361,7 @@ void MediaThread() {
         {
             std::lock_guard<std::mutex> guard(g_MediaState.lock);
             if (g_MediaState.albumArt) {
-                delete g_MediaState.albumArt;
-                g_MediaState.albumArt = nullptr;
+                g_MediaState.albumArt.reset();
                 Wh_Log(L"Album art cleaned up in MediaThread");
             }
         }
@@ -3595,35 +3590,55 @@ BOOL WhTool_ModInit() {
     g_IsGameDetected = false;
     g_IsHiddenByIdle = false;
     g_IdleSecondsCounter = 0;
-    Wh_Log(L"Global state reset");
+    g_ShutdownMode = false;
+    Wh_Log(L"[INIT] Global state reset");
 
     if (FAILED(SetCurrentProcessExplicitAppUserModelID(L"taskbar-music-lounge-fork"))) {
-        Wh_Log(L"WARNING: SetCurrentProcessExplicitAppUserModelID failed");
+        Wh_Log(L"[WARNING] SetCurrentProcessExplicitAppUserModelID failed (non-critical)");
     }
     
     // CRITICAL: Initialize DPI scaling FIRST (independent of taskbar)
     UpdateScaleFactor();
-    Wh_Log(L"Scale factor initialized to %.2f", g_ScaleFactor);
+    if (g_ScaleFactor <= 0.0f) {
+        Wh_Log(L"[ERROR] Failed to initialize DPI scale factor");
+        return FALSE;
+    }
+    Wh_Log(L"[INIT] Scale factor initialized to %.2f", g_ScaleFactor);
     
     // CRITICAL: Initialize taskbar handle FIRST (before thread spawn)
     EnsureTaskbarHandle();
 
     // Initialize Audio COM first so LoadSettings can enable the meter if needed
-    if (!g_audioCOM.Init()) {
-        Wh_Log(L"ERROR: Failed to initialize audio COM");
-        return FALSE;
+    const bool audioComOk = g_audioCOM.Init();
+    if (!audioComOk) {
+        Wh_Log(L"[WARNING] Audio COM initialization failed (audio reactive disabled)");
+    } else {
+        Wh_Log(L"[INIT] Audio COM initialized");
     }
-    Wh_Log(L"Audio COM initialized");
 
     LoadSettings();
-    Wh_Log(L"Settings loaded");
+    Wh_Log(L"[INIT] Settings loaded");
+
+    if (!audioComOk) {
+        g_Settings.enableAudioReactive = false;
+    } else if (g_Settings.enableAudioReactive && !g_audioCOM.InitMeter()) {
+        Wh_Log(L"[WARNING] Audio meter initialization failed (audio reactive disabled)");
+        g_Settings.enableAudioReactive = false;
+    }
 
     g_Running = true;
     if (!g_pMediaThread) {
-        g_pMediaThread = new std::thread(MediaThread);
-        Wh_Log(L"Media thread spawned");
+        try {
+            g_pMediaThread = new std::thread(MediaThread);
+            Wh_Log(L"[INIT] Media thread spawned");
+        } catch (const std::exception&) {
+            Wh_Log(L"[ERROR] Failed to create media thread");
+            g_audioCOM.Uninit();
+            g_pMediaThread = nullptr;
+            return FALSE;
+        }
     } else {
-        Wh_Log(L"WARNING: Media thread already exists");
+        Wh_Log(L"[WARNING] Media thread already exists");
     }
 
     Wh_Log(L" ---Init complete");
@@ -3631,63 +3646,98 @@ BOOL WhTool_ModInit() {
 }
 
 void WhTool_ModUninit() {
-    Wh_Log(L"[UNINIT] Uninit " WH_MOD_ID L" starting");
-
-    // Clear pending actions
-    {
-        std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
-        Wh_Log(L"[UNINIT] Clearing %d pending actions", (int)g_pendingActions.size());
-        g_pendingActions.clear();
-        Wh_Log(L"[UNINIT] Pending actions cleared");
+    Wh_Log(L"[UNINIT] Starting cleanup...");
+    
+    // Phase 1: Signal shutdown to all threads
+    g_Running = false;
+    g_ShutdownMode = true;
+    
+    // Phase 2: Post quit message to media thread BEFORE destroying windows
+    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        Wh_Log(L"[UNINIT] Posting WM_QUIT to media thread...");
+        PostMessage(g_hMediaWindow, WM_QUIT, 0, 0);
     }
     
-    Wh_Log(L"[UNINIT] Clearing triggers");
-    g_triggers.clear();
-    Wh_Log(L"[UNINIT] Triggers cleared");
-
-    g_Running = false;
-    Wh_Log(L"[UNINIT] Signaled media thread to stop");
-
-    if (g_hRainbowWindow) {
-        Wh_Log(L"[UNINIT] Sending APP_WM_CLOSE to rainbow window 0x%p", g_hRainbowWindow);
-        SendMessage(g_hRainbowWindow, APP_WM_CLOSE, 0, 0);
-        Wh_Log(L"[UNINIT] Close sent to rainbow window");
-    }
-    if (g_hMediaWindow) {
-        Wh_Log(L"[UNINIT] Sending APP_WM_CLOSE to media window 0x%p", g_hMediaWindow);
-        SendMessage(g_hMediaWindow, APP_WM_CLOSE, 0, 0);
-        Wh_Log(L"[UNINIT] Close sent to media window");
-    }
-
+    // Phase 3: Wait for media thread to exit (it will destroy its own windows)
     if (g_pMediaThread) {
         Wh_Log(L"[UNINIT] Waiting for media thread to exit...");
         if (g_pMediaThread->joinable()) {
             g_pMediaThread->join();
-            Wh_Log(L"[UNINIT] Media thread joined successfully");
         }
         delete g_pMediaThread;
         g_pMediaThread = nullptr;
-        Wh_Log(L"[UNINIT] Media thread cleaned up");
-    } else {
-        Wh_Log(L"[UNINIT] WARNING: g_pMediaThread is nullptr");
+        Wh_Log(L"[UNINIT] Media thread joined");
     }
-
-    // Album art cleanup already handled in MediaThread cleanup lambda
-    // (must be deleted BEFORE GdiplusShutdown, not after)
     
-    // Reset audio reactive state
-    Wh_Log(L"[UNINIT] Resetting audio reactive state");
-    g_AudioPeakLevel = 0.0f;
-    g_AudioPeakSmoothed = 0.0f;
-    g_RainbowDirectionReverse = false;
-    Wh_Log(L"[UNINIT] Audio reactive state reset");
-
-    Wh_Log(L"[UNINIT] Uninitializing audio COM");
-    g_audioCOM.Uninit();
-    Wh_Log(L"[UNINIT] Audio COM uninitialized");
-
-    Wh_Log(L"[UNINIT] Uninit complete");
-    Wh_Log(L" --- END --- ");
+    // Phase 4: Clean up any remaining windows (should already be destroyed by thread)
+    if (g_hRainbowWindow && IsWindow(g_hRainbowWindow)) {
+        Wh_Log(L"[UNINIT] WARNING: Rainbow window still exists, destroying...");
+        DestroyWindow(g_hRainbowWindow);
+        g_hRainbowWindow = NULL;
+    }
+    
+    if (g_hMediaWindow && IsWindow(g_hMediaWindow)) {
+        Wh_Log(L"[UNINIT] WARNING: Media window still exists, destroying...");
+        DestroyWindow(g_hMediaWindow);
+        g_hMediaWindow = NULL;
+    }
+    
+    // Phase 5: Clean up pending media info
+    {
+        std::lock_guard<std::mutex> guard(g_PendingMediaInfo.lock);
+        if (g_PendingMediaInfo.pending) {
+            Wh_Log(L"[UNINIT] Cleaning up pending media info");
+            g_PendingMediaInfo.pending.reset();
+        }
+    }
+    
+    // Phase 6: Clean up audio COM
+    if (g_audioCOM.IsInitialized()) {
+        Wh_Log(L"[UNINIT] Shutting down audio COM...");
+        g_audioCOM.Uninit();
+    }
+    
+    // Phase 7: Shutdown GDI+ (after all drawing is done)
+    if (g_gdiplusToken) {
+        Wh_Log(L"[UNINIT] Shutting down GDI+...");
+        GdiplusShutdown(g_gdiplusToken);
+        g_gdiplusToken = 0;
+    }
+    
+    // Phase 8: Reset global state
+    g_IsGameDetected.store(false);
+    g_IsHiddenByIdle.store(false);
+    g_IdleSecondsCounter.store(0);
+    g_RainbowDirectionReverse.store(false);
+    g_AudioPeakLevel.store(0.0f);
+    g_AudioPeakSmoothed.store(0.0f);
+    g_RainbowHue.store(0.0f);
+    g_RainbowAnimState.store(0);
+    g_AnimState.store(0);
+    g_AudioReactiveRuntimeEnabled = true;
+    g_ShutdownMode = false;
+    g_hTaskbar = NULL;
+    g_hVisibilityHook = NULL;
+    
+    {
+        std::lock_guard<std::mutex> lock(g_pendingActionsMutex);
+        g_pendingActions.clear();
+    }
+    g_triggers.clear();
+    
+    // Clear media state
+    {
+        std::lock_guard<std::mutex> guard(g_MediaState.lock);
+        g_MediaState.title.clear();
+        g_MediaState.artist.clear();
+        g_MediaState.sourceId.clear();
+        g_MediaState.lastValidSourceId.clear();
+        g_MediaState.hasMedia = false;
+        g_MediaState.isPlaying = false;
+        g_MediaState.albumArt.reset();
+    }
+    
+    Wh_Log(L"[UNINIT] Cleanup complete");
 }
 
 void WhTool_ModSettingsChanged() {
@@ -3798,12 +3848,6 @@ void WINAPI EntryPoint_Hook() {
 }
 
 BOOL Wh_ModInit() {
-    // Initialize Debug Log from Registry immediately
-    g_Settings.enableAdvancedDebugLog = CheckRegistryDebugLog();
-    if (g_Settings.enableAdvancedDebugLog) {
-        Wh_Log(L"[INIT] Advanced Debug Logging Enabled via Registry Override");
-    }
-
     bool isService = false;
     bool isToolModProcess = false;
     bool isCurrentToolModProcess = false;
