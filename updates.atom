@@ -2,12 +2,123 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-18T17:04:19.000Z</updated>
+    <updated>2026-03-20T20:50:24.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 File Explorer Styler 1.4]]></title>
+        <id>https://windhawk.net/mods/windows-11-file-explorer-styler#9c7f3656e98a7ece5e213dae90a01b8b8fe4ed5a</id>
+        <link href="https://windhawk.net/mods/windows-11-file-explorer-styler"/>
+        <updated>2026-03-20T20:50:24.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added the LiquidGlass theme.</li>
+<li>Some of the settings, such as the Explorer frame container height and the background style, are now applied right away.</li>
+<li>Added the following properties to <code>WindhawkBlur</code>: <code>TintLuminosityOpacity</code>, <code>TintSaturation</code>, <code>NoiseOpacity</code>, and <code>NoiseDensity</code>. The implementation was contributed by <a href="https://github.com/Lockframe">Jhen</a>. For details, refer to <a href="https://github.com/ramensoftware/windows-11-file-explorer-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
+<li>Added XAML syntax support for resource variables.</li>
+<li>Improved resource variable handling and theme resource refresh logic.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word Local AutoSave 3.0]]></title>
+        <id>https://windhawk.net/mods/word-local-autosave#9d08e8f1ebd6a28659c4546c4aa8852f3cec4d21</id>
+        <link href="https://windhawk.net/mods/word-local-autosave"/>
+        <updated>2026-03-20T16:57:35.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Version bumped to 3.0.</li>
+<li>Replaced synthetic <code>Ctrl+S</code> saving with direct Word automation calls (<code>Document.Save</code>).</li>
+<li>Completely removed <code>SendInput</code>-based keyboard injection.</li>
+<li>Eliminated the root cause of false shortcut triggers at very low save cooldowns.</li>
+<li>Removed the old “press-state verification” approach that tried to make injected <code>Ctrl+S</code> safe.</li>
+<li>Removed the separate retry/send pipeline built around synthetic key presses.</li>
+<li>Reworked auto-save execution so it stays on a single owner Word UI thread.</li>
+<li>Switched save scheduling to a simpler owner-thread timer flow.</li>
+<li>Added direct access to the active Word object from the active document window via <code>AccessibleObjectFromWindow</code>.</li>
+<li>Added fallback access to Word through the Running Object Table (<code>GetActiveObject</code>) if window-based access is unavailable.</li>
+<li>Added dynamic runtime loading of required OLE/COM functions instead of relying on linker-resolved imports.</li>
+<li>Preserved the configurable save delay and minimum time between saves.</li>
+<li>Kept manual <code>Ctrl+S</code> detection, but now it only updates internal timing state instead of interacting with synthetic save logic.</li>
+<li>Kept foreground-window checks so auto-save only runs when the active Word document window is focused.</li>
+<li>Kept postponing saves while user input is still active or modifiers/mouse buttons are held.</li>
+<li>Kept skipping unsaved documents to avoid triggering “Save As”.</li>
+<li>Kept skipping read-only documents.</li>
+<li>Updated the readme/metadata text to describe the new direct-save architecture and shortcut-safety model.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.4.1]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-styler#f6d529d39999d0cdbca3ca5f3a1233e09f4f13a3</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
+        <updated>2026-03-20T16:45:29.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added the LayerMicaUI theme.</li>
+<li>Updated themes: Windows10 (Minimal), WindowGlass.</li>
+<li>Added XAML syntax support for resource variables.</li>
+<li>Improved resource variable handling and theme resource refresh logic.</li>
+<li>Fixed restoration of pinned items column count.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word PDF Lossless Export 1.0]]></title>
+        <id>https://windhawk.net/mods/word-pdf-lossless-export#de2754e1d4e4ba64ccf0be547f78037a523311fb</id>
+        <link href="https://windhawk.net/mods/word-pdf-lossless-export"/>
+        <updated>2026-03-20T12:48:44.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="wordpdflosslessexport">Word PDF Lossless Export</h1>
+<p><em>Downsampling and JPEG lossy compression are now over, for good.</em></p>
+<p>Microsoft Word has a notorious, long-standing issue when exporting documents to PDF (via <code>File-&gt; Export -&gt; Create PDF / XPS</code>): it aggressively downsamples and re-compresses images. Even if you enable "Do not compress images in file" and select "High fidelity" in Word's options, the internal PDF rendering engine (<code>mso.dll</code> / <code>exp_pdf.dll</code>) still runs a hidden optimization pass. It calculates the physical dimensions of the image on the page, (almost always) <em>decides</em> your high-resolution image is "too big", downscales it via GDI+, and forces a secondary JPEG compression. This ruins pixel-perfect diagrams, degrades high-res photos, and introduces irreversible compression artifacts. Which is especially frustrating and super annoying because Word's PDF export is often the go-to solution for sharing documents. We expect it to be every bit as good as the original.</p>
+<p>This mod performs a deep, memory-level intervention on Word's internal graphics rendering pipeline to bypass these limitations. It intercepts the core image resolution calculator (<code>DOCEXIMAGE::HrComputeSize</code>) to prevent dimensional downscaling, and hooks the output validator (<code>DOCEXIMAGE::HrCheckForLosslessOutput</code>) to force the engine to use a lossless FLATE (Zlib) stream instead of the default JPEG encoder.</p>
+<p><strong>Key Improvements:</strong></p>
+<ul>
+<li><strong>Pixel-Perfect Pictures:</strong> Solid PNG images, JPEGs and BMPs, etc. are exported with absolute 100% pixel accuracy. No quality loss, no artifacts. PNGs with transparency are guaranteed 99% pixel accuracy (this is due to limits of GDI+, which does not handle alpha channel perfectly, but it's still a huge improvement over what we currently have. For detailed information, see Test Results below).</li>
+<li><strong>True Lossless Quality:</strong> Bypasses Word's forced secondary JPEG compression entirely, preserving the exact quality of your original high-resolution inserts.</li>
+<li><strong>Overrides Broken Settings:</strong> Bypasses the hardcoded internal DPI limits that Word's built-in <em>so called</em> "High fidelity" setting fails to disable.</li>
+<li><strong>Cross-Architecture Support:</strong> Dynamically adapts to both 64-bit and 32-bit versions of Office using precise memory offsets and calling conventions.</li>
+</ul>
+<p><em>Note: this mod needs pdb symbol of <code>exp_pdf.dll</code> and <code>mso.dll</code> to work. And for <code>mso.dll</code> the symbol file is expected to be quite large (~90mb in size). Windhawk will download these automatically when launching Word first time after you installed the mod (the popup at right bottom corner of your screen) please wait patiently and relaunch Word after it finishes.</em></p>
+<p><strong>Attention</strong>: this mod utilizes functions and data structures in <code>DOCEXIMAGE</code> class, which is undocumented and is subject to change without notice. If the mod causes crash when exporting PDFs, please <strong>open an issue</strong> at my <a href="https://github.com/JoeYe-233/windhawk-mods">GitHub repository</a> and provide your version of <code>mso.dll</code> (usually located in <code>C:\Program Files\Microsoft Office\root\vfs\ProgramFilesCommon[X64, X86]\Microsoft Shared\OFFICE16\MSO.DLL</code> where <code>[X64, X86]</code> varies based on your Microsoft Office architecture. For 64-bit Office, usually both X86 and X64 are available, use the X64 one; for 32-bit Office, use the X86 one).</p>
+<p><strong>Test Results and Verifications:</strong></p>
+<ul>
+<li><p><strong>Lossless performance guaranteed for JPEGs, BMPs, and other non-transparent formats</strong>: 100% lossless pixel-perfect accuracy. No downscaling, no compression artifacts or quality loss.</p></li>
+<li><p><strong>Lossless performance guaranteed for PNGs</strong>:</p></li>
+<li><p>100% lossless for pngs that <strong>does not contain</strong> transparent regions. (same as above, no downscaling, no compression artifacts or quality loss).</p></li>
+<li><p>99% (absolute visually lossless) for PNGs that <strong>contain</strong> transparent regions. (No downscaling, no compression artifacts, and negligible quality loss). This is because of how GDI+ handles transparent images (Pre-multiplied Alpha and Float to Integer rounding error). Combined, these may cause up to ±4 drift out of 255 (±0.016%) on each of 3 RGB channels. Also, RGB values for pixels on complete transparent regions (i.e., alpha strictly equals 0) are discarded by GDI+ for better performance. (which is actually a good thing as it increases redundancy, thus decreasing size of end product).</p></li>
+<li><p>Also, pictures embedded in SVGs are lossless too, because the mod hooks the core image processing pipeline, which applies to all images regardless of their source.</p></li>
+</ul>
+<p>Lossless picture extractor of PDF files are also provided to help you verify the output PDF files. You can get the Python script <a href="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/PDF_Image_Extractor_Lossless.py">here</a>.</p>
+<h3 id="beforeinputvsoutput">Before (input vs output)</h3>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-pdf-lossless-export-before.png" alt="Before" /></p>
+<p>(Image courtesy of <a href="https://pixabay.com/photos/winter-nature-trees-snow-cold-6762640/">Nicky ❤️🌿🐞🌿❤️</a> from Pixabay)</p>
+<h3 id="afterinputvsoutput">After (input vs output)</h3>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-pdf-lossless-export-after.png" alt="After" /></p>
+<h3 id="beforevsafterat800zoomleftafterrightbefore">Before vs After at 800% Zoom (Left: After, Right: Before)</h3>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-pdf-lossless-export-before-vs-after.png" alt="Before vs After" /></p>
+<p>(Left: After, Right: Before. Notice the severe downscaling and compression artifacts in the "Before" image, which are completely gone in the "After" image.)</p>
+<h3 id="pngwithtransparencytest">PNG with Transparency Test</h3>
+<p>(Image courtesy of <a href="https://pixabay.com/illustrations/fruit-nutrition-organic-healthy-6925630/">Sunriseforever</a> from Pixabay)</p>
+<p>Before (input vs output):</p>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-pdf-lossless-export-png-before.png" alt="Before" /></p>
+<p>After (input vs output):</p>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-pdf-lossless-export-png-after.png" alt="After" /></p>
+<p>(Notice the pixel value difference of A=0 (fully transparent) pixels, which is caused by GDI+'s handling of transparent images. This is expected.)</p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Taskbar auto-hide fine tuning 2.2]]></title>
         <id>https://windhawk.net/mods/taskbar-auto-hide-keyboard-only#ccbf8d62b852558521be1be12194cb2f2df85a56</id>
@@ -272,94 +383,6 @@ foreground, the window will stay in place instead of being minimized.</p>]]></co
         <author>
             <name>ItsProfessional</name>
             <uri>https://github.com/ItsProfessional</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Desktop Indicator 1.2.1]]></title>
-        <id>https://windhawk.net/mods/taskbar-desktop-indicator#d205b0c73e8dacf528c684eac03b444da31b803a</id>
-        <link href="https://windhawk.net/mods/taskbar-desktop-indicator"/>
-        <updated>2026-03-10T10:30:07.000Z</updated>
-        <content type="html"><![CDATA[<p>Fixes the case where taskbar-desktop-indicator can stop updating after explorer.exe restarts if notification registration initially fails and polling fallback is disabled.</p>
-<p>This keeps the notification thread alive and retries registration until the virtual desktop notification service becomes available, instead of attempting registration only once during startup.</p>
-<p>Related issue: <a href="https://github.com/ramensoftware/windhawk-mods/issues/3520">#3520</a></p>]]></content>
-        <author>
-            <name>Simon Benedict</name>
-            <uri>https://github.com/simon-ami</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Restore folder menubar in 24h2, 25h2 1.0.0]]></title>
-        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#9d729c35aad569218c0991d0f0b156c7bc09c9bf</id>
-        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
-        <updated>2026-03-10T10:29:04.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="restorefoldermenubar">Restore folder menubar</h1>
-<p>This mod in a spin-off from the mod <code>Explorerframe fixes for Win11 22H2+</code>, particularly,
-its functionality related to the menubar in folders, because the author of that mod has
-been recently inactive while recent builds of Windows became incompatible.</p>
-<p>This mod restores the menubar in recent builds of 24h2 and in 25h2.</p>
-<p><strong>!Important!</strong> You would need to use the <a href="https://github.com/thebookisclosed/ViVe/releases">ViVeTool</a> utility
-with the following command before using this mod:</p>
-<p><code>vivetool /disable /id:55063786</code></p>
-<p>Alternatively, you can use the <a href="https://apps.microsoft.com/detail/9P1BW5WB82MH">ViVeToolGUI</a> from
-Windows Store.
-On later builds you may also need to replace the file Explorerframe.dll with the one from an older Windows version.</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Desktop Indicator 1.2.0]]></title>
-        <id>https://windhawk.net/mods/taskbar-desktop-indicator#f00beff69e901b08bbfd500d8fe2f59c2a861720</id>
-        <link href="https://windhawk.net/mods/taskbar-desktop-indicator"/>
-        <updated>2026-03-09T23:55:27.000Z</updated>
-        <content type="html"><![CDATA[<p>Adds optional custom color settings for the taskbar desktop indicator:</p>
-<ul>
-<li>custom color for the active indicator / number</li>
-<li>custom color for inactive workspace markers</li>
-<li>inactive marker opacity now also applies when a custom inactive color is set</li>
-<li>updates the settings descriptions accordingly</li>
-<li>bumps the mod version to 1.2.0</li>
-</ul>]]></content>
-        <author>
-            <name>Simon Benedict</name>
-            <uri>https://github.com/simon-ami</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Discord Balloon Notifications 1.0]]></title>
-        <id>https://windhawk.net/mods/discord-balloon-notifs#15fbe890bd7b4b772eae51e25bbb2e32ac34405f</id>
-        <link href="https://windhawk.net/mods/discord-balloon-notifs"/>
-        <updated>2026-03-09T23:52:50.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="discordballoonnotifications">Discord Balloon Notifications</h1>
-<p>Converts Discord's modern Windows toast notifications into balloon tips that appear from the system tray using Shell_NotifyIconW.</p>
-<p><img src="https://raw.githubusercontent.com/repensky/local-wh-mods/refs/heads/main/image.png" alt="Picture" /></p>
-<h1 id="warning">WARNING!</h1>
-<p>The use of third party Discord clients with this mod is <strong>NOT</strong> supported! This mod is designed for the official Discord app. It may or may not function properly with unofficial Discord clients. Try on your own risk.</p>
-<p>Enable this mod before starting Discord. If Discord is already running when you enable the mod, restart Discord manually. Otherwise, Discord may <strong>crash</strong> if not restarted on next notification.</p>
-<h2 id="requirement">Requirement:</h2>
-<p>Ensure <strong>EnableLegacyBalloonNotifications</strong> is set to <strong>1</strong> in <code>HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer\EnableLegacyBalloonNotifications</code></p>
-<h2 id="features">Features:</h2>
-<ul>
-<li>Notification sender and message is shown in the balloon</li>
-<li>Optionally shows the sender's profile picture as an icon in the balloon</li>
-<li>Configurable PFP icon size (Small 16px, Medium 24px, Large 32px)</li>
-<li>Clicking the balloon or tray icon brings Discord to the foreground</li>
-<li>Tray icon automatically removed when Discord exits</li>
-<li>Emoji decoding with an option to use basic glyphs supported by the font</li>
-<li>Right clicking on the tray icon features exiting Discord</li>
-</ul>
-<h2 id="note">Note:</h2>
-<p>This is tested on <strong>Windows 10 21H2 IoT Enterprise LTSC</strong>. It may or may not function properly on other Windows versions.
-<strong>Windows 11</strong> versions may need to use <strong>ExplorerPatcher</strong> for notifications to be shown in a balloon format.</p>
-<h2 id="note2">Note 2:</h2>
-<p>This mod <strong>downloads</strong> Discord emoji database only on first run for displaying emoji shortcode purposes as it does not support displaying all emojis.</p>
-<h2 id="note3">Note 3:</h2>
-<p>Balloon display duration is controlled by Windows.
-To change, navigate to <strong>Control Panel > Ease of Access Center > Use the computer without a display > How long should Windows notification dialog boxes stay open</strong></p>]]></content>
-        <author>
-            <name>repensky</name>
-            <uri>https://github.com/repensky</uri>
         </author>
     </entry>
 </feed>
