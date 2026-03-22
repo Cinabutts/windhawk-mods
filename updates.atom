@@ -2,12 +2,146 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-20T20:50:24.000Z</updated>
+    <updated>2026-03-21T17:31:37.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Start Menu Size 1.1]]></title>
+        <id>https://windhawk.net/mods/start-menu-size#cc7bb194b5c59a00a396d51a4e6d7a5f119fe25c</id>
+        <link href="https://windhawk.net/mods/start-menu-size"/>
+        <updated>2026-03-21T17:31:37.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added support for setting the search menu size as well. By default, the size that's configured for the Start menu is used for the search menu as well.</li>
+<li>Minor fixes and size calculation improvements.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word PDF Lossless Export 1.1]]></title>
+        <id>https://windhawk.net/mods/word-pdf-lossless-export#eac39ccd38078c62c2b5af644f39b71e5cbc5b9a</id>
+        <link href="https://windhawk.net/mods/word-pdf-lossless-export"/>
+        <updated>2026-03-21T16:16:31.000Z</updated>
+        <content type="html"><![CDATA[<p>Ditched async hook for better reliability</p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hide Start Button 1.0]]></title>
+        <id>https://windhawk.net/mods/hide-start-button#a947466f6d6bede2e97ab37eb6eeb347d03ed918</id>
+        <link href="https://windhawk.net/mods/hide-start-button"/>
+        <updated>2026-03-21T10:27:16.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="hidestartbutton">Hide Start Button</h1>
+<p>Hides the start button from the taskbar. The start menu can still be opened
+via Win key, Ctrl+Esc key or touchscreen gestures.</p>
+<p>Only Windows 11 is supported.</p>
+<p>Based on "Start button always on the left" (taskbar-start-button-position) mod.</p>]]></content>
+        <author>
+            <name>ptrkhh</name>
+            <uri>https://github.com/ptrkhh</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Music Lounge 4.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-music-lounge#fddd032c9c986776e98105654f3a7aa5fa3a43ec</id>
+        <link href="https://windhawk.net/mods/taskbar-music-lounge"/>
+        <updated>2026-03-21T09:09:00.000Z</updated>
+        <content type="html"><![CDATA[<p>This version addresses and incorporates multiple suggestions. A detailed diff table has been added to the README.</p>
+<p>Addressed Issues &amp; Fixes:</p>
+<ul>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3666395914">#3666395914</a> - Add AppID for compatibility with taskbar auto-hide mod</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3666527577">#3666527577</a> - Rounded corners, scalable icons for high-DPI, hide during fullscreen gaming</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/commit/2eddf6953b7aaee9ad5eb050bb329e135f4c7798#commitcomment-173045991">2eddf69</a> - Fix widget lagging behind taskbar with smooth following</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3671818092">#3671818092</a> - Support for AIMP/MPC-BE players, larger 4K icons, fullscreen hide option</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/issues/2828">#2828</a> - Event-driven positioning for smoother auto-hide and fullscreen sync</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3689038965">#3689038965</a> - Comprehensive rework fixing auto-hide lag, fullscreen detection, and high-DPI scaling</li>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3690241518">#3690241518</a> - Auto-hide widget when no media is playing</li>
+</ul>
+<p>Credits:
+Special thanks to @Cinabutts and @Deykii for code references and the community for testing.</p>
+<p>Testing Note:
+AIMP and MPC-BE integration is implemented but currently untested. Please report any issues with these players.</p>]]></content>
+        <author>
+            <name>Hashah2311</name>
+            <uri>https://github.com/Hashah2311</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Scroll Window Opacity 1.0.3]]></title>
+        <id>https://windhawk.net/mods/scroll-window-opacity#0e2de27cbade7621e5af9791789e6ca196f2c2ed</id>
+        <link href="https://windhawk.net/mods/scroll-window-opacity"/>
+        <updated>2026-03-21T08:14:48.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="scrollwindowopacity">Scroll Window Opacity</h1>
+<p>Hold a configurable key combination (default: <strong>Ctrl + Alt</strong>) and scroll the mouse
+wheel to adjust the transparency of the top-level window under the cursor.</p>
+<ul>
+<li><strong>Scroll up</strong> - decrease opacity (more transparent)</li>
+<li><strong>Scroll down</strong> - increase opacity (more opaque)</li>
+</ul>
+<p>The opacity step, minimum opacity, and modifier keys are all configurable in the
+settings panel.</p>
+<p>Common shell windows such as the taskbar and desktop are excluded. For windows
+that this mod makes layered, the original window style is restored when returned
+to 100% opacity.</p>]]></content>
+        <author>
+            <name>Sondre Myrmel</name>
+            <uri>https://github.com/Sondre234</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Clientedge Everywhere 1.5.0]]></title>
+        <id>https://windhawk.net/mods/clientedge-in-apps#d2b64d62431db4d19e45ae39f67a84781e2b0f35</id>
+        <link href="https://windhawk.net/mods/clientedge-in-apps"/>
+        <updated>2026-03-21T08:07:44.000Z</updated>
+        <content type="html"><![CDATA[<p>Add support for "Add network place" dialog</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Fade 2.1.1]]></title>
+        <id>https://windhawk.net/mods/taskbar-fade#b997341ac65e9740a4f3ca291636e78b859c9e13</id>
+        <link href="https://windhawk.net/mods/taskbar-fade"/>
+        <updated>2026-03-21T07:59:56.000Z</updated>
+        <content type="html"><![CDATA[<p>Fixed unintended desktop icon show/hide state override. The mod now checks if the user has naturally hidden their desktop icons via the Windows context menu, and will no longer force them to reappear when the taskbar wakes up or when the mod unloads.</p>]]></content>
+        <author>
+            <name>Lukvbp</name>
+            <uri>https://github.com/lukvbp</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Office UI Reverter (32/64-bit Universal) 1.0]]></title>
+        <id>https://windhawk.net/mods/office-ui-reverter-universal#a3b8e6191ffac4c94d2aff9583740019face5fc1</id>
+        <link href="https://windhawk.net/mods/office-ui-reverter-universal"/>
+        <updated>2026-03-21T07:52:41.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="officeuireverter3264bituniversal">Office UI Reverter (32/64-bit Universal)</h1>
+<p><em>(Updated to support both 32-bit and 64-bit via PDB Symbol Hooking)</em></p>
+<p><em>This mod is an enhanced fork of the original <a href="https://windhawk.net/mods/office-ui-reverter">Office UI Reverter</a> created by <strong>Amrsatrio</strong>.</em></p>
+<p>Reverts the <strong>Office 2022+/Microsoft 365 UI</strong> back to the look of <strong>Office 2019</strong> or <strong>Office 2016</strong>. Can be changed through mod settings.</p>
+<h2 id="note">⚠️ Note:</h2>
+<ul>
+<li>Early injection to Office processes is required to patch the UI style. This means the process used to launch Office must not be excluded from Windhawk injection.</li>
+<li>Please close all windows of an Office program and relaunch it to apply the new style.</li>
+<li>Older styles may lack icons for new features such as <em>Copilot</em>. Those are not covered by this mod.</li>
+<li>Be advised that Microsoft can remove the older style remaining in the application anytime in the future. When that happens, this mod will no longer work until a new workaround is found.</li>
+</ul>
+<h2 id="creditsacknowledgements">Credits &amp; Acknowledgements</h2>
+<ul>
+<li><strong><a href="https://github.com/Amrsatrio">Amrsatrio</a></strong>: For the original concept, the initial discovery of the <code>GetVisualStyleForSurface</code> function, and the UI style enumeration.</li>
+</ul>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Windows 11 File Explorer Styler 1.4]]></title>
         <id>https://windhawk.net/mods/windows-11-file-explorer-styler#9c7f3656e98a7ece5e213dae90a01b8b8fe4ed5a</id>
@@ -260,129 +394,6 @@ covering every known code path Windows uses to open the speed test URL.</p>]]></
         <author>
             <name>BCRTVKCS</name>
             <uri>https://github.com/bcrtvkcs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tiling Helper 2.0.0]]></title>
-        <id>https://windhawk.net/mods/tiling-helper#b25cbfb1fa555527b71e6c68a5ddedd4816e51b5</id>
-        <link href="https://windhawk.net/mods/tiling-helper"/>
-        <updated>2026-03-15T11:07:06.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Reworked Tiling Helper around a simpler always-on <code>Master+Stack</code> workflow. After tiling a monitor, windows stay managed until automatic tiling is paused.</li>
-<li>Dragging a tiled window now untile it and removes it from the current layout, while the remaining tiled windows are rearranged automatically.</li>
-<li>Removed layout cycling and the extra layouts, and focused the settings on a single configurable <code>Master+Stack</code> layout with horizontal/vertical orientation and adjustable master size.</li>
-<li>Updated hotkeys and controls: the retile toggle now pauses/resumes automatic tiling without disabling manual tiling, and a new shortcut can switch which window is the master.</li>
-</ul>
-<p>Credit to @Meteony for the majority of code changes in this release.</p>]]></content>
-        <author>
-            <name>u2x1</name>
-            <uri>https://github.com/u2x1</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.4]]></title>
-        <id>https://windhawk.net/mods/windows-11-start-menu-styler#7e05bbe573b538403775170df7259a4f434e20f3</id>
-        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
-        <updated>2026-03-15T00:23:45.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added more layout options to the mod settings. Now the classic layout with Phone Link can be selected, as well as the new (redesigned) layout.</li>
-<li>Added the following themes: SunValley, LiquidGlass, Windows10X, TintedGlass.</li>
-<li>Update the following themes:</li>
-<li>Classic start menu: TranslucentStartMenu, NoRecommendedSection, Down Aero.</li>
-<li>Redesigned start menu: Windows10<em>Minimal, Windows11</em>Metro10, Windows11_Metro10Minimal, SunValley (Legacy, formerly 21996), OnlySearch, WindowGlass, Oversimplified&amp;Accentuated.</li>
-<li>Both variants: SideBySide, SideBySide2, SideBySideMinimal, UniMenu.</li>
-<li>Added the following properties to <code>WindhawkBlur</code>: <code>TintLuminosityOpacity</code>, <code>TintSaturation</code>, <code>NoiseOpacity</code>, and <code>NoiseDensity</code>. The implementation was contributed by <a href="https://github.com/Lockframe">Jhen</a>. For details, refer to <a href="https://github.com/ramensoftware/windows-11-start-menu-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
-<li>Added a way to define theme-aware resources. For example, different colors for an element can be defined for light mode and dark mode.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disk Usage Bar in Drive Properties 1.2]]></title>
-        <id>https://windhawk.net/mods/disk-usage-bar-in-drive-properties#7749d8190cab3e0f243aed47c317204e64bf21e9</id>
-        <link href="https://windhawk.net/mods/disk-usage-bar-in-drive-properties"/>
-        <updated>2026-03-14T14:14:05.000Z</updated>
-        <content type="html"><![CDATA[<p>Added an option to hide the "Details" (Windows 11) or "Disk Clean-up" (Windows 8.1/10) button, which is recommended for localized systems to prevent a UI collision with a long "Space used" string for the disk usage percentage text.</p>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar: no minimize on click 1.0]]></title>
-        <id>https://windhawk.net/mods/taskbar-no-minimize#4dc3292c7ed8bec555e8ce057dc2e78acfd86e19</id>
-        <link href="https://windhawk.net/mods/taskbar-no-minimize"/>
-        <updated>2026-03-13T10:42:20.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="taskbarnominimizeonclick">Taskbar: no minimize on click</h1>
-<p>Disable the "minimize window" function when clicking an already active window on
-the taskbar. When you click a taskbar button for a window that is already in the
-foreground, the window will stay in place instead of being minimized.</p>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VLC Discord Rich Presence 1.1.3]]></title>
-        <id>https://windhawk.net/mods/vlc-discord-rpc#9f9bae05d7e71f4194161e0eafabfe182458ff1c</id>
-        <link href="https://windhawk.net/mods/vlc-discord-rpc"/>
-        <updated>2026-03-12T22:16:57.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Fixed slow Discord status updates:</strong></p>
-<ul>
-<li>Your status now updates instantly when a song or video changes. Cover art uploading now runs in the background, so Discord no longer freezes while waiting for images.</li>
-</ul>
-<p><strong>Fixed local album art not showing:</strong></p>
-<ul>
-<li>Some users could not upload local artwork because our previous image host (~~<code>0x0.st</code>~~) was silently blocking certain connections. We have switched to <code>uguu.se</code>, which is more reliable and automatically deletes images after 24 hours.</li>
-</ul>
-<p><strong>New "Minimal Mode" toggle:</strong></p>
-<ul>
-<li>You can now enable Minimal Mode in the settings. Instead of choosing a separate theme, this toggle hides the play/pause/stop badges while keeping your current theme (such as Dark Mode) active. This allows the cover art to fill the entire square.</li>
-</ul>
-<p><strong>Formatting and search improvements:</strong></p>
-<ul>
-<li>Episode formatting now uses proper spacing (e.g., S01 E01 instead of S01E01). This improves readability and makes the Search This button results more accurate.</li>
-</ul>]]></content>
-        <author>
-            <name>ciizerr</name>
-            <uri>https://github.com/ciizerr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Classic Theme 1.2.3]]></title>
-        <id>https://windhawk.net/mods/classic-theme-enable#e1b8e2ff94ab78003a632952e797e356b2b81a76</id>
-        <link href="https://windhawk.net/mods/classic-theme-enable"/>
-        <updated>2026-03-12T13:35:26.000Z</updated>
-        <content type="html"><![CDATA[<p>update readme</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Win10 taskbar on Win11 24H2 or 25H2 0.1.7]]></title>
-        <id>https://windhawk.net/mods/win10-taskbar-on-win11-24h2#5e2b846e45baaa08bd60622c5d694d981ed93f9f</id>
-        <link href="https://windhawk.net/mods/win10-taskbar-on-win11-24h2"/>
-        <updated>2026-03-12T13:32:38.000Z</updated>
-        <content type="html"><![CDATA[<p>update readme</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[No SumatraPDF Drag Cursor 1.0.0]]></title>
-        <id>https://windhawk.net/mods/no-sumatrapdf-drag-cursor#df31498aec56f9a9cb1a8944f2120af88ed38b4a</id>
-        <link href="https://windhawk.net/mods/no-sumatrapdf-drag-cursor"/>
-        <updated>2026-03-10T13:21:24.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="nosumatrapdfdragcursor">No SumatraPDF Drag Cursor</h1>
-<p>This mod removes the drag cursor which is shown when panning a document by dragging with the cursor.
-<img src="https://raw.githubusercontent.com/ItsProfessional/Screenshots/refs/heads/main/Windhawk/no-sumatrapdf-drag-cursor.png" alt="SumatraPDF Drag Cursor" /></p>]]></content>
-        <author>
-            <name>ItsProfessional</name>
-            <uri>https://github.com/ItsProfessional</uri>
         </author>
     </entry>
 </feed>
