@@ -232,7 +232,7 @@
                     208
                 ],
                 "ratingUsers": 223,
-                "updated": 1761689419000,
+                "updated": 1774222332000,
                 "users": 14291
             },
             "metadata": {
@@ -247,7 +247,7 @@
                     "explorer.exe"
                 ],
                 "name": "Alt+Tab per monitor",
-                "version": "1.1.1"
+                "version": "1.2"
             }
         },
         "app-theme-crash-fixer": {
@@ -4597,12 +4597,12 @@
                     18
                 ],
                 "ratingUsers": 27,
-                "updated": 1770846004000,
+                "updated": 1774211245000,
                 "users": 1587
             },
             "metadata": {
                 "author": "ALMAS CP",
-                "compilerOptions": "-lwininet -lws2_32 -liphlpapi -lgdi32 -luser32",
+                "compilerOptions": "-lwininet -lws2_32 -liphlpapi -lgdi32 -luser32 -lwtsapi32",
                 "description": "Real-time network connectivity monitoring with visual indicators as a Tray Icon",
                 "github": "https://github.com/almas-cp",
                 "homepage": "https://github.com/almas-cp",
@@ -4610,7 +4610,7 @@
                     "windhawk.exe"
                 ],
                 "name": "Internet Status Indicator",
-                "version": "0.8.2"
+                "version": "0.8.4"
             }
         },
         "invisible-borders": {
@@ -6676,22 +6676,27 @@
                     20
                 ],
                 "ratingUsers": 21,
-                "updated": 1758396728000,
+                "updated": 1774195173000,
                 "users": 2253
             },
             "metadata": {
                 "author": "lorenzoc01",
                 "compilerOptions": "-lgdi32",
-                "description": "Removes “TO EXIT FULLSCREEN PRESS ESC/F11” popup in Chrome/Opera/OperaGX/Edge/Brave",
+                "description": "Removes “TO EXIT FULLSCREEN PRESS ESC/F11” popup in Chromium-based browsers like Chrome/Opera/OperaGX/Edge/Brave and more",
                 "github": "https://github.com/lorenzoc01",
                 "include": [
-                    "opera.exe",
                     "chrome.exe",
+                    "opera.exe",
                     "msedge.exe",
-                    "brave.exe"
+                    "brave.exe",
+                    "comet.exe",
+                    "Maxthon.exe",
+                    "whale.exe",
+                    "aloha.exe",
+                    "thorium.exe"
                 ],
                 "name": "Remove \"Exit Fullscreen\" popup in Chrome",
-                "version": "1.2"
+                "version": "1.3"
             }
         },
         "remove-ms-store-open-with": {
@@ -8407,7 +8412,7 @@
                     88
                 ],
                 "ratingUsers": 145,
-                "updated": 1774084140000,
+                "updated": 1774220790000,
                 "users": 1987
             },
             "metadata": {
@@ -8419,7 +8424,7 @@
                     "explorer.exe"
                 ],
                 "name": "Taskbar Music Lounge",
-                "version": "4.0"
+                "version": "4.0.1"
             }
         },
         "taskbar-no-minimize": {
@@ -10961,7 +10966,7 @@
                     3
                 ],
                 "ratingUsers": 3,
-                "updated": 1774109791000,
+                "updated": 1774175059000,
                 "users": 24
             },
             "metadata": {
@@ -10972,7 +10977,7 @@
                     "winword.exe"
                 ],
                 "name": "Word 图像无损导出 PDF",
-                "version": "1.1"
+                "version": "1.1.1"
             }
         },
         "xs-discord-control-registered-games": {
