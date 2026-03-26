@@ -2,12 +2,86 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-24T22:53:04.000Z</updated>
+    <updated>2026-03-25T22:08:29.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Auto Time Sync On Startup 1.0]]></title>
+        <id>https://windhawk.net/mods/auto-time-sync-on-startup#c3079a58100cd96c3ec7cda1f12a83dc664fee45</id>
+        <link href="https://windhawk.net/mods/auto-time-sync-on-startup"/>
+        <updated>2026-03-25T22:08:29.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="autotimesynconstartup">Auto Time Sync On Startup</h1>
+<p>This mod asks Windows to synchronize the clock once after sign-in. It runs the
+actual sync logic in a separate <code>explorer.exe</code> host process instead of the main
+shell process. It doesn't set a custom NTP server or change the time zone. It
+simply triggers the standard Windows time sync flow, so the current system date
+and time settings continue to apply.</p>
+<p>The sync request is attempted in the background with an optional delay and
+retries, which helps when the network or Windows Time service isn't ready
+immediately after startup.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Windhawk mods are user-mode mods, so this runs after sign-in, not before the
+logon screen.</li>
+<li>The mod is intended for 64-bit Windows.</li>
+<li>The primary method is <code>SystemSettingsAdminFlows.exe ForceTimeSync 0</code>, which
+matches the Windows Settings "Sync now" flow.</li>
+<li>If enabled and the mod is already running elevated, it can fall back to
+<code>w32tm /resync /nowait</code>.</li>
+<li>After a successful synchronization, the mod shows a notification.</li>
+<li>Windows can still show a UAC prompt for the sync request because time sync is
+a privileged operation.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Numberer for Windows 11 1.0.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-numberer#053f76ad008b82a28cc1318b7d318acdd2135883</id>
+        <link href="https://windhawk.net/mods/taskbar-numberer"/>
+        <updated>2026-03-25T11:51:37.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="taskbarnumbererforwindows11">Taskbar Numberer for Windows 11</h1>
+<p>Displays keyboard shortcut numbers (1-9, 0) on Windows 11 taskbar items, replicating the functionality of the classic 7+ Taskbar Numberer tool.
+<img src="https://raw.githubusercontent.com/rik-smeets/images/refs/heads/main/taskbar-numberer.png" alt="" /></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Numbers 1-9 for first nine apps, 0 for tenth app</li>
+<li>Fully customizable appearance (position, size, colors)</li>
+<li>Stroke outline for better visibility on any background</li>
+<li>Supports light and dark themes</li>
+<li>Hidden overlays for apps beyond position 10</li>
+<li>Efficient overlay management with minimal performance impact</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Numbers correspond to Windows + [number] keyboard shortcuts for quick app launching. Simply press Win+1 to open the first app, Win+2 for second, etc.</p>
+<h2 id="knownissues">Known issues</h2>
+<ul>
+<li>After reordering task bar items, numbering might be incorrect. This self-corrects in the next render.</li>
+<li>After initially enabling mod or updating settings: numbers don't appear until first taskbar interaction (like hovering). If mod is enabled, numbers will be there on Windows startup.</li>
+</ul>
+<h2 id="customization">Customization</h2>
+<p>The following settings can be configured through mod settings:</p>
+<ul>
+<li>Number position (corner)</li>
+<li>Font size</li>
+<li>Text color</li>
+<li>Stroke color</li>
+<li>Enable/disable showing numbers on secondary taskbars</li>
+</ul>
+<h2 id="specialthanks">Special Thanks</h2>
+<ul>
+<li><a href="https://github.com/jsfdez">jsfdez</a>: Created the base for this mod in <a href="https://github.com/ramensoftware/windhawk-mods/pull/2260">this pull request</a> after <a href="https://tightcorner.substack.com/p/reverse-engineering-windows-11s-taskbar">this research</a>.</li>
+</ul>]]></content>
+        <author>
+            <name>Rik Smeets</name>
+            <uri>https://github.com/rik-smeets</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Context Menu Preloader 1.0]]></title>
         <id>https://windhawk.net/mods/context-menu-preloader#2cdc049b45f3043a33b507f7cd556b1c1a0380b0</id>
@@ -432,48 +506,6 @@ to 100% opacity.</p>]]></content>
         <author>
             <name>Lukvbp</name>
             <uri>https://github.com/lukvbp</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Office UI Reverter (32/64-bit Universal) 1.0]]></title>
-        <id>https://windhawk.net/mods/office-ui-reverter-universal#a3b8e6191ffac4c94d2aff9583740019face5fc1</id>
-        <link href="https://windhawk.net/mods/office-ui-reverter-universal"/>
-        <updated>2026-03-21T07:52:41.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="officeuireverter3264bituniversal">Office UI Reverter (32/64-bit Universal)</h1>
-<p><em>(Updated to support both 32-bit and 64-bit via PDB Symbol Hooking)</em></p>
-<p><em>This mod is an enhanced fork of the original <a href="https://windhawk.net/mods/office-ui-reverter">Office UI Reverter</a> created by <strong>Amrsatrio</strong>.</em></p>
-<p>Reverts the <strong>Office 2022+/Microsoft 365 UI</strong> back to the look of <strong>Office 2019</strong> or <strong>Office 2016</strong>. Can be changed through mod settings.</p>
-<h2 id="note">⚠️ Note:</h2>
-<ul>
-<li>Early injection to Office processes is required to patch the UI style. This means the process used to launch Office must not be excluded from Windhawk injection.</li>
-<li>Please close all windows of an Office program and relaunch it to apply the new style.</li>
-<li>Older styles may lack icons for new features such as <em>Copilot</em>. Those are not covered by this mod.</li>
-<li>Be advised that Microsoft can remove the older style remaining in the application anytime in the future. When that happens, this mod will no longer work until a new workaround is found.</li>
-</ul>
-<h2 id="creditsacknowledgements">Credits &amp; Acknowledgements</h2>
-<ul>
-<li><strong><a href="https://github.com/Amrsatrio">Amrsatrio</a></strong>: For the original concept, the initial discovery of the <code>GetVisualStyleForSurface</code> function, and the UI style enumeration.</li>
-</ul>]]></content>
-        <author>
-            <name>Joe Ye</name>
-            <uri>https://github.com/JoeYe-233</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 File Explorer Styler 1.4]]></title>
-        <id>https://windhawk.net/mods/windows-11-file-explorer-styler#9c7f3656e98a7ece5e213dae90a01b8b8fe4ed5a</id>
-        <link href="https://windhawk.net/mods/windows-11-file-explorer-styler"/>
-        <updated>2026-03-20T20:50:24.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added the LiquidGlass theme.</li>
-<li>Some of the settings, such as the Explorer frame container height and the background style, are now applied right away.</li>
-<li>Added the following properties to <code>WindhawkBlur</code>: <code>TintLuminosityOpacity</code>, <code>TintSaturation</code>, <code>NoiseOpacity</code>, and <code>NoiseDensity</code>. The implementation was contributed by <a href="https://github.com/Lockframe">Jhen</a>. For details, refer to <a href="https://github.com/ramensoftware/windows-11-file-explorer-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
-<li>Added XAML syntax support for resource variables.</li>
-<li>Improved resource variable handling and theme resource refresh logic.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
         </author>
     </entry>
 </feed>
