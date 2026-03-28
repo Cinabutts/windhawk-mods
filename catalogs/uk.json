@@ -6102,6 +6102,36 @@
                 "version": "1.0.0"
             }
         },
+        "nvidia-control-panel-missing-dialog-hider": {
+            "details": {
+                "defaultSorting": 18,
+                "published": 1774614573000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774614573000,
+                "users": 2
+            },
+            "metadata": {
+                "author": "BCRTVKCS",
+                "compilerOptions": "-luser32 -lkernel32",
+                "description": "Hides the nvcontainer.exe popup that says NVIDIA Control Panel is not found",
+                "github": "https://github.com/bcrtvkcs",
+                "homepage": "https://grdigital.pro",
+                "include": [
+                    "nvcontainer.exe"
+                ],
+                "name": "Hide NVIDIA Control Panel Missing Dialog",
+                "twitter": "https://x.com/bcrtvkcs",
+                "version": "1.1.0"
+            }
+        },
         "office-ui-reverter": {
             "details": {
                 "defaultSorting": 1970,
@@ -8054,7 +8084,7 @@
                     6
                 ],
                 "ratingUsers": 7,
-                "updated": 1767471886000,
+                "updated": 1774620175000,
                 "users": 107
             },
             "metadata": {
@@ -8069,7 +8099,7 @@
                     "explorer.exe"
                 ],
                 "name": "Taskbar ContentPresenter Injector",
-                "version": "1.2"
+                "version": "1.3"
             }
         },
         "taskbar-desktop-indicator": {
@@ -9588,6 +9618,33 @@
                     "th17.exe"
                 ],
                 "name": "Touhou Keyboard Binds",
+                "version": "1.0.0"
+            }
+        },
+        "translucent-flyouts-controller": {
+            "details": {
+                "defaultSorting": 50,
+                "published": 1774613617000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1774613617000,
+                "users": 5
+            },
+            "metadata": {
+                "author": "GID0317",
+                "description": "Controls TranslucentFlyouts settings through Windhawk (registry bridge)",
+                "github": "https://github.com/GID0317",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Translucent Flyouts Controller",
                 "version": "1.0.0"
             }
         },

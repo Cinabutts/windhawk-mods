@@ -2,12 +2,113 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-26T10:59:41.000Z</updated>
+    <updated>2026-03-27T14:02:55.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Taskbar ContentPresenter Injector 1.3]]></title>
+        <id>https://windhawk.net/mods/taskbar-content-presenter-injector#d770227ef3dda830a140a36b06c144e8ec7a5bae</id>
+        <link href="https://windhawk.net/mods/taskbar-content-presenter-injector"/>
+        <updated>2026-03-27T14:02:55.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed 25H2 support by implementing deferred injection</li>
+<li>Improved structure tracking logic and performance</li>
+<li>Added multi-monitor support</li>
+</ul>
+<p>Initial deferred injection patch by <a href="https://github.com/acercandr0">Acercandro</a></p>]]></content>
+        <author>
+            <name>Lockframe</name>
+            <uri>https://github.com/Lockframe</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hide NVIDIA Control Panel Missing Dialog 1.1.0]]></title>
+        <id>https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider#b83161afe9e3090495743124c1192750a3f5920c</id>
+        <link href="https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider"/>
+        <updated>2026-03-27T12:29:33.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="hidenvidiacontrolpanelmissingdialog">Hide NVIDIA Control Panel Missing Dialog</h1>
+<p><img src="https://i.imgur.com/8vaxTpN.png" alt="Screenshot" /></p>
+<p>Silences the <strong>"NVIDIA Control Panel not found"</strong> notification that appears in the bottom-right corner every time Windows starts.</p>
+<h2 id="background">Background</h2>
+<p>Tools like <a href="https://www.techpowerup.com/nvcleanstall/">NVCleanstall</a> allow you to strip components from the NVIDIA driver package during installation. Certain options — such as disabling or not installing the NVIDIA Control Panel — break the Control Panel integration intentionally or as a side effect. Once broken, <code>nvcontainer.exe</code> detects that the Control Panel is missing or non-functional and displays a dialog on every startup prompting you to reinstall it from the Microsoft Store.</p>
+<p>Since the <strong>NVIDIA App</strong> now covers everything the classic Control Panel offered — display settings, GPU overclocking, driver management, and more — there is no practical reason to have the Control Panel installed. The dialog serves no purpose and becomes permanent noise.</p>
+<h2 id="whatitdoes">What it does</h2>
+<p>This mod suppresses the "NVIDIA Control Panel not found" dialog completely. It never appears on screen, neither at startup nor at any other time.</p>
+<h2 id="howitworks">How it works</h2>
+<p>The mod hooks into <code>nvcontainer.exe</code> and intercepts <code>ShowWindow</code> and <code>SetWindowPos</code> calls. Any top-level <code>#32770</code> dialog whose child windows contain the text "NVIDIA" is immediately blocked from becoming visible. A cache of confirmed dialog handles ensures the detection logic runs only once per window, keeping overhead minimal on subsequent calls.</p>
+<p>On mod initialization, any already-visible instance of the dialog is also hidden immediately.</p>
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li>Windows 10 and Windows 11</li>
+<li>Targets <code>nvcontainer.exe</code> only</li>
+</ul>]]></content>
+        <author>
+            <name>BCRTVKCS</name>
+            <uri>https://github.com/bcrtvkcs</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Translucent Flyouts Controller 1.0.0]]></title>
+        <id>https://windhawk.net/mods/translucent-flyouts-controller#5ce1d85477d2d642a676c043d6b045dc89c9030e</id>
+        <link href="https://windhawk.net/mods/translucent-flyouts-controller"/>
+        <updated>2026-03-27T12:13:37.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="translucentflyoutscontrollerforwindhawk">Translucent Flyouts Controller for Windhawk</h1>
+<p><img src="https://i.imgur.com/F64iYmG.gif" alt="Preview" /></p>
+<p>This mod provides a Windhawk settings interface for <a href="https://github.com/ALTaleX531/TranslucentFlyouts">TranslucentFlyouts</a>, a Windows utility that applies visual effects to system menus and tooltips. The controller bridges Windhawk's GUI to the registry keys that TranslucentFlyouts monitors.</p>
+<p>TranslucentFlyouts handles the actual rendering of transparency and effects. This controller simply lets you configure those effects without manual registry editing.</p>
+<h2 id="requirements">Requirements</h2>
+<p>You must have <a href="https://github.com/ALTaleX531/TranslucentFlyouts">TranslucentFlyouts</a> already installed and running. If you don't have it, install it first. This controller won't work standalone.</p>
+<p>Minimum OS: Windows 10/11 (depends on selected effect)
+Recommended: Windows 11 22H2 or newer</p>
+<h2 id="howsettingsareapplied">How Settings Are Applied</h2>
+<p>When you adjust a setting and click Apply:</p>
+<ol>
+<li>The mod reads your Windhawk configuration</li>
+<li>Writes the corresponding values to TranslucentFlyouts registry keys (under HKCU\Software\TranslucentFlyouts)</li>
+<li>Sends a refresh signal so changes take effect immediately</li>
+</ol>
+<p>By default, this refresh is fast. It pokes the running TranslucentFlyouts process. If you enable "Hard Reload On Apply", it fully restarts the process instead, which is slower but sometimes necessary if visuals appear corrupted or stale.</p>
+<h2 id="thecategorysystem">The Category System</h2>
+<p>Settings are organized into four main categories:</p>
+<ul>
+<li><strong>Global</strong>: Default settings that apply across all menu types</li>
+<li><strong>DropDown</strong>: Behavior for standard dropdown menus</li>
+<li><strong>Menu</strong>: Styling for context menus and application menus</li>
+<li><strong>Tooltip</strong>: Appearance of system tooltips</li>
+</ul>
+<p>Each category can either use its own settings or inherit from Global via the "use global" option. This lets you have one consistent style throughout Windows, or customize specific menu types.</p>
+<h2 id="resettingtodefaults">Resetting to Defaults</h2>
+<p>Use the "Controller / Reset To Defaults" dropdown to restore a category to its built-in defaults:</p>
+<ol>
+<li>Select which category to reset: Global, DropDown, Menu, Tooltip, or All</li>
+<li>Click Apply</li>
+<li>The dropdown automatically returns to None</li>
+</ol>
+<p>You can trigger another reset anytime by picking a category again. This pattern exists because Windhawk doesn't support custom buttons in settings. Only dropdowns and toggles are available.</p>
+<h2 id="keydetails">Key Details</h2>
+<ul>
+<li>The "use global" setting (when available) makes a category inherit the corresponding Global setting value</li>
+<li>Color values use ARGB hex format: <code>0xAARRGGBB</code></li>
+<li>Example: <code>0xFF0000FF</code> is fully opaque blue</li>
+<li>Example: <code>0x801F75FF</code> is semi-transparent blue</li>
+<li>Some settings interact with each other. For example, "Enable Immersive Style" on menu applies Windows 11's modern visual language</li>
+<li>Effect types include options like Acrylic, Mica, Blur, and Transparent, each with different visual characteristics</li>
+</ul>
+<h2 id="references">References</h2>
+<p>This controller is built on top of two excellent projects:</p>
+<ul>
+<li><p><a href="https://github.com/ALTaleX531/TranslucentFlyouts">TranslucentFlyouts</a> by ALTaleX531 provides the original runtime and handles all the actual menu rendering that makes Windows menus truly customizable.</p></li>
+<li><p><a href="https://github.com/Satanarious/TranslucentFlyoutsConfig">TranslucentFlyoutsConfig</a> by Satanarious created a polished configuration application that became the standard way to manage these settings. The setting names, organization, and defaults used in this controller are based on that work.</p></li>
+</ul>
+<p>Both projects are well maintained and worth exploring if you want to understand how it all works together.</p>]]></content>
+        <author>
+            <name>GID0317</name>
+            <uri>https://github.com/GID0317</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Auto Time Sync On Startup 1.1]]></title>
         <id>https://windhawk.net/mods/auto-time-sync-on-startup#abcbd90ab2482b23364890fda64981aab39f5b49</id>
@@ -454,68 +555,6 @@ Native UIA Probing: Replaced ProbeAddressBarWithClipboard with ProbeAddressBarWi
         <author>
             <name>Joe Ye</name>
             <uri>https://github.com/JoeYe-233</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hide Start Button 1.0]]></title>
-        <id>https://windhawk.net/mods/hide-start-button#a947466f6d6bede2e97ab37eb6eeb347d03ed918</id>
-        <link href="https://windhawk.net/mods/hide-start-button"/>
-        <updated>2026-03-21T10:27:16.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="hidestartbutton">Hide Start Button</h1>
-<p>Hides the start button from the taskbar. The start menu can still be opened
-via Win key, Ctrl+Esc key or touchscreen gestures.</p>
-<p>Only Windows 11 is supported.</p>
-<p>Based on "Start button always on the left" (taskbar-start-button-position) mod.</p>]]></content>
-        <author>
-            <name>ptrkhh</name>
-            <uri>https://github.com/ptrkhh</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Music Lounge 4.0]]></title>
-        <id>https://windhawk.net/mods/taskbar-music-lounge#fddd032c9c986776e98105654f3a7aa5fa3a43ec</id>
-        <link href="https://windhawk.net/mods/taskbar-music-lounge"/>
-        <updated>2026-03-21T09:09:00.000Z</updated>
-        <content type="html"><![CDATA[<p>This version addresses and incorporates multiple suggestions. A detailed diff table has been added to the README.</p>
-<p>Addressed Issues &amp; Fixes:</p>
-<ul>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3666395914">#3666395914</a> - Add AppID for compatibility with taskbar auto-hide mod</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3666527577">#3666527577</a> - Rounded corners, scalable icons for high-DPI, hide during fullscreen gaming</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/commit/2eddf6953b7aaee9ad5eb050bb329e135f4c7798#commitcomment-173045991">2eddf69</a> - Fix widget lagging behind taskbar with smooth following</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3671818092">#3671818092</a> - Support for AIMP/MPC-BE players, larger 4K icons, fullscreen hide option</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/issues/2828">#2828</a> - Event-driven positioning for smoother auto-hide and fullscreen sync</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3689038965">#3689038965</a> - Comprehensive rework fixing auto-hide lag, fullscreen detection, and high-DPI scaling</li>
-<li><a href="https://github.com/ramensoftware/windhawk-mods/pull/2746#issuecomment-3690241518">#3690241518</a> - Auto-hide widget when no media is playing</li>
-</ul>
-<p>Credits:
-Special thanks to @Cinabutts and @Deykii for code references and the community for testing.</p>
-<p>Testing Note:
-AIMP and MPC-BE integration is implemented but currently untested. Please report any issues with these players.</p>]]></content>
-        <author>
-            <name>Hashah2311</name>
-            <uri>https://github.com/Hashah2311</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scroll Window Opacity 1.0.3]]></title>
-        <id>https://windhawk.net/mods/scroll-window-opacity#0e2de27cbade7621e5af9791789e6ca196f2c2ed</id>
-        <link href="https://windhawk.net/mods/scroll-window-opacity"/>
-        <updated>2026-03-21T08:14:48.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="scrollwindowopacity">Scroll Window Opacity</h1>
-<p>Hold a configurable key combination (default: <strong>Ctrl + Alt</strong>) and scroll the mouse
-wheel to adjust the transparency of the top-level window under the cursor.</p>
-<ul>
-<li><strong>Scroll up</strong> - decrease opacity (more transparent)</li>
-<li><strong>Scroll down</strong> - increase opacity (more opaque)</li>
-</ul>
-<p>The opacity step, minimum opacity, and modifier keys are all configurable in the
-settings panel.</p>
-<p>Common shell windows such as the taskbar and desktop are excluded. For windows
-that this mod makes layered, the original window style is restored when returned
-to 100% opacity.</p>]]></content>
-        <author>
-            <name>Sondre Myrmel</name>
-            <uri>https://github.com/Sondre234</uri>
         </author>
     </entry>
 </feed>
