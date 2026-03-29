@@ -724,6 +724,31 @@
                 "version": "1.0.0"
             }
         },
+        "change-tray-icons": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774729804000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774729804000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "aubymori",
+                "compilerOptions": "-lshell32 -lgdi32",
+                "description": "Change all tray icons for an application to a specific other icon",
+                "github": "https://github.com/aubymori",
+                "name": "Change Tray Icons",
+                "version": "1.0.0"
+            }
+        },
         "chinese-ime-fixed-mode": {
             "details": {
                 "defaultSorting": 760,
@@ -2974,6 +2999,35 @@
                 "version": "1.3.1"
             }
         },
+        "dwrite-font-fallback-override": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774718714000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774718714000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Muhammad Ragib Hasin",
+                "compilerOptions": "-ldwrite -lole32 -lwindowsapp",
+                "description": "Intercepts DirectWrite font fallback to replace fonts for specific characters",
+                "github": "https://github.com/RagibHasin",
+                "include": [
+                    "*"
+                ],
+                "license": "MIT",
+                "name": "DirectWrite Font Fallback Override",
+                "version": "1.0"
+            }
+        },
         "edge-hot-corner-desktop-switch": {
             "details": {
                 "defaultSorting": 584,
@@ -4184,6 +4238,33 @@
                 ],
                 "name": "Force Chinese IME Mode Legacy",
                 "version": "1.0.2"
+            }
+        },
+        "force-kill-active-window": {
+            "details": {
+                "defaultSorting": 40,
+                "published": 1774705040000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1774705040000,
+                "users": 4
+            },
+            "metadata": {
+                "author": "vfxturjo",
+                "description": "Press Ctrl+Alt+F4 to forcefully kill the active foreground window.",
+                "github": "https://github.com/zunaidFarouque",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Force Kill Active Window",
+                "version": "1.0"
             }
         },
         "force-thick-frames": {
@@ -6182,7 +6263,7 @@
                     1
                 ],
                 "ratingUsers": 1,
-                "updated": 1774079561000,
+                "updated": 1774701519000,
                 "users": 26
             },
             "metadata": {
@@ -6200,8 +6281,8 @@
                     "MSPUB.EXE",
                     "MSACCESS.EXE"
                 ],
-                "name": "Office 还原旧版 UI 界面（32/64 位通用版）",
-                "version": "1.0"
+                "name": "Office 还原旧版 UI 界面（32/64 位通用）",
+                "version": "1.0.1"
             }
         },
         "old-auto-colorization": {
@@ -6323,6 +6404,34 @@
                 ],
                 "name": "Old This PC Commands",
                 "version": "1.0.1"
+            }
+        },
+        "one-hair": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774725181000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774725181000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Acercandr0",
+                "compilerOptions": "-lgdi32 -luser32",
+                "description": "A hair on your screen. Always on top.",
+                "github": "https://github.com/Acercandr0",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "One Hair",
+                "version": "1.0"
             }
         },
         "onenote-cursor-teleport-fix": {
@@ -7280,6 +7389,38 @@
                 ],
                 "name": "ShadowPlay Save Folder Override",
                 "version": "1.1"
+            }
+        },
+        "shell-animation-disabler": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774729894000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774729894000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Lockframe",
+                "compilerOptions": "-luser32",
+                "description": "Selectively disable UWP shell animations while preserving other system animations.",
+                "github": "https://github.com/Lockframe",
+                "include": [
+                    "StartMenuExperienceHost.exe",
+                    "ShellExperienceHost.exe",
+                    "ShellHost.exe",
+                    "SearchHost.exe",
+                    "explorer.exe"
+                ],
+                "name": "Shell Animation Disabler",
+                "version": "1.0"
             }
         },
         "shell-flyout-positions": {
@@ -10003,6 +10144,33 @@
                 "version": "1.0.4"
             }
         },
+        "visio-hd-thumbnail": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1774710161000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774710161000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "Joe Ye",
+                "description": "修复资源管理器中 Visio 文档低质量缩略图问题",
+                "github": "https://github.com/JoeYe-233",
+                "include": [
+                    "visio.exe"
+                ],
+                "name": "Visio 缩略图高清修复",
+                "version": "1.0.0"
+            }
+        },
         "visio-pan-zoom": {
             "details": {
                 "defaultSorting": 150,
@@ -10971,6 +11139,38 @@
                 "version": "1.4"
             }
         },
+        "windows-11-start-menu-buttons": {
+            "details": {
+                "defaultSorting": 20,
+                "published": 1774714315000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1774714315000,
+                "users": 2
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Salyts",
+                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject -lshlwapi -lshell32 -luuid -luser32 -lwtsapi32 -lpowrprof",
+                "description": "Customizable buttons for the Windows 11 Start menu.",
+                "github": "https://github.com/Salyts",
+                "include": [
+                    "StartMenuExperienceHost.exe",
+                    "explorer.exe"
+                ],
+                "name": "Windows 11 Start Menu Buttons",
+                "version": "1.1"
+            }
+        },
         "windows-11-start-menu-styler": {
             "details": {
                 "defaultSorting": 4632687,
@@ -11020,7 +11220,7 @@
                     6224
                 ],
                 "ratingUsers": 7517,
-                "updated": 1765925967000,
+                "updated": 1774737858000,
                 "users": 512055
             },
             "featured": true,
@@ -11038,7 +11238,7 @@
                 ],
                 "name": "Windows 11 Taskbar Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.5.2"
+                "version": "1.6"
             }
         },
         "windows-7-clock-spacing": {

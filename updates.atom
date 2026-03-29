@@ -2,12 +2,199 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-03-27T14:02:55.000Z</updated>
+    <updated>2026-03-28T22:44:18.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Taskbar Styler 1.6]]></title>
+        <id>https://windhawk.net/mods/windows-11-taskbar-styler#7568990b9f5176ab4b6646ed48c9a637790352b0</id>
+        <link href="https://windhawk.net/mods/windows-11-taskbar-styler"/>
+        <updated>2026-03-28T22:44:18.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added the following themes: LayerMicaUI, Fluid, TintedGlass, TaskbarToStatusbar, UltraWideFriendly, LiquidGlass, Borderless.</li>
+<li>Updated the following themes: SimplyTransparent, WinXP, CleanSlate, WindowGlass, Luminosity.</li>
+<li>If mod initialization requires an explorer restart, a message box for restarting explorer is now shown. Previously, the themes silently failed to apply.</li>
+<li>Added detection for conflicting programs which use the XAML Diagnostics API, and an option to block such programs. Refer to the mod description for more details.</li>
+<li>Added a way to define theme-aware resources. For example, different colors for an element can be defined for light mode and dark mode.</li>
+<li>Added XAML syntax support for resource variables.</li>
+<li>Added the following properties to&nbsp;<code>WindhawkBlur</code>:&nbsp;<code>TintLuminosityOpacity</code>,&nbsp;<code>TintSaturation</code>,&nbsp;<code>NoiseOpacity</code>, and&nbsp;<code>NoiseDensity</code>. The implementation was contributed by&nbsp;<a href="https://github.com/Lockframe">Jhen</a>. For details, refer to&nbsp;<a href="https://github.com/ramensoftware/windows-11-taskbar-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Shell Animation Disabler 1.0]]></title>
+        <id>https://windhawk.net/mods/shell-animation-disabler#0df13a9a16e18c36e1b09a6fd7d11ec2c68de08c</id>
+        <link href="https://windhawk.net/mods/shell-animation-disabler"/>
+        <updated>2026-03-28T20:31:34.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="shellanimationdisabler">Shell Animation Disabler</h1>
+<p>This mod allows you to selectively disable the animations for the start menu, the search menu, the quick settings panel and the notification center.</p>
+<p><img src="https://i.imgur.com/YeEeM4M.gif" alt="" /></p>]]></content>
+        <author>
+            <name>Lockframe</name>
+            <uri>https://github.com/Lockframe</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Change Tray Icons 1.0.0]]></title>
+        <id>https://windhawk.net/mods/change-tray-icons#ef2b66ea7d81e120629daaf0d285dd5a8d41bf42</id>
+        <link href="https://windhawk.net/mods/change-tray-icons"/>
+        <updated>2026-03-28T20:30:04.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="forcetrayicons">Force Tray Icons</h1>
+<p>This mod will change all tray icons for an application to a specific other icon.</p>
+<p><strong>Example</strong>: Steam with its pre-2011 icon</p>
+<p><img src="https://raw.githubusercontent.com/aubymori/images/refs/heads/main/change-tray-icons-example.png" alt="Example: *Steam with its pre-2011 icon" /></p>
+<h2 id="howtouse">How to use</h2>
+<ol>
+<li>Go to the "Advanced" tab of this mod</li>
+<li>Find the "Custom process inclusion list"</li>
+<li>Add the name of the EXE you want to disable tray icons for.</li>
+</ol>
+<ul>
+<li>If you don't know the name of the EXE, you can find it using 
+ Task Manager.</li>
+</ul>
+<ol>
+<li>Click Save.</li>
+<li>Configure the mod as you want it to be.</li>
+<li>If the program is open already, restart it.</li>
+</ol>]]></content>
+        <author>
+            <name>aubymori</name>
+            <uri>https://github.com/aubymori</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[One Hair 1.0]]></title>
+        <id>https://windhawk.net/mods/one-hair#74f45c84c96abe191f6aaaf5d72b4a965519338f</id>
+        <link href="https://windhawk.net/mods/one-hair"/>
+        <updated>2026-03-28T19:13:01.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="onehair">One Hair</h1>
+<p><strong>The first mod designed to make your Windows experience slightly worse.</strong></p>
+<p>One Hair places a single, slightly annoying hair on your screen. It’s always on top, and moves randomly.</p>
+<h2 id="why">Why?</h2>
+<p>Why not?</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>One persistent hair</strong> always on top, always there.</li>
+<li><strong>Configurable movement interval</strong> – default: 5 minutes (or whatever you set).</li>
+<li><strong>Random positions</strong> because a hair that stays still is boring.</li>
+<li><strong>Runs in its own process</strong> won't crash your Explorer. (But it might annoy you.)</li>
+</ul>]]></content>
+        <author>
+            <name>Acercandr0</name>
+            <uri>https://github.com/Acercandr0</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[DirectWrite Font Fallback Override 1.0]]></title>
+        <id>https://windhawk.net/mods/dwrite-font-fallback-override#9a65e3674e7c1c8f8265f346bd561a76bce6667c</id>
+        <link href="https://windhawk.net/mods/dwrite-font-fallback-override"/>
+        <updated>2026-03-28T17:25:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="directwritefontfallbackoverride">DirectWrite Font Fallback Override</h1>
+<p>Hooks DirectWrite's font fallback system to override font selection for specific
+Unicode character ranges across all applications.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Global font fallback override</li>
+<li>Per-character-range customization</li>
+<li>Real-time configuration updates</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Configure fallback rules in settings to map character ranges to specific fonts.
+For example, force all CJK characters (U+4E00-U+9FFF) to use "Microsoft YaHei".</p>]]></content>
+        <author>
+            <name>Muhammad Ragib Hasin</name>
+            <uri>https://github.com/RagibHasin</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Buttons 1.1]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-buttons#9b7c94904e9d65cd9c1c24efe672f5cb5f2a6ee2</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-buttons"/>
+        <updated>2026-03-28T16:11:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="windows11startmenubuttons">Windows 11 Start Menu Buttons</h1>
+<p>This mod replaces the default bottom row of the Windows 11 Start menu with custom buttons.
+Each button has three fields:</p>
+<ol>
+<li><p><strong>Name</strong> — tooltip text.</p></li>
+<li><p><strong>Icon</strong> — a <a href="https://learn.microsoft.com/en-us/windows/apps/design/iconography/segoe-ui-symbol-font">Segoe Fluent Icons / Segoe UI Symbol</a> glyph, for example <code>\uE7E8</code>. </p></li>
+<li><p><strong>Action</strong> — what the button does.</p></li>
+</ol>
+<p><img src="https://i.imgur.com/FpVm6OR.png" alt="img" /></p>
+<h3 id="actionformats">Action formats</h3>
+<ul>
+<li><code>cmd:explorer.exe</code> — runs through <code>cmd.exe</code>.</li>
+<li><code>shell:shutdown /r</code> — runs console window. </li>
+<li><code>"C:\Program Files"</code> — opens a folder.</li>
+<li><code>"C:\Program Files\Google\Chrome\Application\chrome.exe"</code> — opens a file or app.</li>
+<li><code>~Downloads</code> — searches for a folder by name in common system locations.</li>
+<li><code>~chrome.exe</code> — searches for a file by name in common system locations.</li>
+<li><code>https://www.youtube.com/</code> — opens a website.</li>
+<li><code>{ "Restart", "\uE777", "shell:shutdown /r /f /t 0" }, { "Shut down", "\uE7E8", "shell:shutdown /s /f /t 0" }</code> — a submenu with multiple items.</li>
+</ul>]]></content>
+        <author>
+            <name>Salyts</name>
+            <uri>https://github.com/Salyts</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Visio Thumbnail HD Fix 1.0.0]]></title>
+        <id>https://windhawk.net/mods/visio-hd-thumbnail#70d408f846c9f3f3d62b769e877f4a3c80ef4ddb</id>
+        <link href="https://windhawk.net/mods/visio-hd-thumbnail"/>
+        <updated>2026-03-28T15:02:41.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="visiothumbnailhdfix">Visio Thumbnail HD Fix</h1>
+<p>This mod addresses the issue of low-resolution thumbnails for Visio documents in File Explorer. Visio generates thumbnails according to fixed area sizes (i.e., a max total pixel count), which can lead to blurry thumbnails for larger documents. This mod intercepts the thumbnail generation function in <code>vislib.dll</code> and scales up the area parameter, enabling Visio to produce higher-resolution thumbnails, resulting in clearer previews in File Explorer.</p>
+<h1 id="notes">Notes</h1>
+<ul>
+<li><p>This will only take effect on newly saved or modified Visio files, as thumbnails for existing files were generated and saved at the time of their creation or last modification. To update thumbnails for existing files, simply open, do some modifications, and resave them in Visio. (Direct resave without modification may not trigger thumbnail regeneration, as Visio is kind of smart in that regard. Changing text color or adding and then removing a shape should be enough to force thumbnail update.)</p></li>
+<li><p>Each file with HD thumbnails might take up extra 10KB of storage space (as of <code>Scale Multiplier</code> being set to 4). We consider this a reasonable trade-off for the improved thumbnail quality, especially for complex Visio documents where only clear thumbnails make sense.</p></li>
+</ul>
+<h1 id="before">Before</h1>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/visio-hd-thumbnail-before.png" alt="Before" /></p>
+<h1 id="after">After</h1>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/visio-hd-thumbnail-after.png" alt="After" /></p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Force Kill Active Window 1.0]]></title>
+        <id>https://windhawk.net/mods/force-kill-active-window#e3d4505be854f2fee52fadd2bf1d05b7aff4712e</id>
+        <link href="https://windhawk.net/mods/force-kill-active-window"/>
+        <updated>2026-03-28T13:37:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="forcekillactivewindow">Force Kill Active Window</h1>
+<p>Instantly terminate any frozen or unresponsive application with a keyboard shortcut.</p>
+<p>By default, pressing <strong>Ctrl+Alt+F4</strong> will execute a hard system kill on the currently active foreground window, bypassing the standard Windows polite closure request.</p>
+<h3 id="warning">⚠️ Warning</h3>
+<p>This performs a hard system termination (<code>TerminateProcess</code>). The target application will <strong>not</strong> be given a chance to save your work. Use strictly as a last resort.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Customizable Hotkey:</strong> Change the trigger shortcut in the settings. Updates apply instantly.</li>
+<li><strong>Process Blacklist:</strong> Define apps (like <code>winword.exe</code> or <code>chrome.exe</code>) that the mod is forbidden from killing to protect your most critical work.</li>
+</ul>]]></content>
+        <author>
+            <name>vfxturjo</name>
+            <uri>https://github.com/zunaidFarouque</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Office UI Reverter (32/64-bit Universal) 1.0.1]]></title>
+        <id>https://windhawk.net/mods/office-ui-reverter-universal#930d54229ce6b8af9f00da0307d8dcf0024d6800</id>
+        <link href="https://windhawk.net/mods/office-ui-reverter-universal"/>
+        <updated>2026-03-28T12:38:39.000Z</updated>
+        <content type="html"><![CDATA[<p>Ditched async hook for better reliability and avoid fetching for online symbol cache</p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Taskbar ContentPresenter Injector 1.3]]></title>
         <id>https://windhawk.net/mods/taskbar-content-presenter-injector#d770227ef3dda830a140a36b06c144e8ec7a5bae</id>
@@ -434,127 +621,6 @@ any of the recent (2025-2026) versions that use the Qt 6.x.x framework.</p>
         <author>
             <name>St0RM53</name>
             <uri>https://github.com/St0RM53</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Breadcrumb Middle-Click New Tab 1.1.0]]></title>
-        <id>https://windhawk.net/mods/explorer-breadcrumb-mclick-newtab#3b18c32d213fdf0e1047f5e9615ba1e334fbbdcd</id>
-        <link href="https://windhawk.net/mods/explorer-breadcrumb-mclick-newtab"/>
-        <updated>2026-03-23T18:40:55.000Z</updated>
-        <content type="html"><![CDATA[<p>🚀 Release v1.1.0: The Clipboard-Free Update
-This major update completely redesigns how the mod reads and writes folder paths, moving away from the clipboard-dependent logic of v1.0.0 to a much safer and less intrusive architecture.</p>
-<p>✨ Key Improvements &amp; Fixes
-Preserves Copied Files (Non-Destructive): In v1.0.0, the mod temporarily hijacked the Windows Clipboard to read and paste paths, which inadvertently destroyed any copied files or complex data sitting in your clipboard. Version 1.1.0 is 100% Clipboard-Free. You can now copy a file, middle-click a folder to open a new tab, and safely paste your file without interruption.</p>
-<p>Increased Reliability: Removed the reliance on simulated Ctrl+C and Ctrl+V commands, which could sometimes misfire depending on system lag or clipboard history monitors.</p>
-<p>⚙️ Under the Hood (v1.0.0 vs v1.1.0)
-Native UIA Probing: Replaced ProbeAddressBarWithClipboard with ProbeAddressBarWithUIA. Instead of forcing a copy command, the mod now securely reads the ValuePattern of the active XAML address bar directly through UIAutomation.</p>
-<p>Unicode Injection: Replaced the clipboard-paste navigation sequence. Target folder paths are now instantly typed into the new tab's address bar using native KEYEVENTF_UNICODE input vectors, bypassing the clipboard entirely.</p>
-<p>Code Cleanup: Completely removed the old BackupClipboard and RestoreClipboard structures, resulting in a cleaner and more efficient execution flow.</p>]]></content>
-        <author>
-            <name>osmanonurkoc</name>
-            <uri>https://github.com/osmanonurkoc</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Nilesoft Shell Animator 1.0]]></title>
-        <id>https://windhawk.net/mods/nilesoft-shell-animator#34ed4db043f361f89303e921edc69d3dafa8bd15</id>
-        <link href="https://windhawk.net/mods/nilesoft-shell-animator"/>
-        <updated>2026-03-23T18:30:52.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="nilesoftshellanimator">Nilesoft Shell Animator</h1>
-<p>Adds customizable and position-aware animations to Nilesoft Shell's context menu without touching Windows' native menus.</p>
-<p>Slide animation mode:</p>
-<p><img src="https://i.imgur.com/lugdazk.gif" alt="" /></p>
-<p>Fade animation mode:</p>
-<p><img src="https://i.imgur.com/omQGzOV.gif" alt="" /></p>
-<p>Slide + Fade animation mode:</p>
-<p><img src="https://i.imgur.com/THFUeBK.gif" alt="" /></p>
-<p>Native animation mode:</p>
-<p><img src="https://i.imgur.com/qA0Zxhg.gif" alt="" /></p>]]></content>
-        <author>
-            <name>Lockframe</name>
-            <uri>https://github.com/Lockframe</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Alt+Tab per monitor 1.2]]></title>
-        <id>https://windhawk.net/mods/alt-tab-per-monitor#2eec6038eb43a1847f7cf4dfa0fa65a101aafd18</id>
-        <link href="https://windhawk.net/mods/alt-tab-per-monitor"/>
-        <updated>2026-03-22T23:32:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added customization options for both the display location and the windows to show. Win+Alt+Tab can have different options.</li>
-</ul>]]></content>
-        <author>
-            <name>L3r0y</name>
-            <uri>https://github.com/L3r0yThingz</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Music Lounge 4.0.1]]></title>
-        <id>https://windhawk.net/mods/taskbar-music-lounge#de1c1388c6aadf16637ba7ebe4051f310cb2605a</id>
-        <link href="https://windhawk.net/mods/taskbar-music-lounge"/>
-        <updated>2026-03-22T23:06:30.000Z</updated>
-        <content type="html"><![CDATA[<p>Fixes the widget appearing at top-left of screen on startup.</p>]]></content>
-        <author>
-            <name>Hashah2311</name>
-            <uri>https://github.com/Hashah2311</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Internet Status Indicator 0.8.4]]></title>
-        <id>https://windhawk.net/mods/internet-status-indicator#b8aef2acb5387beafa57d674f1ebe4f843823ec4</id>
-        <link href="https://windhawk.net/mods/internet-status-indicator"/>
-        <updated>2026-03-22T20:27:25.000Z</updated>
-        <content type="html"><![CDATA[<p>logout bug fix</p>]]></content>
-        <author>
-            <name>ALMAS CP</name>
-            <uri>https://github.com/almas-cp</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remove "Exit Fullscreen" popup in Chrome 1.3]]></title>
-        <id>https://windhawk.net/mods/remove-fullscreen-popup-chrome#025a1b56cb1df44cc2eb38d5c65dde2e99d9f661</id>
-        <link href="https://windhawk.net/mods/remove-fullscreen-popup-chrome"/>
-        <updated>2026-03-22T15:59:33.000Z</updated>
-        <content type="html"><![CDATA[<p>Add support for more browsers</p>]]></content>
-        <author>
-            <name>lorenzoc01</name>
-            <uri>https://github.com/lorenzoc01</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word PDF Lossless Export 1.1.1]]></title>
-        <id>https://windhawk.net/mods/word-pdf-lossless-export#9bcd4574bc24f4fe78d3818a65a576fea7a35e47</id>
-        <link href="https://windhawk.net/mods/word-pdf-lossless-export"/>
-        <updated>2026-03-22T10:24:19.000Z</updated>
-        <content type="html"><![CDATA[<p>Avoid fetching for online cache</p>]]></content>
-        <author>
-            <name>Joe Ye</name>
-            <uri>https://github.com/JoeYe-233</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Start Menu Size 1.1]]></title>
-        <id>https://windhawk.net/mods/start-menu-size#cc7bb194b5c59a00a396d51a4e6d7a5f119fe25c</id>
-        <link href="https://windhawk.net/mods/start-menu-size"/>
-        <updated>2026-03-21T17:31:37.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added support for setting the search menu size as well. By default, the size that's configured for the Start menu is used for the search menu as well.</li>
-<li>Minor fixes and size calculation improvements.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word PDF Lossless Export 1.1]]></title>
-        <id>https://windhawk.net/mods/word-pdf-lossless-export#eac39ccd38078c62c2b5af644f39b71e5cbc5b9a</id>
-        <link href="https://windhawk.net/mods/word-pdf-lossless-export"/>
-        <updated>2026-03-21T16:16:31.000Z</updated>
-        <content type="html"><![CDATA[<p>Ditched async hook for better reliability</p>]]></content>
-        <author>
-            <name>Joe Ye</name>
-            <uri>https://github.com/JoeYe-233</uri>
         </author>
     </entry>
 </feed>

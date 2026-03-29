@@ -6,6 +6,11 @@
             "https://hyaenahyaena.com"
         ]
     },
+    "https://github.com/acercandr0": {
+        "author": "Acercandr0",
+        "github": "https://github.com/Acercandr0",
+        "homepages": []
+    },
     "https://github.com/ahmed605": {
         "author": "ahmed605",
         "github": "https://github.com/ahmed605",
@@ -428,6 +433,11 @@
             "https://www.linkedin.com/in/patrick-hermawan/"
         ]
     },
+    "https://github.com/ragibhasin": {
+        "author": "Muhammad Ragib Hasin",
+        "github": "https://github.com/RagibHasin",
+        "homepages": []
+    },
     "https://github.com/reabstraction": {
         "author": "Reabstraction",
         "github": "https://github.com/Reabstraction",
@@ -469,6 +479,11 @@
     "https://github.com/rounk-ctrl": {
         "author": "rounk-ctrl",
         "github": "https://github.com/rounk-ctrl",
+        "homepages": []
+    },
+    "https://github.com/salyts": {
+        "author": "Salyts",
+        "github": "https://github.com/Salyts",
         "homepages": []
     },
     "https://github.com/sanskarprasad": {
@@ -614,6 +629,11 @@
     "https://github.com/yuma-dev": {
         "author": "yuma-dev",
         "github": "https://github.com/yuma-dev",
+        "homepages": []
+    },
+    "https://github.com/zunaidfarouque": {
+        "author": "vfxturjo",
+        "github": "https://github.com/zunaidFarouque",
         "homepages": []
     }
 }
