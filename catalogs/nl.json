@@ -4653,12 +4653,12 @@
                     289
                 ],
                 "ratingUsers": 339,
-                "updated": 1769905123000,
+                "updated": 1774816423000,
                 "users": 31279
             },
             "metadata": {
                 "author": "m417z",
-                "compilerOptions": "-lcomctl32 -lole32 -loleaut32",
+                "compilerOptions": "-lcomctl32 -lgdi32 -lole32 -loleaut32",
                 "description": "Define alternative files for loading various resources (e.g. icons in imageres.dll) for simple theming without having to modify system files",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -4667,7 +4667,7 @@
                 ],
                 "name": "Resource Redirect",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.2.4"
+                "version": "1.2.5"
             }
         },
         "icon16bitfix": {
@@ -7963,7 +7963,7 @@
                     531
                 ],
                 "ratingUsers": 658,
-                "updated": 1767578051000,
+                "updated": 1774819969000,
                 "users": 46151
             },
             "featured": true,
@@ -7972,7 +7972,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lruntimeobject -lversion",
+                "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lversion",
                 "description": "Makes the taskbar auto-hide only when a window is maximized or intersects the taskbar",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -7981,7 +7981,7 @@
                 ],
                 "name": "Taskbar auto-hide when maximized",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.2.4"
+                "version": "1.2.5"
             }
         },
         "taskbar-autohide-better": {
@@ -8191,7 +8191,7 @@
                     1239
                 ],
                 "ratingUsers": 1389,
-                "updated": 1767370411000,
+                "updated": 1774821053000,
                 "users": 73180
             },
             "featured": true,
@@ -8209,7 +8209,7 @@
                 ],
                 "name": "Taskbar Clock Customization",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.7.1"
+                "version": "1.7.3"
             }
         },
         "taskbar-content-presenter-injector": {
@@ -10068,7 +10068,7 @@
                     19
                 ],
                 "ratingUsers": 21,
-                "updated": 1773743179000,
+                "updated": 1774777701000,
                 "users": 274
             },
             "metadata": {
@@ -10080,7 +10080,7 @@
                     "windhawk.exe"
                 ],
                 "name": "Virtual Desktop Helper",
-                "version": "2.4.0"
+                "version": "2.4.1"
             }
         },
         "virtual-desktop-hotkey-cycle": {
@@ -11220,7 +11220,7 @@
                     6224
                 ],
                 "ratingUsers": 7517,
-                "updated": 1774737858000,
+                "updated": 1774812432000,
                 "users": 512055
             },
             "featured": true,
@@ -11238,7 +11238,7 @@
                 ],
                 "name": "Windows 11 Taskbar Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.6"
+                "version": "1.6.1"
             }
         },
         "windows-7-clock-spacing": {
