@@ -323,19 +323,20 @@
                     14
                 ],
                 "ratingUsers": 19,
-                "updated": 1773001133000,
+                "updated": 1774964112000,
                 "users": 471
             },
             "metadata": {
                 "author": "tinodin",
                 "compilerOptions": "-lole32 -loleaut32 -lwindowsapp -lruntimeobject -lkernel32 -luser32 -lshell32",
-                "description": "Automatically switch between light and dark appearance/wallpapers/themes based on a custom hours/sunset to sunrise with custom script support",
+                "description": "Automatically switch between light and dark appearance/wallpapers/themes based on a schedule with hotkey and custom script support",
                 "github": "https://github.com/tinodin",
                 "include": [
                     "explorer.exe"
                 ],
+                "license": "GPL-3.0",
                 "name": "Auto Theme Switcher",
-                "version": "1.2.0"
+                "version": "1.3.0"
             }
         },
         "auto-time-sync-on-startup": {
@@ -4563,20 +4564,20 @@
                     1
                 ],
                 "ratingUsers": 3,
-                "updated": 1771367816000,
+                "updated": 1774900956000,
                 "users": 11
             },
             "metadata": {
                 "author": "webberlv",
                 "compilerOptions": "-lcomctl32 -loleaut32 -lole32 -lversion",
-                "description": "Assign configurable keyboard hotkeys to up to 8 actions, gated by cursor zones (four corners + four edges) of the active monitor.",
+                "description": "Assign up to 9 distinct actions per hotkey, dispatched based on which screen zone the cursor is in when pressed (4 corners, 4 edges, or elsewhere).",
                 "github": "https://github.com/webberLV",
                 "include": [
                     "explorer.exe"
                 ],
                 "license": "GPL-3.0-only",
                 "name": "HotCorner Hotkeys",
-                "version": "2.4"
+                "version": "3.3"
             }
         },
         "hover-text-magnifier": {
@@ -7575,6 +7576,38 @@
                 "version": "1.0.0"
             }
         },
+        "smooth-scroll-win32": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774944629000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774944629000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "crazyboyybs",
+                "compilerOptions": "-luser32 -lcomctl32 -lole32 -loleaut32",
+                "description": "Adds smooth scrolling with spring physics to legacy Win32 apps",
+                "github": "https://github.com/crazyboyybs",
+                "include": [
+                    "explorer.exe",
+                    "regedit.exe",
+                    "mmc.exe",
+                    "control.exe",
+                    "wordpad.exe"
+                ],
+                "name": "Smooth Scroll for Win32",
+                "version": "1.0.0"
+            }
+        },
         "spoof-light-dark-theme": {
             "details": {
                 "defaultSorting": 2912,
@@ -7963,7 +7996,7 @@
                     539
                 ],
                 "ratingUsers": 664,
-                "updated": 1774819969000,
+                "updated": 1774855380000,
                 "users": 46868
             },
             "featured": true,
@@ -7981,7 +8014,7 @@
                 ],
                 "name": "Taskbar auto-hide when maximized",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.2.5"
+                "version": "1.2.6"
             }
         },
         "taskbar-autohide-better": {
@@ -9468,6 +9501,37 @@
                 "version": "1.1.10"
             }
         },
+        "taskbar-z-order-override": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774944387000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774944387000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "meteoni",
+                "compilerOptions": "-lcomctl32",
+                "description": "Control whether the taskbar stays always on top, always at the bottom, or behaves like a normal window",
+                "github": "https://github.com/Meteony",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Taskbar Z-Order Override",
+                "version": "0.7"
+            }
+        },
         "taskmgr-esc": {
             "details": {
                 "defaultSorting": 3033,
@@ -9775,18 +9839,19 @@
                     3
                 ],
                 "ratingUsers": 3,
-                "updated": 1774613617000,
+                "updated": 1774939634000,
                 "users": 60
             },
             "metadata": {
                 "author": "GID0317",
+                "compilerOptions": "-lwtsapi32",
                 "description": "Controls TranslucentFlyouts settings through Windhawk (registry bridge)",
                 "github": "https://github.com/GID0317",
                 "include": [
                     "windhawk.exe"
                 ],
                 "name": "Translucent Flyouts Controller",
-                "version": "1.0.0"
+                "version": "1.1.0"
             }
         },
         "translucent-windows": {
@@ -10430,7 +10495,7 @@
                     68
                 ],
                 "ratingUsers": 76,
-                "updated": 1754905659000,
+                "updated": 1774900915000,
                 "users": 5082
             },
             "metadata": {
@@ -10442,7 +10507,7 @@
                     "explorer.exe"
                 ],
                 "name": "Win+D per monitor(show desktop)",
-                "version": "1.1.20250811"
+                "version": "1.3.260330"
             }
         },
         "win10-colored-borders": {
@@ -11385,6 +11450,34 @@
                 ],
                 "name": "Word Local AutoSave",
                 "version": "3.1"
+            }
+        },
+        "word-mathtype-dark-fix": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1774906294000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1774906294000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Joe Ye",
+                "compilerOptions": "-lgdi32 -lshlwapi",
+                "description": "解决 Word 深色模式下 MathType 公式的可读性问题",
+                "github": "https://github.com/JoeYe-233",
+                "include": [
+                    "winword.exe"
+                ],
+                "name": "Word MathType 公式深色模式修复",
+                "version": "1.0.0"
             }
         },
         "word-pdf-lossless-export": {
