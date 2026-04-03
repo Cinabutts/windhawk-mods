@@ -6719,6 +6719,37 @@
                 "version": "1.0.1"
             }
         },
+        "prevista-file-copy": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1775173824000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1775173824000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "arceus413",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -ldbghelp -luxtheme -lcomctl32 -lshlwapi -lgdi32 -luuid",
+                "description": "Replaces the file copy dialog with a pre-Vista style progress dialog",
+                "github": "https://github.com/arceuss",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Pre-Vista File Copy Dialog",
+                "version": "2.1.0"
+            }
+        },
         "quicklaunch-3dbuttons": {
             "details": {
                 "defaultSorting": 400,
@@ -7589,7 +7620,7 @@
                     10
                 ],
                 "ratingUsers": 11,
-                "updated": 1774944629000,
+                "updated": 1775124994000,
                 "users": 132
             },
             "metadata": {
@@ -7605,7 +7636,7 @@
                     "wordpad.exe"
                 ],
                 "name": "Smooth Scroll for Win32",
-                "version": "1.0.0"
+                "version": "1.0.1"
             }
         },
         "spoof-light-dark-theme": {
@@ -11434,7 +11465,7 @@
                     5
                 ],
                 "ratingUsers": 5,
-                "updated": 1774516062000,
+                "updated": 1775169765000,
                 "users": 118
             },
             "metadata": {
@@ -11449,7 +11480,7 @@
                     "WINWORD.EXE"
                 ],
                 "name": "Word Local AutoSave",
-                "version": "3.1"
+                "version": "3.2"
             }
         },
         "word-mathtype-dark-fix": {
@@ -11465,7 +11496,7 @@
                     2
                 ],
                 "ratingUsers": 2,
-                "updated": 1774906294000,
+                "updated": 1775125091000,
                 "users": 18
             },
             "metadata": {
@@ -11477,7 +11508,7 @@
                     "winword.exe"
                 ],
                 "name": "Word MathType Dark Mode Fix",
-                "version": "1.0.0"
+                "version": "1.0.1"
             }
         },
         "word-pdf-lossless-export": {

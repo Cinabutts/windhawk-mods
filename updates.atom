@@ -2,12 +2,90 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-04-01T14:41:49.000Z</updated>
+    <updated>2026-04-02T23:50:24.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Pre-Vista File Copy Dialog 2.1.0]]></title>
+        <id>https://windhawk.net/mods/prevista-file-copy#a44a7e403dbeb79f3dd8e0934b6f3af779c779ba</id>
+        <link href="https://windhawk.net/mods/prevista-file-copy"/>
+        <updated>2026-04-02T23:50:24.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="previstafilecopydialog">Pre-Vista File Copy Dialog</h1>
+<p>This mod replaces the modern file copy/move/delete progress dialog with a
+pre-Vista style classic progress dialog.</p>
+<p>Based on the original Windows XP CProgressDialog implementation from browseui.
+Hooks CoCreateInstance to intercept CLSID_ProgressDialog and provide a custom
+implementation that reproduces XP's behavior for copy, move, delete,
+recycle, and empty recycle bin operations, including animations, per-file
+progress text, and time estimates.</p>
+<p>Works with shell32.dll from Windows 95 up to XP for loading the original AVI
+animations and strings.</p>
+<p><img src="https://i.imgur.com/wWq5rhx.png" alt="Copying" />
+<img src="https://i.imgur.com/Tiey5JK.png" alt="Moving" />
+<img src="https://i.imgur.com/5uFWHay.png" alt="Deleting" />
+<img src="https://i.imgur.com/nBMB7wB.png" alt="Emptying the Recycle Bin" /></p>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><strong>Shell32 Path</strong>: Point this to a pre-Vista shell32.dll to load the original
+AVI animations (filecopy, filemove, filedel, filenuke, filedelreal). If not set
+or the file doesn't exist, animations will be skipped gracefully.</li>
+</ul>]]></content>
+        <author>
+            <name>arceus413</name>
+            <uri>https://github.com/arceuss</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word Local AutoSave 3.2]]></title>
+        <id>https://windhawk.net/mods/word-local-autosave#986dba20bfaf6c9b4fe1acf7c4c82b1aad598403</id>
+        <link href="https://windhawk.net/mods/word-local-autosave"/>
+        <updated>2026-04-02T22:42:45.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="improved">Improved</h3>
+<ul>
+<li>Reworked active document inspection into a shared snapshot path, removing duplicated COM/Automation logic.</li>
+<li>Added safer RAII-style wrappers for <code>IDispatch</code>, <code>BSTR</code>, and <code>VARIANT</code> to reduce cleanup mistakes and make the code easier to maintain.</li>
+<li>Switched document-state monitoring to adaptive polling: faster while edits/saves are active, slower while idle.</li>
+<li>Added retry backoff for temporary COM/Automation failures instead of retrying at a fixed interval.</li>
+<li>Throttled repeated failure logs to reduce noise in Windhawk logs.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fixed manual save handling so <code>Ctrl+S</code> no longer marks the document as clean before Word actually finishes saving.</li>
+<li>Fixed internal dirty-state tracking so it is tied to the current document path, avoiding stale state when switching between documents.</li>
+<li>Improved owner UI thread handling so the mod can re-adopt the active Word UI thread more reliably.</li>
+<li>Fixed timer behavior so save/state timers are treated as proper one-shot timers and cleaned up correctly after firing.</li>
+<li>Improved runtime state reset on init, unload, and settings reload to avoid leftover internal state.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word MathType Dark Mode Fix 1.0.1]]></title>
+        <id>https://windhawk.net/mods/word-mathtype-dark-fix#625efd049990e7576b84ce9802cd97b8573f43e7</id>
+        <link href="https://windhawk.net/mods/word-mathtype-dark-fix"/>
+        <updated>2026-04-02T10:18:11.000Z</updated>
+        <content type="html"><![CDATA[<p>Fix equation color when Export as PDF/Print/Open Print Preview</p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Smooth Scroll for Win32 1.0.1]]></title>
+        <id>https://windhawk.net/mods/smooth-scroll-win32#22be6a2051b29dfeb12a0ff4ebf3cd47c0caa41b</id>
+        <link href="https://windhawk.net/mods/smooth-scroll-win32"/>
+        <updated>2026-04-02T10:16:34.000Z</updated>
+        <content type="html"><![CDATA[<p>Fixed horizontal scrolling on listview mode</p>]]></content>
+        <author>
+            <name>crazyboyybs</name>
+            <uri>https://github.com/crazyboyybs</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Remove Context Menu Items 1.8.0]]></title>
         <id>https://windhawk.net/mods/remove-context-menu-items#52291cefbfc5af7de26d64e3e430a373e2352e78</id>
@@ -316,64 +394,6 @@ remainder; built-in aliases: gpt, yt, google, copilot, x, reddit, translate</li>
         <author>
             <name>m417z</name>
             <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Taskbar Styler 1.6.1]]></title>
-        <id>https://windhawk.net/mods/windows-11-taskbar-styler#fbe583ec54172125c1dcce0468a3cac3c3ab9ef4</id>
-        <link href="https://windhawk.net/mods/windows-11-taskbar-styler"/>
-        <updated>2026-03-29T19:27:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Updated the LiquidGlass theme and added LiquidGlass (Alternate).</li>
-<li>Fixed the tray area being cut off for WindowGlass (Full-Length).</li>
-<li>Improve secondary monitor support for TaskbarXII, WindowGlass, Luminosity, LayerMicaUI, UltraWideFriendly, and Borderless themes.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Virtual Desktop Helper 2.4.1]]></title>
-        <id>https://windhawk.net/mods/virtual-desktop-helper#d31cc9caa1d942878e751a16924b51ab1a8a4a90</id>
-        <link href="https://windhawk.net/mods/virtual-desktop-helper"/>
-        <updated>2026-03-29T09:48:21.000Z</updated>
-        <content type="html"><![CDATA[<p>Update last desktop tracking when the foreground window changes, so desktop switches triggered by taskbar window activation are recorded correctly.</p>]]></content>
-        <author>
-            <name>u2x1</name>
-            <uri>https://github.com/u2x1</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Taskbar Styler 1.6]]></title>
-        <id>https://windhawk.net/mods/windows-11-taskbar-styler#7568990b9f5176ab4b6646ed48c9a637790352b0</id>
-        <link href="https://windhawk.net/mods/windows-11-taskbar-styler"/>
-        <updated>2026-03-28T22:44:18.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added the following themes: LayerMicaUI, Fluid, TintedGlass, TaskbarToStatusbar, UltraWideFriendly, LiquidGlass, Borderless.</li>
-<li>Updated the following themes: SimplyTransparent, WinXP, CleanSlate, WindowGlass, Luminosity.</li>
-<li>If mod initialization requires an explorer restart, a message box for restarting explorer is now shown. Previously, the themes silently failed to apply.</li>
-<li>Added detection for conflicting programs which use the XAML Diagnostics API, and an option to block such programs. Refer to the mod description for more details.</li>
-<li>Added a way to define theme-aware resources. For example, different colors for an element can be defined for light mode and dark mode.</li>
-<li>Added XAML syntax support for resource variables.</li>
-<li>Added the following properties to&nbsp;<code>WindhawkBlur</code>:&nbsp;<code>TintLuminosityOpacity</code>,&nbsp;<code>TintSaturation</code>,&nbsp;<code>NoiseOpacity</code>, and&nbsp;<code>NoiseDensity</code>. The implementation was contributed by&nbsp;<a href="https://github.com/Lockframe">Jhen</a>. For details, refer to&nbsp;<a href="https://github.com/ramensoftware/windows-11-taskbar-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Shell Animation Disabler 1.0]]></title>
-        <id>https://windhawk.net/mods/shell-animation-disabler#0df13a9a16e18c36e1b09a6fd7d11ec2c68de08c</id>
-        <link href="https://windhawk.net/mods/shell-animation-disabler"/>
-        <updated>2026-03-28T20:31:34.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="shellanimationdisabler">Shell Animation Disabler</h1>
-<p>This mod allows you to selectively disable the animations for the start menu, the search menu, the quick settings panel and the notification center.</p>
-<p><img src="https://i.imgur.com/YeEeM4M.gif" alt="" /></p>]]></content>
-        <author>
-            <name>Lockframe</name>
-            <uri>https://github.com/Lockframe</uri>
         </author>
     </entry>
 </feed>
