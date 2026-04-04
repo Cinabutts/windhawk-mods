@@ -2,12 +2,45 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-04-02T23:50:24.000Z</updated>
+    <updated>2026-04-03T19:35:52.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[HotCorner Hotkeys 3.51]]></title>
+        <id>https://windhawk.net/mods/hotcorner-hotkeys#f2850a35c116304bc2eca1ad292e071967f13338</id>
+        <link href="https://windhawk.net/mods/hotcorner-hotkeys"/>
+        <updated>2026-04-03T19:35:52.000Z</updated>
+        <content type="html"><![CDATA[<p>Readme fix</p>]]></content>
+        <author>
+            <name>webberlv</name>
+            <uri>https://github.com/webberLV</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Discord Balloon Notifications 1.0.1]]></title>
+        <id>https://windhawk.net/mods/discord-balloon-notifs#3944b06ee2845d98143f9ef2e81f2514880a09e5</id>
+        <link href="https://windhawk.net/mods/discord-balloon-notifs"/>
+        <updated>2026-04-03T19:35:22.000Z</updated>
+        <content type="html"><![CDATA[<p>Fixed Discord crashing at startup after latest Discord update and cleaned up code.</p>]]></content>
+        <author>
+            <name>repensky</name>
+            <uri>https://github.com/repensky</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HotCorner Hotkeys 3.5]]></title>
+        <id>https://windhawk.net/mods/hotcorner-hotkeys#e22c08bcf35cf5638953f829e0cd7f3e3f368e69</id>
+        <link href="https://windhawk.net/mods/hotcorner-hotkeys"/>
+        <updated>2026-04-03T11:35:35.000Z</updated>
+        <content type="html"><![CDATA[<p>Removed Action 12 additional args clip into an action of its own (Action 13). reorder.</p>]]></content>
+        <author>
+            <name>webberlv</name>
+            <uri>https://github.com/webberLV</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Pre-Vista File Copy Dialog 2.1.0]]></title>
         <id>https://windhawk.net/mods/prevista-file-copy#a44a7e403dbeb79f3dd8e0934b6f3af779c779ba</id>
@@ -343,53 +376,6 @@ remainder; built-in aliases: gpt, yt, google, copilot, x, reddit, translate</li>
         <updated>2026-03-29T21:50:53.000Z</updated>
         <content type="html"><![CDATA[<ul>
 <li>Fixed <code>%weather%</code> which stopped working in the previous update.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar auto-hide when maximized 1.2.5]]></title>
-        <id>https://windhawk.net/mods/taskbar-auto-hide-when-maximized#4f639bb40e7da9b66efcf03ad36d9ceaf92ebc64</id>
-        <link href="https://windhawk.net/mods/taskbar-auto-hide-when-maximized"/>
-        <updated>2026-03-29T21:32:49.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Improved Alt+Tab handling which no longer causes the taskbar to be hidden.</li>
-<li>Improved handling of context menus which no longer cause the taskbar to be hidden.</li>
-<li>Fixed the taskbar being stuck sometimes after using Win+Tab.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Clock Customization 1.7.2]]></title>
-        <id>https://windhawk.net/mods/taskbar-clock-customization#9ef1fb4b9f5c423fdf927b0d56b67742ed063793</id>
-        <link href="https://windhawk.net/mods/taskbar-clock-customization"/>
-        <updated>2026-03-29T21:09:13.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added <code>%cpu_temp%</code> and <code>%cpu_temp_f%</code> for the CPU temperature in °C/°F (average of all ACPI thermal zones).</li>
-<li>Added leading zeros to single-digit <code>%weeknum%</code> and <code>%weeknum_iso%</code> values.</li>
-<li>Increased tooltip length limit from 256 to 4096 characters.</li>
-<li>Improved the "Show seconds" option to strip the trailing colon when disabled.</li>
-<li>Improved initialization performance.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Resource Redirect 1.2.5]]></title>
-        <id>https://windhawk.net/mods/icon-resource-redirect#b16bfcbc7666f2c36e256bbda8370ef78e3f2a63</id>
-        <link href="https://windhawk.net/mods/icon-resource-redirect"/>
-        <updated>2026-03-29T20:33:43.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed redirection priority: Redirection resource paths take precedence over theme paths, which take precedence over the selected icon theme.</li>
-<li>Fixed <code>LoadImageW</code> redirection when an exact size is requested.</li>
-<li>Changed <code>PrivateExtractIconsW</code> redirection logic in some cases. Notably, if the first icon group is requested and there's no matching icon group with the same ID, redirection picks the first icon instead of failing.</li>
 </ul>]]></content>
         <author>
             <name>m417z</name>
