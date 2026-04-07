@@ -398,6 +398,7 @@
             "titleBar.inactiveBackground": "#01163499",
             "titleBar.inactiveForeground": "#e7e7e799"
         },
+        "github.copilot.chat.codeGeneration.useInstructionFiles": false,
         "github.copilot.chat.copilotMemory.enabled": true,
         "github.copilot.chat.enableUserPreferences": true,
         "github.copilot.nextEditSuggestions.extendedRange": true,
@@ -411,7 +412,6 @@
         "github.copilot.chat.reviewSelection.enabled": true,
         "github.copilot.chat.workspace.enableFullWorkspace": true,
         "github.copilot.chat.cli.mcp.enabled": true,
-        "github.copilot.chat.codeGeneration.useInstructionFiles": true,
         "github.copilot.chat.codesearch.agent.enabled": true,
         "github.copilot.chat.projectLabels.chat": true,
         "github.copilot.chat.projectLabels.expanded": true,
@@ -470,6 +470,7 @@
         },
         "explorerExclude.backup": {},
         "peacock.color": "#011634",
+        "search.useIgnoreFiles": false,
         // Auto-save to reduce manual saves
         // "files.autoSave": "afterDelay",
         // "files.autoSaveDelay": 1000
