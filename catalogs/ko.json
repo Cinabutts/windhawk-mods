@@ -310,6 +310,34 @@
                 "version": "1.0.0"
             }
         },
+        "audioswap": {
+            "details": {
+                "defaultSorting": 180,
+                "published": 1775671359000,
+                "rating": 9,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    1,
+                    1
+                ],
+                "ratingUsers": 2,
+                "updated": 1775671359000,
+                "users": 20
+            },
+            "metadata": {
+                "author": "BlackPaw",
+                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lshlwapi",
+                "description": "Adds a tray icon to instantly toggle between two preferred audio outputs.",
+                "github": "https://github.com/BlackPaw21",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "AudioSwap",
+                "version": "1.0"
+            }
+        },
         "auto-custom-titlebar-colors": {
             "details": {
                 "defaultSorting": 560,
@@ -7109,7 +7137,7 @@
                     35
                 ],
                 "ratingUsers": 42,
-                "updated": 1775054509000,
+                "updated": 1775759643000,
                 "users": 1098
             },
             "metadata": {
@@ -7125,7 +7153,7 @@
                 ],
                 "license": "MIT",
                 "name": "Remove Context Menu Items",
-                "version": "1.8.0"
+                "version": "1.9.0"
             }
         },
         "remove-fullscreen-popup-chrome": {
