@@ -2,12 +2,93 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-04-09T18:34:03.000Z</updated>
+    <updated>2026-04-10T18:19:17.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Fix white flashes in explorer 1.3]]></title>
+        <id>https://windhawk.net/mods/fix-explorer-white-flash#d222bac40a39c57549015fb3907fbddd8138f962</id>
+        <link href="https://windhawk.net/mods/fix-explorer-white-flash"/>
+        <updated>2026-04-10T18:19:17.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixes bugs in the Properties dialog (Original implementation: <a href="https://github.com/ramensoftware/windhawk-mods/pull/3754">#3754</a>)</li>
+</ul>]]></content>
+        <author>
+            <name>Mgg Sk</name>
+            <uri>https://github.com/MGGSK</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word Image Resize Anti-Flip 1.0.0]]></title>
+        <id>https://windhawk.net/mods/word-image-resize-anti-flip#aa61501fa7e0eef8ee2ab6463635a0f9a45dea8d</id>
+        <link href="https://windhawk.net/mods/word-image-resize-anti-flip"/>
+        <updated>2026-04-10T10:28:17.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="wordimageresizeantiflip">Word Image Resize Anti-Flip</h1>
+<p>This mod fixes the long-standing issue of images being flipped unexpectedly when resizing via dragging the image handles in Word. Before, once the user dragged the resize handles past the anchor point in any direction, the image would flip unexpectedly. The mod works by intercepting the drag update function and dynamically clamping the mouse position parameter to prevent crossing over the anchor point, which is the root cause of the flipping behavior. It also includes an "anti-flip" feature that detects the original drag direction and maintains it even if the user tries to cross over the anchor point, providing a more intuitive resizing experience.</p>
+<p><em>Note: this mod needs pdb symbol of <code>oart.dll</code> to work. The symbol file is expected to be ~35MB in size. Windhawk will download it automatically when you launch Word first time after you installed the mod (the popup at right bottom corner of your screen, please make sure that it shows percentage like "Loading symbols… 0% (oart.dll)", wait until it reaches 100% and the pop up disappear, otherwise please switch your network and try again) please wait patiently and <strong>relaunch Word AS ADMINISTRATOR at least once</strong> after it finishes, this is to write symbols being used to SymbolCache, which speeds up launching later on.</em></p>
+<h2 id="note">⚠️ Note:</h2>
+<ul>
+<li>It is advised to <strong>turn off automatic updates</strong> for Office applications, as PDB may need to be downloaded every time after updates.</li>
+<li>Please relaunch Word as administrator <em>at least once</em> after installing the mod and wait for symbol download to complete, this is to write symbols being used to SymbolCache, which speeds up launching later on.</li>
+</ul>
+<h1 id="before">Before</h1>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-image-resize-anti-flip-before.gif" alt="Before" /></p>
+<h1 id="after">After</h1>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-image-resize-anti-flip-after.gif" alt="After" /></p>
+<p>(Image courtesy of <a href="https://pixabay.com/photos/love-valentines-day-dice-game-9344644/">Ralf1403</a> from Pixabay)</p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word Local AutoSave 3.3]]></title>
+        <id>https://windhawk.net/mods/word-local-autosave#e524a209a6628714426fe8bec453199be01f3e41</id>
+        <link href="https://windhawk.net/mods/word-local-autosave"/>
+        <updated>2026-04-10T10:24:07.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li>Added earlier pending-save flushes at natural action boundaries, such as document/window deactivation, focus loss, close/minimize, and other transition points.</li>
+<li>Added native Word application event handling through COM connection points, with support for <code>DocumentBeforeSave</code>, <code>DocumentBeforeClose</code>, <code>DocumentChange</code>, and <code>WindowDeactivate</code>.</li>
+<li>Added Save As / rename state migration so the tracked document identity can move to the new file name/path without losing autosave context.</li>
+<li>Added per-document COM identity tracking in addition to path-based tracking, reducing ambiguity when Word changes document identity in-place.</li>
+<li>Added per-instance Word binding so the mod is more likely to stay attached to the correct <code>WINWORD.EXE</code> instance instead of relying on generic global resolution.</li>
+<li>Added explicit handling for Protected View so autosave is deferred/skipped more cleanly in that mode.</li>
+<li>Added automation-busy recovery state so pending save work is retried promptly once Word becomes responsive again.</li>
+</ul>
+<h3 id="improved">Improved</h3>
+<ul>
+<li>Improved active document resolution by walking the native object chain more carefully instead of relying only on <code>Application.ActiveDocument</code>.</li>
+<li>Improved handling of multi-window and non-trivial Word UI surfaces by resolving the current document from the active native object, parent chain, and active window context.</li>
+<li>Improved action coalescing so fast sequences of edits/formatting operations are more likely to collapse into one autosave at the end of the burst.</li>
+<li>Improved transition flush behavior so pending changes are more reliably saved for the previous document before switching away.</li>
+<li>Improved document-state polling by combining message-based heuristics with native Word events instead of relying only on one mechanism.</li>
+<li>Improved busy-state recovery so COM rejection/backoff now feeds into a faster recovery path once Word is available again.</li>
+<li>Improved status logging by deduplicating repeated messages and making skip/defer reasons clearer.</li>
+<li>Improved lifecycle cleanup for timers, event connections, status caches, and transient runtime state across init, unload, and settings reload.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fixed document tracking after <code>Save As</code> / rename so internal dirty/pending state is not left behind on the old document path.</li>
+<li>Fixed a class of cross-instance risks where automation could resolve against the wrong Word application instance.</li>
+<li>Fixed some false-positive edit detections by narrowing <code>WM_KEYDOWN</code> handling and leaning more on <code>WM_CHAR</code> for printable text.</li>
+<li>Fixed pending-save handling for cases where Word had already saved the document manually or internally, allowing the mod to clear stale pending work more accurately.</li>
+<li>Fixed event/timer coordination so document-state refresh and autosave recovery are less likely to fight each other.</li>
+<li>Fixed cleanup of native Word event subscriptions on unload/settings reload to avoid stale COM event hookups.</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>The architecture is now hybrid: native Word events are used where available, while the existing <code>TranslateMessage</code>-based logic remains as a fallback.</li>
+<li>No new settings were added; this update focuses on convenience, correctness, and behavior polish on top of the existing feature set.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Remove Context Menu Items 1.9.0]]></title>
         <id>https://windhawk.net/mods/remove-context-menu-items#bf02dc77b1bc761cda1856e3e8f3c01efd8391a4</id>
@@ -365,76 +446,6 @@ or the file doesn't exist, animations will be skipped gracefully.</li>
         <link href="https://windhawk.net/mods/smooth-scroll-win32"/>
         <updated>2026-04-02T10:16:34.000Z</updated>
         <content type="html"><![CDATA[<p>Fixed horizontal scrolling on listview mode</p>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remove Context Menu Items 1.8.0]]></title>
-        <id>https://windhawk.net/mods/remove-context-menu-items#52291cefbfc5af7de26d64e3e430a373e2352e78</id>
-        <link href="https://windhawk.net/mods/remove-context-menu-items"/>
-        <updated>2026-04-01T14:41:49.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added <code>Ask Microsoft 365 Copilot</code> to Bloatware Items with translations for <code>cs-CZ</code>, <code>de-DE</code>, <code>pt-BR</code>, and <code>pt-PT</code></li>
-<li>Fixed <code>Paste</code> removal to only hide the item when greyed out, preserving it when clickable</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Auto Theme Switcher 1.3.0]]></title>
-        <id>https://windhawk.net/mods/auto-theme-switcher#8af6954b1bbd43fae8577e287d460d19c9983500</id>
-        <link href="https://windhawk.net/mods/auto-theme-switcher"/>
-        <updated>2026-03-31T13:35:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added Hotkey support</li>
-<li>Added Hotkey only scheduling mode</li>
-</ul>]]></content>
-        <author>
-            <name>tinodin</name>
-            <uri>https://github.com/tinodin</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Smooth Scroll for Win32 1.0.0]]></title>
-        <id>https://windhawk.net/mods/smooth-scroll-win32#6d6c2dd24ba263b22d599c4890233c2ae2f6a262</id>
-        <link href="https://windhawk.net/mods/smooth-scroll-win32"/>
-        <updated>2026-03-31T08:10:29.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="smoothscrollforwin32">Smooth Scroll for Win32</h1>
-<h2 id="english">English</h2>
-<p>Adds smooth scrolling with spring physics to legacy Win32 applications.
-Only modifies legacy controls — modern WinUI windows are not affected.</p>
-<h3 id="scrollmodesautodetectedperwindow">Scroll modes (auto-detected per window)</h3>
-<p>| Control | Method | Granularity |
-|---|---|---|
-| SysListView32 | LVM<em>SCROLL | Pixel |
-| DirectUIHWND | UIA SetScrollPercent | Continuous |
-| SysTreeView32, Edit, etc | WM</em>VSCROLL | Line |
-| Unknown / modern | Passthrough | Not modified |</p>
-<h3 id="addingmoreprograms">Adding more programs</h3>
-<p>Go to the mod's <strong>Advanced</strong> tab in Windhawk and add custom
-<code>@include</code> entries (e.g. <code>totalcmd.exe</code>). The mod auto-detects
-scrollable controls in any Win32 application. Modern WinUI windows
-inside any included process are automatically skipped.</p>
-<hr />
-<h2 id="portugus">Português</h2>
-<p>Adiciona rolagem suave com física de mola a aplicativos Win32 antigos.
-Só modifica controles legados. Janelas WinUI não são afetadas.</p>
-<h3 id="adicionandomaisprogramas">Adicionando mais programas</h3>
-<p>Vá na aba <strong>Avançado</strong> do mod no Windhawk e adicione entradas
-<code>@include</code> (ex: <code>totalcmd.exe</code>). O mod detecta automaticamente
-controles roláveis em qualquer aplicativo Win32.</p>
-<hr />
-<h2 id="espaol">Español</h2>
-<p>Añade desplazamiento suave con física de resorte a las aplicaciones Win32 antiguas.
-Solo modifica los controles antiguos. Las ventanas de WinUI no se ven afectadas.</p>
-<h3 id="agregarmasprogramas">Agregar mas programas</h3>
-<p>Ve a la pestaña <strong>Avanzado</strong> del mod en Windhawk y añade entradas:
-<code>@include</code> (p. ej., <code>totalcmd.exe</code>). El mod detecta automáticamente
-los controles desplazables en cualquier aplicación Win32.</p>]]></content>
         <author>
             <name>crazyboyybs</name>
             <uri>https://github.com/crazyboyybs</uri>
