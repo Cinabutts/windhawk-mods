@@ -2295,6 +2295,38 @@
                 "version": "1.0.0"
             }
         },
+        "custom-corner-radius": {
+            "details": {
+                "defaultSorting": 27,
+                "published": 1775933851000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1775933851000,
+                "users": 3
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "m417z",
+                "description": "Customizes window corner radius in Windows 11, making corners more or less rounded",
+                "github": "https://github.com/m417z",
+                "homepage": "https://m417z.com/",
+                "include": [
+                    "dwm.exe"
+                ],
+                "name": "Custom Window Corner Radius",
+                "twitter": "https://twitter.com/m417z",
+                "version": "1.0"
+            }
+        },
         "custom-desktop-watermark": {
             "details": {
                 "defaultSorting": 7128,
@@ -3543,6 +3575,38 @@
                 ],
                 "name": "Name explorer windows",
                 "twitter": "https://twitter.com/m417z",
+                "version": "1.0"
+            }
+        },
+        "explorer-navigation-pane-tweaks": {
+            "details": {
+                "defaultSorting": 162,
+                "published": 1775918364000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1775918364000,
+                "users": 18
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Languster",
+                "compilerOptions": "-lcomctl32",
+                "description": "Adjusts the navigation pane tree indent and treeview visual styles in Windows Explorer",
+                "github": "https://github.com/Languster",
+                "include": [
+                    "%SystemRoot%\\explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Explorer Navigation Pane Tweaks",
                 "version": "1.0"
             }
         },
@@ -10514,7 +10578,7 @@
                     5
                 ],
                 "ratingUsers": 7,
-                "updated": 1773353817000,
+                "updated": 1775933493000,
                 "users": 199
             },
             "metadata": {
@@ -10523,7 +10587,7 @@
                     "x86-64"
                 ],
                 "author": "ciizerr",
-                "compilerOptions": "-lwinhttp",
+                "compilerOptions": "-lwinhttp -lshell32 -lgdiplus -lole32",
                 "description": "Shows your playing status, quality tags (4K/HDR), and interactive buttons on Discord.",
                 "github": "https://github.com/ciizerr",
                 "homepage": "https://vlc-rpc.vercel.app/",
@@ -10531,7 +10595,7 @@
                     "vlc.exe"
                 ],
                 "name": "VLC Discord Rich Presence",
-                "version": "1.1.3"
+                "version": "1.1.4"
             }
         },
         "vmware-disable-upgrade-dialog": {
