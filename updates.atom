@@ -2,12 +2,214 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-04-13T18:01:56.000Z</updated>
+    <updated>2026-04-16T22:13:53.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Hide NVIDIA Control Panel Missing Dialog 1.1.2]]></title>
+        <id>https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider#41124567b0fe25b450f766ca0680f04795d5ac2c</id>
+        <link href="https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider"/>
+        <updated>2026-04-16T22:13:53.000Z</updated>
+        <content type="html"><![CDATA[<p>Update version and compatibility in mod description</p>]]></content>
+        <author>
+            <name>BCRTVKCS</name>
+            <uri>https://github.com/bcrtvkcs</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hide NVIDIA Control Panel Missing Dialog 1.1.1]]></title>
+        <id>https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider#5fca568a43648a4d4ebf953b3d4bf7e9a900d2f0</id>
+        <link href="https://windhawk.net/mods/nvidia-control-panel-missing-dialog-hider"/>
+        <updated>2026-04-16T21:55:15.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added NVDisplay.Container.exe as include target for newer NVIDIA drivers</li>
+</ul>]]></content>
+        <author>
+            <name>BCRTVKCS</name>
+            <uri>https://github.com/bcrtvkcs</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar auto-hide fine tuning 2.3]]></title>
+        <id>https://windhawk.net/mods/taskbar-auto-hide-keyboard-only#9f6a018d93adf561e55dc5318babf4428073c11c</id>
+        <link href="https://windhawk.net/mods/taskbar-auto-hide-keyboard-only"/>
+        <updated>2026-04-16T21:52:15.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed a crash on system startup when the "Never" auto-hide mode is used.</li>
+<li>Improved support for the new taskbar auto-hide animation in Windows 11 preview builds (ViVeTool ID: 41356296).</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Paste Clipboard Content to Explorer 1.1]]></title>
+        <id>https://windhawk.net/mods/paste-clipboard-content-to-explorer#4c017a52c6350a00b79133b6c8fec58cf22450bb</id>
+        <link href="https://windhawk.net/mods/paste-clipboard-content-to-explorer"/>
+        <updated>2026-04-16T12:09:51.000Z</updated>
+        <content type="html"><![CDATA[<p>Add error messagebox on denied access</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Win+D per monitor(show desktop) 1.5.260416]]></title>
+        <id>https://windhawk.net/mods/win-d-per-monitor#6f8261d513e2718b604e812c197ca9d384a7d91c</id>
+        <link href="https://windhawk.net/mods/win-d-per-monitor"/>
+        <updated>2026-04-16T11:50:54.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="20260416v15260416">2026-04-16 (v1.5.260416)</h3>
+<ul>
+<li>Fixed repeated invocation of touchpad gesture by adding debounce logic to ignore redundant calls</li>
+<li>修复触摸板手势重复进入问题，添加防抖逻辑忽略连续重复调用</li>
+</ul>
+<p>Known issues:</p>
+<ul>
+<li>Touchpad swipe-down can minimize all windows and show the desktop, but swipe-up does not trigger this function, so windows cannot be restored via gesture — swipe down again to toggle</li>
+<li>已知问题：触摸板下滑可最小化窗口显示桌面，但上滑不会进入此函数，无法通过手势还原窗口，需再次下滑切换</li>
+</ul>
+<p>Fixes:</p>
+<ul>
+<li><a href="https://github.com/ramensoftware/windhawk-mods/issues/3794">#3794</a></li>
+</ul>]]></content>
+        <author>
+            <name>easyatm</name>
+            <uri>https://github.com/easyatm</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word Local AutoSave 3.4]]></title>
+        <id>https://windhawk.net/mods/word-local-autosave#c155764bd43a6b348c16015576dc85163f8cb5b9</id>
+        <link href="https://windhawk.net/mods/word-local-autosave"/>
+        <updated>2026-04-16T10:07:08.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="improved">Improved</h3>
+<ul>
+<li>Reduced hot-path overhead in <code>TranslateMessage</code> by caching the active Word root window, native object window, and owner UI thread instead of rediscovering them repeatedly.</li>
+<li>Split the lightweight message path from the heavier timer/runtime path so expensive UI state checks and automation work run less often.</li>
+<li>Stopped reconnecting native Word events from the per-message path; event connection is now handled on owner-thread adoption and timer-driven recovery paths.</li>
+<li>Reduced idle document-state polling when native Word events are available, lowering background activity while Word is idle.</li>
+<li>Kept fast refresh for command-driven changes such as ribbon formatting and similar non-keyboard actions without relying on dense idle polling.</li>
+<li>Optimized document dirty-state checks so the mod queries <code>Saved</code> first and only resolves full metadata when it is actually needed.</li>
+<li>Reused the cached transition-flush document object before falling back to full document enumeration by path.</li>
+<li>Reduced timer churn by avoiding unnecessary timer re-arming when an existing timer is already scheduled soon enough.</li>
+<li>Reduced log noise in normal operation by removing some high-frequency informational messages and routing change detection through deduplicated status logs.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fixed owner-thread/timer coordination so stale timer IDs from a previous owner thread do not interfere after thread re-adoption.</li>
+<li>Fixed cache invalidation around focus, activation, close, and similar window transitions so cached Word UI context is refreshed when it becomes unreliable.</li>
+<li>Fixed a potential performance regression where expensive Word window discovery could still be triggered too often after optimization changes.</li>
+<li>Fixed transition-flush tracking so cached document references and identities are cleared together when the request is reset.</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>v3.4 does not add new user-facing features or settings.</li>
+<li>This release focuses on lower CPU/UI overhead, less background work, and smoother behavior on slower machines.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Z-Order Override 0.8]]></title>
+        <id>https://windhawk.net/mods/taskbar-z-order-override#19da50b515da4b298e6df4815c25a0f42d3b20ed</id>
+        <link href="https://windhawk.net/mods/taskbar-z-order-override"/>
+        <updated>2026-04-15T16:17:34.000Z</updated>
+        <content type="html"><![CDATA[<p>Add UWP fullscreen workaround for always on top mode.</p>]]></content>
+        <author>
+            <name>meteoni</name>
+            <uri>https://github.com/Meteony</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Paste Clipboard Content to Explorer 1.0]]></title>
+        <id>https://windhawk.net/mods/paste-clipboard-content-to-explorer#53c403569e9f3776cee0f52ec775f464543c3a24</id>
+        <link href="https://windhawk.net/mods/paste-clipboard-content-to-explorer"/>
+        <updated>2026-04-15T09:44:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="pasteclipboardcontenttoexplorer">Paste Clipboard Content to Explorer</h1>
+<p>Allows pasting text and images from clipboard as files in Explorer,
+on the desktop and in open/save file dialogs.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Paste text as .txt (UTF-16 LE with BOM)</li>
+<li>Paste images as .png</li>
+<li>Auto-naming with incrementing number on conflict</li>
+<li>Works in Explorer folders, on the desktop, in file dialogs</li>
+<li>Works with network folders (UNC paths)</li>
+<li>Paste menu item is grayed out in virtual folders (This PC, Network, etc.)</li>
+<li>Ctrl+V and context menu Paste both work</li>
+</ul>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Win+D per monitor(show desktop) 1.4.260415]]></title>
+        <id>https://windhawk.net/mods/win-d-per-monitor#100d1ccbed6a49342e5f3d9c1f025a577525c223</id>
+        <link href="https://windhawk.net/mods/win-d-per-monitor"/>
+        <updated>2026-04-15T09:04:33.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Switched hook target from <code>_HandleGlobalHotkey</code> to <code>_RaiseDesktop</code>, enabling per-monitor show desktop for both Win+D hotkey and touchpad gestures</li>
+<li>将 Hook 目标从 <code>_HandleGlobalHotkey</code> 改为 <code>_RaiseDesktop</code>，同时支持 Win+D 快捷键和触摸板手势的按显示器显示桌面功能</li>
+<li>Fixes: <a href="https://github.com/ramensoftware/windhawk-mods/issues/3794">#3794: Can we add this feature for the touchpad gesture?</a></li>
+</ul>]]></content>
+        <author>
+            <name>easyatm</name>
+            <uri>https://github.com/easyatm</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Auto Custom Titlebar Colors 1.1.1]]></title>
+        <id>https://windhawk.net/mods/auto-custom-titlebar-colors#61ba5925653bc3f666213d1aef8d12a5f811bcd8</id>
+        <link href="https://windhawk.net/mods/auto-custom-titlebar-colors"/>
+        <updated>2026-04-15T08:57:25.000Z</updated>
+        <content type="html"><![CDATA[<p>Issue Fixed:</p>
+<ul>
+<li>Input focus loss for every new window. Root cause was <code>SetWindowPos</code> with <code>SWP_FRAMECHANGED</code> flag in <code>CreateWindowEx</code> hooks was stealing focus from newly created windows.</li>
+</ul>]]></content>
+        <author>
+            <name>Lone</name>
+            <uri>https://github.com/Louis047</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Task Manager Show Link Speed 1.0.0]]></title>
+        <id>https://windhawk.net/mods/taskmgr-link-speed#2bf7cc399aa935bc14d9c0a5f12d86886f79485b</id>
+        <link href="https://windhawk.net/mods/taskmgr-link-speed"/>
+        <updated>2026-04-15T07:16:00.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="taskmanagershowlinkspeed">Task Manager Show Link Speed</h1>
+<p>This mod introduces a simple yet powerful enhancement to the Task Manager's Network tab by replacing the DNS names of network adapters with their real-time link speeds. This allows users to quickly assess the performance of their network connections without needing to open network details and cross-reference adapter names.</p>
+<p>Works for both Windows 10 and Windows 11 version of Task Manager, also supports <code>Windows 10 classic task manager for Windows 11</code> by Winaero. Supports all types of network adapters (Ethernet, Wi-Fi, etc.) by directly reading the link speed from the system's network interface data structures. By default this mod will use the system's built-in multilingual "Link speed" as the label text in Task Manager. You can also customize the label text through the mod settings.</p>
+<p><em>Note: this mod needs pdb symbol of <code>taskmgr.exe</code> to work. Windhawk will download it automatically when you launch Task Manager first time after you installed the mod (the popup at right bottom corner of your screen, please make sure that it shows percentage like "Loading symbols… 0% (taskmgr.exe)", wait until it reaches 100% and the pop up disappear, otherwise please switch your network and try again) please wait patiently and let Windhawk do the rest</em></p>
+<h1 id="beforevsafter">Before vs After</h1>
+<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/taskmgr-link-speed-before-vs-after.png" alt="" /></p>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Auto Custom Titlebar Colors 1.1.0]]></title>
+        <id>https://windhawk.net/mods/auto-custom-titlebar-colors#849442c1f7f0e050615851eedfe35ffbfac0a4b0</id>
+        <link href="https://windhawk.net/mods/auto-custom-titlebar-colors"/>
+        <updated>2026-04-14T20:11:27.000Z</updated>
+        <content type="html"><![CDATA[<p>Fixed a major issue with third-party apps like GlazeWM, Flow Launcher etc</p>
+<p>Issues fixed:</p>
+<ul>
+<li><p>GlazeWM - Chromium-based browsers and apps simply don't play well with running glazewm and having this mod enabled as they aggressively grab the focus and not giving the room to shift workspaces. Also, this mod seems to have caused a regression with it where when toggling so theme from dark to light and vice versa, the workspaces acts weird everytime i.e it randomly shifts workspace focus. </p></li>
+<li><p>Flow Launcher - Closes instantly on an input event. Simple fix by adding <code>Flow.Launcher.exe</code> to <code>@exclude</code></p></li>
+</ul>]]></content>
+        <author>
+            <name>Lone</name>
+            <uri>https://github.com/Louis047</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Restore Explorer "Exploring" Mode 1.3.0]]></title>
         <id>https://windhawk.net/mods/restore-explorer-exploring-mode#e5a21258b21c70350de0683d01a375ce1c07914f</id>
@@ -175,347 +377,6 @@ modified.</li>
         <author>
             <name>ciizerr</name>
             <uri>https://github.com/ciizerr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Navigation Pane Tweaks 1.0]]></title>
-        <id>https://windhawk.net/mods/explorer-navigation-pane-tweaks#d208454541569598e6b5979b89ab1c22fea4fd1c</id>
-        <link href="https://windhawk.net/mods/explorer-navigation-pane-tweaks"/>
-        <updated>2026-04-11T14:39:24.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorernavigationpanetweaks">Explorer Navigation Pane Tweaks</h1>
-<p>Adjusts the indentation and visual tree style of the navigation pane in Windows Explorer.</p>
-<h2 id="beforeafter">Before / After</h2>
-<h3 id="defaultexplorer">Default Explorer</h3>
-<p><img src="https://raw.githubusercontent.com/Languster/ExplorerNavHook/main/screenshots/before.jpg" alt="Before" /></p>
-<h3 id="withexplorernavigationpanetweaks">With Explorer Navigation Pane Tweaks</h3>
-<p><img src="https://raw.githubusercontent.com/Languster/ExplorerNavHook/main/screenshots/after.jpg" alt="After" /></p>
-<h2 id="features">Features</h2>
-<ul>
-<li>changes the navigation tree indent</li>
-<li>can remove expand/collapse buttons</li>
-<li>can remove connector lines</li>
-<li>can remove root lines</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<ul>
-<li><strong>Target indent</strong>: controls how far the tree items are shifted</li>
-<li><strong>Remove TVS_HASBUTTONS</strong>: removes tree buttons</li>
-<li><strong>Remove TVS_HASLINES</strong>: removes connector lines</li>
-<li><strong>Remove TVS_LINESATROOT</strong>: removes root lines</li>
-</ul>
-<h2 id="compatibility">Compatibility</h2>
-<ul>
-<li>designed for Windows Explorer (<code>explorer.exe</code>)</li>
-<li>tested with the original ExplorerNavHook behavior migrated to Windhawk</li>
-<li>behavior may vary between different Windows builds and Explorer variants</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>targets <code>explorer.exe</code></li>
-<li>based on the original ExplorerNavHook project</li>
-<li>changes apply to the Explorer navigation tree</li>
-</ul>
-<h2 id="limitations">Limitations</h2>
-<ul>
-<li>this mod targets the navigation tree in Explorer, not every tree view in the system</li>
-<li>some Explorer variants or future Windows updates may behave differently</li>
-<li>visual results depend on the current Explorer implementation</li>
-</ul>]]></content>
-        <author>
-            <name>Languster</name>
-            <uri>https://github.com/Languster</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fix white flashes in explorer 1.3]]></title>
-        <id>https://windhawk.net/mods/fix-explorer-white-flash#d222bac40a39c57549015fb3907fbddd8138f962</id>
-        <link href="https://windhawk.net/mods/fix-explorer-white-flash"/>
-        <updated>2026-04-10T18:19:17.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixes bugs in the Properties dialog (Original implementation: <a href="https://github.com/ramensoftware/windhawk-mods/pull/3754">#3754</a>)</li>
-</ul>]]></content>
-        <author>
-            <name>Mgg Sk</name>
-            <uri>https://github.com/MGGSK</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word Image Resize Anti-Flip 1.0.0]]></title>
-        <id>https://windhawk.net/mods/word-image-resize-anti-flip#aa61501fa7e0eef8ee2ab6463635a0f9a45dea8d</id>
-        <link href="https://windhawk.net/mods/word-image-resize-anti-flip"/>
-        <updated>2026-04-10T10:28:17.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="wordimageresizeantiflip">Word Image Resize Anti-Flip</h1>
-<p>This mod fixes the long-standing issue of images being flipped unexpectedly when resizing via dragging the image handles in Word. Before, once the user dragged the resize handles past the anchor point in any direction, the image would flip unexpectedly. The mod works by intercepting the drag update function and dynamically clamping the mouse position parameter to prevent crossing over the anchor point, which is the root cause of the flipping behavior. It also includes an "anti-flip" feature that detects the original drag direction and maintains it even if the user tries to cross over the anchor point, providing a more intuitive resizing experience.</p>
-<p><em>Note: this mod needs pdb symbol of <code>oart.dll</code> to work. The symbol file is expected to be ~35MB in size. Windhawk will download it automatically when you launch Word first time after you installed the mod (the popup at right bottom corner of your screen, please make sure that it shows percentage like "Loading symbols… 0% (oart.dll)", wait until it reaches 100% and the pop up disappear, otherwise please switch your network and try again) please wait patiently and <strong>relaunch Word AS ADMINISTRATOR at least once</strong> after it finishes, this is to write symbols being used to SymbolCache, which speeds up launching later on.</em></p>
-<h2 id="note">⚠️ Note:</h2>
-<ul>
-<li>It is advised to <strong>turn off automatic updates</strong> for Office applications, as PDB may need to be downloaded every time after updates.</li>
-<li>Please relaunch Word as administrator <em>at least once</em> after installing the mod and wait for symbol download to complete, this is to write symbols being used to SymbolCache, which speeds up launching later on.</li>
-</ul>
-<h1 id="before">Before</h1>
-<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-image-resize-anti-flip-before.gif" alt="Before" /></p>
-<h1 id="after">After</h1>
-<p><img src="https://raw.githubusercontent.com/JoeYe-233/images/refs/heads/main/word-image-resize-anti-flip-after.gif" alt="After" /></p>
-<p>(Image courtesy of <a href="https://pixabay.com/photos/love-valentines-day-dice-game-9344644/">Ralf1403</a> from Pixabay)</p>]]></content>
-        <author>
-            <name>Joe Ye</name>
-            <uri>https://github.com/JoeYe-233</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word Local AutoSave 3.3]]></title>
-        <id>https://windhawk.net/mods/word-local-autosave#e524a209a6628714426fe8bec453199be01f3e41</id>
-        <link href="https://windhawk.net/mods/word-local-autosave"/>
-        <updated>2026-04-10T10:24:07.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="added">Added</h3>
-<ul>
-<li>Added earlier pending-save flushes at natural action boundaries, such as document/window deactivation, focus loss, close/minimize, and other transition points.</li>
-<li>Added native Word application event handling through COM connection points, with support for <code>DocumentBeforeSave</code>, <code>DocumentBeforeClose</code>, <code>DocumentChange</code>, and <code>WindowDeactivate</code>.</li>
-<li>Added Save As / rename state migration so the tracked document identity can move to the new file name/path without losing autosave context.</li>
-<li>Added per-document COM identity tracking in addition to path-based tracking, reducing ambiguity when Word changes document identity in-place.</li>
-<li>Added per-instance Word binding so the mod is more likely to stay attached to the correct <code>WINWORD.EXE</code> instance instead of relying on generic global resolution.</li>
-<li>Added explicit handling for Protected View so autosave is deferred/skipped more cleanly in that mode.</li>
-<li>Added automation-busy recovery state so pending save work is retried promptly once Word becomes responsive again.</li>
-</ul>
-<h3 id="improved">Improved</h3>
-<ul>
-<li>Improved active document resolution by walking the native object chain more carefully instead of relying only on <code>Application.ActiveDocument</code>.</li>
-<li>Improved handling of multi-window and non-trivial Word UI surfaces by resolving the current document from the active native object, parent chain, and active window context.</li>
-<li>Improved action coalescing so fast sequences of edits/formatting operations are more likely to collapse into one autosave at the end of the burst.</li>
-<li>Improved transition flush behavior so pending changes are more reliably saved for the previous document before switching away.</li>
-<li>Improved document-state polling by combining message-based heuristics with native Word events instead of relying only on one mechanism.</li>
-<li>Improved busy-state recovery so COM rejection/backoff now feeds into a faster recovery path once Word is available again.</li>
-<li>Improved status logging by deduplicating repeated messages and making skip/defer reasons clearer.</li>
-<li>Improved lifecycle cleanup for timers, event connections, status caches, and transient runtime state across init, unload, and settings reload.</li>
-</ul>
-<h3 id="fixed">Fixed</h3>
-<ul>
-<li>Fixed document tracking after <code>Save As</code> / rename so internal dirty/pending state is not left behind on the old document path.</li>
-<li>Fixed a class of cross-instance risks where automation could resolve against the wrong Word application instance.</li>
-<li>Fixed some false-positive edit detections by narrowing <code>WM_KEYDOWN</code> handling and leaning more on <code>WM_CHAR</code> for printable text.</li>
-<li>Fixed pending-save handling for cases where Word had already saved the document manually or internally, allowing the mod to clear stale pending work more accurately.</li>
-<li>Fixed event/timer coordination so document-state refresh and autosave recovery are less likely to fight each other.</li>
-<li>Fixed cleanup of native Word event subscriptions on unload/settings reload to avoid stale COM event hookups.</li>
-</ul>
-<h3 id="notes">Notes</h3>
-<ul>
-<li>The architecture is now hybrid: native Word events are used where available, while the existing <code>TranslateMessage</code>-based logic remains as a fallback.</li>
-<li>No new settings were added; this update focuses on convenience, correctness, and behavior polish on top of the existing feature set.</li>
-</ul>]]></content>
-        <author>
-            <name>communism420</name>
-            <uri>https://github.com/communism420</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remove Context Menu Items 1.9.0]]></title>
-        <id>https://windhawk.net/mods/remove-context-menu-items#bf02dc77b1bc761cda1856e3e8f3c01efd8391a4</id>
-        <link href="https://windhawk.net/mods/remove-context-menu-items"/>
-        <updated>2026-04-09T18:34:03.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added Spanish language support (thanks to <a href="https://github.com/frankh93">frankh93</a>)</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AudioSwap 1.0]]></title>
-        <id>https://windhawk.net/mods/audioswap#de26d434714384dc9cab67fa36a08a5399276e64</id>
-        <link href="https://windhawk.net/mods/audioswap"/>
-        <updated>2026-04-08T18:02:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="audiooutputswitcher">Audio Output Switcher</h1>
-<p>A lightning-fast audio toggle right in your taskbar! 🎧🔊</p>
-<h2 id="howtouseit">📖 How to Use It</h2>
-<ol>
-<li>⚙️ <strong>Configure Your Devices:</strong> Go to the <strong>Settings</strong> tab. </li>
-</ol>
-<ul>
-<li>Type the Name of your device names (e.g., "Headphones" and "Speakers").</li>
-<li>Select an icon for each device from the dropdown menus.</li>
-</ul>
-<ol>
-<li>🔍 <strong>Find the Icon:</strong> Look in your system tray. The icon will change based on which device is currently active!</li>
-<li>🎯 <strong>Click to Toggle:</strong> A single click swaps your audio and updates the icon instantly.</li>
-</ol>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[File Explorer Toolbar Position Fix 1.0]]></title>
-        <id>https://windhawk.net/mods/fix-file-explorer-toolbar-position#716e9dc4d3c64b227586c985e4aa6968b47b9cb9</id>
-        <link href="https://windhawk.net/mods/fix-file-explorer-toolbar-position"/>
-        <updated>2026-04-06T23:19:11.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="fileexplorertoolbarpositionfix">File Explorer Toolbar Position Fix</h1>
-<p>This mod fixes an issue with file explorer toolbars not setting the position correctly when opening explorer.</p>
-<p><strong>Before</strong><br />
-After opening explorer, all of the toolbars will be forced to be on a new line, ignoring the previous position and style.
-<img src="https://i.imgur.com/v8bj787.png" alt="Before" /></p>
-<p><strong>After</strong><br />
-Now the toolbars will respect the previous position and style when opening explorer.
-<img src="https://i.imgur.com/zGqzAfz.png" alt="After" /></p>]]></content>
-        <author>
-            <name>xalejandro</name>
-            <uri>https://github.com/tetawaves</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pre-Vista Explorer Status Bar 2.0.0]]></title>
-        <id>https://windhawk.net/mods/prevista-explorer-statusbar#04e0523bdf54399ff52631138d50dba606d9a5eb</id>
-        <link href="https://windhawk.net/mods/prevista-explorer-statusbar"/>
-        <updated>2026-04-06T18:06:36.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="previstaexplorerstatusbar">Pre-Vista Explorer Status Bar</h1>
-<p>Adds a classic status bar to Windows Explorer with selectable pane styles
-matching different Windows versions. Based on the other status bar mod by Anixx,
-rewritten from XP SP1 / Win2K / 98 source code and decompilations.</p>
-<p>Note: Windows already has a built-in status bar, Hide it in folder options for this mod to look proper.</p>
-<h2 id="panestyles">Pane Styles</h2>
-<ul>
-<li><strong>Windows XP</strong> — Per-filetype infotip on single select (reads <code>HKCR\{ext}\InfoTip</code>),
-dynamic pane widths, security zone icon + name</li>
-<li><strong>Windows 2000</strong> — Simpler infotip (<code>Type;Author;Title;Subject;Comment;Size</code>),
-same layout as XP</li>
-<li><strong>Windows 98</strong> — Fixed-width left/right panes, always shows object count in pane 0,
-file size or drive capacity in pane 1</li>
-<li><strong>Windows 95/NT4</strong> — Two panes only (count + size), no zone pane, no infotip</li>
-</ul>
-<h2 id="screenshots">Screenshots</h2>
-<p><strong>XP/2000 style:</strong>
-<img src="https://i.imgur.com/5ZmPXuc.png" alt="XP/2000 style" /></p>
-<p><strong>98 style:</strong>
-<img src="https://i.imgur.com/lpHSWgY.png" alt="98 style" /></p>
-<p><strong>95/NT4 style:</strong>
-<img src="https://i.imgur.com/dmcjYwW.png" alt="95/NT4 style" /></p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Three-pane layout: object count / file size / security zone</li>
-<li>Locale-aware number formatting with thousands separators</li>
-<li>Hidden file count display (XP/2000 no-selection state)</li>
-<li>Disk free space in explorer mode (tree pane visible)</li>
-</ul>]]></content>
-        <author>
-            <name>arceus413</name>
-            <uri>https://github.com/arceuss</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Network Toggle 1.0]]></title>
-        <id>https://windhawk.net/mods/net-toggle#0874a2e6656b36f8a8834879ee568d80f39d0ed7</id>
-        <link href="https://windhawk.net/mods/net-toggle"/>
-        <updated>2026-04-06T16:27:44.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="networktoggle">Network Toggle</h1>
-<p>A lightning-fast internet kill switch right in your taskbar! ⚡</p>
-<p>Ever needed to quickly disconnect from the web without digging through Windows settings or ripping the ethernet cable out of the wall? Network Toggle adds a clean, native-looking button directly to your system tray. </p>
-<p>One click drops your connection. Click it again, and you're back online.</p>
-<h2 id="howtouseit">📖 How to Use It</h2>
-<p>Using the toggle is incredibly simple:</p>
-<ol>
-<li>🔍 <strong>Find the Icon:</strong> 
-&gt; <strong>Look in your system tray (bottom right of your screen, next to the clock) for the little <code>^</code> arrow. hit it and look for the network icon.</strong></li>
-<li>🎯 <strong>Click to Toggle:</strong>
-&gt; <strong>Give the icon a single click.</strong></li>
-<li>✅ <strong>Approve the Prompt:</strong>
-&gt; **Windows will pop up a quick UAC screen asking for permission. Click **Yes<strong>.</strong></li>
-<li>🕒 <strong>Wait a Sec:</strong> 
-&gt; <strong>The tray icon will update instantly, but give Windows just a few seconds to actually power your network adapters down or back up in the background.</strong> </li>
-</ol>
-<p><strong>Why do I need to accept the UAC?</strong> </p>
-<blockquote>
-  <p>Windows requires admin permission to physically turn off your network hardware. </p>
-  <p>This is a built-in security feature to stop rogue background apps from disconnecting you secretly.</p>
-</blockquote>
-<h2 id="whyyoullloveit">✨ Why You'll Love It</h2>
-<ul>
-<li><strong>Instant Access:</strong> Your network power switch is always exactly one click away.</li>
-<li><strong>Native Look & Feel:</strong> Uses official Windows system icons, so it blends perfectly into your taskbar.</li>
-<li><strong>Smart & Safe:</strong> Only toggles your actual, physical hardware. It completely ignores virtual networks (like WSL or VMs), so your local environments stay perfectly intact!</li>
-</ul>
-<h2 id="knownissues">⚠️ Known Issues</h2>
-<ul>
-<li><strong>The UAC Popup:</strong> You will get a User Account Control prompt <em>every time</em> you use the toggle. While it adds an extra click, it's an unavoidable Windows security rule for turning physical hardware on and off.</li>
-<li><strong>Icon Grouping on the Taskbar:</strong> If you try to manually drag the icon out of the hidden <code>^</code> menu to drop it onto your main taskbar, Windows might get confused and group it with the main Windhawk app icon. this is still fully functional but showing 2 icons instead of 1.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Breadcrumb Middle-Click New Tab 1.2.0]]></title>
-        <id>https://windhawk.net/mods/explorer-breadcrumb-mclick-newtab#33e8963bbd0dd420be7812ec2e6a22f68c75db8d</id>
-        <link href="https://windhawk.net/mods/explorer-breadcrumb-mclick-newtab"/>
-        <updated>2026-04-05T10:42:07.000Z</updated>
-        <content type="html"><![CDATA[<p>[Added] Dropdown Menu Support: Middle-clicking subfolders within the &gt; (chevron) dropdown menus in the address bar now directly opens the selected folder in a new background tab.</p>
-<p>[Improved] Smart Menu Detection: Expanded the AnalyzeElement function to dynamically distinguish between a standard breadcrumb click and a dropdown menu item click (UIA List, Text, or Menu items).</p>
-<p>[Improved] Expanded State Detection: Introduced the FindExpandedBreadcrumbElement function to accurately identify which breadcrumb menu is currently open in the background. The system flawlessly combines the clicked subfolder's name with the expanded parent path.</p>
-<p>[Stability] The 100% clipboard-free architecture—which preserves your copied data and prevents Explorer crashes—has been maintained and fully integrated with the new dropdown feature.</p>]]></content>
-        <author>
-            <name>osmanonurkoc</name>
-            <uri>https://github.com/osmanonurkoc</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Smooth Scroll for Win32 1.0.2]]></title>
-        <id>https://windhawk.net/mods/smooth-scroll-win32#466acb75de958bc766e59c85b639c56a759a99a4</id>
-        <link href="https://windhawk.net/mods/smooth-scroll-win32"/>
-        <updated>2026-04-05T09:56:24.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed scrolling on SysListView32 horizontal-only views (Icon, Table, Tile)</li>
-<li>Fixed scrolling not working on Task Manager WinUI tabs</li>
-<li>Fixed possible overscroll past top/bottom boundaries</li>
-<li>Fixed inconsistent item scrolling in folders with different item counts</li>
-<li>Added V-Sync option to match animation interval to display refresh rate</li>
-<li>Fixed Ctrl+scroll not working when changing view modes</li>
-<li>Smoother spring effect for a more natural scrolling experience</li>
-</ul>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Auto Custom Titlebar Colors 1.0.0]]></title>
-        <id>https://windhawk.net/mods/auto-custom-titlebar-colors#03eb122ec8fd09c77818492144ff779102f0aec7</id>
-        <link href="https://windhawk.net/mods/auto-custom-titlebar-colors"/>
-        <updated>2026-04-04T18:37:27.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="autodarktitlebarwithcustomcolours">Auto Dark Titlebar with Custom Colours</h1>
-<p>Combines automatic dark/light titlebar switching with per-mode, per-state custom colours. Inspired from the following mods:</p>
-<ul>
-<li><code>Auto Dark Titlebar</code> by Asteski</li>
-<li><code>Windows 11 Custom Titlebar Colors</code> by Th3Fanbus</li>
-</ul>
-<h2 id="features">Features</h2>
-<ul>
-<li>Auto-detects Windows dark/light theme via registry and applies <code>DWMWA_USE_IMMERSIVE_DARK_MODE</code></li>
-<li>Custom titlebar colours for four independent states:</li>
-<li><strong>Light Mode</strong> - Active window</li>
-<li><strong>Light Mode</strong> - Inactive window</li>
-<li><strong>Dark Mode</strong>  - Active window</li>
-<li><strong>Dark Mode</strong>  - Inactive window</li>
-<li>Per-mode "Use Custom Colours" toggle -- leave off to keep system defaults for that mode</li>
-<li>Per-mode colour input format toggle -- choose between Hex (<code>RRGGBB</code>) or separate R/G/B fields</li>
-<li>Real-time theme change detection (responds to <code>WM_SETTINGCHANGE</code> / <code>WM_DWMCOLORIZATIONCOLORCHANGED</code>)</li>
-<li>New windows receive the correct style immediately via <code>CreateWindowEx</code> hooks</li>
-<li>Dialog windows handled via <code>DefDlgProc</code> hooks</li>
-<li>Live settings reload: colour changes apply instantly without restarting the process</li>
-</ul>
-<h2 id="colourformat">Colour Format</h2>
-<ul>
-<li><strong>Hex mode</strong>: enter a 6-character hex string, e.g. <code>FF0000</code> for red (no <code>#</code> prefix)</li>
-<li><strong>RGB mode</strong>: enter R, G, B as integers 0-255 in separate fields</li>
-</ul>
-<p>Custom colours are only applied when the corresponding "Use Custom Colours" toggle is enabled.</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li><code>systemsettings.exe</code> and <code>applicationframehost.exe</code> are excluded via <code>@exclude</code> to avoid conflicts</li>
-<li>No forced repaint is issued while a mouse button is held (prevents drag-state corruption)</li>
-</ul>]]></content>
-        <author>
-            <name>Lone</name>
-            <uri>https://github.com/Louis047</uri>
         </author>
     </entry>
 </feed>
