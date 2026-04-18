@@ -351,7 +351,7 @@
                     11
                 ],
                 "ratingUsers": 13,
-                "updated": 1775671359000,
+                "updated": 1776431281000,
                 "users": 93
             },
             "metadata": {
@@ -363,7 +363,7 @@
                     "windhawk.exe"
                 ],
                 "name": "AudioSwap",
-                "version": "1.0"
+                "version": "1.1.0"
             }
         },
         "auto-custom-titlebar-colors": {
@@ -379,7 +379,7 @@
                     3
                 ],
                 "ratingUsers": 4,
-                "updated": 1776243445000,
+                "updated": 1776466578000,
                 "users": 99
             },
             "metadata": {
@@ -389,15 +389,14 @@
                 "exclude": [
                     "devenv.exe",
                     "systemsettings.exe",
-                    "applicationframehost.exe",
-                    "Flow.Launcher.exe"
+                    "applicationframehost.exe"
                 ],
                 "github": "https://github.com/Louis047",
                 "include": [
                     "*"
                 ],
                 "name": "Auto Custom Titlebar Colors",
-                "version": "1.1.1"
+                "version": "1.1.2"
             }
         },
         "auto-theme-switcher": {
@@ -570,19 +569,19 @@
                     3
                 ],
                 "ratingUsers": 3,
-                "updated": 1772584797000,
+                "updated": 1776466724000,
                 "users": 349
             },
             "metadata": {
                 "author": "FireBlade",
-                "compilerOptions": "-lcomdlg32 -luser32 -lshell32 -lole32 -luuid -lcomctl32",
+                "compilerOptions": "-lcomdlg32 -luser32 -lshell32 -lole32 -luuid -lcomctl32 -lgdi32 -ld2d1 -ldwrite",
                 "description": "Improves Windows dialog boxes.",
                 "github": "https://github.com/FireBlade211",
                 "include": [
                     "*"
                 ],
                 "name": "Better Dialogs",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "block-win-v": {
@@ -2975,6 +2974,35 @@
                     "explorer.exe"
                 ],
                 "name": "Disable Voice Access Hotkey",
+                "version": "1.0.0"
+            }
+        },
+        "disable-windows-shortcuts": {
+            "details": {
+                "defaultSorting": 40,
+                "published": 1776438695000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1776438695000,
+                "users": 4
+            },
+            "metadata": {
+                "author": "Lone",
+                "compilerOptions": "-lcomctl32",
+                "description": "Selectively disable Windows keyboard shortcuts with individual toggles",
+                "github": "https://github.com/Louis047",
+                "include": [
+                    "explorer.exe",
+                    "dwm.exe"
+                ],
+                "name": "Disable Windows Shortcuts",
                 "version": "1.0.0"
             }
         },
