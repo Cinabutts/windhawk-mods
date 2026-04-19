@@ -3264,6 +3264,34 @@
                 "version": "0.3.1"
             }
         },
+        "edge-snap-throw": {
+            "details": {
+                "defaultSorting": 30,
+                "published": 1776512498000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1776512498000,
+                "users": 3
+            },
+            "metadata": {
+                "author": "getrektbynoob20",
+                "compilerOptions": "-lcomctl32 -ldwmapi",
+                "description": "Slide a window into a screen edge and it snaps like native Windows snap",
+                "github": "https://github.com/getrektbynoob20",
+                "include": [
+                    "*"
+                ],
+                "name": "Edge Snap Throw",
+                "version": "2.0.0"
+            }
+        },
         "edge-window-tab-manager-block": {
             "details": {
                 "defaultSorting": 12740,
@@ -5011,7 +5039,7 @@
                     0
                 ],
                 "ratingUsers": 0,
-                "updated": 1771887115000,
+                "updated": 1776518109000,
                 "users": 46
             },
             "metadata": {
@@ -5025,7 +5053,7 @@
                 ],
                 "name": "IDM Clear Completed Downloads",
                 "twitter": "https://x.com/bcrtvkcs",
-                "version": "0.5.3"
+                "version": "0.5.4"
             }
         },
         "ignore-focus-loss": {
@@ -6760,6 +6788,34 @@
                 ],
                 "name": "OneNote Cursor Teleport Fix",
                 "version": "2.0"
+            }
+        },
+        "osu-tray-profile": {
+            "details": {
+                "defaultSorting": 10,
+                "published": 1776546651000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    2
+                ],
+                "ratingUsers": 2,
+                "updated": 1776546651000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "antoshika",
+                "compilerOptions": "-luser32 -lgdi32 -lwinhttp -lurlmon -lgdiplus",
+                "description": "Displays PP, rank, and avatar from rhythm game osu! (standard mode) next to the system tray",
+                "github": "https://github.com/Antoshika",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "osu!Profile in Taskbar",
+                "version": "3.9"
             }
         },
         "passkey-popup-blocker": {
