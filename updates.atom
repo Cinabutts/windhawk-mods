@@ -2,12 +2,63 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-04-21T14:57:03.000Z</updated>
+    <updated>2026-04-22T19:44:55.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Disable Windows Shortcuts 1.1.0]]></title>
+        <id>https://windhawk.net/mods/disable-windows-shortcuts#7c82186f741a488c1fa6ac78b2247bb5399c9411</id>
+        <link href="https://windhawk.net/mods/disable-windows-shortcuts"/>
+        <updated>2026-04-22T19:44:55.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixes few shortcut keys that are hard-coded into windows with a new approach</li>
+<li>Refactored settings into two separate groups for the updated shortcuts</li>
+</ul>]]></content>
+        <author>
+            <name>Lone</name>
+            <uri>https://github.com/Louis047</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Auto-Hide Instant Show 2.2]]></title>
+        <id>https://windhawk.net/mods/taskbar-autohide-instant-show#8346ae1c33be7e1d792c7e8351455d26862a2aa0</id>
+        <link href="https://windhawk.net/mods/taskbar-autohide-instant-show"/>
+        <updated>2026-04-22T15:43:03.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Add No animation and Overshoot options</li>
+<li>Upgrade Slide + Fade to quintic ease for silkier motion</li>
+<li>Edge detection: replace one-shot trigger with throttled retry so the taskbar reliably appears over fullscreen apps and foreground windows that swallow the edge event</li>
+</ul>]]></content>
+        <author>
+            <name>Bo0ii</name>
+            <uri>https://github.com/Bo0ii</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Edge Snap Throw 2.0.1]]></title>
+        <id>https://windhawk.net/mods/edge-snap-throw#6ab0fe7097af06e58f35e42aa68ba95e05d59a71</id>
+        <link href="https://windhawk.net/mods/edge-snap-throw"/>
+        <updated>2026-04-22T09:56:29.000Z</updated>
+        <content type="html"><![CDATA[<p>Updated author and GitHub metadata to reflect username change.</p>]]></content>
+        <author>
+            <name>Getrektbynoob15</name>
+            <uri>https://github.com/getrektbynoob15</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Restore folder menubar in 24h2, 25h2 1.0.1]]></title>
+        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#8dd7643ed86609f7309b6b1cf7a6495d6ec3dad1</id>
+        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
+        <updated>2026-04-22T09:07:17.000Z</updated>
+        <content type="html"><![CDATA[<p>Bump version to 1.0.1 and update readme</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fix white flashes in explorer 1.4]]></title>
         <id>https://windhawk.net/mods/fix-explorer-white-flash#f8301dd5b08cb37bc3f3983d7732dc7c5a570548</id>
@@ -333,89 +384,6 @@ works correctly regardless of how Windows names the device.</p></li>
 <p>Fixes:</p>
 <ul>
 <li><a href="https://github.com/ramensoftware/windhawk-mods/issues/3794">#3794</a></li>
-</ul>]]></content>
-        <author>
-            <name>easyatm</name>
-            <uri>https://github.com/easyatm</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word Local AutoSave 3.4]]></title>
-        <id>https://windhawk.net/mods/word-local-autosave#c155764bd43a6b348c16015576dc85163f8cb5b9</id>
-        <link href="https://windhawk.net/mods/word-local-autosave"/>
-        <updated>2026-04-16T10:07:08.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="improved">Improved</h3>
-<ul>
-<li>Reduced hot-path overhead in <code>TranslateMessage</code> by caching the active Word root window, native object window, and owner UI thread instead of rediscovering them repeatedly.</li>
-<li>Split the lightweight message path from the heavier timer/runtime path so expensive UI state checks and automation work run less often.</li>
-<li>Stopped reconnecting native Word events from the per-message path; event connection is now handled on owner-thread adoption and timer-driven recovery paths.</li>
-<li>Reduced idle document-state polling when native Word events are available, lowering background activity while Word is idle.</li>
-<li>Kept fast refresh for command-driven changes such as ribbon formatting and similar non-keyboard actions without relying on dense idle polling.</li>
-<li>Optimized document dirty-state checks so the mod queries <code>Saved</code> first and only resolves full metadata when it is actually needed.</li>
-<li>Reused the cached transition-flush document object before falling back to full document enumeration by path.</li>
-<li>Reduced timer churn by avoiding unnecessary timer re-arming when an existing timer is already scheduled soon enough.</li>
-<li>Reduced log noise in normal operation by removing some high-frequency informational messages and routing change detection through deduplicated status logs.</li>
-</ul>
-<h3 id="fixed">Fixed</h3>
-<ul>
-<li>Fixed owner-thread/timer coordination so stale timer IDs from a previous owner thread do not interfere after thread re-adoption.</li>
-<li>Fixed cache invalidation around focus, activation, close, and similar window transitions so cached Word UI context is refreshed when it becomes unreliable.</li>
-<li>Fixed a potential performance regression where expensive Word window discovery could still be triggered too often after optimization changes.</li>
-<li>Fixed transition-flush tracking so cached document references and identities are cleared together when the request is reset.</li>
-</ul>
-<h3 id="notes">Notes</h3>
-<ul>
-<li>v3.4 does not add new user-facing features or settings.</li>
-<li>This release focuses on lower CPU/UI overhead, less background work, and smoother behavior on slower machines.</li>
-</ul>]]></content>
-        <author>
-            <name>communism420</name>
-            <uri>https://github.com/communism420</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Z-Order Override 0.8]]></title>
-        <id>https://windhawk.net/mods/taskbar-z-order-override#19da50b515da4b298e6df4815c25a0f42d3b20ed</id>
-        <link href="https://windhawk.net/mods/taskbar-z-order-override"/>
-        <updated>2026-04-15T16:17:34.000Z</updated>
-        <content type="html"><![CDATA[<p>Add UWP fullscreen workaround for always on top mode.</p>]]></content>
-        <author>
-            <name>meteoni</name>
-            <uri>https://github.com/Meteony</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Paste Clipboard Content to Explorer 1.0]]></title>
-        <id>https://windhawk.net/mods/paste-clipboard-content-to-explorer#53c403569e9f3776cee0f52ec775f464543c3a24</id>
-        <link href="https://windhawk.net/mods/paste-clipboard-content-to-explorer"/>
-        <updated>2026-04-15T09:44:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="pasteclipboardcontenttoexplorer">Paste Clipboard Content to Explorer</h1>
-<p>Allows pasting text and images from clipboard as files in Explorer,
-on the desktop and in open/save file dialogs.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Paste text as .txt (UTF-16 LE with BOM)</li>
-<li>Paste images as .png</li>
-<li>Auto-naming with incrementing number on conflict</li>
-<li>Works in Explorer folders, on the desktop, in file dialogs</li>
-<li>Works with network folders (UNC paths)</li>
-<li>Paste menu item is grayed out in virtual folders (This PC, Network, etc.)</li>
-<li>Ctrl+V and context menu Paste both work</li>
-</ul>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Win+D per monitor(show desktop) 1.4.260415]]></title>
-        <id>https://windhawk.net/mods/win-d-per-monitor#100d1ccbed6a49342e5f3d9c1f025a577525c223</id>
-        <link href="https://windhawk.net/mods/win-d-per-monitor"/>
-        <updated>2026-04-15T09:04:33.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Switched hook target from <code>_HandleGlobalHotkey</code> to <code>_RaiseDesktop</code>, enabling per-monitor show desktop for both Win+D hotkey and touchpad gestures</li>
-<li>将 Hook 目标从 <code>_HandleGlobalHotkey</code> 改为 <code>_RaiseDesktop</code>，同时支持 Win+D 快捷键和触摸板手势的按显示器显示桌面功能</li>
-<li>Fixes: <a href="https://github.com/ramensoftware/windhawk-mods/issues/3794">#3794: Can we add this feature for the touchpad gesture?</a></li>
 </ul>]]></content>
         <author>
             <name>easyatm</name>
