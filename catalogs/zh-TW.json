@@ -3062,6 +3062,34 @@
                 "version": "1.0.1"
             }
         },
+        "disk-usage-bar-color": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1777131528000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1777131528000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "dirtyrazkl",
+                "compilerOptions": "-luxtheme -lmsimg32 -lgdi32",
+                "description": "Customize the disk usage bar color in File Explorer This PC view",
+                "github": "https://github.com/dirtyrazkl",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Disk Usage Bar Color",
+                "version": "1.1.0"
+            }
+        },
         "disk-usage-bar-in-drive-properties": {
             "details": {
                 "defaultSorting": 4270,
@@ -3641,12 +3669,12 @@
                     6
                 ],
                 "ratingUsers": 7,
-                "updated": 1776679755000,
+                "updated": 1777120063000,
                 "users": 60
             },
             "metadata": {
                 "author": "ernisn",
-                "compilerOptions": "-lole32 -lshlwapi -lpropsys",
+                "compilerOptions": "-lole32 -lshlwapi -lpropsys -lgdi32",
                 "description": "Forces a fixed set of columns in File Explorer Details view. Columns and their order are configurable. Has no effect on other view modes.",
                 "github": "https://github.com/ernisn",
                 "include": [
@@ -3654,7 +3682,7 @@
                 ],
                 "license": "MIT",
                 "name": "Explorer Details View Columns",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "explorer-frame-classic": {
@@ -3894,6 +3922,68 @@
                     "explorer.exe"
                 ],
                 "name": "Separators around File Explorer toolbars",
+                "version": "1.0.0"
+            }
+        },
+        "explorer-treeitem-tweaker": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1777156793000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1777156793000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Languster",
+                "compilerOptions": "-luxtheme -lcomctl32 -lgdi32 -lgdiplus",
+                "description": "Custom backgrounds and text colors for Explorer TreeView",
+                "github": "https://github.com/Languster",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Explorer TreeItem Tweaker",
+                "version": "1.0.0"
+            }
+        },
+        "explorer-treeline-killer": {
+            "details": {
+                "defaultSorting": 20,
+                "published": 1777147112000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1777147112000,
+                "users": 2
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Languster",
+                "compilerOptions": "-lcomctl32 -lgdi32",
+                "description": "Hide navigation pane separator lines and control upper/lower spacing in Explorer",
+                "github": "https://github.com/Languster",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Explorer TreeLine Killer",
                 "version": "1.0.0"
             }
         },
@@ -8722,7 +8812,7 @@
                     1364
                 ],
                 "ratingUsers": 1556,
-                "updated": 1774821053000,
+                "updated": 1777126546000,
                 "users": 79712
             },
             "featured": true,
@@ -8740,7 +8830,7 @@
                 ],
                 "name": "Taskbar Clock Customization",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.7.3"
+                "version": "1.7.4"
             }
         },
         "taskbar-content-presenter-injector": {
@@ -9064,7 +9154,7 @@
                     2731
                 ],
                 "ratingUsers": 3054,
-                "updated": 1761402057000,
+                "updated": 1777151262000,
                 "users": 230833
             },
             "featured": true,
@@ -9073,7 +9163,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-DWINVER=0x0A00 -lole32 -loleaut32 -lruntimeobject -lshcore",
+                "compilerOptions": "-DWINVER=0x0A00 -lole32 -loleaut32 -lruntimeobject -lshcore -lversion",
                 "description": "Control the taskbar height and icon size, improve icon quality (Windows 11 only)",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -9082,7 +9172,7 @@
                 ],
                 "name": "Taskbar height and icon size",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3.6"
+                "version": "1.3.7"
             }
         },
         "taskbar-jump-list-on-cursor-pos": {
@@ -9320,7 +9410,7 @@
                     422
                 ],
                 "ratingUsers": 466,
-                "updated": 1767557810000,
+                "updated": 1777124129000,
                 "users": 29009
             },
             "featured": true,
@@ -9329,7 +9419,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
                 "description": "Reduce or increase the spacing between tray icons on the taskbar, optionally have a grid of tray icons (Windows 11 only)",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -9338,7 +9428,7 @@
                 ],
                 "name": "Taskbar tray icon spacing and grid",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3"
+                "version": "1.3.1"
             }
         },
         "taskbar-notification-icons-show-all": {
@@ -9580,7 +9670,7 @@
                     104
                 ],
                 "ratingUsers": 117,
-                "updated": 1743105958000,
+                "updated": 1777136092000,
                 "users": 7439
             },
             "metadata": {
@@ -9588,7 +9678,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
                 "description": "Enable Aero Peek when hovering over the \"Show Desktop\" button, like it was possible before Windows 11",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -9597,7 +9687,7 @@
                 ],
                 "name": "Aero Peek on \"Show desktop\" button hover",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.0.1"
+                "version": "1.0.2"
             }
         },
         "taskbar-start-button-corner-fix": {
@@ -9843,7 +9933,7 @@
                     605
                 ],
                 "ratingUsers": 650,
-                "updated": 1753311615000,
+                "updated": 1777134442000,
                 "users": 55896
             },
             "metadata": {
@@ -9851,8 +9941,8 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject",
-                "description": "Allows hiding system icons: volume, network, battery, microphone, location/GPS, Studio Effects, language bar, bell (always or when there are no new notifications), and the \"Show desktop\" button (hide or set width)",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
+                "description": "Allows hiding system icons: volume, network, battery, microphone, location/GPS, Studio Effects, Recall, language bar, bell (always or when there are no new notifications), and the \"Show desktop\" button (hide or set width)",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
                 "include": [
@@ -9860,7 +9950,7 @@
                 ],
                 "name": "Taskbar tray system icon tweaks",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.2.3"
+                "version": "1.3"
             }
         },
         "taskbar-vertical": {
@@ -11992,7 +12082,7 @@
                     4
                 ],
                 "ratingUsers": 6,
-                "updated": 1776334028000,
+                "updated": 1777119262000,
                 "users": 134
             },
             "metadata": {
@@ -12007,7 +12097,7 @@
                     "WINWORD.EXE"
                 ],
                 "name": "Word Local AutoSave",
-                "version": "3.4"
+                "version": "3.5"
             }
         },
         "word-mathtype-dark-fix": {
@@ -12036,6 +12126,34 @@
                 ],
                 "name": "Word MathType 公式深色模式修复",
                 "version": "1.0.1"
+            }
+        },
+        "word-omath-shade-fix": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1777131686000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1777131686000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "Joe Ye",
+                "compilerOptions": "-lshlwapi",
+                "description": "解决 Word 深色模式下 OfficeMath 公式编辑框阴影颜色问题",
+                "github": "https://github.com/JoeYe-233",
+                "include": [
+                    "winword.exe"
+                ],
+                "name": "Word OfficeMath 公式编辑框阴影修复",
+                "version": "1.0.0"
             }
         },
         "word-pdf-lossless-export": {
