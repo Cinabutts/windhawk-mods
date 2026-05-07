@@ -5464,6 +5464,34 @@
                 "version": "1.1.2"
             }
         },
+        "key-click": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1778099462000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1778099462000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Anixx",
+                "compilerOptions": "-lwinmm",
+                "description": "Produces click sound on keypress, supports autorepeat",
+                "github": "https://github.com/Anixx",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Key Click",
+                "version": "1.0"
+            }
+        },
         "keyboard-shortcut-actions": {
             "details": {
                 "defaultSorting": 1782,
@@ -7257,7 +7285,7 @@
                     24
                 ],
                 "ratingUsers": 26,
-                "updated": 1777652915000,
+                "updated": 1778105023000,
                 "users": 384
             },
             "metadata": {
@@ -7269,7 +7297,7 @@
                     "*"
                 ],
                 "name": "Paste Clipboard Content to Explorer",
-                "version": "1.5"
+                "version": "1.6"
             }
         },
         "per-app-language-preferences": {
@@ -7656,6 +7684,34 @@
                 ],
                 "name": "RegEdit Fix \"Copy Key Name\"",
                 "version": "1.0.0"
+            }
+        },
+        "remap-copilot-key": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1778095973000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1778095973000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Lukvbp",
+                "compilerOptions": "-luser32",
+                "description": "Global low-level hook running inside Windhawk to remap or disable the Copilot key.",
+                "github": "https://github.com/lukvbp",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Remap Copilot Key",
+                "version": "1.0"
             }
         },
         "remarkable-polish": {
@@ -12049,6 +12105,39 @@
                 ],
                 "name": "WinDbg No OleFlushClipboard",
                 "version": "0.2"
+            }
+        },
+        "window-border-customizer": {
+            "details": {
+                "defaultSorting": 54,
+                "published": 1778078451000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1778078451000,
+                "users": 6
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Lockframe",
+                "compilerOptions": "-lwevtapi",
+                "description": "Replaces DWM stock borders with custom ARGB translucent borders.",
+                "github": "https://github.com/Lockframe",
+                "include": [
+                    "dwm.exe",
+                    "explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Window Border Customizer",
+                "version": "1.0.0"
             }
         },
         "window-opacity": {
