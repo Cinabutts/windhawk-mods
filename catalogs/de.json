@@ -445,7 +445,7 @@
                     16
                 ],
                 "ratingUsers": 20,
-                "updated": 1774964112000,
+                "updated": 1778343937000,
                 "users": 538
             },
             "metadata": {
@@ -454,11 +454,11 @@
                 "description": "Automatically switch between light and dark appearance/wallpapers/themes based on a schedule with hotkey and custom script support",
                 "github": "https://github.com/tinodin",
                 "include": [
-                    "explorer.exe"
+                    "windhawk.exe"
                 ],
                 "license": "GPL-3.0",
                 "name": "Auto Theme Switcher",
-                "version": "1.3.0"
+                "version": "1.3.1"
             }
         },
         "auto-time-sync-on-startup": {
@@ -3732,7 +3732,7 @@
                     39
                 ],
                 "ratingUsers": 43,
-                "updated": 1769979420000,
+                "updated": 1778352177000,
                 "users": 1384
             },
             "metadata": {
@@ -3743,7 +3743,7 @@
                     "explorer.exe"
                 ],
                 "name": "Select filename extension on double F2",
-                "version": "3"
+                "version": "4"
             }
         },
         "explorer-font-changer": {
@@ -12244,7 +12244,7 @@
                     2257
                 ],
                 "ratingUsers": 2610,
-                "updated": 1770480438000,
+                "updated": 1778340153000,
                 "users": 362629
             },
             "metadata": {
@@ -12262,7 +12262,7 @@
                 ],
                 "name": "Windows 11 Notification Center Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.4"
+                "version": "1.5"
             }
         },
         "windows-11-start-menu-buttons": {
@@ -12311,7 +12311,7 @@
                     5660
                 ],
                 "ratingUsers": 6661,
-                "updated": 1774025129000,
+                "updated": 1778327840000,
                 "users": 603049
             },
             "featured": true,
@@ -12331,7 +12331,7 @@
                 ],
                 "name": "Windows 11 Start Menu Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.4.1"
+                "version": "1.5"
             }
         },
         "windows-11-taskbar-styler": {

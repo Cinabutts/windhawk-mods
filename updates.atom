@@ -2,12 +2,84 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-09T08:05:56.000Z</updated>
+    <updated>2026-05-09T18:42:57.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Select filename extension on double F2 4]]></title>
+        <id>https://windhawk.net/mods/explorer-double-f2-rename-extension#2f35c17225494d7db86c2c400a08007a9279e8fe</id>
+        <link href="https://windhawk.net/mods/explorer-double-f2-rename-extension"/>
+        <updated>2026-05-09T18:42:57.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>fix init method signature</li>
+</ul>]]></content>
+        <author>
+            <name>Marnes &lt;leaumar@sent.com&gt;</name>
+            <uri>https://github.com/leaumar</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Auto Theme Switcher 1.3.1]]></title>
+        <id>https://windhawk.net/mods/auto-theme-switcher#97c5ff6fcd4bb755aae0e1030c6d53e542d1af4d</id>
+        <link href="https://windhawk.net/mods/auto-theme-switcher"/>
+        <updated>2026-05-09T16:25:37.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Change target to windhawk.exe</li>
+</ul>]]></content>
+        <author>
+            <name>tinodin</name>
+            <uri>https://github.com/tinodin</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Notification Center Styler 1.5]]></title>
+        <id>https://windhawk.net/mods/windows-11-notification-center-styler#bd2fbb3ba729988e29eee1dd1df1cabea135c144</id>
+        <link href="https://windhawk.net/mods/windows-11-notification-center-styler"/>
+        <updated>2026-05-09T15:22:33.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added themes: LiquidGlass, BetterControl11, LayerMicaUI, Borderless.</li>
+<li>Updated themes: WindowGlass, Fluid.</li>
+<li>Added style variables that allow to observe a control's property value and use it in other controls or styles. Refer to the mod description for details.</li>
+<li>Added a way to match any number of intermediate parent controls, for example: <code>ParentClass &gt; * &gt; Class#Name</code>.</li>
+<li>Added a way to match root controls, for example: <code>:root &gt; Class#Name</code>.</li>
+<li>Added the following properties to&nbsp;<code>WindhawkBlur</code>:&nbsp;<code>TintLuminosityOpacity</code>,&nbsp;<code>TintSaturation</code>,&nbsp;<code>NoiseOpacity</code>, <code>NoiseDensity</code>, and <code>FallbackColor</code>. The implementation was contributed by&nbsp;<a href="https://github.com/Lockframe">Jhen</a>. For details, refer to&nbsp;<a href="https://github.com/ramensoftware/windows-11-notification-center-styling-guide#windhawkblur-effect-as-color">the styling guide</a>.</li>
+<li>Improved <code>ThemeResource</code> handling for <code>WindhawkBlur</code>.</li>
+<li>Improved property matching which now works for more properties.</li>
+<li>Added XAML syntax support for resource variables.</li>
+<li>Improved resource variable handling and theme resource refresh logic.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.5]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-styler#949923d28a43c40563236c5d2e820ea114e496fb</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
+        <updated>2026-05-09T11:57:20.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Updated the Start menu layout options.</li>
+<li>The older classic layout, previously known as "Disable new layout and Phone Link", was removed in recent Windows 11 builds. It's no longer supported by built-in themes. If your custom theme requires it, it's still available as "Legacy classic layout" in older Windows 11 builds.</li>
+<li>The newer classic layout, previously known as "Disable new layout but keep Phone Link", is now the preferred layout for the classic Start menu. Built-in themes were updated to support this layout, and Phone Link can be toggled in the Windows settings.</li>
+<li>Added themes: Borderless, Command Center.</li>
+<li>Updated new (redesigned) Start menu themes: SideBySide, SideBySide2, SideBySideMinimal, WindowGlass, LiquidGlass, LayerMicaUI.</li>
+<li>Updated classic Start menu themes: SideBySide, SideBySide2, SideBySideMinimal, Fluent2Inspired, RosePine, Windows11<em>Metro10Minimal, Windows10, Windows10 (Minimal), Windows11</em>Metro10.</li>
+<li>Added style variables that allow to observe a control's property value and use it in other controls or styles. Refer to the mod description for details.</li>
+<li>Added a way to match any number of intermediate parent controls, for example: <code>ParentClass &gt; * &gt; Class#Name</code>.</li>
+<li>Added a way to match root controls, for example: <code>:root &gt; Class#Name</code>.</li>
+<li>Added <code>FallbackColor</code> property to <code>WindhawkBlur</code>.</li>
+<li>Improved <code>ThemeResource</code> handling for <code>WindhawkBlur</code>.</li>
+<li>Improved property matching which now works for more properties.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Taskbar ContentPresenter Injector 1.4]]></title>
         <id>https://windhawk.net/mods/taskbar-content-presenter-injector#e33b63fbaf11e119f003ae9e8a165c68a14b305b</id>
@@ -487,125 +559,6 @@ line-height adjustment, and more</li>
         <author>
             <name>bbmaster123</name>
             <uri>https://github.com/bbmaster123</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MicroSwap 1.0.0]]></title>
-        <id>https://windhawk.net/mods/microswap#d464024830ea0879a2e1f89c6d5be2769be2ba4c</id>
-        <link href="https://windhawk.net/mods/microswap"/>
-        <updated>2026-05-02T14:19:27.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="micswap">MicSwap</h1>
-<p>Instantly toggle between two audio input devices (microphones) from your system tray — no diving into Sound settings.</p>
-<hr />
-<h2 id="howtouse">How to Use</h2>
-<ol>
-<li><strong>Choose Icons</strong> — Open the <strong>Settings</strong> tab and pick an icon for each of your two devices.</li>
-<li><strong>Select Your Devices</strong> — Right-click the tray icon. Use <strong>Set as Input 1</strong> and <strong>Set as Input 2</strong> to assign your inputs from the live device list.</li>
-<li><strong>Toggle</strong> — Left-click the tray icon at any time to swap between the two devices instantly.</li>
-</ol>
-<blockquote>
-  <p>The tray tooltip always shows the active input. On first run it will read <em>"Right-click to configure"</em> until both devices are assigned.</p>
-</blockquote>
-<hr />
-<h2 id="changelog">Changelog</h2>
-<h3 id="v100">v1.0.0</h3>
-<ul>
-<li>Initial release. Mirrors AudioSwap but targets audio input/capture devices.</li>
-<li>Right-click context menu auto-detects all active audio inputs and lets you assign Input 1 and Input 2 from a live list.</li>
-<li>Device selections persist across restarts.</li>
-<li>Toggle matches devices by their unique system ID for reliable switching regardless of device naming.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Move Window to Monitor 1.1.0]]></title>
-        <id>https://windhawk.net/mods/move-window-to-monitor#f0ef9faeba5aac55e931e6603bf30066d2e4a7f3</id>
-        <link href="https://windhawk.net/mods/move-window-to-monitor"/>
-        <updated>2026-05-02T14:15:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="movewindowtomonitor">Move Window to Monitor</h1>
-<p>Moves the active window to a specific monitor using configurable hotkeys.</p>
-<h2 id="defaultshortcutctrlaltarrowkeys">Default Shortcut: Ctrl+Alt+Arrow keys</h2>
-<h2 id="setup">Setup</h2>
-<p>Monitors are numbered automatically, sorted <strong>left to right, then top to bottom</strong>
-based on their physical position in your Windows display layout.</p>
-<p><strong>Example for a setup with 3 monitors on the bottom and 1 on top center:</strong></p>
-<pre><code>        [ 1 ]
-[ 0 ]   [ 2 ]   [ 3 ]
-</code></pre>
-<p>Set: UP=1, LEFT=0, DOWN=2, RIGHT=3</p>
-<p>Use <strong>-1</strong> to keep automatic geometric detection for a direction.</p>
-<p>When the active window is already on the target monitor, the hotkey does nothing.</p>
-<p>The <strong>Center window</strong> option centers the window on the target monitor instead
-of preserving its relative position. Works independently of <strong>Keep window size</strong>.</p>]]></content>
-        <author>
-            <name>TomberWolf</name>
-            <uri>https://github.com/TomberWolf</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ultimate Custom Tray 1.0]]></title>
-        <id>https://windhawk.net/mods/ultimate-custom-tray#7f92885de8e49e5169175fd8adcdc46854a938e4</id>
-        <link href="https://windhawk.net/mods/ultimate-custom-tray"/>
-        <updated>2026-05-02T14:13:45.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="ultimatecustomtray">Ultimate Custom Tray</h1>
-<p>Adds your own icons to the system tray. Each icon can run an
-action on left-click and/or show a context menu on right-click.</p>
-<hr />
-<h2 id="quickstart">Quick start</h2>
-<ol>
-<li>Open Windhawk settings for this mod.</li>
-<li>Add one or more <strong>Items</strong> to the list.</li>
-<li>Fill in <strong>Label</strong>, <strong>Icon</strong> and <strong>Action</strong> for each item.</li>
-<li>Save — the icons appear in the tray immediately.</li>
-</ol>
-<hr />
-<h2 id="actionformats">Action formats</h2>
-<p>Actions run on <strong>left-click</strong> (or from a context menu item).</p>
-<p>| Prefix | Example | Description |
-|--------|---------|-------------|
-| <code>" "</code> | <code>"C:\Program Files\app.exe"</code> | Opens a file or folder by absolute path. |
-| <code>~</code> | <code>~Downloads</code> | Opens a folder or file by name. |
-| <code>cmd:</code> | <code>cmd:control</code> | Runs a command through <code>cmd.exe</code>. |
-| <code>shell:</code> | <code>shell:shutdown /r /f /t 0</code> | Runs through <code>powershell.exe</code>. |
-| <code>web:</code> | <code>web:https://windhawk.net/</code> | Opens a URL in the default browser. |
-| <code>ms-settings:</code> | <code>ms-settings:bluetooth</code> | Opens a Windows Settings page. |</p>
-<hr />
-<h2 id="iconfield">Icon field</h2>
-<p>| Type | Example | Description |
-|---|---|---|
-| <strong>Glyph</strong> | <code>E774</code> | Hex code of a <a href="https://learn.microsoft.com/en-us/windows/apps/design/iconography/segoe-ui-symbol-font">Segoe Fluent Icons</a> glyph. 4-digit hex only, no <code>\u</code> prefix. |
-| <strong>Image file</strong> | <code>C:\Icons\name.png</code> | Full path to an image. Supported: <code>.png</code> <code>.ico</code> <code>.jpg</code> <code>.bmp</code>. Recommended: 32x32 px, transparent background. |</p>
-<hr />
-<h2 id="iconcolor">Icon color</h2>
-<p>Use the <strong>Icon color</strong> setting to choose <strong>White</strong> (for dark taskbar) or <strong>Black</strong> (for light taskbar).</p>
-<hr />
-<h2 id="contextmenus">Context menus</h2>
-<p>Each tray icon can show a right-click context menu.</p>
-<ul>
-<li>Add items under <strong>Context menu</strong> for the icon.</li>
-<li>Each item has its own <strong>Name</strong>, <strong>Icon</strong> and <strong>Action</strong>.</li>
-<li>If no items are defined, right-clicking does nothing.</li>
-<li>Left-click always runs the main <strong>Action</strong>, regardless of whether a context menu exists.</li>
-</ul>]]></content>
-        <author>
-            <name>Salyts</name>
-            <uri>https://github.com/Salyts</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Taskbar Overlay Icon 1.0]]></title>
-        <id>https://windhawk.net/mods/explorer-taskbar-overlay-icon#205ef84100133d3a9d4d48de951cb77d2b5fb6a6</id>
-        <link href="https://windhawk.net/mods/explorer-taskbar-overlay-icon"/>
-        <updated>2026-05-02T13:51:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorertaskbaroverlayicon">Explorer Taskbar Overlay Icon</h1>
-<p>Shows a taskbar overlay icon on Explorer windows that displays the icon of the current directory.</p>
-<p><img src="https://raw.githubusercontent.com/FireBlade211/FireBlade211/refs/heads/main/WindhawkModReadmeImages/ExplorerTaskbarOverlayIcon/screenshot.png" alt="Screenshot" /></p>]]></content>
-        <author>
-            <name>FireBlade</name>
-            <uri>https://github.com/FireBlade211</uri>
         </author>
     </entry>
 </feed>
