@@ -2,12 +2,177 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-13T16:18:10.000Z</updated>
+    <updated>2026-05-14T20:37:57.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[CrystalDiskInfo Smart Auto-Refresh 1.0]]></title>
+        <id>https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh#b6f9529af93c2bdde4ce2b9e70abff1fce8683a7</id>
+        <link href="https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh"/>
+        <updated>2026-05-14T20:37:57.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="crystaldiskinfosmartautorefresh">CrystalDiskInfo Smart Auto-Refresh</h1>
+<p>CrystalDiskInfo includes an optional Auto-Refresh feature that updates disk
+information at specified intervals, which is useful for background monitoring
+while the application is minimized to the system tray. However, when the
+application's main window is visible, automatic refreshes can interfere with the
+analysis of current disk status, as shifting attribute values make tracking
+specific metrics more difficult.</p>
+<p>This mod temporarily pauses the Auto-Refresh function by blocking its disk
+polling cycle whenever the application's main window is visible, allowing for an
+uninterrupted analysis of current disk status.</p>
+<p>The Auto-Refresh function resumes once the application is minimized to the
+taskbar or system tray.</p>
+<p><strong>Note:</strong> If CrystalDiskInfo is already running when the mod is loaded, pick one
+of the following options to activate it:</p>
+<ul>
+<li>Restart the application completely.</li>
+<li>Select an interval in <strong>Function</strong> → <strong>Auto Refresh</strong>, including the one
+currently set.</li>
+</ul>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Theme Toggler Tray 1.2.1]]></title>
+        <id>https://windhawk.net/mods/theme-toggler-tray#acfafad42bba74504b8d8556fc7fe148aa512344</id>
+        <link href="https://windhawk.net/mods/theme-toggler-tray"/>
+        <updated>2026-05-14T19:46:02.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="themetogglertraystandalonemode">Theme Toggler Tray (Standalone Mode)</h1>
+<p>This mod now runs in a dedicated Windhawk process for better stability.
+Click the tray icon to instantly toggle between Dark and Light mode.</p>]]></content>
+        <author>
+            <name>Husam-Abdulraheem</name>
+            <uri>https://github.com/Husam-Abdulraheem</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Expanded Clipboard (Win+V) 0.7.1]]></title>
+        <id>https://windhawk.net/mods/expanded-clipboard#baa1a76097e8116eb1d7582a91ef90e80058227a</id>
+        <link href="https://windhawk.net/mods/expanded-clipboard"/>
+        <updated>2026-05-14T19:08:25.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="expandedclipboardwinv">Expanded Clipboard (Win+V)</h1>
+<p>Raises the 25-entry cap on Windows 11 clipboard history (the list shown by
+<strong>Win+V</strong>) and lifts the per-item size cap so large image entries are kept.</p>
+<h2 id="hooktargets">Hook targets</h2>
+<p>Hosted in <code>cbdhsvc.dll</code> (per-user <code>svchost.exe</code>, service group
+<code>UnistackSvcGroup</code>). All hooks are virtual COM methods on <code>ClipboardSettingsImpl</code>
+plus one static helper:</p>
+<ul>
+<li><code>get_ClipboardHistoryMaxItemsCount</code>: entry-count cap (default 25).</li>
+<li><code>get_ClipboardHistoryMaxItemSizeInBytes</code>: per-item byte cap (default 4 MiB).</li>
+<li><code>get_ClipboardHistoryMaxSizeInBytes</code>: total in-memory buffer cap. Empirically
+this is the gate the inner add path checks first.</li>
+<li><code>DataPackageHelper::CanIncludeInClipboardHistory</code>: opt-in override of the
+per-item allow check.</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<ul>
+<li><code>maxItems</code> (default 100, range 25..5000): entry cap.</li>
+<li><code>maxItemSizeMB</code> (default 256, range 4..4096): per-item and total buffer byte
+cap, in MB. Both caps share this value.</li>
+<li><code>forceIncludeAll</code> (default off): when on, force the allow check to true so
+items marked "do not include in history" by their source app still land in
+Win+V.</li>
+</ul>
+<h2 id="logs">Logs</h2>
+<p>Open Windhawk Logs. Filter <code>[ExpandedClipboard]</code>.</p>]]></content>
+        <author>
+            <name>takattowo</name>
+            <uri>https://github.com/takattowo</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Monitor Sleep Button 1.0.0]]></title>
+        <id>https://windhawk.net/mods/monitor-sleep-button#bba2b04e3327bb83eb2c37a9725e0782be23fb4d</id>
+        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
+        <updated>2026-05-14T17:39:39.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="monitorsleepbutton">Monitor Sleep Button</h1>
+<p>Adds a small tray icon for turning off the monitor.</p>
+<h2 id="usage">Usage</h2>
+<ul>
+<li>Left-click the tray icon.</li>
+<li>A countdown appears on the screen.</li>
+<li>After the countdown, the monitor turns off.</li>
+<li>Move the mouse or press any key to wake the monitor again.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<p>The countdown duration can be configured in the mod settings.</p>
+<p>Available values:</p>
+<ul>
+<li>1 second</li>
+<li>2 seconds</li>
+<li>3 seconds</li>
+<li>5 seconds</li>
+<li>10 seconds</li>
+<li>15 seconds</li>
+<li>30 seconds</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>This mod does not shut down, suspend, or lock the computer. It only sends the Windows monitor power-off command.</p>
+<p>Useful as a quick replacement for desktop shortcuts or batch files.</p>
+<p>This is useful when long-running downloads, renders, AI model installs, or other background tasks are running and the monitor should be turned off without putting the PC to sleep.</p>]]></content>
+        <author>
+            <name>SilverAmd</name>
+            <uri>https://github.com/SilverAmd</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Files 2 Folders 1.2]]></title>
+        <id>https://windhawk.net/mods/files-2-folders#f97bd370462cef10e23fea9e699a2debfaf651ec</id>
+        <link href="https://windhawk.net/mods/files-2-folders"/>
+        <updated>2026-05-14T16:57:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="files2folders">Files 2 Folders</h1>
+<p>Inspired by <a href="https://www.dcmembers.com/skwire/download/files-2-folder/">Files 2 Folder</a>
+by Jody Holmes (Skwire Empire).</p>
+<p>When one or more items are selected in an Explorer window, adds a
+<strong>Files 2 Folder…</strong> entry to the right-click context menu. Choosing it opens
+a dialog with four options for moving the selection into a new subfolder:</p>
+<ol>
+<li>Move the selection into a subfolder with a fixed name (e.g. <code>folder</code>).</li>
+<li>Move each file into a subfolder named after the file (without extension):
+<code>Good.bat</code> -&gt; <code>.\Good\Good.bat</code>. With a single file selected, this just
+creates one folder around that file.</li>
+<li>Move each file into a subfolder named after its extension
+(e.g. all <code>.txt</code> files into <code>.\txt\</code>). With a single file selected, this
+creates one folder named after that file's extension.</li>
+<li>Move the selection into a subfolder named with the current date/time,
+formatted using the date format from settings.</li>
+</ol>
+<p>Folders inside the selection are skipped for modes 2 and 3 (they only make
+sense for files); they are still moved for modes 1 and 4.</p>
+<h2 id="fastvsslowmode">Fast vs. slow mode</h2>
+<p>By default the mod uses <code>MoveFileExW</code> directly, which is essentially instant
+for same-volume moves. Enable <strong>Slow mode (shell-integrated)</strong> in settings to
+route moves through <code>IFileOperation</code> instead — that gives you the standard
+Windows progress dialog, <strong>Ctrl+Z undo</strong>, UAC elevation prompts for protected
+paths, and conflict-resolution dialogs, at the cost of significantly slower
+operation on large selections.</p>
+<h2 id="workaroundforotherprograms">Workaround for other programs</h2>
+<p>A configurable global hotkey (default <strong>Ctrl+Alt+F</strong>) makes the mod usable
+from any file manager (Total Commander, Directory Opus, Files, XYplorer,
+Q-Dir, etc.):</p>
+<ol>
+<li>Select one or more files in the other program.</li>
+<li>Press <strong>Ctrl+C</strong> (or <strong>Ctrl+X</strong>) to put the file paths on the clipboard.</li>
+<li>Press the hotkey. The dialog appears, the files get moved into the chosen
+subfolder under their parent directory.</li>
+</ol>
+<p>Toggle <strong>Silent</strong> to suppress the help popup when the clipboard is empty.</p>
+<h2 id="dateformat">Date format</h2>
+<p>Uses the same tokens as Win32 <code>GetDateFormat</code> / <code>GetTimeFormat</code>:
+<code>yyyy MM dd HH mm ss</code> etc. Example: <code>yyyy-MM-dd-HH-mm</code>.</p>
+<p>Forbidden characters in folder names (<code>* : ? " &lt; &gt; | / \</code>) are replaced with
+<code>_</code> automatically.</p>]]></content>
+        <author>
+            <name>tria</name>
+            <uri>https://github.com/triatomic</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Taskbar Desktop Indicator 1.3]]></title>
         <id>https://windhawk.net/mods/taskbar-desktop-indicator#cca00be44cb57cc49644279f551f0a499f97f874</id>
@@ -377,131 +542,6 @@ UI frameworks already handle their own previous-word deletion functionality.</li
         <author>
             <name>m417z</name>
             <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar ContentPresenter Injector 1.4]]></title>
-        <id>https://windhawk.net/mods/taskbar-content-presenter-injector#e33b63fbaf11e119f003ae9e8a165c68a14b305b</id>
-        <link href="https://windhawk.net/mods/taskbar-content-presenter-injector"/>
-        <updated>2026-05-09T08:05:56.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>The mod now injects into <code>SearchUx.SearchUI.SearchButtonRootGrid</code>.</li>
-</ul>]]></content>
-        <author>
-            <name>Lockframe</name>
-            <uri>https://github.com/Lockframe</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Details View Columns 1.2]]></title>
-        <id>https://windhawk.net/mods/explorer-force-details-columns#ee00fe42ee1bf5e16382c2e2a8529336e86278ca</id>
-        <link href="https://windhawk.net/mods/explorer-force-details-columns"/>
-        <updated>2026-05-08T14:34:47.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed the problem causing the settings to fallback to default during mod initiating.</li>
-<li>Refined width realization and DPI calculation, fixed the problem of minimum width being too wide.</li>
-<li>Duplicated property keys are handled only once if the user added same property multiple times in settings.</li>
-<li>Fixed some other problems.</li>
-</ul>]]></content>
-        <author>
-            <name>ernisn</name>
-            <uri>https://github.com/ernisn</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Mic Tray Control & Decibel Viewer 1.14]]></title>
-        <id>https://windhawk.net/mods/mic-tray-control#9f108172c376cb9c51352e95152bd9a2055adc37</id>
-        <link href="https://windhawk.net/mods/mic-tray-control"/>
-        <updated>2026-05-08T14:26:10.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed popup UI positioning for top taskbar and multi-monitor setups.</li>
-<li>Safely constrained the popup window within the bounds of the monitor where the cursor currently resides.</li>
-</ul>]]></content>
-        <author>
-            <name>ciahciach</name>
-            <uri>https://github.com/ciahciach</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AutoScroll Win32 1.0.0]]></title>
-        <id>https://windhawk.net/mods/autoscroll-win32#126a2a9093f065ec58610d11c98e8f75a0cdb014</id>
-        <link href="https://windhawk.net/mods/autoscroll-win32"/>
-        <updated>2026-05-07T08:44:09.000Z</updated>
-        <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/crazyboyybs/assets/refs/heads/main/auto%20scroll%20preview.gif" alt="Preview" /></p>
-<hr />
-<h2 id="autoscrollwin32">AutoScroll Win32</h2>
-<p>Simulates browser-style autoscroll (middle mouse button) in Win32 applications
-such as File Explorer, with a WinUI-style visual indicator at the scroll origin.</p>
-<h3 id="howtouse">How to use</h3>
-<ol>
-<li><strong>Hold</strong> the <strong>middle mouse button</strong> anywhere in a scrollable area.</li>
-<li>Move the cursor <strong>up or down</strong> (and optionally sideways) from the origin
-point -- the farther from the origin, the faster the scroll.</li>
-<li><strong>Release</strong> the middle button to stop.</li>
-</ol>
-<h3 id="compatibilitywithsmoothscrollwin32">Compatibility with Smooth Scroll Win32</h3>
-<p>Fully compatible. AutoScroll Win32 posts standard WM<em>MOUSEWHEEL and
-WM</em>MOUSEHWHEEL messages, which Smooth Scroll Win32 intercepts and animates
-exactly like real mouse-wheel events.</p>
-<h3 id="addingmoreapplications">Adding more applications</h3>
-<p>By default the mod targets only explorer.exe. To enable it in other
-applications, add their executable names in the <strong>Advanced</strong> tab of the mod
-settings in Windhawk under "Include processes".</p>
-<hr />
-<h2 id="autoscrollwin32portugues">AutoScroll Win32 (Portugues)</h2>
-<p>Simula a rolagem automatica com o botao do meio do mouse (estilo navegador) em
-aplicativos Win32 como o Explorador de Arquivos, com um indicador visual
-estilo WinUI no ponto de origem da rolagem.</p>
-<h3 id="comousar">Como usar</h3>
-<ol>
-<li><strong>Segure</strong> o <strong>botao do meio do mouse</strong> em qualquer area rolavel.</li>
-<li>Mova o cursor <strong>para cima ou para baixo</strong> (e opcionalmente para os lados)
-a partir do ponto de origem -- quanto mais longe, mais rapido rola.</li>
-<li><strong>Solte</strong> o botao do meio para parar.</li>
-</ol>
-<h3 id="compatibilidadecomsmoothscrollwin32">Compatibilidade com Smooth Scroll Win32</h3>
-<p>Totalmente compativel. O AutoScroll Win32 envia mensagens padrao WM<em>MOUSEWHEEL
-e WM</em>MOUSEHWHEEL, que o Smooth Scroll Win32 intercepta e anima exatamente como
-eventos reais da roda do mouse.</p>
-<h3 id="adicionarmaisaplicativos">Adicionar mais aplicativos</h3>
-<p>Por padrao, o mod afeta apenas o explorer.exe. Para ativa-lo em outros
-aplicativos, adicione os nomes dos executaveis na aba <strong>Advanced</strong> das
-configuraces do mod no Windhawk em "Include processes".</p>
-<hr />
-<h2 id="autoscrollwin32espanol">AutoScroll Win32 (Espanol)</h2>
-<p>Simula el desplazamiento automatico con el boton central del raton (estilo
-navegador) en aplicaciones Win32 como el Explorador de archivos, con un
-indicador visual estilo WinUI en el punto de origen del desplazamiento.</p>
-<h3 id="comousar-1">Como usar</h3>
-<ol>
-<li><strong>Mantena presionado</strong> el <strong>boton central del raton</strong> en cualquier area
-desplazable.</li>
-<li>Mueve el cursor <strong>hacia arriba o hacia abajo</strong> (y opcionalmente hacia los
-lados) desde el punto de origen -- cuanto mas lejos, mas rapido se desplaza.</li>
-<li><strong>Suelta</strong> el boton central para detener.</li>
-</ol>
-<h3 id="compatibilidadconsmoothscrollwin32">Compatibilidad con Smooth Scroll Win32</h3>
-<p>Totalmente compatible. AutoScroll Win32 envia mensajes estandar WM<em>MOUSEWHEEL
-y WM</em>MOUSEHWHEEL, que Smooth Scroll Win32 intercepta y anima exactamente como
-eventos reales de la rueda del raton.</p>
-<h3 id="agregarmasaplicaciones">Agregar mas aplicaciones</h3>
-<p>De forma predeterminada, el mod solo afecta a explorer.exe. Para habilitarlo
-en otras aplicaciones, agrega los nombres de los ejecutables en la pestana <strong>Advanced</strong>
-de la configuracion del mod en Windhawk bajo "Include processes".</p>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Paste Clipboard Content to Explorer 1.6]]></title>
-        <id>https://windhawk.net/mods/paste-clipboard-content-to-explorer#c481a1583aa87773d13dc34257d1632d037dd04a</id>
-        <link href="https://windhawk.net/mods/paste-clipboard-content-to-explorer"/>
-        <updated>2026-05-06T22:03:43.000Z</updated>
-        <content type="html"><![CDATA[<p>Add plain UTF-8 as an option</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
         </author>
     </entry>
 </feed>
