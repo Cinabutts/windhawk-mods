@@ -11335,12 +11335,12 @@
                     3
                 ],
                 "ratingUsers": 3,
-                "updated": 1778574676000,
+                "updated": 1778845464000,
                 "users": 31
             },
             "metadata": {
                 "author": "ferrys",
-                "compilerOptions": "-lcomctl32 -lole32 -loleaut32",
+                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lgdiplus -lgdi32",
                 "description": "Replace UWP app assets (such as icons) without worrying about updates or modifying system files permissions.",
                 "github": "https://github.com/atferrys",
                 "include": [
@@ -11354,7 +11354,7 @@
                 ],
                 "license": "GPL-3.0",
                 "name": "UWP Assets Redirect",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "uwp-clean": {
@@ -11521,7 +11521,7 @@
                     43
                 ],
                 "ratingUsers": 49,
-                "updated": 1725909793000,
+                "updated": 1778840805000,
                 "users": 2191
             },
             "metadata": {
@@ -11529,7 +11529,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-lcomctl32 -lversion -lwininet",
+                "compilerOptions": "-lcomctl32 -lversion",
                 "description": "The order on the taskbar isn't preserved between virtual desktop switches, this mod fixes it",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -11538,7 +11538,7 @@
                 ],
                 "name": "Virtual Desktop Preserve Taskbar Order",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.0.4"
+                "version": "1.0.5"
             }
         },
         "visio-hd-thumbnail": {
@@ -12651,7 +12651,7 @@
                     7777
                 ],
                 "ratingUsers": 9344,
-                "updated": 1774812432000,
+                "updated": 1778861358000,
                 "users": 621631
             },
             "featured": true,
@@ -12669,7 +12669,7 @@
                 ],
                 "name": "Windows 11 Taskbar Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.6.1"
+                "version": "1.7"
             }
         },
         "windows-7-clock-spacing": {
