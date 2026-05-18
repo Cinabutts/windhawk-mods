@@ -2,12 +2,59 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk New Mod Releases</title>
-    <updated>2026-05-14T20:37:57.000Z</updated>
+    <updated>2026-05-16T16:25:26.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>New mods in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Start Search Bing Redirector 1.0.0]]></title>
+        <id>https://windhawk.net/mods/start-search-bing-redirector#a6800ed0793157681e68ef726fcb595b16a4b3d9</id>
+        <link href="https://windhawk.net/mods/start-search-bing-redirector"/>
+        <updated>2026-05-16T16:25:26.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="startsearchbingredirector">Start Search Bing Redirector</h1>
+<p>When you click a web result in the Windows Start menu search, Windows forces
+the URL through <code>microsoft-edge:?url=https://www.bing.com/search?q=...</code> so it
+always opens in Edge with Bing.</p>
+<p>This mod intercepts that hand-off, extracts the search query, and redirects
+it to your chosen engine. The <code>microsoft-edge:</code> wrapper is dropped so the
+URL opens in your <strong>default browser</strong>.</p>
+<h2 id="howitworks">How it works</h2>
+<p>Hooks <code>WindowsCreateString</code> in <code>combase.dll</code> inside <code>SearchHost.exe</code>. When the
+HSTRING being constructed is the click activation URL, the URL is rewritten
+in place before it reaches the WinRT URI launcher.</p>
+<p>The in-flyout result previews (the right panel) are <strong>not</strong> changed. Those
+are rendered from Bing's JSON API and would need a full API proxy to swap.
+Only the click hand-off is redirected.</p>
+<h2 id="logs">Logs</h2>
+<p>Open Windhawk's log viewer and filter for <code>[BingRedirector]</code>.</p>]]></content>
+        <author>
+            <name>takattowo</name>
+            <uri>https://github.com/takattowo</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ExplorerPatcher Taskbar Button Width 1.0.0]]></title>
+        <id>https://windhawk.net/mods/ep-taskbar-button-width#7036416753c22f8b60d43cedd65848fd88c77a15</id>
+        <link href="https://windhawk.net/mods/ep-taskbar-button-width"/>
+        <updated>2026-05-16T15:31:51.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="explorerpatchertaskbarbuttonwidth">ExplorerPatcher Taskbar Button Width</h1>
+<p>This mod lets you change the width of taskbar items when using ExplorerPatcher's Windows 10 taskbar on Windows 11.</p>
+<p>Before:</p>
+<p><img src="https://i.imgur.com/r82ISo3.png" alt="Before" /></p>
+<p>After (120%):</p>
+<p><img src="https://i.imgur.com/qHaRdVt.png" alt="After" /></p>
+<p>The item scales as a percentage from a pre-computed base value not exposed by EP.</p>
+<p>(The registry hack at
+<code>HKCU\Control Panel\Desktop\WindowMetrics\MinWidth</code> doesn't work with
+ExplorerPatcher.)</p>
+<p><strong>Requirements:</strong> Windows 11 with ExplorerPatcher, using the Windows 10 taskbar.</p>]]></content>
+        <author>
+            <name>Rod Boev</name>
+            <uri>https://github.com/rodboev</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CrystalDiskInfo Smart Auto-Refresh 1.0]]></title>
         <id>https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh#b6f9529af93c2bdde4ce2b9e70abff1fce8683a7</id>
@@ -708,62 +755,6 @@ line-height adjustment, and more</li>
         <author>
             <name>bbmaster123</name>
             <uri>https://github.com/bbmaster123</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MicroSwap 1.0.0]]></title>
-        <id>https://windhawk.net/mods/microswap#d464024830ea0879a2e1f89c6d5be2769be2ba4c</id>
-        <link href="https://windhawk.net/mods/microswap"/>
-        <updated>2026-05-02T14:19:27.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="micswap">MicSwap</h1>
-<p>Instantly toggle between two audio input devices (microphones) from your system tray — no diving into Sound settings.</p>
-<hr />
-<h2 id="howtouse">How to Use</h2>
-<ol>
-<li><strong>Choose Icons</strong> — Open the <strong>Settings</strong> tab and pick an icon for each of your two devices.</li>
-<li><strong>Select Your Devices</strong> — Right-click the tray icon. Use <strong>Set as Input 1</strong> and <strong>Set as Input 2</strong> to assign your inputs from the live device list.</li>
-<li><strong>Toggle</strong> — Left-click the tray icon at any time to swap between the two devices instantly.</li>
-</ol>
-<blockquote>
-  <p>The tray tooltip always shows the active input. On first run it will read <em>"Right-click to configure"</em> until both devices are assigned.</p>
-</blockquote>
-<hr />
-<h2 id="changelog">Changelog</h2>
-<h3 id="v100">v1.0.0</h3>
-<ul>
-<li>Initial release. Mirrors AudioSwap but targets audio input/capture devices.</li>
-<li>Right-click context menu auto-detects all active audio inputs and lets you assign Input 1 and Input 2 from a live list.</li>
-<li>Device selections persist across restarts.</li>
-<li>Toggle matches devices by their unique system ID for reliable switching regardless of device naming.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Move Window to Monitor 1.1.0]]></title>
-        <id>https://windhawk.net/mods/move-window-to-monitor#f0ef9faeba5aac55e931e6603bf30066d2e4a7f3</id>
-        <link href="https://windhawk.net/mods/move-window-to-monitor"/>
-        <updated>2026-05-02T14:15:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="movewindowtomonitor">Move Window to Monitor</h1>
-<p>Moves the active window to a specific monitor using configurable hotkeys.</p>
-<h2 id="defaultshortcutctrlaltarrowkeys">Default Shortcut: Ctrl+Alt+Arrow keys</h2>
-<h2 id="setup">Setup</h2>
-<p>Monitors are numbered automatically, sorted <strong>left to right, then top to bottom</strong>
-based on their physical position in your Windows display layout.</p>
-<p><strong>Example for a setup with 3 monitors on the bottom and 1 on top center:</strong></p>
-<pre><code>        [ 1 ]
-[ 0 ]   [ 2 ]   [ 3 ]
-</code></pre>
-<p>Set: UP=1, LEFT=0, DOWN=2, RIGHT=3</p>
-<p>Use <strong>-1</strong> to keep automatic geometric detection for a direction.</p>
-<p>When the active window is already on the target monitor, the hotkey does nothing.</p>
-<p>The <strong>Center window</strong> option centers the window on the target monitor instead
-of preserving its relative position. Works independently of <strong>Keep window size</strong>.</p>]]></content>
-        <author>
-            <name>TomberWolf</name>
-            <uri>https://github.com/TomberWolf</uri>
         </author>
     </entry>
 </feed>
