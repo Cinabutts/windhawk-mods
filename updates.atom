@@ -2,12 +2,127 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-20T23:12:20.000Z</updated>
+    <updated>2026-05-22T18:32:51.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Key Click 1.1]]></title>
+        <id>https://windhawk.net/mods/key-click#42e0209f2d49af8f06d3df8d1f19edb15ec1dbcd</id>
+        <link href="https://windhawk.net/mods/key-click"/>
+        <updated>2026-05-22T18:32:51.000Z</updated>
+        <content type="html"><![CDATA[<p>Remove autorepoeat sound when pressing modifiers (Alt, Ctrl, Shift,Win)</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Buttons 2.1]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-buttons#5cebaf3b9d51243548c53c9df5d14a54bfb1dd88</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-buttons"/>
+        <updated>2026-05-22T18:26:43.000Z</updated>
+        <content type="html"><![CDATA[<p>New Features:</p>
+<ul>
+<li><p>Added press: action prefix for keyboard shortcuts (e.g., press:Win+E or press:0x5B;0x45)</p></li>
+<li><p>Added modifier signs for actions: - (run as admin) and * (show terminal window)</p></li>
+<li><p>Added support for extracting icons from .exe and .dll files</p></li>
+<li><p>Icon field now accepts 4-digit hex codes without \u prefix (e.g., E774)</p></li>
+<li><p>Icon field now accepts /u as alternative to \u for Unicode escapes</p>
+<p>Bug Fixes:</p></li>
+<li><p>Fixed icon normalization and parsing</p></li>
+<li><p>Improved GDI+ initialization for icon extraction</p></li>
+<li><p>Fixed window class registration error handling</p></li>
+<li><p>Improved code stability and error handling</p></li>
+</ul>]]></content>
+        <author>
+            <name>Salyts</name>
+            <uri>https://github.com/Salyts</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Explorer No Minimum Window Size 1.0.0]]></title>
+        <id>https://windhawk.net/mods/explorer-no-min-size#737fe5ca2c253eee455e5ca74c678a8f56db33c1</id>
+        <link href="https://windhawk.net/mods/explorer-no-min-size"/>
+        <updated>2026-05-22T14:52:28.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="explorernominimumwindowsize">Explorer No Minimum Window Size</h1>
+<p>Removes the minimum window size restriction in Windows File Explorer.
+By default, Explorer prevents windows from being resized below a certain
+width and height. With this mod you can resize Explorer windows to any size.</p>
+<p><img src="https://i.imgur.com/eE0Hmr8.png" alt="screenshot" /></p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Never Auto-Expand Explorer Tree Items 1.0]]></title>
+        <id>https://windhawk.net/mods/never-auto-expand-explorer-tree-items#95a7912335a7140e3c46fb5826c1b2a1cd04a3aa</id>
+        <link href="https://windhawk.net/mods/never-auto-expand-explorer-tree-items"/>
+        <updated>2026-05-22T13:57:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="neverautoexpandexplorertreeitems">Never Auto-Expand Explorer Tree Items</h1>
+<p>File Explorer automatically expands navigation pane items (such as "This PC")
+even if the "Expand to current folder" option is off, specifically when:</p>
+<ul>
+<li>Opening any folder inside an external drive in a new tab or window.</li>
+<li>Navigating to any drive after manually expanding and collapsing "This PC".</li>
+</ul>
+<p>This mod prevents this unwanted auto-expansion behavior, keeping the navigation
+pane tidy.</p>
+<p>| Before | After |
+| :----: | :---: |
+| <img src="https://raw.githubusercontent.com/AromaKitsune/My-Windhawk-Mods/main/screenshots/never-auto-expand-explorer-tree-items_before.png" alt="" /> | <img src="https://raw.githubusercontent.com/AromaKitsune/My-Windhawk-Mods/main/screenshots/never-auto-expand-explorer-tree-items_after.png" alt="" /> |</p>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Disk Usage Bar Color 1.2.1]]></title>
+        <id>https://windhawk.net/mods/disk-usage-bar-color#650420a62873ff46d0aa951457bfa4aac414dc1c</id>
+        <link href="https://windhawk.net/mods/disk-usage-bar-color"/>
+        <updated>2026-05-22T13:06:33.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Add screenshot preview image to the mod readme.</li>
+</ul>]]></content>
+        <author>
+            <name>dirtyrazkl</name>
+            <uri>https://github.com/dirtyrazkl</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AutoScroll Win32 1.0.1]]></title>
+        <id>https://windhawk.net/mods/autoscroll-win32#d9e0a6536452c29607e43e8030a4dd03c7d7ee84</id>
+        <link href="https://windhawk.net/mods/autoscroll-win32"/>
+        <updated>2026-05-22T13:04:46.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>Fixed middle-click "open in new tab" so it now works in hold mode</li>
+<li>Fixed overscroll without Smooth Scroll Win32 (capped to 1 wheel notch per frame)</li>
+<li>Added Toggle Mode -- click to start scrolling, click again to stop</li>
+<li>Added: Block Middle Button Release -- suppresses mouse3 release for bound apps</li>
+<li>Added per-monitor DPI support for the visual indicator</li>
+<li>Improved: scroll thread idles at zero CPU (WaitForSingleObject on event)</li>
+</ol>]]></content>
+        <author>
+            <name>crazyboyybs</name>
+            <uri>https://github.com/crazyboyybs</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AudioSwap 2.0.0]]></title>
+        <id>https://windhawk.net/mods/audioswap#95bddae96da8f6e404291b5e7d9842674ac104d4</id>
+        <link href="https://windhawk.net/mods/audioswap"/>
+        <updated>2026-05-22T12:57:32.000Z</updated>
+        <content type="html"><![CDATA[<p>improved performance
+Windows Native dashboard = right-click → <strong>Mod Settings</strong>.
+All configuration (device slots, icons, mode, count) lives in the dashboard; Windhawk's settings panel is no longer used.</p>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Monitor Sleep Button 1.1.0]]></title>
         <id>https://windhawk.net/mods/monitor-sleep-button#6da1e2166b9f1d3ea9c073170de375ff2d8e8d91</id>
@@ -274,198 +389,6 @@ ExplorerPatcher.)</p>
         <author>
             <name>ferrys</name>
             <uri>https://github.com/atferrys</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Virtual Desktop Preserve Taskbar Order 1.0.5]]></title>
-        <id>https://windhawk.net/mods/virtual-desktop-taskbar-order#22ec4510d1db5a2a0734427f8aff7592aa254bda</id>
-        <link href="https://windhawk.net/mods/virtual-desktop-taskbar-order"/>
-        <updated>2026-05-15T10:26:45.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed compatibility with recent Windows 11 versions.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CrystalDiskInfo Smart Auto-Refresh 1.0]]></title>
-        <id>https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh#b6f9529af93c2bdde4ce2b9e70abff1fce8683a7</id>
-        <link href="https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh"/>
-        <updated>2026-05-14T20:37:57.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="crystaldiskinfosmartautorefresh">CrystalDiskInfo Smart Auto-Refresh</h1>
-<p>CrystalDiskInfo includes an optional Auto-Refresh feature that updates disk
-information at specified intervals, which is useful for background monitoring
-while the application is minimized to the system tray. However, when the
-application's main window is visible, automatic refreshes can interfere with the
-analysis of current disk status, as shifting attribute values make tracking
-specific metrics more difficult.</p>
-<p>This mod temporarily pauses the Auto-Refresh function by blocking its disk
-polling cycle whenever the application's main window is visible, allowing for an
-uninterrupted analysis of current disk status.</p>
-<p>The Auto-Refresh function resumes once the application is minimized to the
-taskbar or system tray.</p>
-<p><strong>Note:</strong> If CrystalDiskInfo is already running when the mod is loaded, pick one
-of the following options to activate it:</p>
-<ul>
-<li>Restart the application completely.</li>
-<li>Select an interval in <strong>Function</strong> → <strong>Auto Refresh</strong>, including the one
-currently set.</li>
-</ul>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Theme Toggler Tray 1.2.1]]></title>
-        <id>https://windhawk.net/mods/theme-toggler-tray#acfafad42bba74504b8d8556fc7fe148aa512344</id>
-        <link href="https://windhawk.net/mods/theme-toggler-tray"/>
-        <updated>2026-05-14T19:46:02.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="themetogglertraystandalonemode">Theme Toggler Tray (Standalone Mode)</h1>
-<p>This mod now runs in a dedicated Windhawk process for better stability.
-Click the tray icon to instantly toggle between Dark and Light mode.</p>]]></content>
-        <author>
-            <name>Husam-Abdulraheem</name>
-            <uri>https://github.com/Husam-Abdulraheem</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Expanded Clipboard (Win+V) 0.7.1]]></title>
-        <id>https://windhawk.net/mods/expanded-clipboard#baa1a76097e8116eb1d7582a91ef90e80058227a</id>
-        <link href="https://windhawk.net/mods/expanded-clipboard"/>
-        <updated>2026-05-14T19:08:25.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="expandedclipboardwinv">Expanded Clipboard (Win+V)</h1>
-<p>Raises the 25-entry cap on Windows 11 clipboard history (the list shown by
-<strong>Win+V</strong>) and lifts the per-item size cap so large image entries are kept.</p>
-<h2 id="hooktargets">Hook targets</h2>
-<p>Hosted in <code>cbdhsvc.dll</code> (per-user <code>svchost.exe</code>, service group
-<code>UnistackSvcGroup</code>). All hooks are virtual COM methods on <code>ClipboardSettingsImpl</code>
-plus one static helper:</p>
-<ul>
-<li><code>get_ClipboardHistoryMaxItemsCount</code>: entry-count cap (default 25).</li>
-<li><code>get_ClipboardHistoryMaxItemSizeInBytes</code>: per-item byte cap (default 4 MiB).</li>
-<li><code>get_ClipboardHistoryMaxSizeInBytes</code>: total in-memory buffer cap. Empirically
-this is the gate the inner add path checks first.</li>
-<li><code>DataPackageHelper::CanIncludeInClipboardHistory</code>: opt-in override of the
-per-item allow check.</li>
-</ul>
-<h2 id="configuration">Configuration</h2>
-<ul>
-<li><code>maxItems</code> (default 100, range 25..5000): entry cap.</li>
-<li><code>maxItemSizeMB</code> (default 256, range 4..4096): per-item and total buffer byte
-cap, in MB. Both caps share this value.</li>
-<li><code>forceIncludeAll</code> (default off): when on, force the allow check to true so
-items marked "do not include in history" by their source app still land in
-Win+V.</li>
-</ul>
-<h2 id="logs">Logs</h2>
-<p>Open Windhawk Logs. Filter <code>[ExpandedClipboard]</code>.</p>]]></content>
-        <author>
-            <name>takattowo</name>
-            <uri>https://github.com/takattowo</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Monitor Sleep Button 1.0.0]]></title>
-        <id>https://windhawk.net/mods/monitor-sleep-button#bba2b04e3327bb83eb2c37a9725e0782be23fb4d</id>
-        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
-        <updated>2026-05-14T17:39:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="monitorsleepbutton">Monitor Sleep Button</h1>
-<p>Adds a small tray icon for turning off the monitor.</p>
-<h2 id="usage">Usage</h2>
-<ul>
-<li>Left-click the tray icon.</li>
-<li>A countdown appears on the screen.</li>
-<li>After the countdown, the monitor turns off.</li>
-<li>Move the mouse or press any key to wake the monitor again.</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<p>The countdown duration can be configured in the mod settings.</p>
-<p>Available values:</p>
-<ul>
-<li>1 second</li>
-<li>2 seconds</li>
-<li>3 seconds</li>
-<li>5 seconds</li>
-<li>10 seconds</li>
-<li>15 seconds</li>
-<li>30 seconds</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<p>This mod does not shut down, suspend, or lock the computer. It only sends the Windows monitor power-off command.</p>
-<p>Useful as a quick replacement for desktop shortcuts or batch files.</p>
-<p>This is useful when long-running downloads, renders, AI model installs, or other background tasks are running and the monitor should be turned off without putting the PC to sleep.</p>]]></content>
-        <author>
-            <name>SilverAmd</name>
-            <uri>https://github.com/SilverAmd</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Files 2 Folders 1.2]]></title>
-        <id>https://windhawk.net/mods/files-2-folders#f97bd370462cef10e23fea9e699a2debfaf651ec</id>
-        <link href="https://windhawk.net/mods/files-2-folders"/>
-        <updated>2026-05-14T16:57:19.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="files2folders">Files 2 Folders</h1>
-<p>Inspired by <a href="https://www.dcmembers.com/skwire/download/files-2-folder/">Files 2 Folder</a>
-by Jody Holmes (Skwire Empire).</p>
-<p>When one or more items are selected in an Explorer window, adds a
-<strong>Files 2 Folder…</strong> entry to the right-click context menu. Choosing it opens
-a dialog with four options for moving the selection into a new subfolder:</p>
-<ol>
-<li>Move the selection into a subfolder with a fixed name (e.g. <code>folder</code>).</li>
-<li>Move each file into a subfolder named after the file (without extension):
-<code>Good.bat</code> -&gt; <code>.\Good\Good.bat</code>. With a single file selected, this just
-creates one folder around that file.</li>
-<li>Move each file into a subfolder named after its extension
-(e.g. all <code>.txt</code> files into <code>.\txt\</code>). With a single file selected, this
-creates one folder named after that file's extension.</li>
-<li>Move the selection into a subfolder named with the current date/time,
-formatted using the date format from settings.</li>
-</ol>
-<p>Folders inside the selection are skipped for modes 2 and 3 (they only make
-sense for files); they are still moved for modes 1 and 4.</p>
-<h2 id="fastvsslowmode">Fast vs. slow mode</h2>
-<p>By default the mod uses <code>MoveFileExW</code> directly, which is essentially instant
-for same-volume moves. Enable <strong>Slow mode (shell-integrated)</strong> in settings to
-route moves through <code>IFileOperation</code> instead — that gives you the standard
-Windows progress dialog, <strong>Ctrl+Z undo</strong>, UAC elevation prompts for protected
-paths, and conflict-resolution dialogs, at the cost of significantly slower
-operation on large selections.</p>
-<h2 id="workaroundforotherprograms">Workaround for other programs</h2>
-<p>A configurable global hotkey (default <strong>Ctrl+Alt+F</strong>) makes the mod usable
-from any file manager (Total Commander, Directory Opus, Files, XYplorer,
-Q-Dir, etc.):</p>
-<ol>
-<li>Select one or more files in the other program.</li>
-<li>Press <strong>Ctrl+C</strong> (or <strong>Ctrl+X</strong>) to put the file paths on the clipboard.</li>
-<li>Press the hotkey. The dialog appears, the files get moved into the chosen
-subfolder under their parent directory.</li>
-</ol>
-<p>Toggle <strong>Silent</strong> to suppress the help popup when the clipboard is empty.</p>
-<h2 id="dateformat">Date format</h2>
-<p>Uses the same tokens as Win32 <code>GetDateFormat</code> / <code>GetTimeFormat</code>:
-<code>yyyy MM dd HH mm ss</code> etc. Example: <code>yyyy-MM-dd-HH-mm</code>.</p>
-<p>Forbidden characters in folder names (<code>* : ? " &lt; &gt; | / \</code>) are replaced with
-<code>_</code> automatically.</p>]]></content>
-        <author>
-            <name>tria</name>
-            <uri>https://github.com/triatomic</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Desktop Indicator 1.3]]></title>
-        <id>https://windhawk.net/mods/taskbar-desktop-indicator#cca00be44cb57cc49644279f551f0a499f97f874</id>
-        <link href="https://windhawk.net/mods/taskbar-desktop-indicator"/>
-        <updated>2026-05-13T16:18:10.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added a desktop name indicator mode, closes <a href="https://github.com/ramensoftware/windhawk-mods/issues/3574">#3574</a></li>
-<li>The desktop number is used as a fallback if a desktop name is not available</li>
-</ul>]]></content>
-        <author>
-            <name>Simon Benedict</name>
-            <uri>https://github.com/simon-ami</uri>
         </author>
     </entry>
 </feed>
