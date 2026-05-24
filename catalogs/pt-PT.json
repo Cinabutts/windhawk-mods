@@ -384,19 +384,20 @@
                     30
                 ],
                 "ratingUsers": 35,
-                "updated": 1779454652000,
+                "updated": 1779570949000,
                 "users": 362
             },
             "metadata": {
                 "author": "BlackPaw",
-                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32",
+                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32",
                 "description": "Tray icon to cycle between multiple preferred audio outputs. Supports up to 6 devices with click or scroll to swap.",
+                "donateUrl": "https://ko-fi.com/blackpaw21",
                 "github": "https://github.com/BlackPaw21",
                 "include": [
                     "windhawk.exe"
                 ],
                 "name": "AudioSwap",
-                "version": "2.0.0"
+                "version": "2.1.0"
             }
         },
         "auto-custom-titlebar-colors": {
@@ -2492,7 +2493,7 @@
                     33
                 ],
                 "ratingUsers": 41,
-                "updated": 1776019684000,
+                "updated": 1779576355000,
                 "users": 2038
             },
             "metadata": {
@@ -2500,6 +2501,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
+                "compilerOptions": "-lgdi32 -lwevtapi",
                 "description": "Customizes window corner radius in Windows 11, making corners more or less rounded",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -2508,7 +2510,7 @@
                 ],
                 "name": "Custom Window Corner Radius",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.1"
+                "version": "1.2"
             }
         },
         "custom-desktop-watermark": {
@@ -3419,6 +3421,38 @@
                 "license": "MIT",
                 "name": "DirectWrite Font Fallback Override",
                 "version": "1.0"
+            }
+        },
+        "dynamic-island-for-windows": {
+            "details": {
+                "defaultSorting": 81,
+                "published": 1779555032000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779555032000,
+                "users": 9
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Himanshu",
+                "compilerOptions": "-lole32 -loleaut32 -lshcore -ld2d1 -ldwrite -ldwmapi -lgdi32 -luser32 -lshell32 -lruntimeobject -lwindowscodecs -lavrt -lsetupapi",
+                "description": "A living, breathing pill overlay inspired by iPhone's Dynamic Island. Reacts to media, downloads, clipboard, battery, and more.",
+                "github": "https://github.com/devcode90",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "license": "MIT",
+                "name": "Dynamic Island for Windows",
+                "version": "1.0.0"
             }
         },
         "edge-hot-corner-desktop-switch": {
@@ -6661,7 +6695,7 @@
                     2
                 ],
                 "ratingUsers": 5,
-                "updated": 1773082808000,
+                "updated": 1779538740000,
                 "users": 71
             },
             "metadata": {
@@ -6674,7 +6708,7 @@
                 ],
                 "license": "MIT",
                 "name": "Native Brightness Shortcut (Always On Top)",
-                "version": "1.0.0"
+                "version": "1.1.0"
             }
         },
         "native-titlebars-uwp-lite": {
@@ -6750,7 +6784,7 @@
                     2
                 ],
                 "ratingUsers": 3,
-                "updated": 1779458240000,
+                "updated": 1779573707000,
                 "users": 32
             },
             "metadata": {
@@ -6762,7 +6796,7 @@
                     "*"
                 ],
                 "name": "Never Auto-Expand Explorer Tree Items",
-                "version": "1.0"
+                "version": "1.0.1"
             }
         },
         "nilesoft-shell-animator": {
@@ -8840,6 +8874,35 @@
                 ],
                 "name": "StartIsBack++ Tweaker",
                 "version": "0.7.1"
+            }
+        },
+        "simple-window-switcher": {
+            "details": {
+                "defaultSorting": 27,
+                "published": 1779555015000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779555015000,
+                "users": 3
+            },
+            "metadata": {
+                "author": "Lone",
+                "compilerOptions": "-ldwmapi -luxtheme -lgdi32 -lshlwapi -loleaut32 -lole32 -lcomctl32 -lgdiplus",
+                "description": "Replaces the default Alt+Tab with a lightweight window switcher inspired by ExplorerPatcher's Simple Window Switcher",
+                "github": "https://github.com/Louis047",
+                "include": [
+                    "windhawk.exe",
+                    "explorer.exe"
+                ],
+                "name": "Simple Window Switcher",
+                "version": "1.0"
             }
         },
         "slick-window-arrangement": {
@@ -13128,6 +13191,37 @@
                 ],
                 "name": "No MS Edge WebView2 for Copilot",
                 "version": "1.1"
+            }
+        },
+        "zen-desktop-toggle-icons": {
+            "details": {
+                "defaultSorting": 27,
+                "published": 1779551699000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779551699000,
+                "users": 3
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Lanbo",
+                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject",
+                "description": "A high-performance, native C++ Windhawk mod that lets you double-click empty desktop space to hide/show desktop icons. Zero lag, zero UI overhead.",
+                "github": "https://github.com/Liset999",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "ZenDesktop: Double Click to Hide Icons",
+                "version": "1.2.0"
             }
         }
     }

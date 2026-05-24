@@ -2,12 +2,156 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-22T18:32:51.000Z</updated>
+    <updated>2026-05-23T22:45:55.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Custom Window Corner Radius 1.2]]></title>
+        <id>https://windhawk.net/mods/custom-corner-radius#c34c936368a39cae882a2e21ba729d94131a87c5</id>
+        <link href="https://windhawk.net/mods/custom-corner-radius"/>
+        <updated>2026-05-23T22:45:55.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added an option for customizing tooltip corner radius.</li>
+<li>Added the ability to specify -1 for each of the settings to use the default corner radius.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Never Auto-Expand Explorer Tree Items 1.0.1]]></title>
+        <id>https://windhawk.net/mods/never-auto-expand-explorer-tree-items#40a3c20e2c02fe9f40a47c9d0868569a369c2cbc</id>
+        <link href="https://windhawk.net/mods/never-auto-expand-explorer-tree-items"/>
+        <updated>2026-05-23T22:01:47.000Z</updated>
+        <content type="html"><![CDATA[<p>Added an exception for the top-level "Desktop" item so it can still auto-expand when the "Show all folders" option is on, keeping the navigation pane populated.</p>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AudioSwap 2.1.0]]></title>
+        <id>https://windhawk.net/mods/audioswap#7f641c526280f213a15d2e9098f5c4e847729990</id>
+        <link href="https://windhawk.net/mods/audioswap"/>
+        <updated>2026-05-23T21:15:49.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>New: Device Priority panel — rank your preferred devices; the highest-priority connected device is assigned to a swap slot automatically.</li>
+<li>New: Advanced Mode toggle in Windhawk settings — shows the Device Priority panel in Mod Settings.</li>
+<li>Fixed: GUI sizing on high-DPI monitors.</li>
+<li>Fixed: Context menu now follows your Windows dark/light theme.</li>
+<li>Fixed: AudioSwap icon is now independent — no longer linked to the Windhawk tray icon.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dynamic Island for Windows 1.0.0]]></title>
+        <id>https://windhawk.net/mods/dynamic-island-for-windows#c0b6582ad2161f8406e294b2a74639851923cfac</id>
+        <link href="https://windhawk.net/mods/dynamic-island-for-windows"/>
+        <updated>2026-05-23T16:50:32.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="dynamicislandforwindows">Dynamic Island for Windows</h1>
+<p><img src="https://raw.githubusercontent.com/devcode90/TIME-TRAVEL-CHRONO/main/Screenshot%202026-05-18%20193649.png" alt="Screenshot 1" /></p>
+<p><img src="https://raw.githubusercontent.com/devcode90/TIME-TRAVEL-CHRONO/main/Screenshot%202026-05-22%20225602.png" alt="Screenshot 2" /></p>
+<p><img src="https://raw.githubusercontent.com/devcode90/TIME-TRAVEL-CHRONO/main/Screenshot%202026-05-22%20225634.png" alt="Screenshot 3" /></p>
+<p>A fluid, living overlay inspired by Apple's Dynamic Island, bringing a beautiful, highly-responsive UI to your Windows desktop. Built from the ground up using native Windows APIs and hardware-accelerated Direct2D rendering for a buttery-smooth 60 FPS experience with virtually zero impact on your system resources.</p>
+<h3 id="features">Features ✨</h3>
+<ul>
+<li><strong>Hardware Privacy Indicators:</strong> A pulsing orange dot appears when your microphone is active, and a green dot when your camera is in use. Rate-limited polling ensures absolutely no CPU drain.</li>
+<li><strong>Rich Media Integration:</strong> Shows album art, song info, a live audio waveform, and playback controls.</li>
+<li><strong>High-Res Clipboard & Notifications:</strong> Instantly see what you copied or your latest Windows notifications, featuring crisp, high-fidelity 64px app icons extracted directly from system executables.</li>
+<li><strong>Customizable Aesthetics:</strong> Switch between sleek OLED Black, Dark Gray, Midnight Blue, and Deep Purple themes from the right-click menu, or use the settings to dial in your exact hex colors.</li>
+<li><strong>Dynamic Fluid Animations:</strong> Fully smooth resizing and splitting when multiple events happen at once (e.g., media playing while you copy text or receive a notification).</li>
+<li><strong>Battery & Clock:</strong> Low battery alerts and an optional minimal clock dashboard for when the island is idle.</li>
+</ul>
+<h3 id="usagesettings">Usage &amp; Settings</h3>
+<ul>
+<li><strong>Hover</strong> over the island to seamlessly expand it.</li>
+<li><strong>Right-click</strong> the island to access Theme presets, Transparency settings, and to pin the island open.</li>
+<li>Visit the <strong>Settings tab</strong> to change the island's Position (Top, Bottom, Left, Right), Size Scale, Animation Speed, and toggle specific modules on or off.</li>
+</ul>]]></content>
+        <author>
+            <name>Himanshu</name>
+            <uri>https://github.com/devcode90</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Simple Window Switcher 1.0]]></title>
+        <id>https://windhawk.net/mods/simple-window-switcher#2da6ee87b56eb42c1802b43f0c201e5e5d3149aa</id>
+        <link href="https://windhawk.net/mods/simple-window-switcher"/>
+        <updated>2026-05-23T16:50:15.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="simplewindowswitcher">Simple Window Switcher</h1>
+<p>A lightweight Alt+Tab replacement for Windows, ported from the
+<a href="https://github.com/valinet/sws">Simple Window Switcher</a> project.
+Additional improvements made by <a href="https://github.com/Asteski">Asteski</a>.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Grid layout with live DWM thumbnail previews</li>
+<li>Different Task List and Header Content layouts</li>
+<li>Keyboard navigation (Tab/Shift+Tab/Shift/Backtick, Arrow keys, Enter, Esc)</li>
+<li>Mouse click to select, scroll wheel to cycle</li>
+<li>Alt+Ctrl+Tab sticky mode</li>
+<li>Theme support (None/Backdrop Acrylic)</li>
+<li>Works with elevated/admin applications</li>
+<li>Dark/light mode auto-detection</li>
+<li>Custom border colors with optional Windows accent color</li>
+<li>DPI-aware, multi-monitor aware</li>
+<li>Rounded corners for switcher and task thumbnails (optional)</li>
+</ul>
+<h2 id="screenshots">Screenshots</h2>
+<p><em>Horizontal squared (default)</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/4.png" alt="Horizontal default" /></p>
+<p><em>Horizontal squared without thumbnails</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/3.png" alt="Horizontal without thumbnails" /></p>
+<p><em>Vertical small rounded</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/58449dc268347949193f2c67b0b042d287c20bd5/img/simple-window-switcher/1.png" alt="Vertical small" /></p>
+<p><em>Vertical large rounded</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/2.png" alt="Vertical large" /></p>
+<p><em>Vertical rounded with centered task icons and titles</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/6.png" alt="Vertical centered" /></p>
+<p><em>Vertical squared with thumbnails</em></p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/5.png" alt="Vertical squared with thumbnails" /></p>]]></content>
+        <author>
+            <name>Lone</name>
+            <uri>https://github.com/Louis047</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ZenDesktop: Double Click to Hide Icons 1.2.0]]></title>
+        <id>https://windhawk.net/mods/zen-desktop-toggle-icons#130894a9b78c9429b22e05420e865d51b9f448b7</id>
+        <link href="https://windhawk.net/mods/zen-desktop-toggle-icons"/>
+        <updated>2026-05-23T15:54:59.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="zendesktopdoubleclicktohideicons">ZenDesktop: Double Click to Hide Icons</h1>
+<p>Have you ever wanted a clean, clutter-free desktop but found it annoying to right-click -&gt; View -&gt; Show desktop icons every time? </p>
+<p><strong>ZenDesktop</strong> brings the ultimate native solution to Windows. It allows you to <strong>double-click empty space on your desktop</strong> to instantly hide or show your icons.</p>
+<h3 id="keyfeatures">🌟 Key Features:</h3>
+<ul>
+<li><strong>Zero UI Overhead</strong>: Embedded natively inside <code>explorer.exe</code> process space. No background EXE running, no taskbar/tray icons, 0% CPU and virtually 0MB extra RAM.</li>
+<li><strong>Process-Native Hit-Testing</strong>: When you double-click, it performs a real-time ListView hit-test. If you double-click a file, folder, or shortcut, the default "open" action is triggered normally. If you double-click empty space, it toggles your desktop icons.</li>
+<li><strong>Dynamic Hooking</strong>: Automatically subclasses the shell views, meaning even if your Explorer crashes, restarts, or you plug/unplug monitors, the mod remains fully active and stable.</li>
+<li><strong>Completely Safe</strong>: Uses native Windows <code>0x7402</code> (WM_COMMAND) toggle signals, ensuring Windows handles the fade animations and desktop state natively without breaking icon grid arrangements.</li>
+</ul>]]></content>
+        <author>
+            <name>Lanbo</name>
+            <uri>https://github.com/Liset999</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Native Brightness Shortcut (Always On Top) 1.1.0]]></title>
+        <id>https://windhawk.net/mods/native-brightness#f5a751d9735864380ff0b33a9e6ca781343632b0</id>
+        <link href="https://windhawk.net/mods/native-brightness"/>
+        <updated>2026-05-23T12:19:00.000Z</updated>
+        <content type="html"><![CDATA[<p>The new update has resolved the previous issue of mod not working properly..</p>]]></content>
+        <author>
+            <name>Prash</name>
+            <uri>https://github.com/prasmit2410</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Key Click 1.1]]></title>
         <id>https://windhawk.net/mods/key-click#42e0209f2d49af8f06d3df8d1f19edb15ec1dbcd</id>
@@ -249,146 +393,6 @@ open a separate window instead.</li>
         <author>
             <name>u2x1</name>
             <uri>https://github.com/u2x1</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Virtual Desktop Helper 2.4.2]]></title>
-        <id>https://windhawk.net/mods/virtual-desktop-helper#3940166c632f8dd5293d1ef4bf3138376d8cc904</id>
-        <link href="https://windhawk.net/mods/virtual-desktop-helper"/>
-        <updated>2026-05-19T10:30:48.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Align tool-mod launcher with wiki recommendations</li>
-</ul>]]></content>
-        <author>
-            <name>u2x1</name>
-            <uri>https://github.com/u2x1</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Text Replace 1.1.1]]></title>
-        <id>https://windhawk.net/mods/text-replace#5a16d8006626f734697d2b1da40f47dfab2b8766</id>
-        <link href="https://windhawk.net/mods/text-replace"/>
-        <updated>2026-05-18T20:21:28.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed a crash when used with sandboxed processes, such as Electron or Chromium renderer processes.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Start Search Bing Redirector 1.0.0]]></title>
-        <id>https://windhawk.net/mods/start-search-bing-redirector#a6800ed0793157681e68ef726fcb595b16a4b3d9</id>
-        <link href="https://windhawk.net/mods/start-search-bing-redirector"/>
-        <updated>2026-05-16T16:25:26.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="startsearchbingredirector">Start Search Bing Redirector</h1>
-<p>When you click a web result in the Windows Start menu search, Windows forces
-the URL through <code>microsoft-edge:?url=https://www.bing.com/search?q=...</code> so it
-always opens in Edge with Bing.</p>
-<p>This mod intercepts that hand-off, extracts the search query, and redirects
-it to your chosen engine. The <code>microsoft-edge:</code> wrapper is dropped so the
-URL opens in your <strong>default browser</strong>.</p>
-<h2 id="howitworks">How it works</h2>
-<p>Hooks <code>WindowsCreateString</code> in <code>combase.dll</code> inside <code>SearchHost.exe</code>. When the
-HSTRING being constructed is the click activation URL, the URL is rewritten
-in place before it reaches the WinRT URI launcher.</p>
-<p>The in-flyout result previews (the right panel) are <strong>not</strong> changed. Those
-are rendered from Bing's JSON API and would need a full API proxy to swap.
-Only the click hand-off is redirected.</p>
-<h2 id="logs">Logs</h2>
-<p>Open Windhawk's log viewer and filter for <code>[BingRedirector]</code>.</p>]]></content>
-        <author>
-            <name>takattowo</name>
-            <uri>https://github.com/takattowo</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ExplorerPatcher Taskbar Button Width 1.0.0]]></title>
-        <id>https://windhawk.net/mods/ep-taskbar-button-width#7036416753c22f8b60d43cedd65848fd88c77a15</id>
-        <link href="https://windhawk.net/mods/ep-taskbar-button-width"/>
-        <updated>2026-05-16T15:31:51.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorerpatchertaskbarbuttonwidth">ExplorerPatcher Taskbar Button Width</h1>
-<p>This mod lets you change the width of taskbar items when using ExplorerPatcher's Windows 10 taskbar on Windows 11.</p>
-<p>Before:</p>
-<p><img src="https://i.imgur.com/r82ISo3.png" alt="Before" /></p>
-<p>After (120%):</p>
-<p><img src="https://i.imgur.com/qHaRdVt.png" alt="After" /></p>
-<p>The item scales as a percentage from a pre-computed base value not exposed by EP.</p>
-<p>(The registry hack at
-<code>HKCU\Control Panel\Desktop\WindowMetrics\MinWidth</code> doesn't work with
-ExplorerPatcher.)</p>
-<p><strong>Requirements:</strong> Windows 11 with ExplorerPatcher, using the Windows 10 taskbar.</p>]]></content>
-        <author>
-            <name>Rod Boev</name>
-            <uri>https://github.com/rodboev</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Word Local AutoSave 3.7]]></title>
-        <id>https://windhawk.net/mods/word-local-autosave#78ca8b502a30cf518a14cfe95a228e1580a18c09</id>
-        <link href="https://windhawk.net/mods/word-local-autosave"/>
-        <updated>2026-05-16T12:37:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Fixed</strong></p>
-<ul>
-<li>Fixed startup initialization so the mod no longer relies on changing settings to refresh its runtime state.</li>
-<li>Isolated internal self-tests from the live runtime initialization path.</li>
-<li>Reset runtime state after self-tests before loading real user settings and activating the mod.</li>
-<li>Added a safe one-shot startup bootstrap that pings the Word UI thread when Word’s window already exists during mod initialization.</li>
-</ul>
-<p><strong>Improved</strong></p>
-<ul>
-<li>Made first-run owner-thread adoption more tolerant when Word is already open or still finishing UI startup.</li>
-<li>Reduced the difference between normal startup and settings reload behavior.</li>
-<li>Added internal self-test coverage for startup owner-thread adoption policy.</li>
-</ul>
-<p><strong>Notes</strong></p>
-<ul>
-<li>v3.7 does not add new user-facing settings or features.</li>
-<li>This release focuses on startup reliability and preserving the existing autosave behavior from v3.6.</li>
-</ul>]]></content>
-        <author>
-            <name>communism420</name>
-            <uri>https://github.com/communism420</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Taskbar Styler 1.7]]></title>
-        <id>https://windhawk.net/mods/windows-11-taskbar-styler#cf0c6b1d2269380846d0da868898d35fc8678c06</id>
-        <link href="https://windhawk.net/mods/windows-11-taskbar-styler"/>
-        <updated>2026-05-15T16:09:18.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Updated the following themes: SunValley, Windows7, WindowGlass (all variants), Oversimplified&amp;Accentuated, Luminosity (all variants), LayerMicaUI, Fluid, TintedGlass, UltraWideFriendly, LiquidGlass (both variants), Borderless.</li>
-<li>Among notable fixes: Alt+Tab not responding to mouse hover and click events in multiple themes.</li>
-<li>Fixed broken taskbar layout in some cases when multiple monitors are used. Mostly affects WindowGlass and UltraWideFriendly.</li>
-<li>Added style variables that allow to observe a control's property value and use it in other controls or styles. Refer to the mod description for details.</li>
-<li>Added a way to match any number of intermediate parent controls, for example:&nbsp;<code>ParentClass &gt; * &gt; Class#Name</code>.</li>
-<li>Added a way to match root controls, for example:&nbsp;<code>:root &gt; Class#Name</code>.</li>
-<li>Added&nbsp;<code>FallbackColor</code>&nbsp;property to&nbsp;<code>WindhawkBlur</code>.</li>
-<li>Improved property matching which now works for more properties.</li>
-<li><code>WindhawkBlur</code> is no longer supported with the <code>Style=Value</code> syntax, the <code>Style:=Value</code> syntax must be used like with the other styler mods.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[UWP Assets Redirect 1.1]]></title>
-        <id>https://windhawk.net/mods/uwp-assets-redirect#7480b0e749aa7109e23cd6655b869cc94c380c72</id>
-        <link href="https://windhawk.net/mods/uwp-assets-redirect"/>
-        <updated>2026-05-15T11:44:24.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added support for .ico redirections:</li>
-<li>You can now provide the path to an .ico file, and assets will be automatically generated,</li>
-<li>You can find more information in the mod's details tab under "Applying redirections".</li>
-<li>Fixed WindowsApps read permissions that caused the mod to hang on loading</li>
-<li>Added dialogs during Icon themes download or when an error occurs</li>
-<li>Added "Luna" theme</li>
-</ul>]]></content>
-        <author>
-            <name>ferrys</name>
-            <uri>https://github.com/atferrys</uri>
         </author>
     </entry>
 </feed>
