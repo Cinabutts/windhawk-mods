@@ -3148,7 +3148,7 @@
                     10
                 ],
                 "ratingUsers": 11,
-                "updated": 1777492049000,
+                "updated": 1779612626000,
                 "users": 76
             },
             "metadata": {
@@ -3161,7 +3161,7 @@
                     "dwm.exe"
                 ],
                 "name": "Disable Windows Shortcuts",
-                "version": "1.1.1"
+                "version": "1.2.0"
             }
         },
         "discord-balloon-notifs": {
@@ -3334,6 +3334,37 @@
                 ],
                 "name": "Dropbox: Reduce Explorer CPU usage on sync",
                 "version": "1.1"
+            }
+        },
+        "dwm-custom-projection-border": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1779652887000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779652887000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "erisune",
+                "description": "Customize or disable the yellow border drawn by DWM when a capture is started using WinRT",
+                "github": "https://github.com/erisune",
+                "include": [
+                    "dwm.exe"
+                ],
+                "license": "GPL-3.0",
+                "name": "DWM Custom Projection Border",
+                "version": "1.0.0"
             }
         },
         "dwm-ghost-mods": {
@@ -8886,7 +8917,7 @@
                     4
                 ],
                 "ratingUsers": 5,
-                "updated": 1779555015000,
+                "updated": 1779645575000,
                 "users": 32
             },
             "metadata": {
@@ -8899,7 +8930,7 @@
                     "explorer.exe"
                 ],
                 "name": "Simple Window Switcher",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "slick-window-arrangement": {
@@ -11486,20 +11517,20 @@
                     6
                 ],
                 "ratingUsers": 7,
-                "updated": 1779318197000,
+                "updated": 1779638258000,
                 "users": 93
             },
             "metadata": {
                 "author": "Salyts",
                 "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -lshlwapi -lcomdlg32 -luuid -lgdiplus -luxtheme",
-                "description": "Custom tray icons with actions, context menus and image icon support.",
+                "description": "Этот мод добавляет настраиваемые иконки в системный трей Windows с возможностью назначения действий и контекстных меню, поддержкой файлов изображений и иконок приложений, а также автоматической адаптацией под тему системы.",
                 "github": "https://github.com/Salyts",
                 "include": [
                     "windhawk.exe"
                 ],
                 "license": "MIT",
                 "name": "Ultimate Custom Tray",
-                "version": "2.0"
+                "version": "2.1"
             }
         },
         "unlock-taskmgr-server": {
