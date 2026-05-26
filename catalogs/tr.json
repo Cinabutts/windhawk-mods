@@ -732,6 +732,38 @@
                 "version": "0.7"
             }
         },
+        "calendar-live-overlay": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1779744942000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779744942000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "SilverAmd",
+                "compilerOptions": "-ldxgi -ld2d1 -ldwrite -ld3d11 -ldcomp -ldwmapi -lgdi32 -lshcore",
+                "description": "Display a customizable monthly calendar on the desktop behind icons.",
+                "github": "https://github.com/SilverAmd",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "GPL-3.0",
+                "name": "Calendar Live Overlay",
+                "version": "0.0.1"
+            }
+        },
         "ce-disable-process-button-flashing": {
             "details": {
                 "defaultSorting": 200,
@@ -5836,7 +5868,7 @@
                     4
                 ],
                 "ratingUsers": 5,
-                "updated": 1779474771000,
+                "updated": 1779705837000,
                 "users": 19
             },
             "metadata": {
@@ -5845,10 +5877,10 @@
                 "description": "Produces click sound on keypress, supports autorepeat",
                 "github": "https://github.com/Anixx",
                 "include": [
-                    "windhawk.exe"
+                    "dwm.exe"
                 ],
                 "name": "Key Click",
-                "version": "1.1"
+                "version": "1.2"
             }
         },
         "keyboard-shortcut-actions": {
@@ -6675,6 +6707,35 @@
                 ],
                 "name": "Message Box Fix",
                 "version": "2.3.0"
+            }
+        },
+        "mshtml-native-controls": {
+            "details": {
+                "defaultSorting": 50,
+                "published": 1779718212000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    2
+                ],
+                "ratingUsers": 2,
+                "updated": 1779718212000,
+                "users": 5
+            },
+            "metadata": {
+                "author": "Ingan121",
+                "description": "Various tweaks for the IE engine, including old control styles and font AA options",
+                "github": "https://github.com/Ingan121",
+                "homepage": "https://www.ingan121.com/",
+                "include": [
+                    "*"
+                ],
+                "name": "MSHTML Tweaks",
+                "twitter": "https://twitter.com/Ingan121",
+                "version": "1.0"
             }
         },
         "mspaint-dark": {
@@ -11109,7 +11170,7 @@
                     2
                 ],
                 "ratingUsers": 3,
-                "updated": 1778787962000,
+                "updated": 1779711603000,
                 "users": 58
             },
             "metadata": {
@@ -11120,7 +11181,7 @@
                     "windhawk.exe"
                 ],
                 "name": "Theme Toggler Tray",
-                "version": "1.2.1"
+                "version": "1.2.2"
             }
         },
         "themed-regedit-listview": {

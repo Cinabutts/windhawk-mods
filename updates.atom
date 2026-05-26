@@ -2,12 +2,221 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-24T20:01:27.000Z</updated>
+    <updated>2026-05-25T21:35:42.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Calendar Live Overlay 0.0.1]]></title>
+        <id>https://windhawk.net/mods/calendar-live-overlay#8422b6be0bd211cdb967c20f14a6e171cf629499</id>
+        <link href="https://windhawk.net/mods/calendar-live-overlay"/>
+        <updated>2026-05-25T21:35:42.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="calendarliveoverlay">Calendar Live Overlay</h1>
+<p>Displays a customizable monthly calendar directly on the desktop behind the desktop icons.</p>
+<h2 id="preview">Preview</h2>
+<p><img src="https://i.imgur.com/A3gcKe0.png" alt="Calendar Live Overlay preview 1" /></p>
+<p><img src="https://i.imgur.com/AuCGcoP.png" alt="Calendar Live Overlay preview 2" /></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Shows the current month as a clean desktop overlay</li>
+<li>Runs behind desktop icons, based on the Desktop Live Overlay method</li>
+<li>Designed to visually match Desktop Live Overlay Mod https://windhawk.net/mods/desktop-live-overlay</li>
+<li>Custom absolute X/Y positioning</li>
+<li>Optional percentage-based positioning</li>
+<li>Multi-monitor support</li>
+<li>Adjustable font size, font family, font weight and font style</li>
+<li>Custom text color with alpha transparency</li>
+<li>Optional German or English month/day names</li>
+<li>Optional Monday or Sunday week start</li>
+<li>Optional month header</li>
+<li>Optional week numbers</li>
+<li>Optional leading zero day numbers</li>
+<li>Optional box drawing border</li>
+<li>Adjustable border content offset</li>
+<li>Highlight today's date with custom color</li>
+<li>Optional bold style for today's date</li>
+<li>Optional underline for today's date</li>
+<li>Highlight weekends with custom color and opacity</li>
+<li>Optional custom color for week numbers</li>
+<li>Optional custom color for weekday names</li>
+<li>Adjustable column and row spacing</li>
+<li>Header alignment: left, center or right</li>
+<li>Optional background with color, padding, rounded corners, border and blur</li>
+<li>Optional background border with custom color and size</li>
+<li>Automatic refresh shortly after each minute change</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Enable the mod and adjust the position and appearance in the mod settings.</p>
+<p>For best alignment, use a monospaced font such as Cascadia Mono, Consolas, JetBrains Mono, or Courier New.</p>
+<h2 id="colorformat">Color Format</h2>
+<p>Colors use hexadecimal format:</p>
+<ul>
+<li><code>#RRGGBB</code></li>
+<li><code>#AARRGGBB</code></li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>#FFFFFFFF</code> = white, fully visible</li>
+<li><code>#80FFFFFF</code> = white, 50% transparent</li>
+<li><code>#FFFF6060</code> = red, fully visible</li>
+<li><code>#FFFFB060</code> = orange, fully visible</li>
+<li><code>#30000000</code> = black, very transparent</li>
+</ul>
+<p>In <code>#AARRGGBB</code>:</p>
+<ul>
+<li><code>AA</code> = alpha / transparency</li>
+<li><code>RR</code> = red</li>
+<li><code>GG</code> = green</li>
+<li><code>BB</code> = blue</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<h3 id="calendar">Calendar</h3>
+<ul>
+<li>Show week numbers</li>
+<li>Week starts on Monday or Sunday</li>
+<li>Use German names</li>
+<li>Show month header</li>
+<li>Leading zero day numbers</li>
+<li>Use box drawing border</li>
+<li>Border content offset</li>
+<li>Column spacing</li>
+<li>Row spacing</li>
+<li>Header alignment</li>
+</ul>
+<h3 id="highlighting">Highlighting</h3>
+<ul>
+<li>Highlight today</li>
+<li>Today color</li>
+<li>Today bold</li>
+<li>Today underline</li>
+<li>Highlight weekends</li>
+<li>Weekend color</li>
+<li>Weekend opacity</li>
+<li>Highlight week numbers</li>
+<li>Week number color</li>
+<li>Highlight weekday names</li>
+<li>Weekday name color</li>
+</ul>
+<h3 id="position">Position</h3>
+<ul>
+<li>Use absolute X/Y position</li>
+<li>X-Position</li>
+<li>Y-Position</li>
+<li>Vertical position percent</li>
+<li>Horizontal position percent</li>
+<li>Monitor</li>
+</ul>
+<h3 id="font">Font</h3>
+<ul>
+<li>Font size</li>
+<li>Text color</li>
+<li>Font family</li>
+<li>Font weight</li>
+<li>Font style</li>
+</ul>
+<p>For best alignment, use a monospaced font.</p>
+<p>Recommended:</p>
+<ul>
+<li>Cascadia Mono</li>
+<li>Consolas</li>
+<li>JetBrains Mono</li>
+<li>Courier New</li>
+</ul>
+<p>Proportional fonts such as Arial, Calibri or Verdana can distort the calendar layout because the calendar uses fixed-width text alignment.</p>
+<h3 id="background">Background</h3>
+<ul>
+<li>Enable background</li>
+<li>Background color</li>
+<li>Background padding</li>
+<li>Background corner radius</li>
+<li>Background blur</li>
+<li>Background border size</li>
+<li>Background border color</li>
+</ul>
+<h2 id="credits">Credits</h2>
+<p>Based on and inspired by Desktop Live Overlay by m417z.</p>
+<p>Special thanks to m417z for the original overlay implementation and the Windhawk ecosystem.</p>
+<p>Additional development help and debugging guidance: ChatGPT by OpenAI.</p>
+<h2 id="notes">Notes</h2>
+<p>This mod is injected into <code>explorer.exe</code> and creates the calendar overlay as part of the desktop window structure.</p>
+<p>If the desktop does not refresh correctly after changing settings, restart Explorer or disable and re-enable the mod.</p>
+<p>The calendar refreshes automatically shortly after each minute change, which is enough to update the highlighted day after midnight.</p>
+<p>For best alignment, use a monospaced font such as:</p>
+<ul>
+<li>Cascadia Mono</li>
+<li>Consolas</li>
+<li>JetBrains Mono</li>
+<li>Courier New</li>
+</ul>
+<p>The mod does not open a normal application window and does not appear in the taskbar.</p>]]></content>
+        <author>
+            <name>SilverAmd</name>
+            <uri>https://github.com/SilverAmd</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MSHTML Tweaks 1.0]]></title>
+        <id>https://windhawk.net/mods/mshtml-native-controls#f7de3782e55d3abd9b6d97588c8116ac80e7e0b1</id>
+        <link href="https://windhawk.net/mods/mshtml-native-controls"/>
+        <updated>2026-05-25T14:10:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="mshtmltweaks">MSHTML Tweaks</h1>
+<ul>
+<li>Various tweaks for Internet Explorer and all the other apps using its engine (Trident/MSHTML), such as HTML Help, HelpPane, MSHTA, MMC, etc.</li>
+<li>This mod can bring back old controls, customize the font smoothing type (disable the forced ClearType), and disable the DirectComposition rendering.</li>
+<li>Special thanks to @xalejandro for the ClearType disabler.</li>
+<li>Only works on Internet Explorer 11 engine running on Windows 10 or higher. Tested on 10 22H2 and 11 25H2. Never tested on Windows 8 or earlier Windows 10 builds. Won't work on Windows 7. (You'll need to remove hooks for some symbols that don't exist.)</li>
+<li>The first launch of an MSHTML application after enabling this mod will take a lot of time, due to the large size of the symbols needed. It may not show the symbols download progress dialog depending on your internet security settings.</li>
+</ul>
+<h2 id="notesregardingtheoldcontrolstyles">Notes regarding the old control styles</h2>
+<ul>
+<li>Note that this mod only restores IE11's built-in Windows 7 behavior for old control styling, which uses hardcoded/fake Aero styles that do not actually match the current system theme.</li>
+<li>Only the scrollbar will use actual bitmaps from the current visual style (or classic); however, they may look glitchy, especially on HiDPI displays.</li>
+<li>You may want to disable the visual styles for controls in Internet Options (<code>inetcpl.cpl</code>) -&gt; Advanced -&gt; <code>Enable visual styles on buttons and controls in web pages</code> to make them look better on older themes such as XP.
+<img src="https://raw.githubusercontent.com/Ingan121/files/refs/heads/master/ie_fakeaero.png" alt="Comparison of fake and real control styles" /></li>
+</ul>
+<h2 id="ifinternetexplorerhangsonstartup">If Internet Explorer hangs on startup</h2>
+<ul>
+<li>Internet Explorer (<code>iexplore.exe</code>) uses a 32-bit subprocess by default, and the subprocess will fail to save its symbol downloaded from the Windhawk server.</li>
+<li>To fix this, please run the following in the run dialog (Win+R) to launch a 32-bit MSHTML as a main process to load the symbols:</li>
+<li><code>C:\Windows\SysWOW64\hh.exe http://www.ingan121.com/</code> (or any other <code>http</code> URL that isn't <code>https</code>)</li>
+</ul>
+<h2 id="knownissues">Known issues</h2>
+<ul>
+<li>Internet Explorer will crash when changing the settings or loading/unloading/updating the mod while it's running. This is not necessarily true for other apps using MSHTML.</li>
+</ul>]]></content>
+        <author>
+            <name>Ingan121</name>
+            <uri>https://github.com/Ingan121</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Theme Toggler Tray 1.2.2]]></title>
+        <id>https://windhawk.net/mods/theme-toggler-tray#4859d479f73c86feed28cd9e3b9f50d98c8b5a8b</id>
+        <link href="https://windhawk.net/mods/theme-toggler-tray"/>
+        <updated>2026-05-25T12:20:03.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed an architectural issue where the tray icon permanently disappears when explorer.exe restarts or the taskbar is recreated (e.g., due to DPI changes).</li>
+<li>Changed the hidden message-only window (HWND<em>MESSAGE) to a hidden top-level tool window (WS</em>EX<em>TOOLWINDOW and WS</em>POPUP) to ensure it correctly receives the TaskbarCreated system broadcast.</li>
+<li>Refactored the TaskbarCreated handler in WindowProc to safely and robustly reconstruct the icon.</li>
+</ul>]]></content>
+        <author>
+            <name>Husam-Abdulraheem</name>
+            <uri>https://github.com/Husam-Abdulraheem</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Key Click 1.2]]></title>
+        <id>https://windhawk.net/mods/key-click#02cb5e875e7f8cf77d890eb3860cf6fafbf60a00</id>
+        <link href="https://windhawk.net/mods/key-click"/>
+        <updated>2026-05-25T10:43:57.000Z</updated>
+        <content type="html"><![CDATA[<p>Filter out injected events so to bypass keyboard redirectors, inject dwm.exe now so to work in elevated windows.</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DWM Custom Projection Border 1.0.0]]></title>
         <id>https://windhawk.net/mods/dwm-custom-projection-border#eefcd95278ff79bf6a79f81175c0eacd6cf2efb7</id>
@@ -305,74 +514,6 @@ pane tidy.</p>
         <author>
             <name>Kitsune</name>
             <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disk Usage Bar Color 1.2.1]]></title>
-        <id>https://windhawk.net/mods/disk-usage-bar-color#650420a62873ff46d0aa951457bfa4aac414dc1c</id>
-        <link href="https://windhawk.net/mods/disk-usage-bar-color"/>
-        <updated>2026-05-22T13:06:33.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Add screenshot preview image to the mod readme.</li>
-</ul>]]></content>
-        <author>
-            <name>dirtyrazkl</name>
-            <uri>https://github.com/dirtyrazkl</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AutoScroll Win32 1.0.1]]></title>
-        <id>https://windhawk.net/mods/autoscroll-win32#d9e0a6536452c29607e43e8030a4dd03c7d7ee84</id>
-        <link href="https://windhawk.net/mods/autoscroll-win32"/>
-        <updated>2026-05-22T13:04:46.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>Fixed middle-click "open in new tab" so it now works in hold mode</li>
-<li>Fixed overscroll without Smooth Scroll Win32 (capped to 1 wheel notch per frame)</li>
-<li>Added Toggle Mode -- click to start scrolling, click again to stop</li>
-<li>Added: Block Middle Button Release -- suppresses mouse3 release for bound apps</li>
-<li>Added per-monitor DPI support for the visual indicator</li>
-<li>Improved: scroll thread idles at zero CPU (WaitForSingleObject on event)</li>
-</ol>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AudioSwap 2.0.0]]></title>
-        <id>https://windhawk.net/mods/audioswap#95bddae96da8f6e404291b5e7d9842674ac104d4</id>
-        <link href="https://windhawk.net/mods/audioswap"/>
-        <updated>2026-05-22T12:57:32.000Z</updated>
-        <content type="html"><![CDATA[<p>improved performance
-Windows Native dashboard = right-click → <strong>Mod Settings</strong>.
-All configuration (device slots, icons, mode, count) lives in the dashboard; Windhawk's settings panel is no longer used.</p>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Monitor Sleep Button 1.1.0]]></title>
-        <id>https://windhawk.net/mods/monitor-sleep-button#6da1e2166b9f1d3ea9c073170de375ff2d8e8d91</id>
-        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
-        <updated>2026-05-20T23:12:20.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Configurable global hotkey</li>
-<li>Ctrl / Alt / Shift / Win modifier support</li>
-<li>Right-click tray menu</li>
-<li>Esc cancels the countdown</li>
-<li>Mouse wheel over the tray icon changes countdown duration</li>
-<li>Tray icon displays the selected countdown duration</li>
-<li>Dynamic tray tooltip and menu text</li>
-<li>Open Windhawk shortcut</li>
-<li>New action mode:</li>
-<li>Turn monitor off</li>
-<li>Show black screen</li>
-<li>Black screen mode can be closed instantly with Esc, a mouse click, or by pressing the tray hotkey / tray icon again</li>
-</ul>]]></content>
-        <author>
-            <name>SilverAmd</name>
-            <uri>https://github.com/SilverAmd</uri>
         </author>
     </entry>
 </feed>
