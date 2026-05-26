@@ -8490,6 +8490,34 @@
                 "version": "1.0"
             }
         },
+        "replace-winver-with-exe": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1779783069000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1779783069000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "winui64",
+                "compilerOptions": "-lshell32 -lshlwapi",
+                "description": "Replaces the Winver dialog with a custom executable",
+                "github": "https://github.com/winui64",
+                "include": [
+                    "winver.exe"
+                ],
+                "name": "Replace Winver With EXE",
+                "version": "1.0"
+            }
+        },
         "resizable-discord": {
             "details": {
                 "defaultSorting": 1290,
@@ -9065,7 +9093,7 @@
                     25
                 ],
                 "ratingUsers": 34,
-                "updated": 1775382984000,
+                "updated": 1779783329000,
                 "users": 1046
             },
             "metadata": {
@@ -9078,10 +9106,11 @@
                     "regedit.exe",
                     "mmc.exe",
                     "control.exe",
-                    "wordpad.exe"
+                    "wordpad.exe",
+                    "taskmgr.exe"
                 ],
                 "name": "Smooth Scroll for Win32",
-                "version": "1.0.2"
+                "version": "1.0.3"
             }
         },
         "spoof-light-dark-theme": {
