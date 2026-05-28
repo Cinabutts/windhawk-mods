@@ -6519,19 +6519,20 @@
                     1
                 ],
                 "ratingUsers": 2,
-                "updated": 1777731567000,
+                "updated": 1779876787000,
                 "users": 26
             },
             "metadata": {
                 "author": "BlackPaw",
-                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lshlwapi",
-                "description": "Adds a tray icon to instantly toggle between two preferred audio inputs (microphones).",
+                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32",
+                "description": "Tray icon to instantly toggle between two preferred audio inputs (microphones).",
+                "donateUrl": "https://ko-fi.com/blackpaw21",
                 "github": "https://github.com/BlackPaw21",
                 "include": [
                     "windhawk.exe"
                 ],
-                "name": "MicroSwap",
-                "version": "1.0.0"
+                "name": "MicSwitch",
+                "version": "1.1.0"
             }
         },
         "modern-notepad-to-classic-editor": {
@@ -6830,6 +6831,34 @@
                 ],
                 "name": "Remove UWP titlebars Lite",
                 "version": "1.1.0"
+            }
+        },
+        "neko-cat": {
+            "details": {
+                "defaultSorting": 80,
+                "published": 1779877611000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    2
+                ],
+                "ratingUsers": 2,
+                "updated": 1779877611000,
+                "users": 8
+            },
+            "metadata": {
+                "author": "ciizerr",
+                "compilerOptions": "-lgdiplus -lwinmm -lgdi32 -lshell32",
+                "description": "Adds a desktop pet cat that runs around and follows your mouse",
+                "github": "https://github.com/ciizerr",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Neko Cat",
+                "version": "1.2.1"
             }
         },
         "net-toggle": {
@@ -10456,7 +10485,7 @@
                     405
                 ],
                 "ratingUsers": 491,
-                "updated": 1766250184000,
+                "updated": 1779880069000,
                 "users": 23713
             },
             "featured": true,
@@ -10465,7 +10494,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-DWINVER=0x0A00 -ldwmapi -lole32 -loleaut32 -lruntimeobject -lshcore -lversion",
+                "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lruntimeobject -lshcore -lversion",
                 "description": "Moves the Windows 11 taskbar to the top of the screen",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -10475,7 +10504,7 @@
                 ],
                 "name": "Taskbar on top for Windows 11",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.1.6"
+                "version": "1.1.7"
             }
         },
         "taskbar-primary-on-secondary-monitor": {
@@ -10915,7 +10944,7 @@
                     481
                 ],
                 "ratingUsers": 589,
-                "updated": 1769169237000,
+                "updated": 1779881106000,
                 "users": 19094
             },
             "featured": true,
@@ -10924,7 +10953,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lruntimeobject -lshcore",
+                "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lruntimeobject -lshcore -lversion",
                 "description": "Finally, the missing vertical taskbar option for Windows 11! Move the taskbar to the left or right side of the screen.",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -10936,7 +10965,7 @@
                 ],
                 "name": "Vertical Taskbar for Windows 11",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3.10"
+                "version": "1.3.11"
             }
         },
         "taskbar-volume-control": {
@@ -12943,7 +12972,7 @@
                     6083
                 ],
                 "ratingUsers": 7170,
-                "updated": 1778443238000,
+                "updated": 1779898932000,
                 "users": 624931
             },
             "featured": true,
@@ -12952,7 +12981,7 @@
                     "x86-64"
                 ],
                 "author": "m417z",
-                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject -Wl,--export-all-symbols",
+                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject -lversion",
                 "description": "Customize the Start menu with themes contributed by others or create your own",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -12963,7 +12992,7 @@
                 ],
                 "name": "Windows 11 Start Menu Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.5.1"
+                "version": "1.5.2"
             }
         },
         "windows-11-taskbar-styler": {

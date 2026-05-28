@@ -2,12 +2,134 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-26T08:15:29.000Z</updated>
+    <updated>2026-05-27T16:22:12.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.5.2]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-styler#49b5f6cd2e724208e8efb94951fd51f70f97c524</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
+        <updated>2026-05-27T16:22:12.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Disabled the classic Start menu layout in the latest Windows 11 update. In the latest update, reverting to the classic layout (either with the mod or via ViVeTool flags) causes the Start menu to fail to open. At this point, it's unclear whether it's a temporary Windows issue, or if it's caused by the removal of the classic layout from Windows.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vertical Taskbar for Windows 11 1.3.11]]></title>
+        <id>https://windhawk.net/mods/taskbar-vertical#8a1f76c14f1a5089841348d37e838c85123bb26f</id>
+        <link href="https://windhawk.net/mods/taskbar-vertical"/>
+        <updated>2026-05-27T11:25:06.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed compatibility with recent Windows 11 versions.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar on top for Windows 11 1.1.7]]></title>
+        <id>https://windhawk.net/mods/taskbar-on-top#6e1ccf5d5ff53ada6ae7d58fd31c81a9723e12ea</id>
+        <link href="https://windhawk.net/mods/taskbar-on-top"/>
+        <updated>2026-05-27T11:07:49.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed compatibility with recent Windows 11 versions.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Neko Cat 1.2.1]]></title>
+        <id>https://windhawk.net/mods/neko-cat#b35660a81b786d8523a45cec049c59d24270b648</id>
+        <link href="https://windhawk.net/mods/neko-cat"/>
+        <updated>2026-05-27T10:26:51.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="nekocat">🐱 Neko Cat</h1>
+<p>A cute desktop pet that follows your mouse and runs around your screen.
+<img src="https://raw.githubusercontent.com/ciizerr/wh-mods/2c1ecbf9ba9d0964e1a764a090cb2b7df729dc5c/previews/Neko-cat.gif" alt="Neko Cat Preview" /></p>
+<h2 id="whatsnewinv120">✨ What's New in v1.2.0?</h2>
+<ul>
+<li><strong>Play With Window:</strong> Neko can now climb the sides of your active window and pace along the title bar! He even reacts physically if you drag the window into him while he's sleeping.</li>
+<li><strong>Multiple Cats:</strong> Feeling lonely? You can now spawn an entire litter of cats! They have built-in separation physics so they won't just stack on top of each other.</li>
+<li><strong>Neko Key:</strong> Set a custom keyboard shortcut to instantly hide all your cats and mute their sounds when you need to focus.</li>
+</ul>
+<h2 id="howtointeract">🎮 How to Interact</h2>
+<ul>
+<li><strong>Left-Click:</strong> Cycles through 6 different behaviors.</li>
+<li><strong>Right-Click:</strong> Wakes Neko up instantly if he's napping.</li>
+<li><strong>Drag & Drop:</strong> Pick him up and drop him! He'll yawn, take a quick nap, and then automatically wake up and go back to what he was doing.</li>
+<li><strong>Window Nudging:</strong> If Neko is exhausted and deeply asleep on the floor, try dragging a window edge into him. He'll slide out of the way and wake up to see what bumped him!</li>
+</ul>
+<h2 id="catbehaviors">🏃 Cat Behaviors</h2>
+<ol>
+<li><strong>Chase Mouse:</strong> (Default) He follows your cursor everywhere!</li>
+<li><strong>Run Away:</strong> Try to catch him if you can!</li>
+<li><strong>Random:</strong> Total zoomies!</li>
+<li><strong>Pace:</strong> He patrols the bottom of your screen.</li>
+<li><strong>Run Around:</strong> He chases an invisible ball.</li>
+<li><strong>Play With Window:</strong> He hunts down your currently focused window to climb the walls and pace the roof.</li>
+</ol>
+<h2 id="multimonitorsupport">🖥️ Multi-Monitor Support</h2>
+<p>Neko can roam freely across <strong>all your monitors</strong>! He can seamlessly jump from one screen to another to follow your mouse.</p>
+<h2 id="customization">⚙️ Customization</h2>
+<p>You can tweak almost everything in the settings: <strong>Size</strong>, <strong>Speed</strong>, <strong>FPS</strong>, <strong>How many cats to spawn</strong>, and your <strong>Neko Key shortcut</strong>. You can also turn his meows and snores on or off.</p>
+<h2 id="assetstransparency">🔒 Assets &amp; Transparency</h2>
+<p>Neko's graphics and sounds are downloaded automatically on the first run.</p>
+<ul>
+<li><strong>Source:</strong> All files come from the GitHub repository: <a href="https://github.com/ciizerr/wh-mods/tree/2c1ecbf9ba9d0964e1a764a090cb2b7df729dc5c/assets/neko-cat">assets/neko-cat</a></li>
+<li><strong>Standard API:</strong> The mod uses the trusted Windhawk <code>Wh_GetUrlContent</code> API.</li>
+<li><strong>Local Storage:</strong> Files are safely cached in your Windhawk <code>modstorage</code> folder.</li>
+</ul>
+<h2 id="licensecredits">📜 License &amp; Credits</h2>
+<p>This mod uses implementations, logic, and state definitions referenced from the <strong>Neko 98</strong> source code.</p>
+<ul>
+<li><strong>Original Author:</strong> Masayuki Koba (X-Windows Neko)</li>
+<li><strong>Windows Port (Neko 98):</strong> David Harvey - <a href="https://sourceforge.net/projects/neko98/">Neko98 Source on SourceForge</a></li>
+<li><strong>JavaScript Port (nekojs):</strong> Louis Abraham - <a href="https://github.com/louisabraham/nekojs">louisabraham/nekojs on GitHub</a></li>
+<li><strong>License:</strong> Used in accordance with the Neko 98 source code license (freely usable as long as credit is given).</li>
+</ul>
+<h2 id="feedbacksupport">💬 Feedback &amp; Support</h2>
+<p>Got ideas or found a bug? I’d love to hear from you!</p>
+<ul>
+<li><strong>Discord:</strong> <code>ciizerr</code></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/ciizerr/wh-mods">wh-mods</a></li>
+</ul>
+<p>Enjoy your new friends!</p>]]></content>
+        <author>
+            <name>ciizerr</name>
+            <uri>https://github.com/ciizerr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MicSwitch 1.1.0]]></title>
+        <id>https://windhawk.net/mods/microswap#4a08293dac7c0135a0a059dbda268f29117f8da8</id>
+        <link href="https://windhawk.net/mods/microswap"/>
+        <updated>2026-05-27T10:13:07.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li><strong>Renamed from MicroSwap to MicSwitch.</strong></li>
+<li>Custom icon support — pick your own image for each device via Settings or right-click.</li>
+<li>Added donate button on the mod page.</li>
+<li>Context menu now follows your Windows dark/light theme.</li>
+<li>Active device shown at the top of the right-click menu.</li>
+<li>Fixed: rare crash when switching devices rapidly.</li>
+<li>Fixed: occasional hang when Windhawk unloads the mod.</li>
+<li>Fixed: tray window appeared in Alt+Tab.</li>
+<li>Fixed: tray icon failed to load on some Windows configurations.</li>
+<li>Tray / Taskbar icon is now independent, no longer linked to the Windhawk icon.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Smooth Scroll for Win32 1.0.3]]></title>
         <id>https://windhawk.net/mods/smooth-scroll-win32#8a4b44b30b8e194e4e7d7e4651ef8a21fecc57db</id>
@@ -417,112 +539,6 @@ settings. If you do not do this, it will silently fail to inject.</p>
         <author>
             <name>Himanshu</name>
             <uri>https://github.com/devcode90</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Simple Window Switcher 1.0]]></title>
-        <id>https://windhawk.net/mods/simple-window-switcher#2da6ee87b56eb42c1802b43f0c201e5e5d3149aa</id>
-        <link href="https://windhawk.net/mods/simple-window-switcher"/>
-        <updated>2026-05-23T16:50:15.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="simplewindowswitcher">Simple Window Switcher</h1>
-<p>A lightweight Alt+Tab replacement for Windows, ported from the
-<a href="https://github.com/valinet/sws">Simple Window Switcher</a> project.
-Additional improvements made by <a href="https://github.com/Asteski">Asteski</a>.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Grid layout with live DWM thumbnail previews</li>
-<li>Different Task List and Header Content layouts</li>
-<li>Keyboard navigation (Tab/Shift+Tab/Shift/Backtick, Arrow keys, Enter, Esc)</li>
-<li>Mouse click to select, scroll wheel to cycle</li>
-<li>Alt+Ctrl+Tab sticky mode</li>
-<li>Theme support (None/Backdrop Acrylic)</li>
-<li>Works with elevated/admin applications</li>
-<li>Dark/light mode auto-detection</li>
-<li>Custom border colors with optional Windows accent color</li>
-<li>DPI-aware, multi-monitor aware</li>
-<li>Rounded corners for switcher and task thumbnails (optional)</li>
-</ul>
-<h2 id="screenshots">Screenshots</h2>
-<p><em>Horizontal squared (default)</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/4.png" alt="Horizontal default" /></p>
-<p><em>Horizontal squared without thumbnails</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/3.png" alt="Horizontal without thumbnails" /></p>
-<p><em>Vertical small rounded</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/58449dc268347949193f2c67b0b042d287c20bd5/img/simple-window-switcher/1.png" alt="Vertical small" /></p>
-<p><em>Vertical large rounded</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/2.png" alt="Vertical large" /></p>
-<p><em>Vertical rounded with centered task icons and titles</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/6.png" alt="Vertical centered" /></p>
-<p><em>Vertical squared with thumbnails</em></p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/simple-window-switcher/5.png" alt="Vertical squared with thumbnails" /></p>]]></content>
-        <author>
-            <name>Lone</name>
-            <uri>https://github.com/Louis047</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ZenDesktop: Double Click to Hide Icons 1.2.0]]></title>
-        <id>https://windhawk.net/mods/zen-desktop-toggle-icons#130894a9b78c9429b22e05420e865d51b9f448b7</id>
-        <link href="https://windhawk.net/mods/zen-desktop-toggle-icons"/>
-        <updated>2026-05-23T15:54:59.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="zendesktopdoubleclicktohideicons">ZenDesktop: Double Click to Hide Icons</h1>
-<p>Have you ever wanted a clean, clutter-free desktop but found it annoying to right-click -&gt; View -&gt; Show desktop icons every time? </p>
-<p><strong>ZenDesktop</strong> brings the ultimate native solution to Windows. It allows you to <strong>double-click empty space on your desktop</strong> to instantly hide or show your icons.</p>
-<h3 id="keyfeatures">🌟 Key Features:</h3>
-<ul>
-<li><strong>Zero UI Overhead</strong>: Embedded natively inside <code>explorer.exe</code> process space. No background EXE running, no taskbar/tray icons, 0% CPU and virtually 0MB extra RAM.</li>
-<li><strong>Process-Native Hit-Testing</strong>: When you double-click, it performs a real-time ListView hit-test. If you double-click a file, folder, or shortcut, the default "open" action is triggered normally. If you double-click empty space, it toggles your desktop icons.</li>
-<li><strong>Dynamic Hooking</strong>: Automatically subclasses the shell views, meaning even if your Explorer crashes, restarts, or you plug/unplug monitors, the mod remains fully active and stable.</li>
-<li><strong>Completely Safe</strong>: Uses native Windows <code>0x7402</code> (WM_COMMAND) toggle signals, ensuring Windows handles the fade animations and desktop state natively without breaking icon grid arrangements.</li>
-</ul>]]></content>
-        <author>
-            <name>Lanbo</name>
-            <uri>https://github.com/Liset999</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Native Brightness Shortcut (Always On Top) 1.1.0]]></title>
-        <id>https://windhawk.net/mods/native-brightness#f5a751d9735864380ff0b33a9e6ca781343632b0</id>
-        <link href="https://windhawk.net/mods/native-brightness"/>
-        <updated>2026-05-23T12:19:00.000Z</updated>
-        <content type="html"><![CDATA[<p>The new update has resolved the previous issue of mod not working properly..</p>]]></content>
-        <author>
-            <name>Prash</name>
-            <uri>https://github.com/prasmit2410</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Key Click 1.1]]></title>
-        <id>https://windhawk.net/mods/key-click#42e0209f2d49af8f06d3df8d1f19edb15ec1dbcd</id>
-        <link href="https://windhawk.net/mods/key-click"/>
-        <updated>2026-05-22T18:32:51.000Z</updated>
-        <content type="html"><![CDATA[<p>Remove autorepoeat sound when pressing modifiers (Alt, Ctrl, Shift,Win)</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Start Menu Buttons 2.1]]></title>
-        <id>https://windhawk.net/mods/windows-11-start-menu-buttons#5cebaf3b9d51243548c53c9df5d14a54bfb1dd88</id>
-        <link href="https://windhawk.net/mods/windows-11-start-menu-buttons"/>
-        <updated>2026-05-22T18:26:43.000Z</updated>
-        <content type="html"><![CDATA[<p>New Features:</p>
-<ul>
-<li><p>Added press: action prefix for keyboard shortcuts (e.g., press:Win+E or press:0x5B;0x45)</p></li>
-<li><p>Added modifier signs for actions: - (run as admin) and * (show terminal window)</p></li>
-<li><p>Added support for extracting icons from .exe and .dll files</p></li>
-<li><p>Icon field now accepts 4-digit hex codes without \u prefix (e.g., E774)</p></li>
-<li><p>Icon field now accepts /u as alternative to \u for Unicode escapes</p>
-<p>Bug Fixes:</p></li>
-<li><p>Fixed icon normalization and parsing</p></li>
-<li><p>Improved GDI+ initialization for icon extraction</p></li>
-<li><p>Fixed window class registration error handling</p></li>
-<li><p>Improved code stability and error handling</p></li>
-</ul>]]></content>
-        <author>
-            <name>Salyts</name>
-            <uri>https://github.com/Salyts</uri>
         </author>
     </entry>
 </feed>
