@@ -2,12 +2,159 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk New Mod Releases</title>
-    <updated>2026-05-29T13:01:54.000Z</updated>
+    <updated>2026-05-30T18:56:55.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>New mods in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[IME Native Mode Lock 0.1]]></title>
+        <id>https://windhawk.net/mods/ime-mode-lock#6f1478f3ddcca4a45d5a1930a2d500db8738a386</id>
+        <link href="https://windhawk.net/mods/ime-mode-lock"/>
+        <updated>2026-05-30T18:56:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="imenativemodelock">IME Native Mode Lock</h1>
+<p>Forces supported IMEs to stay in their native input mode, blocking
+both system-initiated and user-initiated mode switches.</p>
+<p>By default, Windows automatically switches input modes when changing
+window focus or switching between applications. This mod blocks that
+behavior, keeping your IME in its native mode at all times.</p>
+<h2 id="supportedimes">Supported IMEs</h2>
+<ul>
+<li><strong>Simplified Chinese</strong> (Microsoft Pinyin, etc.) — always stays in Chinese mode</li>
+<li>More languages can be added in future updates</li>
+</ul>
+<p><strong>Pair with</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — short-press
+Caps Lock to switch input languages, long-press for Caps Lock.</p>
+<hr />
+<p>强制支持的输入法保持在原生输入模式，同时阻止系统自动切换和用户主动切换。</p>
+<p>默认情况下，Windows 在切换窗口焦点或应用程序时会自动切换输入模式。
+此 mod 阻止该行为，始终保持输入法在原生输入模式。</p>
+<h2 id="">支持的输入法</h2>
+<ul>
+<li><strong>简体中文</strong>（微软拼音等）— 始终保持中文模式</li>
+<li>未来可添加更多语言支持</li>
+</ul>
+<p><strong>推荐搭配</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — 可使用 Caps Lock
+短按切换输入语言，长按触发大小写锁定，配合本 mod 体验更佳。</p>]]></content>
+        <author>
+            <name>ZeonXr</name>
+            <uri>https://github.com/ZeonXr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Caps IME Switcher 0.7]]></title>
+        <id>https://windhawk.net/mods/caps-ime-switcher#8877ffddffed29cd23d442cb2a803d65cdfea9e3</id>
+        <link href="https://windhawk.net/mods/caps-ime-switcher"/>
+        <updated>2026-05-30T18:43:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="capsimeswitcher">Caps IME Switcher</h1>
+<p>Brings the macOS Caps Lock input source switching behavior to Windows.</p>
+<p>Short-press Caps Lock to switch to the next input language.
+Long-press Caps Lock to toggle Caps Lock on/off.</p>
+<p><strong>Pair with</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — auto-locks
+IMEs to their native mode. Best experience when used together.</p>
+<hr />
+<p>将 macOS 的 Caps Lock 输入法切换方式带到 Windows。</p>
+<p>短按 Caps Lock 切换下一个输入语言，长按触发大小写锁定。</p>
+<p><strong>推荐搭配</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — 可在切换输入法时
+自动锁定中文模式，两个 mod 配合使用体验最佳。</p>]]></content>
+        <author>
+            <name>ZeonXr</name>
+            <uri>https://github.com/ZeonXr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Block SMB Quick Access 1.2]]></title>
+        <id>https://windhawk.net/mods/block-smb-quick-access#ab9754b6038bca2df2ffd75fc3f8f13e3ac15359</id>
+        <link href="https://windhawk.net/mods/block-smb-quick-access"/>
+        <updated>2026-05-30T14:11:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="blocksmbquickaccess">Block SMB Quick Access</h1>
+<p>Prevents SMB/UNC network paths (<code>\\server\share</code>) from being added to Quick Access
+in Windows Explorer. Local paths continue to work normally.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Selective blocking</strong>: Only blocks SMB/UNC network paths, local paths work normally</li>
+<li><strong>Comprehensive SHARD support</strong>: Handles all SHARD types (PATHA, PATHW, PIDL, SHELLITEM, LINK, APPIDINFO, APPIDINFOIDLIST, APPIDINFOLINK)</li>
+<li><strong>UNC priority</strong>: Uses <code>SLGP_UNCPRIORITY</code> to correctly detect mapped drive letters</li>
+<li><strong>Silent operation</strong>: Runs in background without UI</li>
+</ul>
+<h2 id="howitworks">How it works</h2>
+<p>The mod hooks the <code>SHAddToRecentDocs</code> function in <code>shell32.dll</code>. When Explorer calls
+this function to add a file to Quick Access, the hook checks if the path is a UNC
+network path (starts with <code>\\</code>). If it is, the call is silently dropped. Otherwise,
+the original function is called normally.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 10 or Windows 11 (64-bit)</li>
+<li>Windhawk 1.4 or newer</li>
+</ul>
+<h2 id="knownlimitations">Known limitations</h2>
+<ul>
+<li>Does not block paths added via other mechanisms (e.g., registry manipulation)</li>
+<li>Some virtual folder PIDLs may not resolve to paths and will be allowed through</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If the mod doesn't seem to work:</p>
+<ol>
+<li>Enable debug logging in Windhawk settings (Settings &gt; Advanced &gt; Debug logging)</li>
+<li>Check Windhawk debug logs for <code>[NOSMB]</code> entries</li>
+<li>Verify the mod is enabled for explorer.exe in Windhawk settings</li>
+<li>Restart Explorer or log out/in after enabling the mod</li>
+</ol>]]></content>
+        <author>
+            <name>Townrain</name>
+            <uri>https://github.com/Townrain</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Console Quick Paste 1.0.0]]></title>
+        <id>https://windhawk.net/mods/console-quick-paste#490dfae0c155a142237630390237447d258de0d8</id>
+        <link href="https://windhawk.net/mods/console-quick-paste"/>
+        <updated>2026-05-30T12:05:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="consolequickpaste">Console Quick Paste</h1>
+<p><img src="https://raw.githubusercontent.com/armaninyow/Remove-Context-Menu-Items/refs/heads/main/CQP.png" alt="Console Quick Paste" /></p>
+<p>Brings a "Quick Commands" submenu to Windows Terminal, giving you one-click access to your most-used PowerShell and Command Prompt snippets. To open it, right-click the empty space on the tab bar.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><code>Quick Commands Submenu</code>: Always pinned to the top of the context menu, separated from the built-in items by a divider.</li>
+<li><code>Configurable Command List</code>: Define as many commands as you like. Each entry has:</li>
+<li><code>Label</code>: The display name shown in the submenu. Falls back to the command itself when left blank.</li>
+<li><code>Command</code>: The string that will be pasted into the console.</li>
+<li><code>Auto-Enter</code>: When enabled, an <code>Enter</code> key is sent immediately after pasting so the command executes automatically.</li>
+</ul>]]></content>
+        <author>
+            <name>Armaninyow</name>
+            <uri>https://github.com/armaninyow</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[URL Blocker 0.1]]></title>
+        <id>https://windhawk.net/mods/url-blocker#9652ca93368edbfbd1274ae2ccc7524025adf302</id>
+        <link href="https://windhawk.net/mods/url-blocker"/>
+        <updated>2026-05-30T10:31:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="whatitdoes">What it does</h2>
+<p>This mod prevents selected applications from opening web links in your default browser. It is mainly intended for cases where programs open unnecessary pages such as post-update "thank you" screens, release notes, promotional pages, or similar unwanted redirects.</p>
+<p>The mod works by intercepting <code>ShellExecuteW</code> and <code>ShellExecuteA</code> calls and ignoring calls that try to open URLs (starting with <code>http</code>). Regular file paths are left alone, so opening local files will continue to work as usual.</p>
+<h2 id="configuration">Configuration</h2>
+<p>This mod doesn't automatically target any processes. Add the programs for which you want to block URL calls under:</p>
+<p><code>Details</code> -&gt; <code>Advanced</code> -&gt; <code>Custom process inclusion list</code></p>
+<p>Only the processes in that list will have URL calls blocked.</p>
+<p><strong><em>No guarantee that it will work on all programs!</em></strong></p>
+<h2 id="notesandlimitations">Notes and limitations</h2>
+<ul>
+<li>The mod only blocks URL launches that go through <code>ShellExecuteW</code> or <code>ShellExecuteA</code>.</li>
+<li>Programs that use another API or an embedded browser may still be able to open web pages.</li>
+<li>The mod is not intended for system-wide URL filtering.</li>
+</ul>
+<h2 id="credits">Credits</h2>
+<p>Inspired by the <code>F1 Blocker</code> mod from <a href="https://github.com/d0gkiller87">d0gkiller87</a>.</p>
+<h2 id="bugreportfeaturerequest">Bug Report / Feature Request</h2>
+<p>Open an issue / discussion on https://github.com/ramensoftware/windhawk-mods and tag <code>@CrazyTim71</code></p>]]></content>
+        <author>
+            <name>CrazyTim71</name>
+            <uri>https://github.com/CrazyTim71</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Explorer Status Bar Metadata 1.4.0]]></title>
         <id>https://windhawk.net/mods/explorer-status-metadata#531762a55d231b40dc5f3a6e374ea8ac8135ecfb</id>
@@ -569,171 +716,6 @@ ExplorerPatcher.)</p>
         <author>
             <name>Rod Boev</name>
             <uri>https://github.com/rodboev</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CrystalDiskInfo Smart Auto-Refresh 1.0]]></title>
-        <id>https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh#b6f9529af93c2bdde4ce2b9e70abff1fce8683a7</id>
-        <link href="https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh"/>
-        <updated>2026-05-14T20:37:57.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="crystaldiskinfosmartautorefresh">CrystalDiskInfo Smart Auto-Refresh</h1>
-<p>CrystalDiskInfo includes an optional Auto-Refresh feature that updates disk
-information at specified intervals, which is useful for background monitoring
-while the application is minimized to the system tray. However, when the
-application's main window is visible, automatic refreshes can interfere with the
-analysis of current disk status, as shifting attribute values make tracking
-specific metrics more difficult.</p>
-<p>This mod temporarily pauses the Auto-Refresh function by blocking its disk
-polling cycle whenever the application's main window is visible, allowing for an
-uninterrupted analysis of current disk status.</p>
-<p>The Auto-Refresh function resumes once the application is minimized to the
-taskbar or system tray.</p>
-<p><strong>Note:</strong> If CrystalDiskInfo is already running when the mod is loaded, pick one
-of the following options to activate it:</p>
-<ul>
-<li>Restart the application completely.</li>
-<li>Select an interval in <strong>Function</strong> → <strong>Auto Refresh</strong>, including the one
-currently set.</li>
-</ul>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Theme Toggler Tray 1.2.1]]></title>
-        <id>https://windhawk.net/mods/theme-toggler-tray#acfafad42bba74504b8d8556fc7fe148aa512344</id>
-        <link href="https://windhawk.net/mods/theme-toggler-tray"/>
-        <updated>2026-05-14T19:46:02.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="themetogglertraystandalonemode">Theme Toggler Tray (Standalone Mode)</h1>
-<p>This mod now runs in a dedicated Windhawk process for better stability.
-Click the tray icon to instantly toggle between Dark and Light mode.</p>]]></content>
-        <author>
-            <name>Husam-Abdulraheem</name>
-            <uri>https://github.com/Husam-Abdulraheem</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Expanded Clipboard (Win+V) 0.7.1]]></title>
-        <id>https://windhawk.net/mods/expanded-clipboard#baa1a76097e8116eb1d7582a91ef90e80058227a</id>
-        <link href="https://windhawk.net/mods/expanded-clipboard"/>
-        <updated>2026-05-14T19:08:25.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="expandedclipboardwinv">Expanded Clipboard (Win+V)</h1>
-<p>Raises the 25-entry cap on Windows 11 clipboard history (the list shown by
-<strong>Win+V</strong>) and lifts the per-item size cap so large image entries are kept.</p>
-<h2 id="hooktargets">Hook targets</h2>
-<p>Hosted in <code>cbdhsvc.dll</code> (per-user <code>svchost.exe</code>, service group
-<code>UnistackSvcGroup</code>). All hooks are virtual COM methods on <code>ClipboardSettingsImpl</code>
-plus one static helper:</p>
-<ul>
-<li><code>get_ClipboardHistoryMaxItemsCount</code>: entry-count cap (default 25).</li>
-<li><code>get_ClipboardHistoryMaxItemSizeInBytes</code>: per-item byte cap (default 4 MiB).</li>
-<li><code>get_ClipboardHistoryMaxSizeInBytes</code>: total in-memory buffer cap. Empirically
-this is the gate the inner add path checks first.</li>
-<li><code>DataPackageHelper::CanIncludeInClipboardHistory</code>: opt-in override of the
-per-item allow check.</li>
-</ul>
-<h2 id="configuration">Configuration</h2>
-<ul>
-<li><code>maxItems</code> (default 100, range 25..5000): entry cap.</li>
-<li><code>maxItemSizeMB</code> (default 256, range 4..4096): per-item and total buffer byte
-cap, in MB. Both caps share this value.</li>
-<li><code>forceIncludeAll</code> (default off): when on, force the allow check to true so
-items marked "do not include in history" by their source app still land in
-Win+V.</li>
-</ul>
-<h2 id="logs">Logs</h2>
-<p>Open Windhawk Logs. Filter <code>[ExpandedClipboard]</code>.</p>]]></content>
-        <author>
-            <name>takattowo</name>
-            <uri>https://github.com/takattowo</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Monitor Sleep Button 1.0.0]]></title>
-        <id>https://windhawk.net/mods/monitor-sleep-button#bba2b04e3327bb83eb2c37a9725e0782be23fb4d</id>
-        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
-        <updated>2026-05-14T17:39:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="monitorsleepbutton">Monitor Sleep Button</h1>
-<p>Adds a small tray icon for turning off the monitor.</p>
-<h2 id="usage">Usage</h2>
-<ul>
-<li>Left-click the tray icon.</li>
-<li>A countdown appears on the screen.</li>
-<li>After the countdown, the monitor turns off.</li>
-<li>Move the mouse or press any key to wake the monitor again.</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<p>The countdown duration can be configured in the mod settings.</p>
-<p>Available values:</p>
-<ul>
-<li>1 second</li>
-<li>2 seconds</li>
-<li>3 seconds</li>
-<li>5 seconds</li>
-<li>10 seconds</li>
-<li>15 seconds</li>
-<li>30 seconds</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<p>This mod does not shut down, suspend, or lock the computer. It only sends the Windows monitor power-off command.</p>
-<p>Useful as a quick replacement for desktop shortcuts or batch files.</p>
-<p>This is useful when long-running downloads, renders, AI model installs, or other background tasks are running and the monitor should be turned off without putting the PC to sleep.</p>]]></content>
-        <author>
-            <name>SilverAmd</name>
-            <uri>https://github.com/SilverAmd</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Files 2 Folders 1.2]]></title>
-        <id>https://windhawk.net/mods/files-2-folders#f97bd370462cef10e23fea9e699a2debfaf651ec</id>
-        <link href="https://windhawk.net/mods/files-2-folders"/>
-        <updated>2026-05-14T16:57:19.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="files2folders">Files 2 Folders</h1>
-<p>Inspired by <a href="https://www.dcmembers.com/skwire/download/files-2-folder/">Files 2 Folder</a>
-by Jody Holmes (Skwire Empire).</p>
-<p>When one or more items are selected in an Explorer window, adds a
-<strong>Files 2 Folder…</strong> entry to the right-click context menu. Choosing it opens
-a dialog with four options for moving the selection into a new subfolder:</p>
-<ol>
-<li>Move the selection into a subfolder with a fixed name (e.g. <code>folder</code>).</li>
-<li>Move each file into a subfolder named after the file (without extension):
-<code>Good.bat</code> -&gt; <code>.\Good\Good.bat</code>. With a single file selected, this just
-creates one folder around that file.</li>
-<li>Move each file into a subfolder named after its extension
-(e.g. all <code>.txt</code> files into <code>.\txt\</code>). With a single file selected, this
-creates one folder named after that file's extension.</li>
-<li>Move the selection into a subfolder named with the current date/time,
-formatted using the date format from settings.</li>
-</ol>
-<p>Folders inside the selection are skipped for modes 2 and 3 (they only make
-sense for files); they are still moved for modes 1 and 4.</p>
-<h2 id="fastvsslowmode">Fast vs. slow mode</h2>
-<p>By default the mod uses <code>MoveFileExW</code> directly, which is essentially instant
-for same-volume moves. Enable <strong>Slow mode (shell-integrated)</strong> in settings to
-route moves through <code>IFileOperation</code> instead — that gives you the standard
-Windows progress dialog, <strong>Ctrl+Z undo</strong>, UAC elevation prompts for protected
-paths, and conflict-resolution dialogs, at the cost of significantly slower
-operation on large selections.</p>
-<h2 id="workaroundforotherprograms">Workaround for other programs</h2>
-<p>A configurable global hotkey (default <strong>Ctrl+Alt+F</strong>) makes the mod usable
-from any file manager (Total Commander, Directory Opus, Files, XYplorer,
-Q-Dir, etc.):</p>
-<ol>
-<li>Select one or more files in the other program.</li>
-<li>Press <strong>Ctrl+C</strong> (or <strong>Ctrl+X</strong>) to put the file paths on the clipboard.</li>
-<li>Press the hotkey. The dialog appears, the files get moved into the chosen
-subfolder under their parent directory.</li>
-</ol>
-<p>Toggle <strong>Silent</strong> to suppress the help popup when the clipboard is empty.</p>
-<h2 id="dateformat">Date format</h2>
-<p>Uses the same tokens as Win32 <code>GetDateFormat</code> / <code>GetTimeFormat</code>:
-<code>yyyy MM dd HH mm ss</code> etc. Example: <code>yyyy-MM-dd-HH-mm</code>.</p>
-<p>Forbidden characters in folder names (<code>* : ? " &lt; &gt; | / \</code>) are replaced with
-<code>_</code> automatically.</p>]]></content>
-        <author>
-            <name>tria</name>
-            <uri>https://github.com/triatomic</uri>
         </author>
     </entry>
 </feed>

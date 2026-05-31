@@ -384,12 +384,12 @@
                     31
                 ],
                 "ratingUsers": 36,
-                "updated": 1779570949000,
+                "updated": 1780168839000,
                 "users": 396
             },
             "metadata": {
                 "author": "BlackPaw",
-                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32",
+                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32 -lcomctl32",
                 "description": "Tray icon to cycle between multiple preferred audio outputs. Supports up to 6 devices with click or scroll to swap.",
                 "donateUrl": "https://ko-fi.com/blackpaw21",
                 "github": "https://github.com/BlackPaw21",
@@ -397,7 +397,7 @@
                     "windhawk.exe"
                 ],
                 "name": "AudioSwap",
-                "version": "2.1.0"
+                "version": "2.2.0"
             }
         },
         "auto-custom-titlebar-colors": {
@@ -646,6 +646,37 @@
                 "version": "1.1"
             }
         },
+        "block-smb-quick-access": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1780150306000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780150306000,
+                "users": 1
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Townrain",
+                "compilerOptions": "-lshlwapi -lole32",
+                "description": "Prevents SMB/UNC network paths from being added to Quick Access in Windows Explorer",
+                "github": "https://github.com/Townrain",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Block SMB Quick Access",
+                "version": "1.2"
+            }
+        },
         "block-win-v": {
             "details": {
                 "defaultSorting": 468,
@@ -686,7 +717,7 @@
                     5
                 ],
                 "ratingUsers": 7,
-                "updated": 1775300398000,
+                "updated": 1780137329000,
                 "users": 92
             },
             "metadata": {
@@ -696,11 +727,12 @@
                 "homepage": "https://exiledeye.github.io/",
                 "include": [
                     "explorer.exe",
-                    "svchost.exe"
+                    "svchost.exe",
+                    "ShellHost.exe"
                 ],
                 "license": "MIT",
                 "name": "Block Start Menu and Hosts",
-                "version": "1.2"
+                "version": "1.4"
             }
         },
         "caffeine": {
@@ -762,6 +794,35 @@
                 "license": "GPL-3.0",
                 "name": "Calendar Live Overlay",
                 "version": "0.0.1"
+            }
+        },
+        "caps-ime-switcher": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780166590000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780166590000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "ZeonXr",
+                "compilerOptions": "-luser32 -lshell32",
+                "description": "Brings the macOS Caps Lock input source switching behavior to Windows.",
+                "github": "https://github.com/ZeonXr",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "license": "MIT",
+                "name": "Caps IME Switcher",
+                "version": "0.7"
             }
         },
         "ce-disable-process-button-flashing": {
@@ -2334,6 +2395,36 @@
                 "version": "1.0.0"
             }
         },
+        "console-quick-paste": {
+            "details": {
+                "defaultSorting": 36,
+                "published": 1780142746000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780142746000,
+                "users": 4
+            },
+            "metadata": {
+                "author": "Armaninyow",
+                "compilerOptions": "-luser32 -lcomctl32",
+                "description": "Injects a \"Quick Commands\" submenu into the right-click context menu of Windows PowerShell and Command Prompt.",
+                "github": "https://github.com/armaninyow",
+                "include": [
+                    "WindowsTerminal.exe",
+                    "conhost.exe",
+                    "OpenConsole.exe"
+                ],
+                "name": "Console Quick Paste",
+                "version": "1.0.0"
+            }
+        },
         "context-menu-preloader": {
             "details": {
                 "defaultSorting": 5490,
@@ -2431,7 +2522,7 @@
                     0
                 ],
                 "ratingUsers": 0,
-                "updated": 1778791077000,
+                "updated": 1780137987000,
                 "users": 21
             },
             "metadata": {
@@ -2454,7 +2545,7 @@
                     "DiskInfoA64S.exe"
                 ],
                 "name": "CrystalDiskInfo Smart Auto-Refresh",
-                "version": "1.0"
+                "version": "1.0.1"
             }
         },
         "ctrl-backspace-fix-for-win32-text-boxes": {
@@ -3499,7 +3590,7 @@
                     24
                 ],
                 "ratingUsers": 37,
-                "updated": 1779606506000,
+                "updated": 1780137823000,
                 "users": 713
             },
             "metadata": {
@@ -3512,7 +3603,7 @@
                 ],
                 "license": "MIT",
                 "name": "Dynamic Island for Windows",
-                "version": "1.0.1"
+                "version": "1.0.2"
             }
         },
         "edge-hot-corner-desktop-switch": {
@@ -5793,6 +5884,35 @@
                 "version": "1.0.0"
             }
         },
+        "ime-mode-lock": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780167415000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780167415000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "ZeonXr",
+                "compilerOptions": "-limm32",
+                "description": "Forces supported IMEs to stay in their native input mode, preventing accidental mode switches.",
+                "github": "https://github.com/ZeonXr",
+                "include": [
+                    "*"
+                ],
+                "license": "MIT",
+                "name": "IME Native Mode Lock",
+                "version": "0.1"
+            }
+        },
         "internet-status-indicator": {
             "details": {
                 "defaultSorting": 15552,
@@ -6575,20 +6695,20 @@
                     1
                 ],
                 "ratingUsers": 2,
-                "updated": 1779876787000,
+                "updated": 1780167697000,
                 "users": 29
             },
             "metadata": {
                 "author": "BlackPaw",
-                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32",
-                "description": "Tray icon to instantly toggle between two preferred audio inputs (microphones).",
+                "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -loleaut32 -lcomdlg32 -ladvapi32 -lcomctl32",
+                "description": "Tray icon to cycle between multiple preferred microphones. Supports up to 6 devices with click or scroll to swap.",
                 "donateUrl": "https://ko-fi.com/blackpaw21",
                 "github": "https://github.com/BlackPaw21",
                 "include": [
                     "windhawk.exe"
                 ],
                 "name": "MicSwitch",
-                "version": "1.1.0"
+                "version": "2.0.0"
             }
         },
         "modern-notepad-to-classic-editor": {
@@ -11733,6 +11853,31 @@
                 ],
                 "name": "Unlock Task Manager for Server",
                 "version": "1.0.0"
+            }
+        },
+        "url-blocker": {
+            "details": {
+                "defaultSorting": 18,
+                "published": 1780137096000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780137096000,
+                "users": 2
+            },
+            "metadata": {
+                "author": "CrazyTim71",
+                "description": "Blocks selected applications from opening web URLs via ShellExecute. Useful for suppressing post-update pages, promo links, and similar browser popups",
+                "github": "https://github.com/CrazyTim71",
+                "license": "MIT",
+                "name": "URL Blocker",
+                "version": "0.1"
             }
         },
         "uwp-assets-redirect": {

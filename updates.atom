@@ -2,12 +2,237 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-29T13:01:54.000Z</updated>
+    <updated>2026-05-30T19:20:39.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[AudioSwap 2.2.0]]></title>
+        <id>https://windhawk.net/mods/audioswap#6f265d52a641c9f32788bd2d34dda07a02428882</id>
+        <link href="https://windhawk.net/mods/audioswap"/>
+        <updated>2026-05-30T19:20:39.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>New: Right-click → <strong>Sound Settings…</strong> opens Windows Sound dialog directly on the Playback tab.</li>
+<li>New: Middle-click tray icon → compact volume slider popup with a custom dark design. Drag to adjust output volume live; click outside or press Escape to close.</li>
+<li>New: Scroll wheel over the tray icon (Click to Swap mode) adjusts output volume, matching native Windows sound icon behaviour.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MicSwitch 2.0.0]]></title>
+        <id>https://windhawk.net/mods/microswap#9825ae7dfb1d78b8be7d98d2e8b2cc14547f3589</id>
+        <link href="https://windhawk.net/mods/microswap"/>
+        <updated>2026-05-30T19:01:37.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li><strong>Complete rebuild.</strong> Full feature sync with AudioSwap:
+6 device slots, configurable cycle order, native dark-themed settings dashboard, scroll-to-swap mode, push-to-mute, instant device-change updates via the MMDevice notification API, and Advanced Mode with priority routing.</li>
+<li>New: Right-click → <strong>Sound Settings…</strong> opens Windows Sound dialog directly on the Recording tab.</li>
+<li>New: Middle-click tray icon → compact volume slider popup with a custom dark design. Drag to adjust microphone volume live; click outside or press Escape to close.</li>
+<li>New: Scroll wheel over the tray icon (Click to Swap mode) adjusts microphone volume, matching native Windows sound icon behaviour.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[IME Native Mode Lock 0.1]]></title>
+        <id>https://windhawk.net/mods/ime-mode-lock#6f1478f3ddcca4a45d5a1930a2d500db8738a386</id>
+        <link href="https://windhawk.net/mods/ime-mode-lock"/>
+        <updated>2026-05-30T18:56:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="imenativemodelock">IME Native Mode Lock</h1>
+<p>Forces supported IMEs to stay in their native input mode, blocking
+both system-initiated and user-initiated mode switches.</p>
+<p>By default, Windows automatically switches input modes when changing
+window focus or switching between applications. This mod blocks that
+behavior, keeping your IME in its native mode at all times.</p>
+<h2 id="supportedimes">Supported IMEs</h2>
+<ul>
+<li><strong>Simplified Chinese</strong> (Microsoft Pinyin, etc.) — always stays in Chinese mode</li>
+<li>More languages can be added in future updates</li>
+</ul>
+<p><strong>Pair with</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — short-press
+Caps Lock to switch input languages, long-press for Caps Lock.</p>
+<hr />
+<p>强制支持的输入法保持在原生输入模式，同时阻止系统自动切换和用户主动切换。</p>
+<p>默认情况下，Windows 在切换窗口焦点或应用程序时会自动切换输入模式。
+此 mod 阻止该行为，始终保持输入法在原生输入模式。</p>
+<h2 id="">支持的输入法</h2>
+<ul>
+<li><strong>简体中文</strong>（微软拼音等）— 始终保持中文模式</li>
+<li>未来可添加更多语言支持</li>
+</ul>
+<p><strong>推荐搭配</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — 可使用 Caps Lock
+短按切换输入语言，长按触发大小写锁定，配合本 mod 体验更佳。</p>]]></content>
+        <author>
+            <name>ZeonXr</name>
+            <uri>https://github.com/ZeonXr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Caps IME Switcher 0.7]]></title>
+        <id>https://windhawk.net/mods/caps-ime-switcher#8877ffddffed29cd23d442cb2a803d65cdfea9e3</id>
+        <link href="https://windhawk.net/mods/caps-ime-switcher"/>
+        <updated>2026-05-30T18:43:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="capsimeswitcher">Caps IME Switcher</h1>
+<p>Brings the macOS Caps Lock input source switching behavior to Windows.</p>
+<p>Short-press Caps Lock to switch to the next input language.
+Long-press Caps Lock to toggle Caps Lock on/off.</p>
+<p><strong>Pair with</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — auto-locks
+IMEs to their native mode. Best experience when used together.</p>
+<hr />
+<p>将 macOS 的 Caps Lock 输入法切换方式带到 Windows。</p>
+<p>短按 Caps Lock 切换下一个输入语言，长按触发大小写锁定。</p>
+<p><strong>推荐搭配</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — 可在切换输入法时
+自动锁定中文模式，两个 mod 配合使用体验最佳。</p>]]></content>
+        <author>
+            <name>ZeonXr</name>
+            <uri>https://github.com/ZeonXr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Block SMB Quick Access 1.2]]></title>
+        <id>https://windhawk.net/mods/block-smb-quick-access#ab9754b6038bca2df2ffd75fc3f8f13e3ac15359</id>
+        <link href="https://windhawk.net/mods/block-smb-quick-access"/>
+        <updated>2026-05-30T14:11:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="blocksmbquickaccess">Block SMB Quick Access</h1>
+<p>Prevents SMB/UNC network paths (<code>\\server\share</code>) from being added to Quick Access
+in Windows Explorer. Local paths continue to work normally.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Selective blocking</strong>: Only blocks SMB/UNC network paths, local paths work normally</li>
+<li><strong>Comprehensive SHARD support</strong>: Handles all SHARD types (PATHA, PATHW, PIDL, SHELLITEM, LINK, APPIDINFO, APPIDINFOIDLIST, APPIDINFOLINK)</li>
+<li><strong>UNC priority</strong>: Uses <code>SLGP_UNCPRIORITY</code> to correctly detect mapped drive letters</li>
+<li><strong>Silent operation</strong>: Runs in background without UI</li>
+</ul>
+<h2 id="howitworks">How it works</h2>
+<p>The mod hooks the <code>SHAddToRecentDocs</code> function in <code>shell32.dll</code>. When Explorer calls
+this function to add a file to Quick Access, the hook checks if the path is a UNC
+network path (starts with <code>\\</code>). If it is, the call is silently dropped. Otherwise,
+the original function is called normally.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Windows 10 or Windows 11 (64-bit)</li>
+<li>Windhawk 1.4 or newer</li>
+</ul>
+<h2 id="knownlimitations">Known limitations</h2>
+<ul>
+<li>Does not block paths added via other mechanisms (e.g., registry manipulation)</li>
+<li>Some virtual folder PIDLs may not resolve to paths and will be allowed through</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If the mod doesn't seem to work:</p>
+<ol>
+<li>Enable debug logging in Windhawk settings (Settings &gt; Advanced &gt; Debug logging)</li>
+<li>Check Windhawk debug logs for <code>[NOSMB]</code> entries</li>
+<li>Verify the mod is enabled for explorer.exe in Windhawk settings</li>
+<li>Restart Explorer or log out/in after enabling the mod</li>
+</ol>]]></content>
+        <author>
+            <name>Townrain</name>
+            <uri>https://github.com/Townrain</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Console Quick Paste 1.0.0]]></title>
+        <id>https://windhawk.net/mods/console-quick-paste#490dfae0c155a142237630390237447d258de0d8</id>
+        <link href="https://windhawk.net/mods/console-quick-paste"/>
+        <updated>2026-05-30T12:05:46.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="consolequickpaste">Console Quick Paste</h1>
+<p><img src="https://raw.githubusercontent.com/armaninyow/Remove-Context-Menu-Items/refs/heads/main/CQP.png" alt="Console Quick Paste" /></p>
+<p>Brings a "Quick Commands" submenu to Windows Terminal, giving you one-click access to your most-used PowerShell and Command Prompt snippets. To open it, right-click the empty space on the tab bar.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><code>Quick Commands Submenu</code>: Always pinned to the top of the context menu, separated from the built-in items by a divider.</li>
+<li><code>Configurable Command List</code>: Define as many commands as you like. Each entry has:</li>
+<li><code>Label</code>: The display name shown in the submenu. Falls back to the command itself when left blank.</li>
+<li><code>Command</code>: The string that will be pasted into the console.</li>
+<li><code>Auto-Enter</code>: When enabled, an <code>Enter</code> key is sent immediately after pasting so the command executes automatically.</li>
+</ul>]]></content>
+        <author>
+            <name>Armaninyow</name>
+            <uri>https://github.com/armaninyow</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CrystalDiskInfo Smart Auto-Refresh 1.0.1]]></title>
+        <id>https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh#295ce177a10c22634f41d589f715f5506a2a1d13</id>
+        <link href="https://windhawk.net/mods/crystaldiskinfo-smart-auto-refresh"/>
+        <updated>2026-05-30T10:46:27.000Z</updated>
+        <content type="html"><![CDATA[<p>Optimized multi-threading performance and eliminated memory leaks caused by dangling timers.</p>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dynamic Island for Windows 1.0.2]]></title>
+        <id>https://windhawk.net/mods/dynamic-island-for-windows#63bfb7795abeb4c8d6067b2dccda957b38bfd34e</id>
+        <link href="https://windhawk.net/mods/dynamic-island-for-windows"/>
+        <updated>2026-05-30T10:43:43.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>Native Windows 11 Fluent Style:** Adds a toggleable mode to render the island as a modern Windows 11 flyout (rounded rectangle with 8px corners and a 1px border highlight) with a new semi-translucent Fluent dark preset.</li>
+<li>Game Overlay DPI Scaling &amp; Alignment:** Refactored overlay cards, vector icons, and panels to scale proportionally with <code>settings.sizeScale</code> and centered the layout inside the expanded pill.</li>
+<li>Caps Lock &amp; Num Lock Hook:** Implemented a lightweight global hook (<code>WH_KEYBOARD_LL</code>) to show real-time lock-key indicator alerts.</li>
+<li>Dynamic Battery &amp; Power Alerts:** Hardware-polled alert triggers with a dynamic fluid vector battery icon that changes color based on charging state.</li>
+<li>USB &amp; Device Connection Alerts:** Added a system event listener (<code>WM_DEVICECHANGE</code>) to show beautiful plug status alerts with indicator lights.</li>
+<li>Tactile Asymmetric Spring Animations:** Upgraded motion curves with separate expansion and contraction physics properties for a more organic feel.</li>
+</ol>]]></content>
+        <author>
+            <name>Himanshu</name>
+            <uri>https://github.com/devcode90</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Block Start Menu and Hosts 1.4]]></title>
+        <id>https://windhawk.net/mods/block-windows-startmenu-and-hosts#f6962b4427b7c68ab3af9d101986dffa5190d834</id>
+        <link href="https://windhawk.net/mods/block-windows-startmenu-and-hosts"/>
+        <updated>2026-05-30T10:35:29.000Z</updated>
+        <content type="html"><![CDATA[<p>I've added additional processes to block:</p>
+<p>ShellHost.exe -&gt; The Action Center UI and process ("WIN + A" shortcut).
+ShellExperienceHost.exe -&gt; The Calendar and Notifications UI and process ("WIN + N" key).
+MicrosoftStartFeedProvider.exe -&gt; The Start Menu process, which provides news, weather, stock quotes, interest cards, recommended and etc.
+WidgetBoard.exe -&gt; The Widgets board UI and process ("WIN + W" shortcut).
+WidgetService.exe -&gt; The Widgets board background data, content and service infrastructure process.
+Additionally I've also updated description for some of the existing processes, specifically hotkey combinations with which they're triggered.</p>]]></content>
+        <author>
+            <name>Exiled Eye</name>
+            <uri>https://github.com/ExiledEye</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[URL Blocker 0.1]]></title>
+        <id>https://windhawk.net/mods/url-blocker#9652ca93368edbfbd1274ae2ccc7524025adf302</id>
+        <link href="https://windhawk.net/mods/url-blocker"/>
+        <updated>2026-05-30T10:31:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="whatitdoes">What it does</h2>
+<p>This mod prevents selected applications from opening web links in your default browser. It is mainly intended for cases where programs open unnecessary pages such as post-update "thank you" screens, release notes, promotional pages, or similar unwanted redirects.</p>
+<p>The mod works by intercepting <code>ShellExecuteW</code> and <code>ShellExecuteA</code> calls and ignoring calls that try to open URLs (starting with <code>http</code>). Regular file paths are left alone, so opening local files will continue to work as usual.</p>
+<h2 id="configuration">Configuration</h2>
+<p>This mod doesn't automatically target any processes. Add the programs for which you want to block URL calls under:</p>
+<p><code>Details</code> -&gt; <code>Advanced</code> -&gt; <code>Custom process inclusion list</code></p>
+<p>Only the processes in that list will have URL calls blocked.</p>
+<p><strong><em>No guarantee that it will work on all programs!</em></strong></p>
+<h2 id="notesandlimitations">Notes and limitations</h2>
+<ul>
+<li>The mod only blocks URL launches that go through <code>ShellExecuteW</code> or <code>ShellExecuteA</code>.</li>
+<li>Programs that use another API or an embedded browser may still be able to open web pages.</li>
+<li>The mod is not intended for system-wide URL filtering.</li>
+</ul>
+<h2 id="credits">Credits</h2>
+<p>Inspired by the <code>F1 Blocker</code> mod from <a href="https://github.com/d0gkiller87">d0gkiller87</a>.</p>
+<h2 id="bugreportfeaturerequest">Bug Report / Feature Request</h2>
+<p>Open an issue / discussion on https://github.com/ramensoftware/windhawk-mods and tag <code>@CrazyTim71</code></p>]]></content>
+        <author>
+            <name>CrazyTim71</name>
+            <uri>https://github.com/CrazyTim71</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Explorer Status Bar Metadata 1.4.0]]></title>
         <id>https://windhawk.net/mods/explorer-status-metadata#531762a55d231b40dc5f3a6e374ea8ac8135ecfb</id>
@@ -189,387 +414,6 @@ tl;dr: Clicking on subfolder name box or date will choose that mod now.</li>
         <author>
             <name>m417z</name>
             <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Neko Cat 1.2.1]]></title>
-        <id>https://windhawk.net/mods/neko-cat#b35660a81b786d8523a45cec049c59d24270b648</id>
-        <link href="https://windhawk.net/mods/neko-cat"/>
-        <updated>2026-05-27T10:26:51.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="nekocat">🐱 Neko Cat</h1>
-<p>A cute desktop pet that follows your mouse and runs around your screen.
-<img src="https://raw.githubusercontent.com/ciizerr/wh-mods/2c1ecbf9ba9d0964e1a764a090cb2b7df729dc5c/previews/Neko-cat.gif" alt="Neko Cat Preview" /></p>
-<h2 id="whatsnewinv120">✨ What's New in v1.2.0?</h2>
-<ul>
-<li><strong>Play With Window:</strong> Neko can now climb the sides of your active window and pace along the title bar! He even reacts physically if you drag the window into him while he's sleeping.</li>
-<li><strong>Multiple Cats:</strong> Feeling lonely? You can now spawn an entire litter of cats! They have built-in separation physics so they won't just stack on top of each other.</li>
-<li><strong>Neko Key:</strong> Set a custom keyboard shortcut to instantly hide all your cats and mute their sounds when you need to focus.</li>
-</ul>
-<h2 id="howtointeract">🎮 How to Interact</h2>
-<ul>
-<li><strong>Left-Click:</strong> Cycles through 6 different behaviors.</li>
-<li><strong>Right-Click:</strong> Wakes Neko up instantly if he's napping.</li>
-<li><strong>Drag & Drop:</strong> Pick him up and drop him! He'll yawn, take a quick nap, and then automatically wake up and go back to what he was doing.</li>
-<li><strong>Window Nudging:</strong> If Neko is exhausted and deeply asleep on the floor, try dragging a window edge into him. He'll slide out of the way and wake up to see what bumped him!</li>
-</ul>
-<h2 id="catbehaviors">🏃 Cat Behaviors</h2>
-<ol>
-<li><strong>Chase Mouse:</strong> (Default) He follows your cursor everywhere!</li>
-<li><strong>Run Away:</strong> Try to catch him if you can!</li>
-<li><strong>Random:</strong> Total zoomies!</li>
-<li><strong>Pace:</strong> He patrols the bottom of your screen.</li>
-<li><strong>Run Around:</strong> He chases an invisible ball.</li>
-<li><strong>Play With Window:</strong> He hunts down your currently focused window to climb the walls and pace the roof.</li>
-</ol>
-<h2 id="multimonitorsupport">🖥️ Multi-Monitor Support</h2>
-<p>Neko can roam freely across <strong>all your monitors</strong>! He can seamlessly jump from one screen to another to follow your mouse.</p>
-<h2 id="customization">⚙️ Customization</h2>
-<p>You can tweak almost everything in the settings: <strong>Size</strong>, <strong>Speed</strong>, <strong>FPS</strong>, <strong>How many cats to spawn</strong>, and your <strong>Neko Key shortcut</strong>. You can also turn his meows and snores on or off.</p>
-<h2 id="assetstransparency">🔒 Assets &amp; Transparency</h2>
-<p>Neko's graphics and sounds are downloaded automatically on the first run.</p>
-<ul>
-<li><strong>Source:</strong> All files come from the GitHub repository: <a href="https://github.com/ciizerr/wh-mods/tree/2c1ecbf9ba9d0964e1a764a090cb2b7df729dc5c/assets/neko-cat">assets/neko-cat</a></li>
-<li><strong>Standard API:</strong> The mod uses the trusted Windhawk <code>Wh_GetUrlContent</code> API.</li>
-<li><strong>Local Storage:</strong> Files are safely cached in your Windhawk <code>modstorage</code> folder.</li>
-</ul>
-<h2 id="licensecredits">📜 License &amp; Credits</h2>
-<p>This mod uses implementations, logic, and state definitions referenced from the <strong>Neko 98</strong> source code.</p>
-<ul>
-<li><strong>Original Author:</strong> Masayuki Koba (X-Windows Neko)</li>
-<li><strong>Windows Port (Neko 98):</strong> David Harvey - <a href="https://sourceforge.net/projects/neko98/">Neko98 Source on SourceForge</a></li>
-<li><strong>JavaScript Port (nekojs):</strong> Louis Abraham - <a href="https://github.com/louisabraham/nekojs">louisabraham/nekojs on GitHub</a></li>
-<li><strong>License:</strong> Used in accordance with the Neko 98 source code license (freely usable as long as credit is given).</li>
-</ul>
-<h2 id="feedbacksupport">💬 Feedback &amp; Support</h2>
-<p>Got ideas or found a bug? I’d love to hear from you!</p>
-<ul>
-<li><strong>Discord:</strong> <code>ciizerr</code></li>
-<li><strong>GitHub:</strong> <a href="https://github.com/ciizerr/wh-mods">wh-mods</a></li>
-</ul>
-<p>Enjoy your new friends!</p>]]></content>
-        <author>
-            <name>ciizerr</name>
-            <uri>https://github.com/ciizerr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MicSwitch 1.1.0]]></title>
-        <id>https://windhawk.net/mods/microswap#4a08293dac7c0135a0a059dbda268f29117f8da8</id>
-        <link href="https://windhawk.net/mods/microswap"/>
-        <updated>2026-05-27T10:13:07.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>Renamed from MicroSwap to MicSwitch.</strong></li>
-<li>Custom icon support — pick your own image for each device via Settings or right-click.</li>
-<li>Added donate button on the mod page.</li>
-<li>Context menu now follows your Windows dark/light theme.</li>
-<li>Active device shown at the top of the right-click menu.</li>
-<li>Fixed: rare crash when switching devices rapidly.</li>
-<li>Fixed: occasional hang when Windhawk unloads the mod.</li>
-<li>Fixed: tray window appeared in Alt+Tab.</li>
-<li>Fixed: tray icon failed to load on some Windows configurations.</li>
-<li>Tray / Taskbar icon is now independent, no longer linked to the Windhawk icon.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Smooth Scroll for Win32 1.0.3]]></title>
-        <id>https://windhawk.net/mods/smooth-scroll-win32#8a4b44b30b8e194e4e7d7e4651ef8a21fecc57db</id>
-        <link href="https://windhawk.net/mods/smooth-scroll-win32"/>
-        <updated>2026-05-26T08:15:29.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>Consistent scroll speed across folder sizes</strong> — the UIA percent-per-line
-estimate now uses a multi-range curve (quadratic for view sizes 25–70,
-power-5 for 70–92, power-20 for 92–100) that keeps scroll distance
-consistent regardless of how many items a folder contains.
-Credit: <strong>@JTFA</strong> (github.com/JTFA).</li>
-<li><strong>Smooth-only mode</strong> — a new setting disables spring physics entirely.
-Scrolling uses linear easing like a touchscreen: no bounce, no overshoot,
-just a clean deceleration. Tune the speed with <strong>Smooth Speed</strong>.</li>
-<li><strong>Improved spring physics</strong> — progressive damping near the target
-eliminates micro-oscillation at rest without affecting the feel of
-the main animation.</li>
-<li><strong>Control Panel scroll no longer blocked</strong> — legacy <code>DirectUIHWND</code> containers
-(Control Panel) are now correctly identified via the root window's WndProc
-module and passed through to the native scroll handler. Detection is stable
-from the first scroll, eliminating the intermittent first-open failure.</li>
-<li><strong>Overshoot</strong> — new setting that underdamps the spring for a subtle
-mobile-like bounce. The progressive near-target damping still prevents
-endless oscillation. No effect in Smooth-only mode.</li>
-<li><strong>Automatic refresh rate</strong> — Animation Interval and V-Sync settings removed.
-The timer interval is now detected per window from the actual monitor's
-refresh rate and updates automatically when the window moves to another
-display.</li>
-</ul>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Replace Winver With EXE 1.0]]></title>
-        <id>https://windhawk.net/mods/replace-winver-with-exe#a29be1e094e31a959458e0b49dd13d70eea9f776</id>
-        <link href="https://windhawk.net/mods/replace-winver-with-exe"/>
-        <updated>2026-05-26T08:11:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="redirectwinvertoanexefile">Redirect Winver to an .exe file.</h1>
-<p>This is a simple mod that intercepts the traditional Winver dialog and replaces it with a custom .exe file of your choice. This can be a Winver replacement like Fluver or Modern Winver for example.</p>]]></content>
-        <author>
-            <name>winui64</name>
-            <uri>https://github.com/winui64</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Calendar Live Overlay 0.0.1]]></title>
-        <id>https://windhawk.net/mods/calendar-live-overlay#8422b6be0bd211cdb967c20f14a6e171cf629499</id>
-        <link href="https://windhawk.net/mods/calendar-live-overlay"/>
-        <updated>2026-05-25T21:35:42.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="calendarliveoverlay">Calendar Live Overlay</h1>
-<p>Displays a customizable monthly calendar directly on the desktop behind the desktop icons.</p>
-<h2 id="preview">Preview</h2>
-<p><img src="https://i.imgur.com/A3gcKe0.png" alt="Calendar Live Overlay preview 1" /></p>
-<p><img src="https://i.imgur.com/AuCGcoP.png" alt="Calendar Live Overlay preview 2" /></p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Shows the current month as a clean desktop overlay</li>
-<li>Runs behind desktop icons, based on the Desktop Live Overlay method</li>
-<li>Designed to visually match Desktop Live Overlay Mod https://windhawk.net/mods/desktop-live-overlay</li>
-<li>Custom absolute X/Y positioning</li>
-<li>Optional percentage-based positioning</li>
-<li>Multi-monitor support</li>
-<li>Adjustable font size, font family, font weight and font style</li>
-<li>Custom text color with alpha transparency</li>
-<li>Optional German or English month/day names</li>
-<li>Optional Monday or Sunday week start</li>
-<li>Optional month header</li>
-<li>Optional week numbers</li>
-<li>Optional leading zero day numbers</li>
-<li>Optional box drawing border</li>
-<li>Adjustable border content offset</li>
-<li>Highlight today's date with custom color</li>
-<li>Optional bold style for today's date</li>
-<li>Optional underline for today's date</li>
-<li>Highlight weekends with custom color and opacity</li>
-<li>Optional custom color for week numbers</li>
-<li>Optional custom color for weekday names</li>
-<li>Adjustable column and row spacing</li>
-<li>Header alignment: left, center or right</li>
-<li>Optional background with color, padding, rounded corners, border and blur</li>
-<li>Optional background border with custom color and size</li>
-<li>Automatic refresh shortly after each minute change</li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>Enable the mod and adjust the position and appearance in the mod settings.</p>
-<p>For best alignment, use a monospaced font such as Cascadia Mono, Consolas, JetBrains Mono, or Courier New.</p>
-<h2 id="colorformat">Color Format</h2>
-<p>Colors use hexadecimal format:</p>
-<ul>
-<li><code>#RRGGBB</code></li>
-<li><code>#AARRGGBB</code></li>
-</ul>
-<p>Examples:</p>
-<ul>
-<li><code>#FFFFFFFF</code> = white, fully visible</li>
-<li><code>#80FFFFFF</code> = white, 50% transparent</li>
-<li><code>#FFFF6060</code> = red, fully visible</li>
-<li><code>#FFFFB060</code> = orange, fully visible</li>
-<li><code>#30000000</code> = black, very transparent</li>
-</ul>
-<p>In <code>#AARRGGBB</code>:</p>
-<ul>
-<li><code>AA</code> = alpha / transparency</li>
-<li><code>RR</code> = red</li>
-<li><code>GG</code> = green</li>
-<li><code>BB</code> = blue</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<h3 id="calendar">Calendar</h3>
-<ul>
-<li>Show week numbers</li>
-<li>Week starts on Monday or Sunday</li>
-<li>Use German names</li>
-<li>Show month header</li>
-<li>Leading zero day numbers</li>
-<li>Use box drawing border</li>
-<li>Border content offset</li>
-<li>Column spacing</li>
-<li>Row spacing</li>
-<li>Header alignment</li>
-</ul>
-<h3 id="highlighting">Highlighting</h3>
-<ul>
-<li>Highlight today</li>
-<li>Today color</li>
-<li>Today bold</li>
-<li>Today underline</li>
-<li>Highlight weekends</li>
-<li>Weekend color</li>
-<li>Weekend opacity</li>
-<li>Highlight week numbers</li>
-<li>Week number color</li>
-<li>Highlight weekday names</li>
-<li>Weekday name color</li>
-</ul>
-<h3 id="position">Position</h3>
-<ul>
-<li>Use absolute X/Y position</li>
-<li>X-Position</li>
-<li>Y-Position</li>
-<li>Vertical position percent</li>
-<li>Horizontal position percent</li>
-<li>Monitor</li>
-</ul>
-<h3 id="font">Font</h3>
-<ul>
-<li>Font size</li>
-<li>Text color</li>
-<li>Font family</li>
-<li>Font weight</li>
-<li>Font style</li>
-</ul>
-<p>For best alignment, use a monospaced font.</p>
-<p>Recommended:</p>
-<ul>
-<li>Cascadia Mono</li>
-<li>Consolas</li>
-<li>JetBrains Mono</li>
-<li>Courier New</li>
-</ul>
-<p>Proportional fonts such as Arial, Calibri or Verdana can distort the calendar layout because the calendar uses fixed-width text alignment.</p>
-<h3 id="background">Background</h3>
-<ul>
-<li>Enable background</li>
-<li>Background color</li>
-<li>Background padding</li>
-<li>Background corner radius</li>
-<li>Background blur</li>
-<li>Background border size</li>
-<li>Background border color</li>
-</ul>
-<h2 id="credits">Credits</h2>
-<p>Based on and inspired by Desktop Live Overlay by m417z.</p>
-<p>Special thanks to m417z for the original overlay implementation and the Windhawk ecosystem.</p>
-<p>Additional development help and debugging guidance: ChatGPT by OpenAI.</p>
-<h2 id="notes">Notes</h2>
-<p>This mod is injected into <code>explorer.exe</code> and creates the calendar overlay as part of the desktop window structure.</p>
-<p>If the desktop does not refresh correctly after changing settings, restart Explorer or disable and re-enable the mod.</p>
-<p>The calendar refreshes automatically shortly after each minute change, which is enough to update the highlighted day after midnight.</p>
-<p>For best alignment, use a monospaced font such as:</p>
-<ul>
-<li>Cascadia Mono</li>
-<li>Consolas</li>
-<li>JetBrains Mono</li>
-<li>Courier New</li>
-</ul>
-<p>The mod does not open a normal application window and does not appear in the taskbar.</p>]]></content>
-        <author>
-            <name>SilverAmd</name>
-            <uri>https://github.com/SilverAmd</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MSHTML Tweaks 1.0]]></title>
-        <id>https://windhawk.net/mods/mshtml-native-controls#f7de3782e55d3abd9b6d97588c8116ac80e7e0b1</id>
-        <link href="https://windhawk.net/mods/mshtml-native-controls"/>
-        <updated>2026-05-25T14:10:12.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="mshtmltweaks">MSHTML Tweaks</h1>
-<ul>
-<li>Various tweaks for Internet Explorer and all the other apps using its engine (Trident/MSHTML), such as HTML Help, HelpPane, MSHTA, MMC, etc.</li>
-<li>This mod can bring back old controls, customize the font smoothing type (disable the forced ClearType), and disable the DirectComposition rendering.</li>
-<li>Special thanks to @xalejandro for the ClearType disabler.</li>
-<li>Only works on Internet Explorer 11 engine running on Windows 10 or higher. Tested on 10 22H2 and 11 25H2. Never tested on Windows 8 or earlier Windows 10 builds. Won't work on Windows 7. (You'll need to remove hooks for some symbols that don't exist.)</li>
-<li>The first launch of an MSHTML application after enabling this mod will take a lot of time, due to the large size of the symbols needed. It may not show the symbols download progress dialog depending on your internet security settings.</li>
-</ul>
-<h2 id="notesregardingtheoldcontrolstyles">Notes regarding the old control styles</h2>
-<ul>
-<li>Note that this mod only restores IE11's built-in Windows 7 behavior for old control styling, which uses hardcoded/fake Aero styles that do not actually match the current system theme.</li>
-<li>Only the scrollbar will use actual bitmaps from the current visual style (or classic); however, they may look glitchy, especially on HiDPI displays.</li>
-<li>You may want to disable the visual styles for controls in Internet Options (<code>inetcpl.cpl</code>) -&gt; Advanced -&gt; <code>Enable visual styles on buttons and controls in web pages</code> to make them look better on older themes such as XP.
-<img src="https://raw.githubusercontent.com/Ingan121/files/refs/heads/master/ie_fakeaero.png" alt="Comparison of fake and real control styles" /></li>
-</ul>
-<h2 id="ifinternetexplorerhangsonstartup">If Internet Explorer hangs on startup</h2>
-<ul>
-<li>Internet Explorer (<code>iexplore.exe</code>) uses a 32-bit subprocess by default, and the subprocess will fail to save its symbol downloaded from the Windhawk server.</li>
-<li>To fix this, please run the following in the run dialog (Win+R) to launch a 32-bit MSHTML as a main process to load the symbols:</li>
-<li><code>C:\Windows\SysWOW64\hh.exe http://www.ingan121.com/</code> (or any other <code>http</code> URL that isn't <code>https</code>)</li>
-</ul>
-<h2 id="knownissues">Known issues</h2>
-<ul>
-<li>Internet Explorer will crash when changing the settings or loading/unloading/updating the mod while it's running. This is not necessarily true for other apps using MSHTML.</li>
-</ul>]]></content>
-        <author>
-            <name>Ingan121</name>
-            <uri>https://github.com/Ingan121</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Theme Toggler Tray 1.2.2]]></title>
-        <id>https://windhawk.net/mods/theme-toggler-tray#4859d479f73c86feed28cd9e3b9f50d98c8b5a8b</id>
-        <link href="https://windhawk.net/mods/theme-toggler-tray"/>
-        <updated>2026-05-25T12:20:03.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed an architectural issue where the tray icon permanently disappears when explorer.exe restarts or the taskbar is recreated (e.g., due to DPI changes).</li>
-<li>Changed the hidden message-only window (HWND<em>MESSAGE) to a hidden top-level tool window (WS</em>EX<em>TOOLWINDOW and WS</em>POPUP) to ensure it correctly receives the TaskbarCreated system broadcast.</li>
-<li>Refactored the TaskbarCreated handler in WindowProc to safely and robustly reconstruct the icon.</li>
-</ul>]]></content>
-        <author>
-            <name>Husam-Abdulraheem</name>
-            <uri>https://github.com/Husam-Abdulraheem</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Key Click 1.2]]></title>
-        <id>https://windhawk.net/mods/key-click#02cb5e875e7f8cf77d890eb3860cf6fafbf60a00</id>
-        <link href="https://windhawk.net/mods/key-click"/>
-        <updated>2026-05-25T10:43:57.000Z</updated>
-        <content type="html"><![CDATA[<p>Filter out injected events so to bypass keyboard redirectors, inject dwm.exe now so to work in elevated windows.</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[DWM Custom Projection Border 1.0.0]]></title>
-        <id>https://windhawk.net/mods/dwm-custom-projection-border#eefcd95278ff79bf6a79f81175c0eacd6cf2efb7</id>
-        <link href="https://windhawk.net/mods/dwm-custom-projection-border"/>
-        <updated>2026-05-24T20:01:27.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="dwmcustomprojectionborder">DWM Custom Projection Border</h1>
-<p>This mod allows you to customize or disable the screen capture indicator, typically a yellow border,
-that is drawn by DWM on top of a window or display that is being captured using WinRT, specifically <code>Windows.Graphics.Capture</code>.
-This mod is particularly useful on Windows 10, which doesn't have a toggle to disable this border.</p>
-<h2 id="importantusagenote">⚠ Important usage note ⚠</h2>
-<p>In order to use this mod, you must allow Windhawk to inject into the <strong>dwm.exe</strong>
-system process. To do so, add it to the process inclusion list in the advanced
-settings. If you do not do this, it will silently fail to inject.</p>
-<p><img src="https://i.imgur.com/LRhREtJ.png" alt="Advanced settings screenshot" /></p>
-<h2 id="examples">Examples</h2>
-<p><strong>Pink border on Windows 11 26H1</strong>:</p>
-<p><img src="https://raw.githubusercontent.com/erisune/misc/refs/heads/images/dwm-custom-projection-border/win11-pink-projection-border-visual.png" alt="Pink border on Windows 11 26H1" /></p>
-<p><strong>Disabled border on Windows 10 21H2</strong>:</p>
-<p><img src="https://raw.githubusercontent.com/erisune/misc/refs/heads/images/dwm-custom-projection-border/win10-disabled-projection-border-visual.png" alt="Disabled border on Windows 10 21H2" /></p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>To update an active border after you change the settings, move the window or ultimately, try restarting the capture.</li>
-<li>To show the border on Windows 11 you may need to prevent other applications from turning it off, this toggle is in <strong>Settings > Privacy and Security > Screenshot borders</strong>.</li>
-</ul>]]></content>
-        <author>
-            <name>erisune</name>
-            <uri>https://github.com/erisune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Simple Window Switcher 1.1]]></title>
-        <id>https://windhawk.net/mods/simple-window-switcher#666743da4e145c838ffbbf89db8f15aa8c7915da</id>
-        <link href="https://windhawk.net/mods/simple-window-switcher"/>
-        <updated>2026-05-24T17:59:35.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Refactor Explorer Restart Prompt logic</li>
-<li>Fixed an issue where the Show Delay setting is broken, <a href="https://github.com/Louis047/windhawk-mods/blob/c0b6582ad2161f8406e294b2a74639851923cfac/mods/simple-window-switcher.wh.cpp#L1510">as it just freezes the switcher thread and blocks the message loop</a> Fix by <a href="https://github.com/zhilemann">@zhilemann</a></li>
-</ul>]]></content>
-        <author>
-            <name>Lone</name>
-            <uri>https://github.com/Louis047</uri>
         </author>
     </entry>
 </feed>
