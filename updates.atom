@@ -2,12 +2,157 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-05-30T19:20:39.000Z</updated>
+    <updated>2026-06-01T21:37:42.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Toggle Hidden Files 1.0.0]]></title>
+        <id>https://windhawk.net/mods/toggle-hidden-files#72576e59a6cee399c10d601d49cc36b666c26191</id>
+        <link href="https://windhawk.net/mods/toggle-hidden-files"/>
+        <updated>2026-06-01T21:37:42.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="togglehiddenfiles">Toggle Hidden Files</h1>
+<p>This mod allows you to toggle the visibility of hidden files in Windows Explorer using the Ctrl+H keyboard shortcut.</p>
+<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/toggle-hidden-files/toggle-hidden-files.gif" alt="toggle-hidden-files-gif" /></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Ctrl+H hotkey that works only when Explorer windows are focused</li>
+<li>Toggles the "Show hidden files" setting</li>
+<li>Optional: Also toggle protected OS files</li>
+<li>Applies changes immediately to Explorer windows</li>
+<li>Works with all Windows Explorer windows</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ol>
+<li><strong>Focus an Explorer window</strong> - Click on or open any File Explorer window</li>
+<li><strong>Press Ctrl+H</strong> - Use the keyboard shortcut to toggle hidden files visibility</li>
+<li><strong>The setting will be applied immediately</strong> to all Explorer windows</li>
+</ol>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><strong>Also toggle protected OS files</strong>: When enabled, Ctrl+H will also show/hide protected operating system files</li>
+</ul>
+<h2 id="technicaldetails">Technical Details</h2>
+<ul>
+<li>Only activates when Windows Explorer windows are in focus</li>
+<li>Queues toggle work to a worker thread to keep input handling responsive</li>
+<li>Uses Windows shell APIs to update hidden-file visibility live</li>
+<li>Notifies the shell to refresh views after toggling</li>
+<li>Handles proper cleanup when the mod is unloaded</li>
+</ul>]]></content>
+        <author>
+            <name>Asteski</name>
+            <uri>https://github.com/Asteski</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Explorer Nav DragOver Fix 1.1.9]]></title>
+        <id>https://windhawk.net/mods/explorer-nav-dragover-fix#e10c123d95f10be617ff01eb586b41851294c2fb</id>
+        <link href="https://windhawk.net/mods/explorer-nav-dragover-fix"/>
+        <updated>2026-06-01T20:34:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="explorernavdragoverfix">Explorer Nav DragOver Fix</h1>
+<p>Two fixes for File Explorer's drag-over behavior:</p>
+<ol>
+<li><p><strong>Stops the jump.</strong> When you drag a file or folder onto a root-level entry
+in the nav pane (drives, pinned folders, the "This PC" grouping), Explorer
+auto-expands that entry after a short hover delay -- and the auto-expand
+often scrolls the pane, sending the row you were aiming at off-screen.
+This mod pins the TreeView's first-visible item to its pre-expand position
+and keeps the drop highlight on the original parent row. Protection
+releases as soon as the cursor leaves the captured row, so deeper folders
+continue to behave normally.</p></li>
+<li><p><strong>Re-enables the mouse wheel.</strong> Windows normally swallows wheel input
+during drag-and-drop. This mod intercepts the wheel and forwards it to
+the Explorer navigation pane (left tree) and the main file list on the
+right (Details / ItemsView on Win11 25H2, and classic Large icons / List
+views via SysListView32). Scrolling prefers UI Automation so wheel messages
+are not sent to SHELLDLL_DefView during a drag. Disable the corresponding
+setting to fall back to native behavior.</p></li>
+</ol>
+<h2 id="demo">Demo</h2>
+<p><img src="https://raw.githubusercontent.com/tonythethompson/windhawk-mods/main/mods_assets/explorer-nav-dragover-fix-demo.gif" alt="Without Mod vs With Mod" /></p>
+<p>Left: default Explorer behavior. Right: with this mod enabled (stable hover
+expand and mouse-wheel scrolling during drag).</p>
+<p>The mod hooks <code>DoDragDrop</code> (to track drag generations across threads),
+subclasses each nav-pane <code>SysTreeView32</code>, and watches <code>EVENT_OBJECT_CREATE</code>
+on a dedicated helper thread to pick up new Explorer windows. No state is
+persisted between drags; everything is scoped to the active drag loop.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>If you disable the mod and see a log line like <strong>"WinEvent helper thread did
+not exit within 10s"</strong>, an Explorer thread was wedged mid-callback (for
+example while subclassing a nav tree). The mod intentionally leaks that
+helper handle rather than calling <code>TerminateThread</code>, which would be unsafe.
+<strong>Restart File Explorer</strong> (or sign out) to clear the state. This is rare in
+normal use.</p>
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li>File Explorer (<code>explorer.exe</code>) on Windows 11 (tested on 23H2 / 24H2).</li>
+<li>Architectures: x64, arm64.</li>
+<li>No effect on any other process.</li>
+</ul>]]></content>
+        <author>
+            <name>tonythethompson</name>
+            <uri>https://github.com/tonythethompson</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Paste Clipboard Content to Explorer 1.7]]></title>
+        <id>https://windhawk.net/mods/paste-clipboard-content-to-explorer#d5e5e1b6cab2f2637193915b3ad2b5249219536b</id>
+        <link href="https://windhawk.net/mods/paste-clipboard-content-to-explorer"/>
+        <updated>2026-06-01T20:00:50.000Z</updated>
+        <content type="html"><![CDATA[<p>Narrow down the command range to fix bugs</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[File Explorer Reopen Closed Tab 1.0.0]]></title>
+        <id>https://windhawk.net/mods/file-explorer-reopen-closed-tab#29156016482a79a1c251b5e211ebbd1f0ec8d5dc</id>
+        <link href="https://windhawk.net/mods/file-explorer-reopen-closed-tab"/>
+        <updated>2026-06-01T19:39:47.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="fileexplorerreopenclosedtab">File Explorer Reopen Closed Tab</h1>
+<p>Press <code>Ctrl+Shift+T</code> in any active File Explorer window to reopen the last closed tab — just like in a browser.</p>
+<ul>
+<li>Restored tabs open directly in the existing Explorer window, not as a new window.</li>
+<li>If no Explorer window is open, nothing happens.</li>
+<li>Up to 50 tabs are remembered per session.</li>
+<li>History clears when all Explorer windows are closed.</li>
+</ul>]]></content>
+        <author>
+            <name>Armaninyow</name>
+            <uri>https://github.com/armaninyow</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Disable Inactive Menubar Greying 1.0]]></title>
+        <id>https://windhawk.net/mods/disable-inactive-menubar-greying#56be4620179f43168964f39cd82179339b6bf8fe</id>
+        <link href="https://windhawk.net/mods/disable-inactive-menubar-greying"/>
+        <updated>2026-06-01T19:16:56.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="disableinactivemenubargreying">Disable Inactive Menubar Greying</h1>
+<p>This mod prevents the classic menubar text (File, Edit, View, etc.) in folder windows
+under the Classic theme from appearing greyed out when the window loses focus, 
+the way it was in Windows 95, before Windows 98.</p>
+<p><img src="https://i.imgur.com/FCEXTyt.png" alt="screenshot" /></p>
+<p><img src="https://i.imgur.com/XBVNN0v.png" alt="screenshot" /></p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Never Auto-Expand Explorer Tree Items 1.1]]></title>
+        <id>https://windhawk.net/mods/never-auto-expand-explorer-tree-items#459e076ea0a9793e5353e9696ee7e7dc45abdff3</id>
+        <link href="https://windhawk.net/mods/never-auto-expand-explorer-tree-items"/>
+        <updated>2026-06-01T09:41:45.000Z</updated>
+        <content type="html"><![CDATA[<p>Added an option to allow top-level items to auto-expand while keeping their nested items collapsed.</p>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[AudioSwap 2.2.0]]></title>
         <id>https://windhawk.net/mods/audioswap#6f265d52a641c9f32788bd2d34dda07a02428882</id>
@@ -337,83 +482,6 @@ Keep in mind that these animation can use a lot of cpu power but from my experie
         <author>
             <name>Lockframe</name>
             <uri>https://github.com/Lockframe</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Classic Theme 1.2.4]]></title>
-        <id>https://windhawk.net/mods/classic-theme-enable#6d9ee12a3235a734856adc0fa9326d16ff5e19a3</id>
-        <link href="https://windhawk.net/mods/classic-theme-enable"/>
-        <updated>2026-05-29T11:23:35.000Z</updated>
-        <content type="html"><![CDATA[<p>Updated version number and added new mod instructions.</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remap Copilot Key 2.0]]></title>
-        <id>https://windhawk.net/mods/remap-copilot-key#a921984f6f70885c56bf5d92ddad683d87e8c73f</id>
-        <link href="https://windhawk.net/mods/remap-copilot-key"/>
-        <updated>2026-05-29T11:21:35.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added Per-App Rules: Users can now map the Copilot key to different custom VK codes depending on which application is currently in the foreground.</li>
-</ul>]]></content>
-        <author>
-            <name>Lukvbp</name>
-            <uri>https://github.com/lukvbp</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Files 2 Folders 1.3]]></title>
-        <id>https://windhawk.net/mods/files-2-folders#edd5a740b5d5c349acaf60598478c0abc5cfe994</id>
-        <link href="https://windhawk.net/mods/files-2-folders"/>
-        <updated>2026-05-29T11:08:25.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Auto-select a mode's radio button when its companion edit box receives focus (by mouse click or Tab). Focusing the subfolder-name box now selects the fixed-name mode; focusing the date box selects the date-named mode. Previously you could type a name into a box without its radio being checked, so the move would run under whichever mode happened to be selected. This makes the mode you're editing the mode that runs on OK.
-tl;dr: Clicking on subfolder name box or date will choose that mod now.</li>
-</ul>]]></content>
-        <author>
-            <name>tria</name>
-            <uri>https://github.com/triatomic</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.5.2]]></title>
-        <id>https://windhawk.net/mods/windows-11-start-menu-styler#49b5f6cd2e724208e8efb94951fd51f70f97c524</id>
-        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
-        <updated>2026-05-27T16:22:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Disabled the classic Start menu layout in the latest Windows 11 update. In the latest update, reverting to the classic layout (either with the mod or via ViVeTool flags) causes the Start menu to fail to open. At this point, it's unclear whether it's a temporary Windows issue, or if it's caused by the removal of the classic layout from Windows.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vertical Taskbar for Windows 11 1.3.11]]></title>
-        <id>https://windhawk.net/mods/taskbar-vertical#8a1f76c14f1a5089841348d37e838c85123bb26f</id>
-        <link href="https://windhawk.net/mods/taskbar-vertical"/>
-        <updated>2026-05-27T11:25:06.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed compatibility with recent Windows 11 versions.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar on top for Windows 11 1.1.7]]></title>
-        <id>https://windhawk.net/mods/taskbar-on-top#6e1ccf5d5ff53ada6ae7d58fd31c81a9723e12ea</id>
-        <link href="https://windhawk.net/mods/taskbar-on-top"/>
-        <updated>2026-05-27T11:07:49.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed compatibility with recent Windows 11 versions.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
         </author>
     </entry>
 </feed>

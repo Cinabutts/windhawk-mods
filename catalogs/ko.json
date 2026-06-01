@@ -2971,6 +2971,34 @@
                 "version": "1.0.0"
             }
         },
+        "disable-inactive-menubar-greying": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780341416000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780341416000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Anixx",
+                "compilerOptions": "-lgdi32",
+                "description": "Prevents menubar text from being greyed out in inactive folder windows in Classic theme",
+                "github": "https://github.com/Anixx",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Disable Inactive Menubar Greying",
+                "version": "1.0"
+            }
+        },
         "disable-ms-teams-hotkey": {
             "details": {
                 "defaultSorting": 1056,
@@ -4177,6 +4205,39 @@
                 "version": "1.0"
             }
         },
+        "explorer-nav-dragover-fix": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780346049000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780346049000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "tonythethompson",
+                "compilerOptions": "-lole32 -lcomctl32 -luiautomationcore",
+                "description": "Stops File Explorer's nav pane from jumping when a folder auto-expands during a drag, and restores mouse-wheel scrolling to reach out-of-view drop targets",
+                "donateUrl": "https://ko-fi.com/tonythethompson",
+                "github": "https://github.com/tonythethompson",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Explorer Nav DragOver Fix",
+                "version": "1.1.9"
+            }
+        },
         "explorer-navigation-pane-tweaks": {
             "details": {
                 "defaultSorting": 3690,
@@ -4914,6 +4975,34 @@
                 "name": "Remove Taskbar Window Suffixes",
                 "twitter": "https://twitter.com/m417z",
                 "version": "1.1.1"
+            }
+        },
+        "file-explorer-reopen-closed-tab": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780342787000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780342787000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Armaninyow",
+                "compilerOptions": "-lshlwapi -lole32 -loleaut32 -lshell32 -luuid",
+                "description": "Reopens the last closed Explorer tab when Ctrl+Shift+T is pressed in an active Explorer window",
+                "github": "https://github.com/armaninyow",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "File Explorer Reopen Closed Tab",
+                "version": "1.0.0"
             }
         },
         "files-2-folders": {
@@ -7078,7 +7167,7 @@
                     5
                 ],
                 "ratingUsers": 6,
-                "updated": 1779573707000,
+                "updated": 1780306905000,
                 "users": 125
             },
             "metadata": {
@@ -7090,7 +7179,7 @@
                     "*"
                 ],
                 "name": "Never Auto-Expand Explorer Tree Items",
-                "version": "1.0.1"
+                "version": "1.1"
             }
         },
         "nilesoft-shell-animator": {
@@ -7968,7 +8057,7 @@
                     33
                 ],
                 "ratingUsers": 36,
-                "updated": 1778105023000,
+                "updated": 1780344050000,
                 "users": 601
             },
             "metadata": {
@@ -7980,7 +8069,7 @@
                     "*"
                 ],
                 "name": "Paste Clipboard Content to Explorer",
-                "version": "1.6"
+                "version": "1.7"
             }
         },
         "per-app-language-preferences": {
@@ -11554,6 +11643,33 @@
                 "name": "Titlebar For Everyone",
                 "twitter": "https://twitter.com/Ingan121",
                 "version": "0.4"
+            }
+        },
+        "toggle-hidden-files": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780349862000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780349862000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Asteski",
+                "description": "Toggle the visibility of hidden files in Windows Explorer using Ctrl+H",
+                "github": "https://github.com/Asteski",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Toggle Hidden Files",
+                "version": "1.0.0"
             }
         },
         "tortoisegit-progress-animation-background-fix": {
