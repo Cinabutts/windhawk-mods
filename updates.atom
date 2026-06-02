@@ -2,12 +2,86 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-02T07:55:19.000Z</updated>
+    <updated>2026-06-02T21:28:24.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Files 2 Folders 2.0]]></title>
+        <id>https://windhawk.net/mods/files-2-folders#ad19ef246bb802bc953cbd0d171ca2f8eeba204d</id>
+        <link href="https://windhawk.net/mods/files-2-folders"/>
+        <updated>2026-06-02T21:28:24.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed: the "Files 2 Folder…" menu entry now appears and works on the desktop (previously only inside Explorer folder windows).</li>
+<li>Added Silent mode (right-click menu): skips the dialog and immediately moves the selection using the default mode; suppresses the mod's own dialogs/error popups. The hotkey workaround is unaffected.</li>
+<li>"Default selected mode" is now a dropdown showing the actual mode names instead of a raw 1-4 number box.</li>
+<li>Fixed: the dialog now correctly pre-selects the configured "Default selected mode" (it was always reverting to the first option).</li>
+<li>Also handles selections in library/search views by deriving the destination from the selected items.</li>
+<li>Fixed: no longer inserts a doubled separator when "Place menu item near Cut/Copy" is on and Explorer already has a separator there.</li>
+<li>The menu entry and default subfolder name now use Windows' own localized strings (shell32: "Move to a folder…", "New folder"), so they appear in the OS language.</li>
+<li>Fixed-name / date modes no longer silently reuse an existing folder of that name — they number duplicates like Explorer ("New folder (2)", "(3)", …).</li>
+<li>The "Files 2 Folder…" entry now also appears in the classic menu bar's Edit dropdown (after Cut/Copy).</li>
+<li>Settings descriptions rewritten for consistency (On/Off states on their own lines, unified quoting/terminology).</li>
+<li>Workaround hotkey: Win-based combos now work via a low-level keyboard hook (the technique PowerToys uses) and suppress the OS default, instead of failing to register. Note: bare Win+<letter> shortcuts (Win+F, Win+L, …) are reserved by Windows and cannot be intercepted by any hook — pair Win with another modifier (e.g. Win+Shift+F); the mod now warns when a bare Win combo is selected.</li>
+</ul>]]></content>
+        <author>
+            <name>tria</name>
+            <uri>https://github.com/triatomic</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Transparent Desktop Icons with Spotlight 1.0]]></title>
+        <id>https://windhawk.net/mods/transparent-desktop-icons-spotlight#7de4fff6bbaa2bbc92512039e8bc39c61480c7bf</id>
+        <link href="https://windhawk.net/mods/transparent-desktop-icons-spotlight"/>
+        <updated>2026-06-02T16:39:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="transparentdesktopiconswithspotlight">Transparent Desktop Icons with Spotlight</h1>
+<p>Makes desktop icons semi-transparent when idle, revealing the wallpaper beneath.
+When you move your mouse over the desktop, a customizable spotlight effect
+illuminates the area around your cursor, revealing icons with full clarity.</p>
+<p>As the cursor leaves the desktop or remains idle, the spotlight fades and icons
+gradually become transparent again. Selected icons remain opaque with their own 
+customizable independent timeouts, blurs, and fade durations.</p>
+<p><strong>Demonstration</strong>: in this case the selected icons have a timeout (set it to 0 to keep them active)</p>
+<p><img src="https://i.imgur.com/7cTTHTN.gif" alt="Demonstration:" /></p>
+<p><strong>Note:</strong> This mod captures the static Windows wallpaper for performance reasons. 
+It does not currently support live/animated wallpapers (e.g., Wallpaper Engine, Lively).</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Dedicated render thread for flawless, vsync-matched 60/144+ FPS performance.</li>
+<li>0% background GPU/CPU usage when the desktop is idle.</li>
+<li>Independent Dual-GPU Blur processing for both the cursor spotlight and selected icons.</li>
+<li>Customizable shapes (square to circle) for both the spotlight and selected areas.</li>
+<li>Click-through architecture using WS<em>EX</em>TRANSPARENT ensures no interference with native OS interaction.</li>
+</ul>]]></content>
+        <author>
+            <name>drgutman</name>
+            <uri>https://github.com/drgutman</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[File Explorer WinUI-Like Content Animation 1.0.1]]></title>
+        <id>https://windhawk.net/mods/file-explorer-content-animation#ff269b026fa0e4628a625cbfb59da891642bb872</id>
+        <link href="https://windhawk.net/mods/file-explorer-content-animation"/>
+        <updated>2026-06-02T13:06:49.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>GPU-accelerated fade - The fade effect now uses a DirectComposition overlay capturing the previous folder's content (including Mica/Acrylic). The overlay fades out on the GPU compositor thread, fully independent of CPU load from thumbnail rendering.</li>
+<li>Page transitions - Detects the navigation type and applies a different animation for each context:
+Entrance (slide up) - Opening Explorer, new tabs, and general navigation.
+Enter folder (short fast slide from right) - Navigating into subfolders.
+Back slide (slide from left) - Going back via button, breadcrumb, or Up arrow.
+Forward slide (slide from right) - Going forward after going back.
+Reverse direction - Content can slide down instead of up.</li>
+<li>Navigation pane animation - The nav pane tree slides in from the left when opening Explorer or a new tab.</li>
+<li>Property page animation - Animates tab switching in folder and file Properties windows.</li>
+<li>Requires symbol resolution on explorerframe.dll (handled automatically by Windhawk).</li>
+</ul>]]></content>
+        <author>
+            <name>crazyboyybs</name>
+            <uri>https://github.com/crazyboyybs</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Desktop Companions 1.3.0]]></title>
         <id>https://windhawk.net/mods/neko-cat#7afddcbd4e0e0300474719100693301b898f1be3</id>
@@ -448,115 +522,6 @@ Additionally I've also updated description for some of the existing processes, s
         <author>
             <name>Exiled Eye</name>
             <uri>https://github.com/ExiledEye</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[URL Blocker 0.1]]></title>
-        <id>https://windhawk.net/mods/url-blocker#9652ca93368edbfbd1274ae2ccc7524025adf302</id>
-        <link href="https://windhawk.net/mods/url-blocker"/>
-        <updated>2026-05-30T10:31:36.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="whatitdoes">What it does</h2>
-<p>This mod prevents selected applications from opening web links in your default browser. It is mainly intended for cases where programs open unnecessary pages such as post-update "thank you" screens, release notes, promotional pages, or similar unwanted redirects.</p>
-<p>The mod works by intercepting <code>ShellExecuteW</code> and <code>ShellExecuteA</code> calls and ignoring calls that try to open URLs (starting with <code>http</code>). Regular file paths are left alone, so opening local files will continue to work as usual.</p>
-<h2 id="configuration">Configuration</h2>
-<p>This mod doesn't automatically target any processes. Add the programs for which you want to block URL calls under:</p>
-<p><code>Details</code> -&gt; <code>Advanced</code> -&gt; <code>Custom process inclusion list</code></p>
-<p>Only the processes in that list will have URL calls blocked.</p>
-<p><strong><em>No guarantee that it will work on all programs!</em></strong></p>
-<h2 id="notesandlimitations">Notes and limitations</h2>
-<ul>
-<li>The mod only blocks URL launches that go through <code>ShellExecuteW</code> or <code>ShellExecuteA</code>.</li>
-<li>Programs that use another API or an embedded browser may still be able to open web pages.</li>
-<li>The mod is not intended for system-wide URL filtering.</li>
-</ul>
-<h2 id="credits">Credits</h2>
-<p>Inspired by the <code>F1 Blocker</code> mod from <a href="https://github.com/d0gkiller87">d0gkiller87</a>.</p>
-<h2 id="bugreportfeaturerequest">Bug Report / Feature Request</h2>
-<p>Open an issue / discussion on https://github.com/ramensoftware/windhawk-mods and tag <code>@CrazyTim71</code></p>]]></content>
-        <author>
-            <name>CrazyTim71</name>
-            <uri>https://github.com/CrazyTim71</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Status Bar Metadata 1.4.0]]></title>
-        <id>https://windhawk.net/mods/explorer-status-metadata#531762a55d231b40dc5f3a6e374ea8ac8135ecfb</id>
-        <link href="https://windhawk.net/mods/explorer-status-metadata"/>
-        <updated>2026-05-29T13:01:54.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorerstatusbarmetadatav140">Explorer Status Bar Metadata — v1.4.0</h1>
-<p>Appends file metadata to the Windows Explorer status bar when a single file
-is selected: dimensions, modification date, file type, duration, bitrate, fps.</p>
-<h2 id="howitworks">How it works</h2>
-<ul>
-<li>No timers, no polling. Metadata is computed only when the selected file changes.</li>
-<li>Path-keyed LRU-style cache (1000 entries). Same file = instant return, zero COM calls.</li>
-<li>Hooks <code>PSFormatForDisplayAlloc</code> in propsys.dll — the exact function Explorer calls
-to format the file size for the status bar. Language-independent, no text matching.</li>
-<li>Filter: <code>key == System.Size</code> AND <code>SHELL32.dll</code> appears in the first 5 call stack
-frames (status bar path), but NOT <code>explorerframe.dll</code> (Details column — skipped).</li>
-<li>Compatible with "Better file sizes in Explorer details" — multi-frame stack scan
-handles chained hooks transparently.</li>
-<li>Custom binary parsers for formats the Windows Property System does not index:
-SVG, HDR, EXR, TIFF/TX (LE+BE), TGA, PSD/PSB, WebM/MKV (EBML).</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<ul>
-<li><strong>Network drives</strong> — disabled by default. Can freeze Explorer on slow networks.</li>
-<li><strong>Removable drives</strong> — enabled by default. Disable if you use slow USB media.</li>
-<li><strong>Cache evict count</strong> — how many old entries to drop when the 1000-entry limit is hit.</li>
-</ul>
-<h2 id="changelog">Changelog</h2>
-<h3 id="v140">v1.4.0</h3>
-<ul>
-<li>Replaced DrawTextW/GetTextExtentPoint32W hooks with PSFormatForDisplayAlloc hook
-(language-independent, no text matching, no "selected"-string false positives)</li>
-<li>SHELL32.dll stack filter (5 frames) precisely identifies the status bar call</li>
-<li>Selection path discovery uses IFolderView2::GetSelection — same-thread, no
-CWM_GETISHELLBROWSER broadcast to arbitrary windows</li>
-<li>CWM_GETISHELLBROWSER is now sent only to windows of known safe classes:
-CabinetWClass and ShellTabWindowClass</li>
-<li>SafeGetShellBrowser: thread-ID guard replaced with process-ID guard.
-PSFormatForDisplayAlloc fires on a shell worker thread (not the GUI thread),
-so the thread-ID check always failed and GetSelectedFilePath always returned
-empty. Process-ID check is sufficient and works correctly from any thread.</li>
-<li>Added Wh<em>Log to Wh</em>ModInit/Wh_ModUninit for basic injection diagnostics</li>
-<li>Added Wh_ModSettingsChanged so settings take effect without restarting Explorer</li>
-<li>Cache upgraded from FIFO to true LRU: cache hits now move the entry to the
-back of the eviction queue, keeping frequently-accessed files safe from eviction</li>
-<li>SVG parser rewritten with ExtractAttribute helper: tolerant of whitespace
-around '=' and both quote styles (viewBox = "…", width='100px', etc.)</li>
-<li>Added PSD/PSB binary parser (width/height from fixed 26-byte header)</li>
-<li>File type moved to last position (right edge) for all file types</li>
-<li>CleanTypeString strips spurious ".<digits>" suffix from type names (Windows
-shell quirk: "Adobe Photoshop Image.27" → "Adobe Photoshop Image")</li>
-<li>PSD/PSB type label overridden to "Adobe Photoshop File" for consistency</li>
-<li>Removed cross-window fallback (Strategy 3): GetSelectedFilePath is strictly
-scoped to the root window identified by GetGUIThreadInfo / GetForegroundWindow
-— no risk of reading a selection from a different Explorer window</li>
-</ul>
-<h3 id="v130">v1.3.0</h3>
-<ul>
-<li>Initial release</li>
-</ul>]]></content>
-        <author>
-            <name>VitalS</name>
-            <uri>https://github.com/VitalSkib</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Genie Animation Mod 1.0.0]]></title>
-        <id>https://windhawk.net/mods/genie-minimize-animation#4e24d3c633491a476404255c01c4b49194e9847b</id>
-        <link href="https://windhawk.net/mods/genie-minimize-animation"/>
-        <updated>2026-05-29T12:07:29.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="genieanimationmod">Genie Animation Mod</h1>
-<p>This is a mod that adds a genie like minimize animation.
-Since I don't know C++ yet, this mode was written by gemini and claude.
-This mod isn't perfect but windows isn't giving me a lot to work with. (windows animation api is almost 20 years old)
-Keep in mind that these animation can use a lot of cpu power but from my experience this only spikes when you spam the animations.</p>
-<p>I'll try to add settings for this mod later.</p>]]></content>
-        <author>
-            <name>lolstijl</name>
-            <uri>https://github.com/lolstijl</uri>
         </author>
     </entry>
 </feed>
