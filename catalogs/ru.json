@@ -94,6 +94,35 @@
                 "version": "1.1.0"
             }
         },
+        "add-virtual-folders-to-nav-top": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1780472070000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780472070000,
+                "users": 0
+            },
+            "metadata": {
+                "author": "Rod Boev",
+                "compilerOptions": "-lole32 -lshell32 -luuid -luxtheme -lgdi32 -lgdiplus -lcomctl32",
+                "description": "Adds This PC and Desktop to the top of Explorer's nav",
+                "github": "https://github.com/rodboev",
+                "include": [
+                    "*"
+                ],
+                "license": "MIT",
+                "name": "Add This PC and Desktop to Nav Top",
+                "version": "1.2.1"
+            }
+        },
         "aerexplorer": {
             "details": {
                 "defaultSorting": 27832,
@@ -8615,7 +8644,7 @@
                     56
                 ],
                 "ratingUsers": 69,
-                "updated": 1776710910000,
+                "updated": 1780474059000,
                 "users": 3214
             },
             "metadata": {
@@ -8631,7 +8660,7 @@
                 ],
                 "license": "MIT",
                 "name": "Remove Context Menu Items",
-                "version": "1.10.0"
+                "version": "1.11.0"
             }
         },
         "remove-fullscreen-popup-chrome": {
@@ -13702,7 +13731,7 @@
                     16
                 ],
                 "ratingUsers": 16,
-                "updated": 1779551699000,
+                "updated": 1780471572000,
                 "users": 340
             },
             "metadata": {
@@ -13710,14 +13739,14 @@
                     "x86-64"
                 ],
                 "author": "Lanbo",
-                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject",
-                "description": "A high-performance, native C++ Windhawk mod that lets you double-click empty desktop space to hide/show desktop icons. Zero lag, zero UI overhead.",
+                "compilerOptions": "-lcomctl32 -lole32 -loleaut32 -lruntimeobject -lshell32",
+                "description": "Native C++ Windhawk mod to hide/show desktop icons by double-clicking, with optional inactivity-based auto-hide and restore.",
                 "github": "https://github.com/Liset999",
                 "include": [
                     "explorer.exe"
                 ],
-                "name": "ZenDesktop: Double Click to Hide Icons",
-                "version": "1.2.0"
+                "name": "ZenDesktop: Desktop Icon Toggle and Auto-Hide",
+                "version": "3.4.0"
             }
         }
     }
