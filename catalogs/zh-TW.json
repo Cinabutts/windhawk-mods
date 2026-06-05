@@ -107,7 +107,7 @@
                     5
                 ],
                 "ratingUsers": 8,
-                "updated": 1780472070000,
+                "updated": 1780601801000,
                 "users": 41
             },
             "metadata": {
@@ -120,7 +120,7 @@
                 ],
                 "license": "MIT",
                 "name": "Add This PC and Desktop to Nav Top",
-                "version": "1.2.1"
+                "version": "1.3.0"
             }
         },
         "aerexplorer": {
@@ -4247,7 +4247,7 @@
                     8
                 ],
                 "ratingUsers": 8,
-                "updated": 1780346049000,
+                "updated": 1780609739000,
                 "users": 91
             },
             "metadata": {
@@ -4256,7 +4256,7 @@
                 ],
                 "author": "tonythethompson",
                 "compilerOptions": "-lole32 -lcomctl32 -luiautomationcore",
-                "description": "Stops File Explorer's nav pane from jumping when a folder auto-expands during a drag, and restores mouse-wheel scrolling to reach out-of-view drop targets",
+                "description": "Stops File Explorer's nav pane from jumping when a folder auto-expands during a drag, restores mouse-wheel scrolling during drag, accelerates edge-scroll, and optionally collapses drag-opened folders when the drag ends",
                 "donateUrl": "https://ko-fi.com/tonythethompson",
                 "github": "https://github.com/tonythethompson",
                 "include": [
@@ -4264,7 +4264,7 @@
                 ],
                 "license": "MIT",
                 "name": "Explorer Nav DragOver Fix",
-                "version": "1.1.9"
+                "version": "1.2.6"
             }
         },
         "explorer-navigation-pane-tweaks": {
@@ -5543,6 +5543,37 @@
                 ],
                 "name": "Hide Action Center icon",
                 "version": "1.0.1"
+            }
+        },
+        "hide-desktop-icon-text": {
+            "details": {
+                "defaultSorting": 63,
+                "published": 1780572761000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780572761000,
+                "users": 7
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "kivsak",
+                "compilerOptions": "-lole32 -lshlwapi -lgdi32 -lcomctl32",
+                "description": "Provides options to hide icon text labels (keeping folder names) and remove shortcut arrow overlays on the desktop.",
+                "github": "https://github.com/kivsak",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Hide Desktop Icon Text and Shortcut Arrows",
+                "version": "1.5.0"
             }
         },
         "hide-dotfiles-explorer": {
@@ -6901,7 +6932,7 @@
                     5
                 ],
                 "ratingUsers": 6,
-                "updated": 1779318740000,
+                "updated": 1780601368000,
                 "users": 101
             },
             "metadata": {
@@ -6915,7 +6946,7 @@
                 ],
                 "license": "MIT",
                 "name": "Monitor Sleep Button",
-                "version": "1.1.0"
+                "version": "1.1.1"
             }
         },
         "more-space-in-language-indicator": {
@@ -8004,6 +8035,35 @@
                 ],
                 "name": "OneNote Cursor Teleport Fix",
                 "version": "2.0"
+            }
+        },
+        "open-in-admin-terminal": {
+            "details": {
+                "defaultSorting": 90,
+                "published": 1780571943000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1780571943000,
+                "users": 10
+            },
+            "metadata": {
+                "author": "aimagist",
+                "compilerOptions": "-lole32 -loleaut32 -luuid -lshlwapi -lshell32 -lgdi32",
+                "description": "Adds an Explorer classic context menu entry to open an elevated terminal in the current or selected folder.",
+                "github": "https://github.com/aimagist",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Open in Admin Terminal",
+                "version": "1.15"
             }
         },
         "osu-tray-profile": {

@@ -2,12 +2,124 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-03T08:07:39.000Z</updated>
+    <updated>2026-06-04T21:48:59.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Explorer Nav DragOver Fix 1.2.6]]></title>
+        <id>https://windhawk.net/mods/explorer-nav-dragover-fix#e7fac19e6a1d29ee72e53d93318a4de19250769a</id>
+        <link href="https://windhawk.net/mods/explorer-nav-dragover-fix"/>
+        <updated>2026-06-04T21:48:59.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fix transient collapse skipped after nav wheel scroll (drag session id vs generation).</li>
+<li>Fix preserve-on-drop ancestor check for successful drops.</li>
+<li>Edge-scroll acceleration during drag.</li>
+<li>Transient expansion tracking, staggered collapse, reconcile pass, <code>lParam</code> re-resolution.</li>
+</ul>]]></content>
+        <author>
+            <name>tonythethompson</name>
+            <uri>https://github.com/tonythethompson</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Add This PC and Desktop to Nav Top 1.3.0]]></title>
+        <id>https://windhawk.net/mods/add-virtual-folders-to-nav-top#ca3145f0cb1e292fead3f7c74c2eda168c686799</id>
+        <link href="https://windhawk.net/mods/add-virtual-folders-to-nav-top"/>
+        <updated>2026-06-04T19:36:41.000Z</updated>
+        <content type="html"><![CDATA[<p>Changed the injection strategy to hook kernelbase!LoadLibraryExW instead of force-loading ExplorerFrame.dll in Wh_ModInit. Processes that don't use ExplorerFrame.dll no longer get it loaded at startup.</p>
+<p>A user reported instability on 25H2 in #4280 (browser tabs crashing, Explorer becoming unresponsive after restart). I haven't been able to reproduce it, but the previous approach loaded ExplorerFrame.dll into every injected process at startup, which is unnecessarily aggressive. Deferring to the kernelbase hook (per @m417z's suggestion in #4159) avoids that entirely.</p>]]></content>
+        <author>
+            <name>Rod Boev</name>
+            <uri>https://github.com/rodboev</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Monitor Sleep Button 1.1.1]]></title>
+        <id>https://windhawk.net/mods/monitor-sleep-button#7911f2ed2e772be13cb019231beb8a2d397dc15b</id>
+        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
+        <updated>2026-06-04T19:29:28.000Z</updated>
+        <content type="html"><![CDATA[<p>Monitor Sleep Button now uses the actual Shell_NotifyIconGetRect rectangle for mouse wheel hit testing instead of expanding the tray icon rectangle. The rectangle is refreshed before handling mouse wheel events.</p>
+<p>Tested with an adjacent tray icon. Monitor Sleep Button now only changes the countdown when scrolling over its own tray icon.</p>]]></content>
+        <author>
+            <name>SilverAmd</name>
+            <uri>https://github.com/SilverAmd</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hide Desktop Icon Text and Shortcut Arrows 1.5.0]]></title>
+        <id>https://windhawk.net/mods/hide-desktop-icon-text#01fbe027ae353a48edeb7cb6c0b74643429f57d6</id>
+        <link href="https://windhawk.net/mods/hide-desktop-icon-text"/>
+        <updated>2026-06-04T11:32:41.000Z</updated>
+        <content type="html"><![CDATA[<p>Provides options to hide desktop icon labels (keeping folder names) and remove the shortcut arrow overlay.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Hide Icon Text</strong>: Hides text labels for files and shortcuts on the desktop while preserving folder names.</li>
+<li><strong>Hide Shortcut Arrows</strong>: Removes the standard shortcut arrow overlay live without requiring registry edits or administrator rights.</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>The shortcut arrow removal affects the entire running Explorer session because the overlay resides in the shared system image list.</li>
+<li>Disabling the shortcut arrow feature (or the mod itself) restores the arrows only after Explorer restarts or the icon cache refreshes.</li>
+</ul>
+<h3 id="knownlimitation">Known limitation</h3>
+<p>Folder detection matches the drawn text against actual desktop folder names. If a <em>file</em> has
+exactly the same name as a <em>folder</em> on the desktop, that file's label will also be kept.</p>]]></content>
+        <author>
+            <name>kivsak</name>
+            <uri>https://github.com/kivsak</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Open in Admin Terminal 1.15]]></title>
+        <id>https://windhawk.net/mods/open-in-admin-terminal#e2b57e7a9131fffb4338dce9a9fb61daae8c85d6</id>
+        <link href="https://windhawk.net/mods/open-in-admin-terminal"/>
+        <updated>2026-06-04T11:19:03.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="openinadminterminal">Open in Admin Terminal</h1>
+<p><strong>TL;DR:</strong> Right-click any folder or drive in File Explorer and open an elevated terminal there — no more navigating after the fact.</p>
+<h2 id="withthismodyoucan">With this mod you can:</h2>
+<ul>
+<li>Right-click a folder background and open an admin terminal in that location</li>
+<li>Right-click a folder item and open an admin terminal inside it</li>
+<li>Right-click a drive and open an admin terminal at its root</li>
+<li>Optionally show the entry when right-clicking filesystem folders and drives in the navigation pane and Quick access</li>
+<li>Choose your preferred terminal: Auto, Windows Terminal, PowerShell 7, Windows PowerShell, Command Prompt, WSL, Git Bash, WezTerm, Alacritty, ConEmu, or a custom command</li>
+<li>Customize the context menu label, or let the mod use a smart default based on your terminal choice</li>
+<li>Optionally append the terminal name to a custom label (e.g. "Open elevated (Windows Terminal)")</li>
+</ul>
+<h2 id="preview">Preview</h2>
+<p><img src="https://i.imgur.com/qEgGpvc.gif" alt="Normal usage — right-click folder background or folder item to open elevated Windows Terminal" /></p>
+<p><em>Right-clicking a folder item to open an elevated terminal in that location (Windows Terminal)</em></p>
+<p><img src="https://i.imgur.com/HziEs16.png" alt="Context menu with Windows Terminal option" /> <img src="https://i.imgur.com/CCE3vlP.png" alt="Context menu with PowerShell 7 option" /></p>
+<p><img src="https://i.imgur.com/8KgCdju.gif" alt="Mod settings showcase" /></p>
+<p><em>Settings panel — choose terminal, customize label, toggle terminal name appending</em></p>
+<p>Screenshots may show earlier builds, but current releases use runtime classic-menu injection. The mod does not write Explorer context menu entries to the registry.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>On Windows 11, Explorer may place this entry under <code>Show more options</code> depending on your context menu setup.</li>
+<li>The entry is injected only while Explorer's classic menu is open; disabling the mod leaves no registry cleanup behind.</li>
+<li>The mod intentionally targets filesystem folders and drive roots only, including optional navigation pane and Quick access support.</li>
+<li>Auto chooses Windows Terminal, PowerShell 7, Windows PowerShell, then Command Prompt. If another built-in preset is unavailable, the mod falls back to Auto instead of hiding the entry.</li>
+<li>Diagnostics use Windhawk's built-in logging controls.</li>
+</ul>
+<h2 id="versionlog">Version log</h2>
+<ul>
+<li>1.15: Added optional navigation pane and Quick access support for filesystem folders and drives.</li>
+<li>1.14: Added support for Desktop context menu targets.</li>
+<li>1.13: Fixed elevated terminal launches for folder paths containing spaces.</li>
+<li>1.12: Added Auto fallback and WSL, Git Bash, WezTerm, Alacritty, and ConEmu terminal presets.</li>
+<li>1.11: Fixed Windows Terminal menu icon lookup when wt.exe is an app execution alias.</li>
+<li>1.10: Reduced Explorer menu-open work by limiting selection path reads and caching terminal icon lookup successes and failures.</li>
+<li>1.9: Added quiet-by-default debug logging, improved menu placement, tightened filesystem target eligibility, and refreshed docs for classic-menu runtime injection.</li>
+<li>1.8: Switched to direct Explorer classic-menu injection with no persistent registry writes.</li>
+</ul>]]></content>
+        <author>
+            <name>aimagist</name>
+            <uri>https://github.com/aimagist</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Remove Context Menu Items 1.11.0]]></title>
         <id>https://windhawk.net/mods/remove-context-menu-items#5183328f1bd44e572e823ad342b948a2025c253e</id>
@@ -417,136 +529,6 @@ the way it was in Windows 95, before Windows 98.</p>
         <author>
             <name>Kitsune</name>
             <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AudioSwap 2.2.0]]></title>
-        <id>https://windhawk.net/mods/audioswap#6f265d52a641c9f32788bd2d34dda07a02428882</id>
-        <link href="https://windhawk.net/mods/audioswap"/>
-        <updated>2026-05-30T19:20:39.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>New: Right-click → <strong>Sound Settings…</strong> opens Windows Sound dialog directly on the Playback tab.</li>
-<li>New: Middle-click tray icon → compact volume slider popup with a custom dark design. Drag to adjust output volume live; click outside or press Escape to close.</li>
-<li>New: Scroll wheel over the tray icon (Click to Swap mode) adjusts output volume, matching native Windows sound icon behaviour.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MicSwitch 2.0.0]]></title>
-        <id>https://windhawk.net/mods/microswap#9825ae7dfb1d78b8be7d98d2e8b2cc14547f3589</id>
-        <link href="https://windhawk.net/mods/microswap"/>
-        <updated>2026-05-30T19:01:37.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>Complete rebuild.</strong> Full feature sync with AudioSwap:
-6 device slots, configurable cycle order, native dark-themed settings dashboard, scroll-to-swap mode, push-to-mute, instant device-change updates via the MMDevice notification API, and Advanced Mode with priority routing.</li>
-<li>New: Right-click → <strong>Sound Settings…</strong> opens Windows Sound dialog directly on the Recording tab.</li>
-<li>New: Middle-click tray icon → compact volume slider popup with a custom dark design. Drag to adjust microphone volume live; click outside or press Escape to close.</li>
-<li>New: Scroll wheel over the tray icon (Click to Swap mode) adjusts microphone volume, matching native Windows sound icon behaviour.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[IME Native Mode Lock 0.1]]></title>
-        <id>https://windhawk.net/mods/ime-mode-lock#6f1478f3ddcca4a45d5a1930a2d500db8738a386</id>
-        <link href="https://windhawk.net/mods/ime-mode-lock"/>
-        <updated>2026-05-30T18:56:55.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="imenativemodelock">IME Native Mode Lock</h1>
-<p>Forces supported IMEs to stay in their native input mode, blocking
-both system-initiated and user-initiated mode switches.</p>
-<p>By default, Windows automatically switches input modes when changing
-window focus or switching between applications. This mod blocks that
-behavior, keeping your IME in its native mode at all times.</p>
-<h2 id="supportedimes">Supported IMEs</h2>
-<ul>
-<li><strong>Simplified Chinese</strong> (Microsoft Pinyin, etc.) — always stays in Chinese mode</li>
-<li>More languages can be added in future updates</li>
-</ul>
-<p><strong>Pair with</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — short-press
-Caps Lock to switch input languages, long-press for Caps Lock.</p>
-<hr />
-<p>强制支持的输入法保持在原生输入模式，同时阻止系统自动切换和用户主动切换。</p>
-<p>默认情况下，Windows 在切换窗口焦点或应用程序时会自动切换输入模式。
-此 mod 阻止该行为，始终保持输入法在原生输入模式。</p>
-<h2 id="">支持的输入法</h2>
-<ul>
-<li><strong>简体中文</strong>（微软拼音等）— 始终保持中文模式</li>
-<li>未来可添加更多语言支持</li>
-</ul>
-<p><strong>推荐搭配</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — 可使用 Caps Lock
-短按切换输入语言，长按触发大小写锁定，配合本 mod 体验更佳。</p>]]></content>
-        <author>
-            <name>ZeonXr</name>
-            <uri>https://github.com/ZeonXr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Caps IME Switcher 0.7]]></title>
-        <id>https://windhawk.net/mods/caps-ime-switcher#8877ffddffed29cd23d442cb2a803d65cdfea9e3</id>
-        <link href="https://windhawk.net/mods/caps-ime-switcher"/>
-        <updated>2026-05-30T18:43:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="capsimeswitcher">Caps IME Switcher</h1>
-<p>Brings the macOS Caps Lock input source switching behavior to Windows.</p>
-<p>Short-press Caps Lock to switch to the next input language.
-Long-press Caps Lock to toggle Caps Lock on/off.</p>
-<p><strong>Pair with</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — auto-locks
-IMEs to their native mode. Best experience when used together.</p>
-<hr />
-<p>将 macOS 的 Caps Lock 输入法切换方式带到 Windows。</p>
-<p>短按 Caps Lock 切换下一个输入语言，长按触发大小写锁定。</p>
-<p><strong>推荐搭配</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — 可在切换输入法时
-自动锁定中文模式，两个 mod 配合使用体验最佳。</p>]]></content>
-        <author>
-            <name>ZeonXr</name>
-            <uri>https://github.com/ZeonXr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Block SMB Quick Access 1.2]]></title>
-        <id>https://windhawk.net/mods/block-smb-quick-access#ab9754b6038bca2df2ffd75fc3f8f13e3ac15359</id>
-        <link href="https://windhawk.net/mods/block-smb-quick-access"/>
-        <updated>2026-05-30T14:11:46.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="blocksmbquickaccess">Block SMB Quick Access</h1>
-<p>Prevents SMB/UNC network paths (<code>\\server\share</code>) from being added to Quick Access
-in Windows Explorer. Local paths continue to work normally.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li><strong>Selective blocking</strong>: Only blocks SMB/UNC network paths, local paths work normally</li>
-<li><strong>Comprehensive SHARD support</strong>: Handles all SHARD types (PATHA, PATHW, PIDL, SHELLITEM, LINK, APPIDINFO, APPIDINFOIDLIST, APPIDINFOLINK)</li>
-<li><strong>UNC priority</strong>: Uses <code>SLGP_UNCPRIORITY</code> to correctly detect mapped drive letters</li>
-<li><strong>Silent operation</strong>: Runs in background without UI</li>
-</ul>
-<h2 id="howitworks">How it works</h2>
-<p>The mod hooks the <code>SHAddToRecentDocs</code> function in <code>shell32.dll</code>. When Explorer calls
-this function to add a file to Quick Access, the hook checks if the path is a UNC
-network path (starts with <code>\\</code>). If it is, the call is silently dropped. Otherwise,
-the original function is called normally.</p>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li>Windows 10 or Windows 11 (64-bit)</li>
-<li>Windhawk 1.4 or newer</li>
-</ul>
-<h2 id="knownlimitations">Known limitations</h2>
-<ul>
-<li>Does not block paths added via other mechanisms (e.g., registry manipulation)</li>
-<li>Some virtual folder PIDLs may not resolve to paths and will be allowed through</li>
-</ul>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>If the mod doesn't seem to work:</p>
-<ol>
-<li>Enable debug logging in Windhawk settings (Settings &gt; Advanced &gt; Debug logging)</li>
-<li>Check Windhawk debug logs for <code>[NOSMB]</code> entries</li>
-<li>Verify the mod is enabled for explorer.exe in Windhawk settings</li>
-<li>Restart Explorer or log out/in after enabling the mod</li>
-</ol>]]></content>
-        <author>
-            <name>Townrain</name>
-            <uri>https://github.com/Townrain</uri>
         </author>
     </entry>
 </feed>
