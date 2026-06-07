@@ -2,12 +2,52 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-06T17:35:50.000Z</updated>
+    <updated>2026-06-07T15:28:04.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 2.0.0]]></title>
+        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#d212cd2fcc4140d1f06f96e590548ddace6d455a</id>
+        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
+        <updated>2026-06-07T15:28:04.000Z</updated>
+        <content type="html"><![CDATA[<p>Seriously expand the mod and add compatibility fixes</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Explorer Ctrl+N to New File 1.1]]></title>
+        <id>https://windhawk.net/mods/explorer-ctrln-newfile#8b1683a4ec3660d5dbc7340248764ee68d40c45b</id>
+        <link href="https://windhawk.net/mods/explorer-ctrln-newfile"/>
+        <updated>2026-06-07T15:20:12.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Support the active tab in tabbed Explorer windows.</li>
+<li>Run as a Windhawk tool mod outside of explorer.exe.</li>
+<li>Resolve the active folder through Explorer's Shell view instead of scraping address bar text with UI Automation.</li>
+<li>Keep the low-level keyboard hook thread responsive by running file creation and rename work on a separate STA worker thread.</li>
+<li>Use Shell file operation fallback for protected folders, allowing Windows to show the standard elevation prompt when needed.</li>
+<li>Improve rename reliability by using the matched active Shell view first.</li>
+</ul>]]></content>
+        <author>
+            <name>lieyanbang</name>
+            <uri>https://github.com/lieyanbang</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Classic Theme Explorer Lite 1.2]]></title>
+        <id>https://windhawk.net/mods/classic-theme-explorer-lite#55ef89214517d9be74807b9e1d38d00365155a14</id>
+        <link href="https://windhawk.net/mods/classic-theme-explorer-lite"/>
+        <updated>2026-06-07T15:10:51.000Z</updated>
+        <content type="html"><![CDATA[<p>Apply fixes only under Classic theme</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Taskbar Music Lounge 4.0.2]]></title>
         <id>https://windhawk.net/mods/taskbar-music-lounge#5f8afab7b38a553578e8e963b7b30c62bf918d17</id>
@@ -399,83 +439,6 @@ exactly the same name as a <em>folder</em> on the desktop, that file's label wil
         <author>
             <name>Rod Boev</name>
             <uri>https://github.com/rodboev</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ZenDesktop: Desktop Icon Toggle and Auto-Hide 3.4.0]]></title>
-        <id>https://windhawk.net/mods/zen-desktop-toggle-icons#59c9161f0f38faf7e4f88414e0f35d428d4dd61b</id>
-        <link href="https://windhawk.net/mods/zen-desktop-toggle-icons"/>
-        <updated>2026-06-03T07:26:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>Asynchronous Execution Pipeline (<code>PostMessageW</code>)</strong>: Replaced all synchronous <code>ShowWindow</code> calls in subclass procedures with asynchronous custom messages to avoid message queue deadlocks and Explorer crashes.</li>
-<li><strong>Full-Screen Application Guard</strong>: Added automatic active window monitoring. Prevents auto-hiding icons when a full-screen application (video playback, PPT slide presentation, or game) is active.</li>
-<li><strong>Zero-Latency Physical Coordinate Guard</strong>: Replaced the laggy 100ms timer guard with a precise, zero-latency mouse coordinate comparison to filter out synthetic window-layout movements immediately while enabling absolute 0ms physical mouse-move restore.</li>
-<li><strong>Dynamic <code>CS_DBLCLKS</code> Support</strong>: Queries GCL_STYLE dynamically to support both native double-click inputs and manual interval-distance tracking fallback for windows lacking double-click style (like <code>SHELLDLL_DefView</code>).</li>
-<li><strong>Type Safety & Process Check</strong>: Standardized custom properties using <code>UlongToHandle</code> / <code>HandleToUlong</code> to prevent 64-bit truncation, and added PID checks before modifying window states on subclass cleanup.</li>
-</ul>]]></content>
-        <author>
-            <name>Lanbo</name>
-            <uri>https://github.com/Liset999</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Dynamic Island for Windows 1.1.0]]></title>
-        <id>https://windhawk.net/mods/dynamic-island-for-windows#55338f1accb10a333568251590275cc3b0e1a77f</id>
-        <link href="https://windhawk.net/mods/dynamic-island-for-windows"/>
-        <updated>2026-06-03T07:13:47.000Z</updated>
-        <content type="html"><![CDATA[<p>This release is a big step forward from v1.0.2 — we’ve gone through the code top to bottom and added a ton of polish. Below is the full breakdown of what’s new, what’s improved, and what’s fixed.</p>
-<hr />
-<h2 id="whatsnew">✨ What's New</h2>
-<ul>
-<li><strong>Complete Weather & Calendar UI Overhaul:</strong> A new interactive calendar and a rebuilt weather engine powered by <code>wttr.in</code>. Weather now shows detailed info like temperature, wind speed, humidity, and “feels like” values.</li>
-<li><strong>True GPU Tracking:</strong> The Game Overlay now tracks GPU usage in real time using Windows Performance Counters (PDH) for smooth and accurate metrics.</li>
-<li><strong>Rich Notification Scraping:</strong> Notifications now display rich text using Windows UI Automation (<code>uiautomation.h</code>), not just app icons.</li>
-<li><strong>Custom Positioning Offsets:</strong> Added <code>Offset X</code> and <code>Offset Y</code> settings so you can fine‑tune the island’s position to match your setup.</li>
-<li><strong>Multi‑Monitor & Follow Mouse Mode:</strong> Implemented multi‑monitor support along with a “follow mouse” mode, so the island can adapt seamlessly across different displays.</li>
-</ul>
-<h2 id="improvements">🛠️ Improvements</h2>
-<ul>
-<li><strong>Privacy Indicators:</strong> Replaced old polling logic with native queries to Windows <code>CapabilityAccessManager</code> Registry for instant, accurate detection.</li>
-<li><strong>Smart Alignment:</strong> Media waveform and pagination dots shift automatically when privacy icons appear, keeping the layout clean.</li>
-<li><strong>Security First:</strong> Even with “Always Show” disabled, the island pops up with clock/battery and privacy dots when your camera or mic is used.</li>
-<li><strong>UI Polish:</strong> Calendar and weather modules got a full visual refresh — sharper typography, centered layouts, and sleek pagination dots.</li>
-<li><strong>Docs & Community:</strong> The Readme and setup guides were rewritten to be clearer and more user‑friendly, with a new Feedback section and credits to contributors.</li>
-</ul>
-<h2 id="fixes">🐛 Fixes</h2>
-<ul>
-<li><strong>Media Controls:</strong> Improved spacing and hit‑testing for playback buttons, now responsive across all DPI settings.</li>
-<li><strong>Direct2D Crashes:</strong> Fixed rendering bugs that caused crashes or flickering during fast expansions or hover states.</li>
-<li><strong>Hover Logic:</strong> Adjusted idle hover behavior so expansions only trigger when the island is visible, preventing phantom triggers.</li>
-</ul>
-<hr />
-<h2 id="specialthanks">🙌 Special Thanks</h2>
-<p>Big thanks to <strong><a href="https://github.com/ciizerr">@ciizerr</a></strong> for the layout refinements and bug fixes.</p>]]></content>
-        <author>
-            <name>Himanshu</name>
-            <uri>https://github.com/devcode90</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Files 2 Folders 2.0]]></title>
-        <id>https://windhawk.net/mods/files-2-folders#ad19ef246bb802bc953cbd0d171ca2f8eeba204d</id>
-        <link href="https://windhawk.net/mods/files-2-folders"/>
-        <updated>2026-06-02T21:28:24.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed: the "Files 2 Folder…" menu entry now appears and works on the desktop (previously only inside Explorer folder windows).</li>
-<li>Added Silent mode (right-click menu): skips the dialog and immediately moves the selection using the default mode; suppresses the mod's own dialogs/error popups. The hotkey workaround is unaffected.</li>
-<li>"Default selected mode" is now a dropdown showing the actual mode names instead of a raw 1-4 number box.</li>
-<li>Fixed: the dialog now correctly pre-selects the configured "Default selected mode" (it was always reverting to the first option).</li>
-<li>Also handles selections in library/search views by deriving the destination from the selected items.</li>
-<li>Fixed: no longer inserts a doubled separator when "Place menu item near Cut/Copy" is on and Explorer already has a separator there.</li>
-<li>The menu entry and default subfolder name now use Windows' own localized strings (shell32: "Move to a folder…", "New folder"), so they appear in the OS language.</li>
-<li>Fixed-name / date modes no longer silently reuse an existing folder of that name — they number duplicates like Explorer ("New folder (2)", "(3)", …).</li>
-<li>The "Files 2 Folder…" entry now also appears in the classic menu bar's Edit dropdown (after Cut/Copy).</li>
-<li>Settings descriptions rewritten for consistency (On/Off states on their own lines, unified quoting/terminology).</li>
-<li>Workaround hotkey: Win-based combos now work via a low-level keyboard hook (the technique PowerToys uses) and suppress the OS default, instead of failing to register. Note: bare Win+<letter> shortcuts (Win+F, Win+L, …) are reserved by Windows and cannot be intercepted by any hook — pair Win with another modifier (e.g. Win+Shift+F); the mod now warns when a bare Win combo is selected.</li>
-</ul>]]></content>
-        <author>
-            <name>tria</name>
-            <uri>https://github.com/triatomic</uri>
         </author>
     </entry>
 </feed>

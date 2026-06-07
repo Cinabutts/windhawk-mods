@@ -2047,7 +2047,7 @@
                     1
                 ],
                 "ratingUsers": 1,
-                "updated": 1728198395000,
+                "updated": 1780845051000,
                 "users": 143
             },
             "metadata": {
@@ -2059,7 +2059,7 @@
                     "explorer.exe"
                 ],
                 "name": "Classic Theme Explorer Lite",
-                "version": "1.1.2"
+                "version": "1.2"
             }
         },
         "classic-theme-explorer-search-fix": {
@@ -3989,20 +3989,20 @@
                     7
                 ],
                 "ratingUsers": 8,
-                "updated": 1763900306000,
+                "updated": 1780845612000,
                 "users": 308
             },
             "metadata": {
                 "author": "lieyanbang",
-                "compilerOptions": "-lole32 -loleaut32 -lshlwapi -lshell32 -luuid -luser32",
-                "description": "Swallow Ctrl+N in Explorer and create a new file in-place, including desktop.",
+                "compilerOptions": "-lole32 -loleaut32 -lshlwapi -lshell32 -luuid -luser32 -luiautomationcore",
+                "description": "Use Ctrl+N in File Explorer to create a new file in the active folder or tab.",
                 "github": "https://github.com/lieyanbang",
                 "homepage": "https://lieyanbang.com/",
                 "include": [
-                    "explorer.exe"
+                    "windhawk.exe"
                 ],
                 "name": "Explorer Ctrl+N to New File",
-                "version": "1.0"
+                "version": "1.1"
             }
         },
         "explorer-ctrlq-new-folder": {
@@ -9048,7 +9048,7 @@
                     0
                 ],
                 "ratingUsers": 0,
-                "updated": 1776848837000,
+                "updated": 1780846084000,
                 "users": 66
             },
             "metadata": {
@@ -9056,14 +9056,14 @@
                     "x86-64"
                 ],
                 "author": "Anixx",
-                "compilerOptions": "-lcomctl32",
-                "description": "Restores the menubar in folder windows in 24h2, 25h2 and later",
+                "compilerOptions": "-lcomctl32 -lgdi32 -luxtheme",
+                "description": "Fixes explorer problems: menu bar, listview redraw, classic background color",
                 "github": "https://github.com/Anixx",
                 "include": [
                     "explorer.exe"
                 ],
-                "name": "Restore folder menubar in 24h2, 25h2",
-                "version": "1.0.1"
+                "name": "ExplorerFrame and menubar fixes fork",
+                "version": "2.0.0"
             }
         },
         "ribbon-caption-icon-fix": {
