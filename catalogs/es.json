@@ -34,6 +34,9 @@
                 ],
                 "name": "Accent Color Sync",
                 "version": "1.6"
+            },
+            "metadataEnglish": {
+                "description": "Restores Control Panel color opacity functionality"
             }
         },
         "accent-hl-color": {
@@ -548,6 +551,10 @@
                 ],
                 "name": "Desplazamiento Automatico Win32",
                 "version": "1.0.1"
+            },
+            "metadataEnglish": {
+                "description": "Enables browser-style middle-mouse autoscroll in Win32 applications. Compatible with Smooth Scroll Win32.",
+                "name": "AutoScroll Win32"
             }
         },
         "balloon-sound-fix": {
@@ -943,6 +950,10 @@
                 "license": "MIT",
                 "name": "Centrar Nuevas Ventanas Automáticamente",
                 "version": "1.0.1"
+            },
+            "metadataEnglish": {
+                "description": "Opens all new windows centered on the screen, including UWP and WinUI apps",
+                "name": "Center New Windows"
             }
         },
         "center-titlebar": {
@@ -2281,6 +2292,10 @@
                 ],
                 "name": "Copiar y Pegar Inteligente",
                 "version": "1.3.2"
+            },
+            "metadataEnglish": {
+                "description": "Automatically format, clean, and enrich text instantly as you copy it to the clipboard.",
+                "name": "Smart Copy & Paste"
             }
         },
         "close-explorer-on-esc": {
@@ -3228,6 +3243,10 @@
                 "name": "Desactivar el tamaño mínimo de miniaturas",
                 "twitter": "https://twitter.com/Leym0naide",
                 "version": "1.3"
+            },
+            "metadataEnglish": {
+                "description": "Disables the cutoff size used to display thumbnails in File Explorer.",
+                "name": "Disable Thumbnail Minimum Size"
             }
         },
         "disable-tray-icons": {
@@ -4946,6 +4965,10 @@
                 "license": "MIT",
                 "name": "Animación de Contenido del Explorador de Archivos estilo WinUI",
                 "version": "1.0.1"
+            },
+            "metadataEnglish": {
+                "description": "Smooth WinUI-like page transition animations for the File Explorer content area.",
+                "name": "File Explorer WinUI-Like Content Animation"
             }
         },
         "file-explorer-details-autofit-columns": {
@@ -9496,6 +9519,10 @@
                 ],
                 "name": "Desplazamiento Suave para Win32",
                 "version": "1.0.3"
+            },
+            "metadataEnglish": {
+                "description": "Adds smooth scrolling with spring physics to legacy Win32 apps",
+                "name": "Smooth Scroll for Win32"
             }
         },
         "snap-commander": {
@@ -10711,7 +10738,7 @@
                     221
                 ],
                 "ratingUsers": 332,
-                "updated": 1774220790000,
+                "updated": 1780767350000,
                 "users": 5524
             },
             "metadata": {
@@ -10723,7 +10750,7 @@
                     "explorer.exe"
                 ],
                 "name": "Taskbar Music Lounge",
-                "version": "4.0.1"
+                "version": "4.0.2"
             }
         },
         "taskbar-no-minimize": {
@@ -11365,13 +11392,13 @@
                     1142
                 ],
                 "ratingUsers": 1263,
-                "updated": 1771272851000,
+                "updated": 1780762241000,
                 "users": 120871
             },
             "featured": true,
             "metadata": {
                 "author": "m417z",
-                "compilerOptions": "-DWINVER=0x0A00 -lcomctl32 -ldwmapi -lgdi32 -lole32 -lversion",
+                "compilerOptions": "-lcomctl32 -ldwmapi -lgdi32 -lole32 -lversion",
                 "description": "Control the system volume by scrolling over the taskbar or anywhere with modifier keys",
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -11382,7 +11409,7 @@
                 ],
                 "name": "Taskbar Volume Control",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3"
+                "version": "1.3.1"
             }
         },
         "taskbar-volume-control-per-app": {
@@ -13440,7 +13467,7 @@
                     6406
                 ],
                 "ratingUsers": 7515,
-                "updated": 1779898932000,
+                "updated": 1780740934000,
                 "users": 639702
             },
             "featured": true,
@@ -13460,7 +13487,7 @@
                 ],
                 "name": "Windows 11 Start Menu Styler",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.5.2"
+                "version": "1.6"
             }
         },
         "windows-11-taskbar-styler": {
@@ -13555,6 +13582,10 @@
                 "license": "MIT",
                 "name": "Menús contextuales con animación WinUI",
                 "version": "1.0.1"
+            },
+            "metadataEnglish": {
+                "description": "Adds smooth WinUI-style vertical slide animations to classic Win32 context menus in Windows 11",
+                "name": "WinUI Context Menu Animation"
             }
         },
         "winver-custom-text": {

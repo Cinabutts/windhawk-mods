@@ -2,12 +2,56 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-05T18:10:10.000Z</updated>
+    <updated>2026-06-06T17:35:50.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Music Lounge 4.0.2]]></title>
+        <id>https://windhawk.net/mods/taskbar-music-lounge#5f8afab7b38a553578e8e963b7b30c62bf918d17</id>
+        <link href="https://windhawk.net/mods/taskbar-music-lounge"/>
+        <updated>2026-06-06T17:35:50.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed settings such as width not being applied until the mod is reloaded.</li>
+</ul>]]></content>
+        <author>
+            <name>Hashah2311</name>
+            <uri>https://github.com/Hashah2311</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Volume Control 1.3.1]]></title>
+        <id>https://windhawk.net/mods/taskbar-volume-control#131f90d6611b96811af101f4b8177dd24e40ed13</id>
+        <link href="https://windhawk.net/mods/taskbar-volume-control"/>
+        <updated>2026-06-06T16:10:41.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed the "Middle click to mute" option in recent Windows 11 versions.</li>
+<li>The Win and Alt modifier keys are now suppressed after scrolling. This fixes e.g. the Start menu opening after Win+scrolling to change the volume.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.6]]></title>
+        <id>https://windhawk.net/mods/windows-11-start-menu-styler#f03c2a238bb19ba9f0a9481d7697b8ddf14e4be8</id>
+        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
+        <updated>2026-06-06T10:15:34.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added the new side by side layout for the redesigned Start menu which allows having pinned apps on one side and all apps on the other side. Both can be scrolled independently.</li>
+<li>Updated the following themes to use the new side by side layout: SideBySide, SideBySide2, SideBySideMinimal.</li>
+<li>Updated the following themes: NoRecommendedSection, Down Aero, RosePine, UniMenu, Command Center.</li>
+<li>Added the FullScreen theme.</li>
+<li>Added comparison and condition operations to style substitution expressions, for example: <code>{{x &gt; 8 ? 1 : 3}}</code>.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Snap Commander 1.0.0]]></title>
         <id>https://windhawk.net/mods/snap-commander#b41f04fdb59386dddaa75f1e522d7403eb00877f</id>
@@ -432,95 +476,6 @@ exactly the same name as a <em>folder</em> on the desktop, that file's label wil
         <author>
             <name>tria</name>
             <uri>https://github.com/triatomic</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Transparent Desktop Icons with Spotlight 1.0]]></title>
-        <id>https://windhawk.net/mods/transparent-desktop-icons-spotlight#7de4fff6bbaa2bbc92512039e8bc39c61480c7bf</id>
-        <link href="https://windhawk.net/mods/transparent-desktop-icons-spotlight"/>
-        <updated>2026-06-02T16:39:45.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="transparentdesktopiconswithspotlight">Transparent Desktop Icons with Spotlight</h1>
-<p>Makes desktop icons semi-transparent when idle, revealing the wallpaper beneath.
-When you move your mouse over the desktop, a customizable spotlight effect
-illuminates the area around your cursor, revealing icons with full clarity.</p>
-<p>As the cursor leaves the desktop or remains idle, the spotlight fades and icons
-gradually become transparent again. Selected icons remain opaque with their own 
-customizable independent timeouts, blurs, and fade durations.</p>
-<p><strong>Demonstration</strong>: in this case the selected icons have a timeout (set it to 0 to keep them active)</p>
-<p><img src="https://i.imgur.com/7cTTHTN.gif" alt="Demonstration:" /></p>
-<p><strong>Note:</strong> This mod captures the static Windows wallpaper for performance reasons. 
-It does not currently support live/animated wallpapers (e.g., Wallpaper Engine, Lively).</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Dedicated render thread for flawless, vsync-matched 60/144+ FPS performance.</li>
-<li>0% background GPU/CPU usage when the desktop is idle.</li>
-<li>Independent Dual-GPU Blur processing for both the cursor spotlight and selected icons.</li>
-<li>Customizable shapes (square to circle) for both the spotlight and selected areas.</li>
-<li>Click-through architecture using WS<em>EX</em>TRANSPARENT ensures no interference with native OS interaction.</li>
-</ul>]]></content>
-        <author>
-            <name>drgutman</name>
-            <uri>https://github.com/drgutman</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[File Explorer WinUI-Like Content Animation 1.0.1]]></title>
-        <id>https://windhawk.net/mods/file-explorer-content-animation#ff269b026fa0e4628a625cbfb59da891642bb872</id>
-        <link href="https://windhawk.net/mods/file-explorer-content-animation"/>
-        <updated>2026-06-02T13:06:49.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>GPU-accelerated fade - The fade effect now uses a DirectComposition overlay capturing the previous folder's content (including Mica/Acrylic). The overlay fades out on the GPU compositor thread, fully independent of CPU load from thumbnail rendering.</li>
-<li>Page transitions - Detects the navigation type and applies a different animation for each context:
-Entrance (slide up) - Opening Explorer, new tabs, and general navigation.
-Enter folder (short fast slide from right) - Navigating into subfolders.
-Back slide (slide from left) - Going back via button, breadcrumb, or Up arrow.
-Forward slide (slide from right) - Going forward after going back.
-Reverse direction - Content can slide down instead of up.</li>
-<li>Navigation pane animation - The nav pane tree slides in from the left when opening Explorer or a new tab.</li>
-<li>Property page animation - Animates tab switching in folder and file Properties windows.</li>
-<li>Requires symbol resolution on explorerframe.dll (handled automatically by Windhawk).</li>
-</ul>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Desktop Companions 1.3.0]]></title>
-        <id>https://windhawk.net/mods/neko-cat#7afddcbd4e0e0300474719100693301b898f1be3</id>
-        <link href="https://windhawk.net/mods/neko-cat"/>
-        <updated>2026-06-02T07:55:19.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="newfeatures">✨ New Features</h2>
-<ul>
-<li><strong>Renamed Mod:</strong> From <em>Neko Cat</em> → <em>Desktop Companions</em>  </li>
-<li><strong>New Characters:</strong> Sakura and Tomoyo join the lineup 🎉  </li>
-<li><strong>Diverse Litters:</strong> Option to spawn a randomized mix of all downloaded characters at once  </li>
-</ul>
-<h2 id="performanceimprovements">⚡ Performance Improvements</h2>
-<ul>
-<li><strong>High-Performance Texture Slicing:</strong><br />
-Replaced 38 separate PNG downloads with a single spritesheet → disk &amp; network checks are <strong>97% faster</strong>!  </li>
-<li><strong>Dynamic RAM Cloning:</strong><br />
-Spritesheets are sliced in memory at startup for smooth, lag-free performance  </li>
-</ul>
-<h2 id="fixesenhancements">🛠 Fixes &amp; Enhancements</h2>
-<ul>
-<li><strong>Leak-Free Switcher:</strong> Fixed memory leak when dynamically switching characters in settings  </li>
-<li><strong>Organized Settings:</strong> Categories are now clean and user-friendly:  </li>
-<li>Appearance  </li>
-<li>Behavior  </li>
-<li>Audio  </li>
-<li>Advanced  </li>
-<li><strong>Window Behavior:</strong> Prevent accidental maximization when double-clicking on a desktop companion  </li>
-</ul>
-<h2 id="importantnote">⚠️ Important Note</h2>
-<p>Due to the reorganized settings layout, you may need to <strong>reset or reconfigure your preferences</strong> in the Windhawk settings panel after updating.</p>
-<hr />
-<h3 id="specialthanks">💖 Special Thanks</h3>
-<p>Big thanks to <strong>@zkyhzxf (quantum)</strong> on Discord for contributing the beautiful Sakura and Tomoyo icons!</p>]]></content>
-        <author>
-            <name>ciizerr</name>
-            <uri>https://github.com/ciizerr</uri>
         </author>
     </entry>
 </feed>
