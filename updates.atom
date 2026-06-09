@@ -2,12 +2,183 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-07T15:28:04.000Z</updated>
+    <updated>2026-06-09T20:31:17.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Redirect Settings to Control Panel 10.0.1]]></title>
+        <id>https://windhawk.net/mods/settings-to-control-panel#1ac6e9fec2eed8fc9df2082f410e528b70dc1720</id>
+        <link href="https://windhawk.net/mods/settings-to-control-panel"/>
+        <updated>2026-06-09T20:31:17.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="redirectsettingscontrolpanel">Redirect Settings → Control Panel</h1>
+<p>This mod intercepts modern <code>ms-settings:</code> URIs and redirects them to their
+corresponding classic Control Panel applets using only native Windows components.</p>
+<hr />
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li><strong>Windows 10</strong> – Mostly complete support</li>
+<li><strong>Windows 11</strong> – Partial support (some redirects may vary by build)</li>
+</ul>
+<hr />
+<h2 id="features">Features</h2>
+<ul>
+<li>Redirects numerous <code>ms-settings:</code> URIs to classic Control Panel</li>
+<li>Anti-loop protection</li>
+<li>Configurable fallback modes</li>
+</ul>
+<hr />
+<h2 id="configuration">Configuration</h2>
+<ul>
+<li><strong>EnableRedirects</strong> – Turn the mod on or off</li>
+<li><strong>UIOnlyRedirects</strong> – Only redirect clicks (safer, may miss some)</li>
+<li><strong>FallbackMode</strong> – What to do when no classic page exists:</li>
+<li><code>0</code> = ignore (do nothing)</li>
+<li><code>1</code> = open Control Panel</li>
+<li><code>2</code> = open modern Settings (default)</li>
+<li><strong>Win11CompatibilityMode</strong> – Extra safety for Windows 11</li>
+<li><strong>MaxLaunchesPerUri</strong> – Prevents infinite loops (default: 3 launches per 5 seconds)</li>
+</ul>
+<hr />
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>System tray icons (audio/network) use DCOM activation and cannot be intercepted (This could change in future)</li>
+<li>Windows 11 support is limited due to Microsoft's architectural changes and some redirects might change based on versions.</li>
+</ul>
+<hr />
+<h2 id="howitworks">How It Works</h2>
+<p>The mod hooks:</p>
+<ul>
+<li><code>ShellExecuteExW</code> / <code>ShellExecuteW</code></li>
+<li><code>CreateProcessW</code></li>
+<li><code>IShellDispatch2::ShellExecute</code></li>
+</ul>
+<p>When a <code>ms-settings:</code> URI is detected, it launches the corresponding classic
+Control Panel target instead of the modern Settings app.</p>
+<hr />
+<h2 id="credits">Credits</h2>
+<ul>
+<li>m417z – Code reviews and feedback</li>
+<li>Anixx – Testing on Windows 11 23H2</li>
+<li>dbilanoski – CLSID documentation</li>
+</ul>]]></content>
+        <author>
+            <name>babamohammed</name>
+            <uri>https://github.com/babamohammed2022</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Files 2 Folders 2.1]]></title>
+        <id>https://windhawk.net/mods/files-2-folders#b0dd6aa46438ea0f3e7c9130f92772831dcbd22c</id>
+        <link href="https://windhawk.net/mods/files-2-folders"/>
+        <updated>2026-06-09T10:23:47.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li><strong>Copy operation mode.</strong> The old Fast/Slow move toggle becomes a single <strong>Operation</strong> setting with three choices: <em>Move - fast</em> (<code>MoveFileExW</code>), <em>Move - safe</em> (<code>IFileOperation::MoveItem</code>, with progress/undo/UAC), and <em>Copy</em> (<code>IFileOperation::CopyItem</code>, leaving the originals in place). The dialog radio labels read "Copy" vs "Move" to match the selected operation.</li>
+<li><strong>Context-menu positioning.</strong> A new <strong>Right-click menu position</strong> setting: <em>Top of menu</em> (default) or <em>Between Cut and Copy</em> — inserted just after the shell Cut/Copy block (matched by command id, so it is locale-independent), falling back to the top of the menu on the modern Windows 11 flyout where Cut/Copy are not real menu items.</li>
+</ul>]]></content>
+        <author>
+            <name>tria</name>
+            <uri>https://github.com/triatomic</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Transparent Desktop Icons with Spotlight 1.1.0]]></title>
+        <id>https://windhawk.net/mods/transparent-desktop-icons-spotlight#20aea8bd8a1224edf15d725d671a55cf158f2577</id>
+        <link href="https://windhawk.net/mods/transparent-desktop-icons-spotlight"/>
+        <updated>2026-06-09T10:17:42.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>NEW FEATURE</strong></p>
+<ul>
+<li>Double-click on empty desktop background to hide or show the overlay</li>
+</ul>
+<p><strong>Added:</strong></p>
+<ul>
+<li>Native WIC image decoding (<code>-lwindowscodecs</code>).</li>
+<li>COM integration (<code>IDesktopWallpaper</code>) for accurate Fit/Position enums.</li>
+<li>Registry Watcher thread for instant theme/wallpaper detection.</li>
+<li>Native Window Subclassing for desktop icon interaction.</li>
+<li>Support for Solid Colour backgrounds and Centre/Fit letterboxing.</li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul>
+<li>Refactored thread safety: Split <code>g_stateMutex</code> (UI) and <code>g_renderMutex</code> (Render).</li>
+<li>Replaced GDI <code>CaptureWallpaperBitmap</code> with WIC <code>LoadWallpaperBitmap</code>.</li>
+<li>Optimized render loop sleep states for high-refresh-rate (144Hz+) monitors.</li>
+<li>Replaced global DispatchMessageW hook with a thread-local WH_GETMESSAGE bootstrap</li>
+<li>Replaced hardcoded WM_APP macros with dynamic RegisterWindowMessageW routing</li>
+<li>Replaced per-frame WindowFromPoint Z-order traversal with native TrackMouseEvent (TME_LEAVE) on desktop subclasses.</li>
+<li>Replaced per-frame WindowFromPoint Z-order traversal with native TrackMouseEvent (TME_LEAVE) on desktop subclasses. This eliminates hundreds of Win32 global lock acquisitions per second, dropping idle CPU usage to absolute zero and preventing micro-stutters on high-refresh-rate monitors.</li>
+<li>Added bounds checking and path validation to TranscodedImageCache parsing to prevent std::bad<em>alloc crashes from corrupted registry data, and added ERROR</em>SUCCESS validation to the Registry Watcher thread to prevent undefined behaviour from null handles.</li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul>
+<li>Wallpaper "Fill" mode misalignment across all DPI scales.</li>
+<li>Spotlight/Selection masks bleeding through the wallpaper overlay.</li>
+<li>Overlay turning solid black/colour after DPI scaling changes.</li>
+<li>Micro-stutters caused by UI thread mutex contention during D2D rendering.</li>
+<li>Icon selection not moving from keyboard input and clean-up code</li>
+</ul>]]></content>
+        <author>
+            <name>drgutman</name>
+            <uri>https://github.com/drgutman</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dynamic Island for Windows 1.1.1]]></title>
+        <id>https://windhawk.net/mods/dynamic-island-for-windows#f9abdadf12d052e7120571bdf52f578ad98c4333</id>
+        <link href="https://windhawk.net/mods/dynamic-island-for-windows"/>
+        <updated>2026-06-09T07:51:07.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="fixes">Fixes</h2>
+<ul>
+<li>Fixed a browser error that could occur when clicking on the Dynamic Island widget.</li>
+<li>Fixed mouse wheel scrolling issues, including delayed responses and unintended looping behavior.</li>
+<li>Fixed an issue where widgets could disappear after clicking on the desktop or using Win + D.</li>
+</ul>
+<h2 id="improvements">Improvements</h2>
+<h3 id="weather">Weather</h3>
+<ul>
+<li>Improved the Weather UI.</li>
+<li>Added support for Imperial units (°F, mph, etc.).</li>
+<li>Added auto-hide functionality.</li>
+<li>Added hover behavior settings.</li>
+</ul>
+<h3 id="mediacontrols">Media Controls</h3>
+<ul>
+<li>Added click-to-expand functionality for the media widget.</li>
+<li>Added a persistent media pill option.</li>
+<li>Centered media playback controls for better alignment.</li>
+<li>Added click animations to media control buttons for improved feedback.</li>
+</ul>]]></content>
+        <author>
+            <name>Himanshu</name>
+            <uri>https://github.com/devcode90</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Classic Theme 1.2.5]]></title>
+        <id>https://windhawk.net/mods/classic-theme-enable#d86f12704aeb84ff7ed2e42838d3ad2bdbf44f10</id>
+        <link href="https://windhawk.net/mods/classic-theme-enable"/>
+        <updated>2026-06-09T07:41:38.000Z</updated>
+        <content type="html"><![CDATA[<p>Update readme</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Office UI Reverter (32/64-bit Universal) 1.1.0]]></title>
+        <id>https://windhawk.net/mods/office-ui-reverter-universal#a8455db085a55422d905bb666c1ebc8f6e63481a</id>
+        <link href="https://windhawk.net/mods/office-ui-reverter-universal"/>
+        <updated>2026-06-09T07:41:11.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added support for splash screen.</li>
+</ul>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 2.0.0]]></title>
         <id>https://windhawk.net/mods/restore-folder-menubar-25h2#d212cd2fcc4140d1f06f96e590548ddace6d455a</id>
@@ -305,140 +476,6 @@ list.</p>]]></content>
         <author>
             <name>tonythethompson</name>
             <uri>https://github.com/tonythethompson</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Add This PC and Desktop to Nav Top 1.3.0]]></title>
-        <id>https://windhawk.net/mods/add-virtual-folders-to-nav-top#ca3145f0cb1e292fead3f7c74c2eda168c686799</id>
-        <link href="https://windhawk.net/mods/add-virtual-folders-to-nav-top"/>
-        <updated>2026-06-04T19:36:41.000Z</updated>
-        <content type="html"><![CDATA[<p>Changed the injection strategy to hook kernelbase!LoadLibraryExW instead of force-loading ExplorerFrame.dll in Wh_ModInit. Processes that don't use ExplorerFrame.dll no longer get it loaded at startup.</p>
-<p>A user reported instability on 25H2 in #4280 (browser tabs crashing, Explorer becoming unresponsive after restart). I haven't been able to reproduce it, but the previous approach loaded ExplorerFrame.dll into every injected process at startup, which is unnecessarily aggressive. Deferring to the kernelbase hook (per @m417z's suggestion in #4159) avoids that entirely.</p>]]></content>
-        <author>
-            <name>Rod Boev</name>
-            <uri>https://github.com/rodboev</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Monitor Sleep Button 1.1.1]]></title>
-        <id>https://windhawk.net/mods/monitor-sleep-button#7911f2ed2e772be13cb019231beb8a2d397dc15b</id>
-        <link href="https://windhawk.net/mods/monitor-sleep-button"/>
-        <updated>2026-06-04T19:29:28.000Z</updated>
-        <content type="html"><![CDATA[<p>Monitor Sleep Button now uses the actual Shell_NotifyIconGetRect rectangle for mouse wheel hit testing instead of expanding the tray icon rectangle. The rectangle is refreshed before handling mouse wheel events.</p>
-<p>Tested with an adjacent tray icon. Monitor Sleep Button now only changes the countdown when scrolling over its own tray icon.</p>]]></content>
-        <author>
-            <name>SilverAmd</name>
-            <uri>https://github.com/SilverAmd</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hide Desktop Icon Text and Shortcut Arrows 1.5.0]]></title>
-        <id>https://windhawk.net/mods/hide-desktop-icon-text#01fbe027ae353a48edeb7cb6c0b74643429f57d6</id>
-        <link href="https://windhawk.net/mods/hide-desktop-icon-text"/>
-        <updated>2026-06-04T11:32:41.000Z</updated>
-        <content type="html"><![CDATA[<p>Provides options to hide desktop icon labels (keeping folder names) and remove the shortcut arrow overlay.</p>
-<h3 id="features">Features</h3>
-<ul>
-<li><strong>Hide Icon Text</strong>: Hides text labels for files and shortcuts on the desktop while preserving folder names.</li>
-<li><strong>Hide Shortcut Arrows</strong>: Removes the standard shortcut arrow overlay live without requiring registry edits or administrator rights.</li>
-</ul>
-<h3 id="notes">Notes</h3>
-<ul>
-<li>The shortcut arrow removal affects the entire running Explorer session because the overlay resides in the shared system image list.</li>
-<li>Disabling the shortcut arrow feature (or the mod itself) restores the arrows only after Explorer restarts or the icon cache refreshes.</li>
-</ul>
-<h3 id="knownlimitation">Known limitation</h3>
-<p>Folder detection matches the drawn text against actual desktop folder names. If a <em>file</em> has
-exactly the same name as a <em>folder</em> on the desktop, that file's label will also be kept.</p>]]></content>
-        <author>
-            <name>kivsak</name>
-            <uri>https://github.com/kivsak</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Open in Admin Terminal 1.15]]></title>
-        <id>https://windhawk.net/mods/open-in-admin-terminal#e2b57e7a9131fffb4338dce9a9fb61daae8c85d6</id>
-        <link href="https://windhawk.net/mods/open-in-admin-terminal"/>
-        <updated>2026-06-04T11:19:03.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="openinadminterminal">Open in Admin Terminal</h1>
-<p><strong>TL;DR:</strong> Right-click any folder or drive in File Explorer and open an elevated terminal there — no more navigating after the fact.</p>
-<h2 id="withthismodyoucan">With this mod you can:</h2>
-<ul>
-<li>Right-click a folder background and open an admin terminal in that location</li>
-<li>Right-click a folder item and open an admin terminal inside it</li>
-<li>Right-click a drive and open an admin terminal at its root</li>
-<li>Optionally show the entry when right-clicking filesystem folders and drives in the navigation pane and Quick access</li>
-<li>Choose your preferred terminal: Auto, Windows Terminal, PowerShell 7, Windows PowerShell, Command Prompt, WSL, Git Bash, WezTerm, Alacritty, ConEmu, or a custom command</li>
-<li>Customize the context menu label, or let the mod use a smart default based on your terminal choice</li>
-<li>Optionally append the terminal name to a custom label (e.g. "Open elevated (Windows Terminal)")</li>
-</ul>
-<h2 id="preview">Preview</h2>
-<p><img src="https://i.imgur.com/qEgGpvc.gif" alt="Normal usage — right-click folder background or folder item to open elevated Windows Terminal" /></p>
-<p><em>Right-clicking a folder item to open an elevated terminal in that location (Windows Terminal)</em></p>
-<p><img src="https://i.imgur.com/HziEs16.png" alt="Context menu with Windows Terminal option" /> <img src="https://i.imgur.com/CCE3vlP.png" alt="Context menu with PowerShell 7 option" /></p>
-<p><img src="https://i.imgur.com/8KgCdju.gif" alt="Mod settings showcase" /></p>
-<p><em>Settings panel — choose terminal, customize label, toggle terminal name appending</em></p>
-<p>Screenshots may show earlier builds, but current releases use runtime classic-menu injection. The mod does not write Explorer context menu entries to the registry.</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>On Windows 11, Explorer may place this entry under <code>Show more options</code> depending on your context menu setup.</li>
-<li>The entry is injected only while Explorer's classic menu is open; disabling the mod leaves no registry cleanup behind.</li>
-<li>The mod intentionally targets filesystem folders and drive roots only, including optional navigation pane and Quick access support.</li>
-<li>Auto chooses Windows Terminal, PowerShell 7, Windows PowerShell, then Command Prompt. If another built-in preset is unavailable, the mod falls back to Auto instead of hiding the entry.</li>
-<li>Diagnostics use Windhawk's built-in logging controls.</li>
-</ul>
-<h2 id="versionlog">Version log</h2>
-<ul>
-<li>1.15: Added optional navigation pane and Quick access support for filesystem folders and drives.</li>
-<li>1.14: Added support for Desktop context menu targets.</li>
-<li>1.13: Fixed elevated terminal launches for folder paths containing spaces.</li>
-<li>1.12: Added Auto fallback and WSL, Git Bash, WezTerm, Alacritty, and ConEmu terminal presets.</li>
-<li>1.11: Fixed Windows Terminal menu icon lookup when wt.exe is an app execution alias.</li>
-<li>1.10: Reduced Explorer menu-open work by limiting selection path reads and caching terminal icon lookup successes and failures.</li>
-<li>1.9: Added quiet-by-default debug logging, improved menu placement, tightened filesystem target eligibility, and refreshed docs for classic-menu runtime injection.</li>
-<li>1.8: Switched to direct Explorer classic-menu injection with no persistent registry writes.</li>
-</ul>]]></content>
-        <author>
-            <name>aimagist</name>
-            <uri>https://github.com/aimagist</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Remove Context Menu Items 1.11.0]]></title>
-        <id>https://windhawk.net/mods/remove-context-menu-items#5183328f1bd44e572e823ad342b948a2025c253e</id>
-        <link href="https://windhawk.net/mods/remove-context-menu-items"/>
-        <updated>2026-06-03T08:07:39.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added Japanese language support (thanks to <a href="https://github.com/haru612">haru612</a>)</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Add This PC and Desktop to Nav Top 1.2.1]]></title>
-        <id>https://windhawk.net/mods/add-virtual-folders-to-nav-top#da0605c6e036ab19f40fecfa7a367a1084daa6e4</id>
-        <link href="https://windhawk.net/mods/add-virtual-folders-to-nav-top"/>
-        <updated>2026-06-03T07:34:30.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="addthispcanddesktoptonavtop">Add This PC and Desktop to Nav Top</h1>
-<p>This mod adds two virtual folders to the top of File Explorer's navigation pane and fixes the chevron rendering.</p>
-<ul>
-<li><p><strong>Show This PC at top:</strong> Adds an expandable This PC entry with drives. (Expandable This PC can't be pinned to the top without this mod.)</p></li>
-<li><p><strong>Show Desktop at top:</strong> Adds a Desktop entry for the root namespace object. This includes Recycle Bin, Control Panel, etc. instead of just the items on the desktop. (This target can't be pinned without this mod.)</p></li>
-</ul>
-<p>Both virtual folders have a toggle for whether they are expandable or not. Their position can be swapped. Duplicate entries of Desktop or This PC can be removed from other parts of the nav. Also:</p>
-<ul>
-<li><p><strong>Hide Home/Gallery:</strong> Optional, default-enabled toggles to hide the native Explorer entries. They don't affect Quick Access.</p></li>
-<li><p><strong>Remove separators:</strong> Optionally remove each separator individually.</p></li>
-<li><p><strong>Fix chevron drawing:</strong> Replaces the pixelated and clipped chevron with a smooth anti-aliased versions. The size (which matches other UI elements by default) is configurable.</p></li>
-</ul>
-<p>This mod injects only in processes that use <code>ExplorerFrame.dll</code>, so the include is set to <code>*</code> but it will not touch most processes. You can set it to <code>explorer.exe</code> only, if you don't want the nav in Open/Save dialogs changed. Only "modern" dialogs are affected.</p>
-<p>Before/after:</p>
-<p><img src="https://i.imgur.com/LZuqzMx.png" alt="" /></p>]]></content>
-        <author>
-            <name>Rod Boev</name>
-            <uri>https://github.com/rodboev</uri>
         </author>
     </entry>
 </feed>
