@@ -2,12 +2,233 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-12T16:23:23.000Z</updated>
+    <updated>2026-06-13T23:27:36.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Taskbar AI Quota Bars 0.9.2]]></title>
+        <id>https://windhawk.net/mods/taskbar-ai-quota#c780b0a668666da572a14c43a7e8f8f22f84cb5d</id>
+        <link href="https://windhawk.net/mods/taskbar-ai-quota"/>
+        <updated>2026-06-13T23:27:36.000Z</updated>
+        <content type="html"><![CDATA[<p>Adds a "Bar mode" setting to show remaining quota instead of used</p>]]></content>
+        <author>
+            <name>Cleroth</name>
+            <uri>https://github.com/Cleroth</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Common Controls Hook 1.0]]></title>
+        <id>https://windhawk.net/mods/common-controls-hook#b02dade50ac82c10c15af1cccbd935ff314c0a53</id>
+        <link href="https://windhawk.net/mods/common-controls-hook"/>
+        <updated>2026-06-13T22:45:33.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="commoncontrolshook">Common Controls Hook</h1>
+<p>This mod forces legacy GUI processes into the Common Controls version 6
+activation context at the moment they create windows, dialogs, and message
+boxes.</p>
+<p>The practical goal is simple: make old Win32 UI surfaces, including VBScript
+<code>MsgBox</code> and classic dialog-based applications, use themed visual styles instead
+of the pre-XP <code>comctl32.dll</code> version 5 look.</p>
+<p><img src="https://i.imgur.com/4oVsYi7.png" alt="Screenshot" /></p>
+<h2 id="credits">Credits</h2>
+<p>This mod is a Windhawk port of
+<a href="https://github.com/LuicdLabs/comctl32v6hook">comctl32v6hook</a>, a standalone
+user-mode DLL by LuicdLabs.</p>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Classic Theme Explorer Lite 1.3]]></title>
+        <id>https://windhawk.net/mods/classic-theme-explorer-lite#cc18d87f7414ade8a50bf593007beecbd82cbff6</id>
+        <link href="https://windhawk.net/mods/classic-theme-explorer-lite"/>
+        <updated>2026-06-13T20:32:28.000Z</updated>
+        <content type="html"><![CDATA[<p>Make adding Clientedge optional for people who dislike it or add via other means (DLL patching, resource redirect, etc)</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Folder Hover Menu 1.0]]></title>
+        <id>https://windhawk.net/mods/explorer-folder-hover-menu#86665e6c477b0e5ba1f8058d8e4b448faa2a5f13</id>
+        <link href="https://windhawk.net/mods/explorer-folder-hover-menu"/>
+        <updated>2026-06-13T19:59:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="folderhovermenu">Folder Hover Menu</h1>
+<p>When you hover the mouse over a folder in the File Explorer file list, a small
+expand button appears in the bottom-right corner of that folder. Click it to pop
+up a cascading menu of the folder's contents. You can navigate into sub-folders
+and launch items straight from the menu, without opening the folder first.</p>
+<p>Inspired by <a href="https://qttabbar.wikidot.com/">QTTabBar</a>.</p>
+<p><img src="https://i.imgur.com/ZPceXoZ.png" alt="Screenshot" /></p>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vertical Taskbar for Windows 11 1.3.13]]></title>
+        <id>https://windhawk.net/mods/taskbar-vertical#79aee20d8e1ca2e951026060ecde060242d41ff0</id>
+        <link href="https://windhawk.net/mods/taskbar-vertical"/>
+        <updated>2026-06-13T19:58:25.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed ARM64 support in recent Windows 11 versions.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar AI Quota Bars 0.9.1]]></title>
+        <id>https://windhawk.net/mods/taskbar-ai-quota#abc86d1f587043340096e5fafc9019caa29cc2e7</id>
+        <link href="https://windhawk.net/mods/taskbar-ai-quota"/>
+        <updated>2026-06-13T18:51:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="taskbaraiquotabars">Taskbar AI Quota Bars</h1>
+<p>Shows Anthropic Claude and OpenAI/Codex AI agent and LLM subscription quota usage as
+compact bars on the Windows 11 taskbar, next to the system tray.
+Can show on the primary taskbar only, all taskbars, or one specific monitor.</p>
+<p><img src="https://i.imgur.com/LD0K31E.png" alt="Taskbar AI Quota Bars" />
+<img src="https://i.imgur.com/H7agnz2.png" alt="Taskbar AI Quota Bars Detail" /></p>
+<p>Each account gets one compact column:</p>
+<ul>
+<li>stacked layout: stacked horizontal bars, filling left-to-right</li>
+<li>vertical layout: side-by-side bars, filling bottom-up</li>
+</ul>
+<p>Hover for exact percentages and reset times. Click a column to refresh that account
+or open the provider dashboard, depending on settings. Right-click for Refresh all
+and Open dashboard.
+Bars use configurable green/yellow/orange/red thresholds, with a colorblind palette option.
+Stale errors can mark labels/tooltips with <code>!</code>.</p>
+<p>Optionally fires a Windows notification when an account first crosses the red threshold
+(5-hour or weekly), so you don't have to keep glancing at the bars.</p>
+<p>Supported credential sources:</p>
+<ul>
+<li>OpenCode: <code>%USERPROFILE%\.local\share\opencode\auth.json</code></li>
+<li>Claude Code: <code>%USERPROFILE%\.claude\.credentials.json</code></li>
+<li>Codex: <code>%USERPROFILE%\.codex\auth.json</code></li>
+</ul>
+<p>Credentials are read-only. The mod never refreshes or rewrites tokens, and never sends
+refresh tokens as bearer tokens. Run OpenCode, Claude Code, or Codex to refresh their
+own auth files if requests start returning <code>401</code>.</p>]]></content>
+        <author>
+            <name>Cleroth</name>
+            <uri>https://github.com/Cleroth</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Fluent Media Player 1.3.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-fluent-media-player#5a2f0ea730d8c70bfd9a4964909c0b6f29bfcf17</id>
+        <link href="https://windhawk.net/mods/taskbar-fluent-media-player"/>
+        <updated>2026-06-13T18:49:47.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li><strong>Text scrolling for long track titles and artist names</strong></li>
+<li>Enable/disable scrolling for title and artist separately</li>
+<li>Adjustable scroll speed (1-10)</li>
+<li>Two scroll modes: bounce (back and forth) and loop (continuous)</li>
+<li>Configurable pause duration and spacing between repeats</li>
+<li><strong>Individual corner radius control</strong> for player, buttons, and album art</li>
+<li>Use single value (e.g., '4') for uniform corners</li>
+<li>Use four values (e.g., '4 2 4 2') for individual corner customization</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>More compact spacing between title and artist by default</li>
+<li>Improved visual feedback when clicking on the player</li>
+</ul>]]></content>
+        <author>
+            <name>Salyts</name>
+            <uri>https://github.com/Salyts</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MicroManager 1.0.0]]></title>
+        <id>https://windhawk.net/mods/micromanager#7f6a9d164aae1027702ac4603ff218928a53661b</id>
+        <link href="https://windhawk.net/mods/micromanager"/>
+        <updated>2026-06-13T17:28:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="micromanager">MicroManager</h1>
+<p><img src="https://i.imgur.com/yDHoq9N.png" alt="Screenshot" /></p>
+<p>A lightweight tray icon that shows a mini task manager popup with live CPU, GPU
+and RAM usage, plus the single top-consuming process for each.</p>
+<h2 id="howtouse">How to Use</h2>
+<ol>
+<li><strong>Left-click</strong> the tray icon to open the popup showing:</li>
+</ol>
+<ul>
+<li>Total CPU usage and the top CPU-consuming process</li>
+<li>Total GPU usage and the top GPU-consuming process</li>
+<li>Total RAM usage and the top RAM-consuming process</li>
+</ul>
+<ol>
+<li><strong>Click anywhere outside</strong> the popup (or press <strong>Esc</strong>) to close it</li>
+<li><strong>Hover</strong> the tray icon to see a live <code>CPU / GPU / RAM</code> summary tooltip</li>
+<li><strong>Right-click</strong> the tray icon for options</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<p>Right-click the tray icon to change the refresh rate (0.3s / 0.5s / 1s / 3s).</p>
+<h2 id="changelog">Changelog</h2>
+<h3 id="v100">v1.0.0</h3>
+<ul>
+<li>Initial release.</li>
+<li>Left-click to see live CPU and GPU usage with the top process for each.</li>
+<li>Right-click for options. Update interval adjustable in Settings.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Net-Toggle 2.1.0]]></title>
+        <id>https://windhawk.net/mods/net-toggle#962908f1a96bfd70d2e01f45873eaef3117aeef4</id>
+        <link href="https://windhawk.net/mods/net-toggle"/>
+        <updated>2026-06-13T09:27:12.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Add secondary (fallback) DNS server support</li>
+<li>New default check: real DNS query (fixes false "unreachable" on networks that block TCP/53) — fixes #4288</li>
+<li>New per-server check methods: UDP DNS / TCP 53 / DoT 853 / DoH 443</li>
+<li>New Orange icon state: primary down, fallback still up</li>
+<li>Tooltip shows per-server status</li>
+<li>Minor reliability fixes (DNS state reads, shutdown handle cleanup)</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Saved Run Commands 1.0.0]]></title>
+        <id>https://windhawk.net/mods/saved-run-commands#3fea50c0b2dad77305ca50376a7683b232443903</id>
+        <link href="https://windhawk.net/mods/saved-run-commands"/>
+        <updated>2026-06-13T09:21:58.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="savedruncommands">Saved Run Commands</h1>
+<p>Adds a small button to the standard Windows Run dialog. The button opens a
+compact "Saved Commands" window. A double click on a saved command inserts it
+into the Run edit box and immediately executes it.
+The Saved Commands window can also save either the current Run command or a
+command typed directly into its own input field.
+Saved commands can be edited with the "Update selected" button.
+Multiple saved commands can be selected and deleted at once.
+Each saved command has a per-row "Run as administrator" checkbox.</p>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28button%29.png" alt="Windows Run dialog with the Saved Run Commands button" /></p>
+<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28window%29.png" alt="Saved Commands window" /></p>
+<p>Notes:</p>
+<ul>
+<li>Commands are stored as one line per command in the mod storage folder.</li>
+<li>Elevated commands expand environment variables before a best-effort
+ShellExecute runas launch.</li>
+<li>The UI added by this mod is intentionally English-only.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Explorer Context Menu Custom Items 1.0]]></title>
         <id>https://windhawk.net/mods/explorer-context-menu-custom-items#19bc5c4ed26f7fae503df45a5415ab60fec6311e</id>
@@ -279,252 +500,6 @@ Control Panel target instead of the modern Settings app.</p>
         <author>
             <name>Joe Ye</name>
             <uri>https://github.com/JoeYe-233</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 2.0.0]]></title>
-        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#d212cd2fcc4140d1f06f96e590548ddace6d455a</id>
-        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
-        <updated>2026-06-07T15:28:04.000Z</updated>
-        <content type="html"><![CDATA[<p>Seriously expand the mod and add compatibility fixes</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Ctrl+N to New File 1.1]]></title>
-        <id>https://windhawk.net/mods/explorer-ctrln-newfile#8b1683a4ec3660d5dbc7340248764ee68d40c45b</id>
-        <link href="https://windhawk.net/mods/explorer-ctrln-newfile"/>
-        <updated>2026-06-07T15:20:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Support the active tab in tabbed Explorer windows.</li>
-<li>Run as a Windhawk tool mod outside of explorer.exe.</li>
-<li>Resolve the active folder through Explorer's Shell view instead of scraping address bar text with UI Automation.</li>
-<li>Keep the low-level keyboard hook thread responsive by running file creation and rename work on a separate STA worker thread.</li>
-<li>Use Shell file operation fallback for protected folders, allowing Windows to show the standard elevation prompt when needed.</li>
-<li>Improve rename reliability by using the matched active Shell view first.</li>
-</ul>]]></content>
-        <author>
-            <name>lieyanbang</name>
-            <uri>https://github.com/lieyanbang</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Classic Theme Explorer Lite 1.2]]></title>
-        <id>https://windhawk.net/mods/classic-theme-explorer-lite#55ef89214517d9be74807b9e1d38d00365155a14</id>
-        <link href="https://windhawk.net/mods/classic-theme-explorer-lite"/>
-        <updated>2026-06-07T15:10:51.000Z</updated>
-        <content type="html"><![CDATA[<p>Apply fixes only under Classic theme</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Music Lounge 4.0.2]]></title>
-        <id>https://windhawk.net/mods/taskbar-music-lounge#5f8afab7b38a553578e8e963b7b30c62bf918d17</id>
-        <link href="https://windhawk.net/mods/taskbar-music-lounge"/>
-        <updated>2026-06-06T17:35:50.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed settings such as width not being applied until the mod is reloaded.</li>
-</ul>]]></content>
-        <author>
-            <name>Hashah2311</name>
-            <uri>https://github.com/Hashah2311</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Volume Control 1.3.1]]></title>
-        <id>https://windhawk.net/mods/taskbar-volume-control#131f90d6611b96811af101f4b8177dd24e40ed13</id>
-        <link href="https://windhawk.net/mods/taskbar-volume-control"/>
-        <updated>2026-06-06T16:10:41.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Fixed the "Middle click to mute" option in recent Windows 11 versions.</li>
-<li>The Win and Alt modifier keys are now suppressed after scrolling. This fixes e.g. the Start menu opening after Win+scrolling to change the volume.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 11 Start Menu Styler 1.6]]></title>
-        <id>https://windhawk.net/mods/windows-11-start-menu-styler#f03c2a238bb19ba9f0a9481d7697b8ddf14e4be8</id>
-        <link href="https://windhawk.net/mods/windows-11-start-menu-styler"/>
-        <updated>2026-06-06T10:15:34.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added the new side by side layout for the redesigned Start menu which allows having pinned apps on one side and all apps on the other side. Both can be scrolled independently.</li>
-<li>Updated the following themes to use the new side by side layout: SideBySide, SideBySide2, SideBySideMinimal.</li>
-<li>Updated the following themes: NoRecommendedSection, Down Aero, RosePine, UniMenu, Command Center.</li>
-<li>Added the FullScreen theme.</li>
-<li>Added comparison and condition operations to style substitution expressions, for example: <code>{{x &gt; 8 ? 1 : 3}}</code>.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Snap Commander 1.0.0]]></title>
-        <id>https://windhawk.net/mods/snap-commander#b41f04fdb59386dddaa75f1e522d7403eb00877f</id>
-        <link href="https://windhawk.net/mods/snap-commander"/>
-        <updated>2026-06-05T18:10:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="snapcommander">Snap Commander</h1>
-<p>Move the active window to specific screen areas using keyboard shortcuts, just like
-the <a href="https://rectangleapp.com/">Rectangle</a> app on macOS.</p>
-<p><img src="https://raw.githubusercontent.com/Asteski/Windhawk-Mods/refs/heads/main/img/snap-commander/snap-commander.gif" alt="snap-commander" /></p>
-<h2 id="defaultshortcuts">Default shortcuts</h2>
-<p>| Action          | Shortcut    |
-| --------------- | ----------- |
-| Left half       | <code>Alt</code> + <code>Q</code> |
-| Right half      | <code>Alt</code> + <code>W</code> |
-| Top half        | <code>Alt</code> + <code>E</code> |
-| Bottom half     | <code>Alt</code> + <code>R</code> |
-| Center half     | <code>Alt</code> + <code>T</code> |
-| Top-left        | <code>Alt</code> + <code>U</code> |
-| Top-right       | <code>Alt</code> + <code>I</code> |
-| Bottom-left     | <code>Alt</code> + <code>J</code> |
-| Bottom-right    | <code>Alt</code> + <code>K</code> |
-| Maximize        | <code>Alt</code> + <code>H</code> |
-| Almost maximize | <code>Alt</code> + <code>Y</code> |
-| Center          | <code>Alt</code> + <code>G</code> |
-| Minimize        | <code>Alt</code> + <code>M</code> |
-| Next display    | <code>Alt</code> + <code>]</code> |
-| Previous display| <code>Alt</code> + <code>[</code> |
-| Make smaller    | <code>Alt</code> + <code>-</code> |
-| Make larger     | <code>Alt</code> + <code>+</code> |
-| Restore         | <code>Alt</code> + <code>Z</code> |</p>
-<p><em>Maximize</em> fills the work area ignoring gaps; <em>almost maximize</em> fills it while keeping
-the configured gaps. <em>Center</em> re-centers the active window without resizing it (unless a
-center width/height is set). <em>Next/previous display</em> move the window to the adjacent
-monitor (keeping its relative size and position, wrapping around). <em>Make smaller/larger</em>
-shrink or grow the window about its center by the configured resize step. <em>Restore</em>
-returns the window to where it was before its first snap.</p>
-<h2 id="howitworks">How it works</h2>
-<p>Each action is bound to a keyboard shortcut you type as text. The mod registers these as
-global hotkeys (via <code>RegisterHotKey</code>), so when you press one, the focused window is
-resized and moved to the matching region of the monitor it is on. The whole combination
-is consumed cleanly, so it never reaches the focused application and leaves no stray
-modifier behind (no menu-bar or Start-menu flicker).</p>
-<h2 id="shortcuts">Shortcuts</h2>
-<p>Each action's shortcut is free text in the form <code>[modifier+]...key</code>, for example:</p>
-<ul>
-<li><code>q</code> - just the <code>Q</code> key</li>
-<li><code>ctrl+q</code> - <code>Ctrl</code> + <code>Q</code></li>
-<li><code>ctrl+shift+left</code> - <code>Ctrl</code> + <code>Shift</code> + <code>Left arrow</code></li>
-</ul>
-<p>Recognised modifier words are <code>alt</code>, <code>ctrl</code>, <code>shift</code>, and <code>win</code>; the key may be a letter
-<code>a</code>-<code>z</code>, a digit <code>0</code>-<code>9</code>, an arrow <code>left</code>/<code>right</code>/<code>up</code>/<code>down</code>, or one of the punctuation
-keys <code>[</code>, <code>]</code>, <code>-</code>. Tokens are separated by <code>+</code> and are case-insensitive. Because <code>+</code> is
-the separator, the <code>=</code>/<code>+</code> key must be written as <code>plus</code> (or <code>=</code>).</p>
-<p>The <strong>Modifier key</strong> setting adds a modifier (or two) on top of whatever you type for
-every action. So with Modifier = <code>Alt</code> and Left half = <code>q</code>, the shortcut is <code>Alt+Q</code>. Set
-Modifier = <code>None</code> to use only the modifiers written in each shortcut - letting you give
-different actions different modifiers (e.g. <code>q</code>, <code>ctrl+w</code>, <code>ctrl+shift+e</code>).</p>
-<p>The modifier combination must match exactly: an action bound to <code>Alt+Q</code> will <em>not</em> fire
-on <code>Ctrl+Alt+Q</code>. Note that binding a bare key (e.g. <code>q</code> with Modifier = <code>None</code>) means
-that key is claimed system-wide and can no longer be typed normally.</p>
-<p>Each shortcut can have only one global owner, so a combination already claimed by another
-app (or a reserved one such as <code>Win</code>+<code>L</code>) can't be registered. When that happens it is
-noted in the mod's log and the shortcut is simply skipped.</p>
-<h2 id="otherconfiguration">Other configuration</h2>
-<ul>
-<li><strong>Gaps</strong>: optional space (in pixels) applied to each side of the snapped window
-(top, bottom, left, right). All default to <code>0</code>, so windows sit flush by default.</li>
-<li><strong>Gap distribution</strong>: controls how the gap is shared between adjacent windows.
-<em>Even spacing</em> (default) puts the full gap on sides touching a screen edge and half the
-gap on shared edges, so two windows placed side by side show the same gap between them
-as a single window shows against the screen edge - no doubling. <em>Full gap on every side</em>
-applies the whole gap to each side (adjacent windows then show a doubled gap). <em>Screen
-edges only</em> gaps just the sides that touch a screen edge, so adjacent windows meet flush.</li>
-<li><strong>Center size</strong>: optional width/height (in pixels) for the Center action. Leave either
-empty to keep the window's current width or height.</li>
-</ul>
-<h2 id="autosnaprules">Auto-snap rules</h2>
-<p>Beyond keyboard shortcuts, you can have the mod snap certain apps automatically. Each
-<strong>Auto-snap rule</strong> pairs one or more executable names with an action: when a window of a
-matching process is shown, that action is applied to it. Rules also run against
-already-open windows when you save settings, so adding a rule snaps matching windows that
-are already on screen.</p>
-<p>Executable names are case-insensitive and the <code>.exe</code> suffix is optional; list several in
-one field separated by <code>,</code>, <code>;</code>, or <code>|</code> (e.g. <code>notepad; calc.exe</code>). The available
-actions are the same region actions as the shortcuts (Maximize, halves, corners, etc.);
-<em>Restore</em> is intentionally not offered, since a freshly opened window has nothing to
-restore to.</p>
-<p>Enable a rule's <strong>Don't resize</strong> toggle to move the window into the chosen region while
-keeping its current size - the unresized window is anchored to the matching corner or
-side of the region (e.g. <em>top-right</em> pins it to the region's top-right). This is ignored
-by the Minimize action.</p>
-<h2 id="importantusagenote">⚠ Important usage note ⚠</h2>
-<p>In order to use this mod with elevated processes, it can be configured to target
-<code>dwm.exe</code>.</p>
-<p>First, navigate to Windhawk's Settings &gt; Advanced settings &gt; More advanced
-settings &gt; Process inclusion list, and make sure that <code>dwm.exe</code> is in the list.</p>
-<p><img src="https://i.imgur.com/LRhREtJ.png" alt="Advanced settings screenshot" /></p>
-<p>Next, go to the mod's advanced tab, enable this option: "Ignore mod
-inclusion/exclusion lists", then add <code>dwm.exe</code> to the custom process inclusion
-list.</p>]]></content>
-        <author>
-            <name>Asteski</name>
-            <uri>https://github.com/Asteski</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Net-Toggle 2.0.0]]></title>
-        <id>https://windhawk.net/mods/net-toggle#c750ebdd82eef330bdfe48831fa1b5fda89c2192</id>
-        <link href="https://windhawk.net/mods/net-toggle"/>
-        <updated>2026-06-05T17:19:58.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>Complete rebuild.</strong> Mod renamed to Net-Toggle.</li>
-<li>New: <strong>DNS Monitoring</strong> — The icon monitors your connection and changes color if your internet drops out (configurable in Mod Settings).</li>
-<li>New: <strong>WiFi-style tray icon</strong> with 5 color states (Red / Yellow / Blue / Green / Grey).</li>
-<li>New: Middle-click → <strong>Full Network Reset</strong> (flush DNS, release/renew, winsock + IP reset).</li>
-<li>New: Right-click context menu — toggle network, open Network Settings, or exit.</li>
-<li>New: Donate button on the mod page.</li>
-<li>Improved: Tray icon is now independent from the Windhawk app and no longer groups with it in the taskbar.</li>
-<li>Improved: Tray icon persists reliably across Explorer restarts.</li>
-<li>Improved: Icon stays in sync even if you disable your adapter directly in Windows Settings.</li>
-<li>Fixed: Occasional hangs during network toggles or timeouts.</li>
-<li>Fixed: Tray icon could show the wrong state if a toggle failed.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Open in Admin Terminal 1.16]]></title>
-        <id>https://windhawk.net/mods/open-in-admin-terminal#122fdce29f3e4e6aca8b07b62ab278139fb9228a</id>
-        <link href="https://windhawk.net/mods/open-in-admin-terminal"/>
-        <updated>2026-06-05T15:06:14.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added native UAC shield overlay composition on the terminal menu icon using <code>SHGetStockIconInfo(SIID_SHIELD)</code>.</li>
-</ul>]]></content>
-        <author>
-            <name>aimagist</name>
-            <uri>https://github.com/aimagist</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Transparent Desktop Icons with Spotlight 1.0.1]]></title>
-        <id>https://windhawk.net/mods/transparent-desktop-icons-spotlight#7b8cbb03327c369d4eb77030b8dd7c0a9c7ee242</id>
-        <link href="https://windhawk.net/mods/transparent-desktop-icons-spotlight"/>
-        <updated>2026-06-05T12:01:31.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="architectureupdatesoptimizations">🚀 Architecture Updates &amp; Optimizations</h3>
-<ul>
-<li><strong>Robust Thread-Safe Initialization:</strong> Fixed early-boot race conditions and cold-start bugs. Implemented a throttled desktop discovery loop with an exponential backoff system that safely triggers native overlay initialization on the correct desktop thread.</li>
-<li><strong>0% CPU Deep Sleep:</strong> Replaced active rendering poll loops with an event-driven <code>WaitForSingleObject</code> wait. The background thread drops into an <code>INFINITE</code> sleep state (0.00% CPU/GPU) when the desktop is fully idle.</li>
-<li><strong>Zero-Latency Mouse Wake:</strong> Bypassed Windows timer throttling by intercepting hardware-level mouse events (<code>WM_MOUSEFIRST/LAST</code> and pointer updates) in the message dispatch hook to wake the render thread instantly.</li>
-<li><strong>Refactored Wallpaper Capture:</strong> Refined the background capture routine to target the correct <code>WorkerW</code> sibling and cleanly hide transient layers, resolving theme-change ghosting and recursive rendering bugs.</li>
-<li><strong>UX & Stability Fixes:</strong> <ul>
-<li>Keeps the spotlight fully illuminated while renaming desktop icons (F2 edit controls).</li>
-<li>Added robust DXGI device loss recovery to rebuild the DirectX pipeline after GPU resets or system sleep.</li>
-<li>Minor settings description changes for better readability</li></ul></li>
-</ul>]]></content>
-        <author>
-            <name>drgutman</name>
-            <uri>https://github.com/drgutman</uri>
         </author>
     </entry>
 </feed>

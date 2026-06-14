@@ -2043,7 +2043,7 @@
                     1
                 ],
                 "ratingUsers": 1,
-                "updated": 1780845051000,
+                "updated": 1781382748000,
                 "users": 150
             },
             "metadata": {
@@ -2055,7 +2055,7 @@
                     "explorer.exe"
                 ],
                 "name": "Classic Theme Explorer Lite",
-                "version": "1.2"
+                "version": "1.3"
             }
         },
         "classic-theme-explorer-search-fix": {
@@ -2375,6 +2375,36 @@
                 ],
                 "name": "Color Picker Dialog Hex Input",
                 "version": "1.0.0"
+            }
+        },
+        "common-controls-hook": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1781390733000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781390733000,
+                "users": 1
+            },
+            "metadata": {
+                "author": "m417z",
+                "description": "Force-enable Common Controls v6 visual styles for legacy Win32 applications",
+                "github": "https://github.com/m417z",
+                "homepage": "https://m417z.com/",
+                "include": [
+                    "*"
+                ],
+                "license": "MIT",
+                "name": "Common Controls Hook",
+                "twitter": "https://twitter.com/m417z",
+                "version": "1.0"
             }
         },
         "confirm-closing-multiple-explorer-tabs": {
@@ -4156,6 +4186,36 @@
                 ],
                 "name": "Select filename extension on double F2",
                 "version": "4"
+            }
+        },
+        "explorer-folder-hover-menu": {
+            "details": {
+                "defaultSorting": 27,
+                "published": 1781380795000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781380795000,
+                "users": 3
+            },
+            "metadata": {
+                "author": "m417z",
+                "compilerOptions": "-lole32 -loleaut32 -luuid -lshlwapi -lshell32 -lgdi32 -lgdiplus -ladvapi32 -luiautomationcore",
+                "description": "Hover a folder in File Explorer to get an expand button that opens a cascading menu of the folder's contents",
+                "github": "https://github.com/m417z",
+                "homepage": "https://m417z.com/",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "Folder Hover Menu",
+                "twitter": "https://twitter.com/m417z",
+                "version": "1.0"
             }
         },
         "explorer-font-changer": {
@@ -6875,6 +6935,35 @@
                 "version": "1.14"
             }
         },
+        "micromanager": {
+            "details": {
+                "defaultSorting": 18,
+                "published": 1781371689000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781371689000,
+                "users": 2
+            },
+            "metadata": {
+                "author": "BlackPaw",
+                "compilerOptions": "-lpdh -lshell32 -lgdi32 -luser32 -lole32 -luuid -ladvapi32 -ldwmapi",
+                "description": "Mini task manager tray icon showing CPU, GPU and RAM usage with top consumers.",
+                "donateUrl": "https://ko-fi.com/blackpaw21",
+                "github": "https://github.com/BlackPaw21",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "name": "MicroManager",
+                "version": "1.0.0"
+            }
+        },
         "microswap": {
             "details": {
                 "defaultSorting": 360,
@@ -7243,20 +7332,20 @@
                     5
                 ],
                 "ratingUsers": 5,
-                "updated": 1780679998000,
+                "updated": 1781342832000,
                 "users": 112
             },
             "metadata": {
                 "author": "BlackPaw",
                 "compilerOptions": "-lshell32 -lgdi32 -luser32 -lole32 -luuid -liphlpapi -lws2_32 -ladvapi32 -DWIN32_LEAN_AND_MEAN",
-                "description": "Network toggle + DNS reachability monitor in your system tray",
+                "description": "Internet kill switch with primary/secondary DNS monitoring in your system tray",
                 "donateUrl": "https://ko-fi.com/blackpaw21",
                 "github": "https://github.com/BlackPaw21",
                 "include": [
                     "windhawk.exe"
                 ],
                 "name": "Net-Toggle",
-                "version": "2.0.0"
+                "version": "2.1.0"
             }
         },
         "never-auto-expand-explorer-tree-items": {
@@ -9188,6 +9277,34 @@
                 "version": "1.0"
             }
         },
+        "saved-run-commands": {
+            "details": {
+                "defaultSorting": 150,
+                "published": 1781342518000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1781342518000,
+                "users": 15
+            },
+            "metadata": {
+                "author": "communism420",
+                "compilerOptions": "-lcomctl32 -lgdi32 -lshell32",
+                "description": "Adds a compact saved commands list to the Windows Run dialog.",
+                "github": "https://github.com/communism420",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Saved Run Commands",
+                "version": "1.0.0"
+            }
+        },
         "scroll-window-opacity": {
             "details": {
                 "defaultSorting": 1460,
@@ -9883,6 +10000,38 @@
                 "version": "1.1"
             }
         },
+        "taskbar-ai-quota": {
+            "details": {
+                "defaultSorting": 0,
+                "published": 1781376669000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781393256000,
+                "users": 0
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "Cleroth",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lwindowsapp -lwinhttp -luser32 -lshell32",
+                "description": "Shows compact 5-hour and weekly AI agent/LLM subscription quota bars for Anthropic and OpenAI on the Windows 11 taskbar",
+                "github": "https://github.com/Cleroth",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "MIT",
+                "name": "Taskbar AI Quota Bars",
+                "version": "0.9.2"
+            }
+        },
         "taskbar-auto-hide-custom-activation-area": {
             "details": {
                 "defaultSorting": 3460,
@@ -10510,7 +10659,7 @@
                     42
                 ],
                 "ratingUsers": 43,
-                "updated": 1781128210000,
+                "updated": 1781376587000,
                 "users": 378
             },
             "metadata": {
@@ -10522,7 +10671,7 @@
                     "explorer.exe"
                 ],
                 "name": "Taskbar Fluent Media Player",
-                "version": "1.2.0"
+                "version": "1.3.0"
             }
         },
         "taskbar-grouping": {
@@ -11445,7 +11594,7 @@
                     533
                 ],
                 "ratingUsers": 651,
-                "updated": 1781269294000,
+                "updated": 1781380705000,
                 "users": 19156
             },
             "featured": true,
@@ -11466,7 +11615,7 @@
                 ],
                 "name": "Vertical Taskbar for Windows 11",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.3.12"
+                "version": "1.3.13"
             }
         },
         "taskbar-volume-control": {

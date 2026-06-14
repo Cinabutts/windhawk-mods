@@ -2,12 +2,154 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk New Mod Releases</title>
-    <updated>2026-06-12T16:23:23.000Z</updated>
+    <updated>2026-06-13T22:45:33.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>New mods in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Common Controls Hook 1.0]]></title>
+        <id>https://windhawk.net/mods/common-controls-hook#b02dade50ac82c10c15af1cccbd935ff314c0a53</id>
+        <link href="https://windhawk.net/mods/common-controls-hook"/>
+        <updated>2026-06-13T22:45:33.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="commoncontrolshook">Common Controls Hook</h1>
+<p>This mod forces legacy GUI processes into the Common Controls version 6
+activation context at the moment they create windows, dialogs, and message
+boxes.</p>
+<p>The practical goal is simple: make old Win32 UI surfaces, including VBScript
+<code>MsgBox</code> and classic dialog-based applications, use themed visual styles instead
+of the pre-XP <code>comctl32.dll</code> version 5 look.</p>
+<p><img src="https://i.imgur.com/4oVsYi7.png" alt="Screenshot" /></p>
+<h2 id="credits">Credits</h2>
+<p>This mod is a Windhawk port of
+<a href="https://github.com/LuicdLabs/comctl32v6hook">comctl32v6hook</a>, a standalone
+user-mode DLL by LuicdLabs.</p>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Folder Hover Menu 1.0]]></title>
+        <id>https://windhawk.net/mods/explorer-folder-hover-menu#86665e6c477b0e5ba1f8058d8e4b448faa2a5f13</id>
+        <link href="https://windhawk.net/mods/explorer-folder-hover-menu"/>
+        <updated>2026-06-13T19:59:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="folderhovermenu">Folder Hover Menu</h1>
+<p>When you hover the mouse over a folder in the File Explorer file list, a small
+expand button appears in the bottom-right corner of that folder. Click it to pop
+up a cascading menu of the folder's contents. You can navigate into sub-folders
+and launch items straight from the menu, without opening the folder first.</p>
+<p>Inspired by <a href="https://qttabbar.wikidot.com/">QTTabBar</a>.</p>
+<p><img src="https://i.imgur.com/ZPceXoZ.png" alt="Screenshot" /></p>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar AI Quota Bars 0.9.1]]></title>
+        <id>https://windhawk.net/mods/taskbar-ai-quota#abc86d1f587043340096e5fafc9019caa29cc2e7</id>
+        <link href="https://windhawk.net/mods/taskbar-ai-quota"/>
+        <updated>2026-06-13T18:51:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="taskbaraiquotabars">Taskbar AI Quota Bars</h1>
+<p>Shows Anthropic Claude and OpenAI/Codex AI agent and LLM subscription quota usage as
+compact bars on the Windows 11 taskbar, next to the system tray.
+Can show on the primary taskbar only, all taskbars, or one specific monitor.</p>
+<p><img src="https://i.imgur.com/LD0K31E.png" alt="Taskbar AI Quota Bars" />
+<img src="https://i.imgur.com/H7agnz2.png" alt="Taskbar AI Quota Bars Detail" /></p>
+<p>Each account gets one compact column:</p>
+<ul>
+<li>stacked layout: stacked horizontal bars, filling left-to-right</li>
+<li>vertical layout: side-by-side bars, filling bottom-up</li>
+</ul>
+<p>Hover for exact percentages and reset times. Click a column to refresh that account
+or open the provider dashboard, depending on settings. Right-click for Refresh all
+and Open dashboard.
+Bars use configurable green/yellow/orange/red thresholds, with a colorblind palette option.
+Stale errors can mark labels/tooltips with <code>!</code>.</p>
+<p>Optionally fires a Windows notification when an account first crosses the red threshold
+(5-hour or weekly), so you don't have to keep glancing at the bars.</p>
+<p>Supported credential sources:</p>
+<ul>
+<li>OpenCode: <code>%USERPROFILE%\.local\share\opencode\auth.json</code></li>
+<li>Claude Code: <code>%USERPROFILE%\.claude\.credentials.json</code></li>
+<li>Codex: <code>%USERPROFILE%\.codex\auth.json</code></li>
+</ul>
+<p>Credentials are read-only. The mod never refreshes or rewrites tokens, and never sends
+refresh tokens as bearer tokens. Run OpenCode, Claude Code, or Codex to refresh their
+own auth files if requests start returning <code>401</code>.</p>]]></content>
+        <author>
+            <name>Cleroth</name>
+            <uri>https://github.com/Cleroth</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MicroManager 1.0.0]]></title>
+        <id>https://windhawk.net/mods/micromanager#7f6a9d164aae1027702ac4603ff218928a53661b</id>
+        <link href="https://windhawk.net/mods/micromanager"/>
+        <updated>2026-06-13T17:28:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="micromanager">MicroManager</h1>
+<p><img src="https://i.imgur.com/yDHoq9N.png" alt="Screenshot" /></p>
+<p>A lightweight tray icon that shows a mini task manager popup with live CPU, GPU
+and RAM usage, plus the single top-consuming process for each.</p>
+<h2 id="howtouse">How to Use</h2>
+<ol>
+<li><strong>Left-click</strong> the tray icon to open the popup showing:</li>
+</ol>
+<ul>
+<li>Total CPU usage and the top CPU-consuming process</li>
+<li>Total GPU usage and the top GPU-consuming process</li>
+<li>Total RAM usage and the top RAM-consuming process</li>
+</ul>
+<ol>
+<li><strong>Click anywhere outside</strong> the popup (or press <strong>Esc</strong>) to close it</li>
+<li><strong>Hover</strong> the tray icon to see a live <code>CPU / GPU / RAM</code> summary tooltip</li>
+<li><strong>Right-click</strong> the tray icon for options</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<p>Right-click the tray icon to change the refresh rate (0.3s / 0.5s / 1s / 3s).</p>
+<h2 id="changelog">Changelog</h2>
+<h3 id="v100">v1.0.0</h3>
+<ul>
+<li>Initial release.</li>
+<li>Left-click to see live CPU and GPU usage with the top process for each.</li>
+<li>Right-click for options. Update interval adjustable in Settings.</li>
+</ul>]]></content>
+        <author>
+            <name>BlackPaw</name>
+            <uri>https://github.com/BlackPaw21</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Saved Run Commands 1.0.0]]></title>
+        <id>https://windhawk.net/mods/saved-run-commands#3fea50c0b2dad77305ca50376a7683b232443903</id>
+        <link href="https://windhawk.net/mods/saved-run-commands"/>
+        <updated>2026-06-13T09:21:58.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="savedruncommands">Saved Run Commands</h1>
+<p>Adds a small button to the standard Windows Run dialog. The button opens a
+compact "Saved Commands" window. A double click on a saved command inserts it
+into the Run edit box and immediately executes it.
+The Saved Commands window can also save either the current Run command or a
+command typed directly into its own input field.
+Saved commands can be edited with the "Update selected" button.
+Multiple saved commands can be selected and deleted at once.
+Each saved command has a per-row "Run as administrator" checkbox.</p>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28button%29.png" alt="Windows Run dialog with the Saved Run Commands button" /></p>
+<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28window%29.png" alt="Saved Commands window" /></p>
+<p>Notes:</p>
+<ul>
+<li>Commands are stored as one line per command in the mod storage folder.</li>
+<li>Elevated commands expand environment variables before a best-effort
+ShellExecute runas launch.</li>
+<li>The UI added by this mod is intentionally English-only.</li>
+</ul>]]></content>
+        <author>
+            <name>communism420</name>
+            <uri>https://github.com/communism420</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Explorer Context Menu Custom Items 1.0]]></title>
         <id>https://windhawk.net/mods/explorer-context-menu-custom-items#19bc5c4ed26f7fae503df45a5415ab60fec6311e</id>
@@ -564,179 +706,6 @@ IMEs to their native mode. Best experience when used together.</p>
         <author>
             <name>ZeonXr</name>
             <uri>https://github.com/ZeonXr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Block SMB Quick Access 1.2]]></title>
-        <id>https://windhawk.net/mods/block-smb-quick-access#ab9754b6038bca2df2ffd75fc3f8f13e3ac15359</id>
-        <link href="https://windhawk.net/mods/block-smb-quick-access"/>
-        <updated>2026-05-30T14:11:46.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="blocksmbquickaccess">Block SMB Quick Access</h1>
-<p>Prevents SMB/UNC network paths (<code>\\server\share</code>) from being added to Quick Access
-in Windows Explorer. Local paths continue to work normally.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li><strong>Selective blocking</strong>: Only blocks SMB/UNC network paths, local paths work normally</li>
-<li><strong>Comprehensive SHARD support</strong>: Handles all SHARD types (PATHA, PATHW, PIDL, SHELLITEM, LINK, APPIDINFO, APPIDINFOIDLIST, APPIDINFOLINK)</li>
-<li><strong>UNC priority</strong>: Uses <code>SLGP_UNCPRIORITY</code> to correctly detect mapped drive letters</li>
-<li><strong>Silent operation</strong>: Runs in background without UI</li>
-</ul>
-<h2 id="howitworks">How it works</h2>
-<p>The mod hooks the <code>SHAddToRecentDocs</code> function in <code>shell32.dll</code>. When Explorer calls
-this function to add a file to Quick Access, the hook checks if the path is a UNC
-network path (starts with <code>\\</code>). If it is, the call is silently dropped. Otherwise,
-the original function is called normally.</p>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li>Windows 10 or Windows 11 (64-bit)</li>
-<li>Windhawk 1.4 or newer</li>
-</ul>
-<h2 id="knownlimitations">Known limitations</h2>
-<ul>
-<li>Does not block paths added via other mechanisms (e.g., registry manipulation)</li>
-<li>Some virtual folder PIDLs may not resolve to paths and will be allowed through</li>
-</ul>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>If the mod doesn't seem to work:</p>
-<ol>
-<li>Enable debug logging in Windhawk settings (Settings &gt; Advanced &gt; Debug logging)</li>
-<li>Check Windhawk debug logs for <code>[NOSMB]</code> entries</li>
-<li>Verify the mod is enabled for explorer.exe in Windhawk settings</li>
-<li>Restart Explorer or log out/in after enabling the mod</li>
-</ol>]]></content>
-        <author>
-            <name>Townrain</name>
-            <uri>https://github.com/Townrain</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Console Quick Paste 1.0.0]]></title>
-        <id>https://windhawk.net/mods/console-quick-paste#490dfae0c155a142237630390237447d258de0d8</id>
-        <link href="https://windhawk.net/mods/console-quick-paste"/>
-        <updated>2026-05-30T12:05:46.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="consolequickpaste">Console Quick Paste</h1>
-<p><img src="https://raw.githubusercontent.com/armaninyow/Remove-Context-Menu-Items/refs/heads/main/CQP.png" alt="Console Quick Paste" /></p>
-<p>Brings a "Quick Commands" submenu to Windows Terminal, giving you one-click access to your most-used PowerShell and Command Prompt snippets. To open it, right-click the empty space on the tab bar.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li><code>Quick Commands Submenu</code>: Always pinned to the top of the context menu, separated from the built-in items by a divider.</li>
-<li><code>Configurable Command List</code>: Define as many commands as you like. Each entry has:</li>
-<li><code>Label</code>: The display name shown in the submenu. Falls back to the command itself when left blank.</li>
-<li><code>Command</code>: The string that will be pasted into the console.</li>
-<li><code>Auto-Enter</code>: When enabled, an <code>Enter</code> key is sent immediately after pasting so the command executes automatically.</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[URL Blocker 0.1]]></title>
-        <id>https://windhawk.net/mods/url-blocker#9652ca93368edbfbd1274ae2ccc7524025adf302</id>
-        <link href="https://windhawk.net/mods/url-blocker"/>
-        <updated>2026-05-30T10:31:36.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="whatitdoes">What it does</h2>
-<p>This mod prevents selected applications from opening web links in your default browser. It is mainly intended for cases where programs open unnecessary pages such as post-update "thank you" screens, release notes, promotional pages, or similar unwanted redirects.</p>
-<p>The mod works by intercepting <code>ShellExecuteW</code> and <code>ShellExecuteA</code> calls and ignoring calls that try to open URLs (starting with <code>http</code>). Regular file paths are left alone, so opening local files will continue to work as usual.</p>
-<h2 id="configuration">Configuration</h2>
-<p>This mod doesn't automatically target any processes. Add the programs for which you want to block URL calls under:</p>
-<p><code>Details</code> -&gt; <code>Advanced</code> -&gt; <code>Custom process inclusion list</code></p>
-<p>Only the processes in that list will have URL calls blocked.</p>
-<p><strong><em>No guarantee that it will work on all programs!</em></strong></p>
-<h2 id="notesandlimitations">Notes and limitations</h2>
-<ul>
-<li>The mod only blocks URL launches that go through <code>ShellExecuteW</code> or <code>ShellExecuteA</code>.</li>
-<li>Programs that use another API or an embedded browser may still be able to open web pages.</li>
-<li>The mod is not intended for system-wide URL filtering.</li>
-</ul>
-<h2 id="credits">Credits</h2>
-<p>Inspired by the <code>F1 Blocker</code> mod from <a href="https://github.com/d0gkiller87">d0gkiller87</a>.</p>
-<h2 id="bugreportfeaturerequest">Bug Report / Feature Request</h2>
-<p>Open an issue / discussion on https://github.com/ramensoftware/windhawk-mods and tag <code>@CrazyTim71</code></p>]]></content>
-        <author>
-            <name>CrazyTim71</name>
-            <uri>https://github.com/CrazyTim71</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Status Bar Metadata 1.4.0]]></title>
-        <id>https://windhawk.net/mods/explorer-status-metadata#531762a55d231b40dc5f3a6e374ea8ac8135ecfb</id>
-        <link href="https://windhawk.net/mods/explorer-status-metadata"/>
-        <updated>2026-05-29T13:01:54.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorerstatusbarmetadatav140">Explorer Status Bar Metadata — v1.4.0</h1>
-<p>Appends file metadata to the Windows Explorer status bar when a single file
-is selected: dimensions, modification date, file type, duration, bitrate, fps.</p>
-<h2 id="howitworks">How it works</h2>
-<ul>
-<li>No timers, no polling. Metadata is computed only when the selected file changes.</li>
-<li>Path-keyed LRU-style cache (1000 entries). Same file = instant return, zero COM calls.</li>
-<li>Hooks <code>PSFormatForDisplayAlloc</code> in propsys.dll — the exact function Explorer calls
-to format the file size for the status bar. Language-independent, no text matching.</li>
-<li>Filter: <code>key == System.Size</code> AND <code>SHELL32.dll</code> appears in the first 5 call stack
-frames (status bar path), but NOT <code>explorerframe.dll</code> (Details column — skipped).</li>
-<li>Compatible with "Better file sizes in Explorer details" — multi-frame stack scan
-handles chained hooks transparently.</li>
-<li>Custom binary parsers for formats the Windows Property System does not index:
-SVG, HDR, EXR, TIFF/TX (LE+BE), TGA, PSD/PSB, WebM/MKV (EBML).</li>
-</ul>
-<h2 id="settings">Settings</h2>
-<ul>
-<li><strong>Network drives</strong> — disabled by default. Can freeze Explorer on slow networks.</li>
-<li><strong>Removable drives</strong> — enabled by default. Disable if you use slow USB media.</li>
-<li><strong>Cache evict count</strong> — how many old entries to drop when the 1000-entry limit is hit.</li>
-</ul>
-<h2 id="changelog">Changelog</h2>
-<h3 id="v140">v1.4.0</h3>
-<ul>
-<li>Replaced DrawTextW/GetTextExtentPoint32W hooks with PSFormatForDisplayAlloc hook
-(language-independent, no text matching, no "selected"-string false positives)</li>
-<li>SHELL32.dll stack filter (5 frames) precisely identifies the status bar call</li>
-<li>Selection path discovery uses IFolderView2::GetSelection — same-thread, no
-CWM_GETISHELLBROWSER broadcast to arbitrary windows</li>
-<li>CWM_GETISHELLBROWSER is now sent only to windows of known safe classes:
-CabinetWClass and ShellTabWindowClass</li>
-<li>SafeGetShellBrowser: thread-ID guard replaced with process-ID guard.
-PSFormatForDisplayAlloc fires on a shell worker thread (not the GUI thread),
-so the thread-ID check always failed and GetSelectedFilePath always returned
-empty. Process-ID check is sufficient and works correctly from any thread.</li>
-<li>Added Wh<em>Log to Wh</em>ModInit/Wh_ModUninit for basic injection diagnostics</li>
-<li>Added Wh_ModSettingsChanged so settings take effect without restarting Explorer</li>
-<li>Cache upgraded from FIFO to true LRU: cache hits now move the entry to the
-back of the eviction queue, keeping frequently-accessed files safe from eviction</li>
-<li>SVG parser rewritten with ExtractAttribute helper: tolerant of whitespace
-around '=' and both quote styles (viewBox = "…", width='100px', etc.)</li>
-<li>Added PSD/PSB binary parser (width/height from fixed 26-byte header)</li>
-<li>File type moved to last position (right edge) for all file types</li>
-<li>CleanTypeString strips spurious ".<digits>" suffix from type names (Windows
-shell quirk: "Adobe Photoshop Image.27" → "Adobe Photoshop Image")</li>
-<li>PSD/PSB type label overridden to "Adobe Photoshop File" for consistency</li>
-<li>Removed cross-window fallback (Strategy 3): GetSelectedFilePath is strictly
-scoped to the root window identified by GetGUIThreadInfo / GetForegroundWindow
-— no risk of reading a selection from a different Explorer window</li>
-</ul>
-<h3 id="v130">v1.3.0</h3>
-<ul>
-<li>Initial release</li>
-</ul>]]></content>
-        <author>
-            <name>VitalS</name>
-            <uri>https://github.com/VitalSkib</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Genie Animation Mod 1.0.0]]></title>
-        <id>https://windhawk.net/mods/genie-minimize-animation#4e24d3c633491a476404255c01c4b49194e9847b</id>
-        <link href="https://windhawk.net/mods/genie-minimize-animation"/>
-        <updated>2026-05-29T12:07:29.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="genieanimationmod">Genie Animation Mod</h1>
-<p>This is a mod that adds a genie like minimize animation.
-Since I don't know C++ yet, this mode was written by gemini and claude.
-This mod isn't perfect but windows isn't giving me a lot to work with. (windows animation api is almost 20 years old)
-Keep in mind that these animation can use a lot of cpu power but from my experience this only spikes when you spam the animations.</p>
-<p>I'll try to add settings for this mod later.</p>]]></content>
-        <author>
-            <name>lolstijl</name>
-            <uri>https://github.com/lolstijl</uri>
         </author>
     </entry>
 </feed>
