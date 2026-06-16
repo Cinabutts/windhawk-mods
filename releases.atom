@@ -2,12 +2,427 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk New Mod Releases</title>
-    <updated>2026-06-13T22:45:33.000Z</updated>
+    <updated>2026-06-15T17:39:49.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>New mods in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Classic Taskbar and Start Menu Properties 2.0.2]]></title>
+        <id>https://windhawk.net/mods/classic-taskbar-properties#29bacda66445835d5b79e6657d124ca107540575</id>
+        <link href="https://windhawk.net/mods/classic-taskbar-properties"/>
+        <updated>2026-06-15T17:39:49.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="classictaskbarandstartmenuproperties">Classic Taskbar and Start Menu Properties</h1>
+<p>This Windhawk mod restores the classic "Taskbar and Start Menu Properties" dialog inspired by Windows 7.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Lock/Unlock the taskbar</strong></li>
+<li><strong>Auto-hide the taskbar</strong></li>
+<li><strong>Use small icons</strong></li>
+<li><strong>Configure taskbar button grouping</strong> (Always combine, Combine when full, Never combine)</li>
+<li><strong>Configure Aero Peek</strong></li>
+<li><strong>Start Menu customization</strong> — only settings that actually work on Windows 10 are included</li>
+<li><strong>Toolbars tab</strong> — Address, Links, Tablet PC Input Panel, Desktop</li>
+</ul>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="https://raw.githubusercontent.com/babamohammed2022/babamohammed2022/main/pic.PNG" alt="Classic Taskbar Properties Dialog" /></p>
+<h2 id="startmenusettingswindows10">Start Menu Settings (Windows 10)</h2>
+<p>| Setting | Registry Key | Notes |
+|---------|-------------|-------|
+| Show more tiles | Start<em>ShowMoreTiles | Works on Win10 |
+| Show app list | Start</em>ShowAppList | Works on Win10 |
+| Show recently added apps | Start<em>TrackProgs | Works on Win10 |
+| Use Start full screen | ForceStartSize | Works on Win10 |
+| Show recently opened items | Start</em>TrackDocs | Works on Win10 |
+| Show account notifications | Start<em>NotifyNewApps | Works on Win10 |
+| Search programs | Start</em>SearchPrograms | Works on Win10 |
+| Search files | Start_SearchFiles | Works on Win10 |
+| Folders on Start | Per-folder registry values | Win10 HKCU...\Start |</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>| Feature | Windows 10 21H2 | Windows 11 |
+|---------|----------------|------------|
+| Taskbar tab | Full support | Partial |
+| Start Menu tab | Full support | May vary |
+| Toolbars tab | Full support | Limited |
+| Position change | Not available | Not available |</p>
+<h2 id="knownlimitations">Known Limitations</h2>
+<ul>
+<li>Changing taskbar position is unavailable (risk of Explorer instability).</li>
+<li>Classic toolbars (Address, Links, Desktop) have limited support on newer Windows versions.</li>
+<li>Some Start Menu settings may require an Explorer restart or logout to take full effect.</li>
+</ul>]]></content>
+        <author>
+            <name>babamohammed</name>
+            <uri>https://github.com/babamohammed2022</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mouse Button Remapper 1.7.2]]></title>
+        <id>https://windhawk.net/mods/mouse-button-remap#073f0f0f798ceab2c0f67e6d7fb2a9a1b11ac201</id>
+        <link href="https://windhawk.net/mods/mouse-button-remap"/>
+        <updated>2026-06-15T14:16:18.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="mousebuttonremapper">Mouse Button Remapper</h1>
+<p><img src="https://i.imgur.com/z2ndWbk.png" alt="Demo" /></p>
+<p>Remaps mouse buttons to keyboard keys, optionally with modifiers (Ctrl,
+Shift, Alt, Win). Supported buttons:</p>
+<ul>
+<li><strong>Upper side button</strong> = "Forward" (XButton2) — on most mice this is the
+side button closer to the front of the mouse.</li>
+<li><strong>Lower side button</strong> = "Back" (XButton1).</li>
+<li><strong>Middle button</strong> = pressing the scroll wheel.</li>
+<li><strong>Left button</strong> and <strong>Right button</strong> — see the warning below.</li>
+</ul>
+<p>Each button has its own on/off switch — when a button is disabled, it
+keeps its original function. If your mouse has the side buttons swapped,
+simply configure the other one.</p>
+<p>The mod runs as a tool mod in a dedicated process and installs a global
+low-level mouse hook, so it works system-wide (in every application)
+without injecting into the shell or other programs.</p>
+<h2 id="mousecompatibility">Mouse compatibility</h2>
+<p>By default, on virtually all mice the two side buttons are reported as
+standard mouse buttons — <strong>Forward</strong> (XButton2) and <strong>Back</strong> (XButton1) —
+and the middle button as the wheel click. Those are exactly the events
+this mod intercepts, so it works out of the box on a normal mouse with no
+vendor software.</p>
+<p>However, if the mouse's own software or onboard firmware remaps a button
+to a <strong>multimedia or keyboard function</strong> (e.g. "Refresh", "Play/Pause",
+"Browser Back"), that press is no longer sent as a mouse button — it
+arrives as a media/keyboard command that a mouse hook cannot see, so this
+mod can no longer remap it. If a button is not being intercepted, open
+your mouse software and set it back to the plain <strong>Forward</strong> / <strong>Back</strong> /
+<strong>Wheel click</strong> function, then assign the keyboard key here in the mod.
+In other words: let the mouse send a normal button, and let the mod do
+the remapping — do not remap the same button in both places.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Each button has its own section in the mod settings:</p>
+<ol>
+<li><p><strong>Enabled</strong> — the master switch for that button. When unchecked, the
+button behaves exactly as the manufacturer intended and all other
+fields in the section are ignored. This lets you remap only one button
+and leave the rest untouched.</p></li>
+<li><p><strong>Key</strong> — the keyboard key sent while the button is held. Pick one
+from the dropdown (F1–F12, Enter, Esc, arrows, media keys, …). The
+key press mirrors the button press: key-down when you press the
+button, key-up when you release it. The original button action is
+suppressed only when the remap is active.</p></li>
+<li><p><strong>Custom key</strong> — used only when <strong>Key</strong> is set to
+<em>Custom (use field below)</em>. It lets you type any key the dropdown
+does not list. Accepted values:</p></li>
+</ol>
+<ul>
+<li><p><code>F1</code> … <code>F24</code></p></li>
+<li><p>single letters and digits: <code>A</code> … <code>Z</code>, <code>0</code> … <code>9</code></p></li>
+<li><p>named keys: <code>Enter</code>, <code>Esc</code>, <code>Tab</code>, <code>Space</code>, <code>Backspace</code>, <code>Delete</code>,
+ <code>Insert</code>, <code>Home</code>, <code>End</code>, <code>PageUp</code>, <code>PageDown</code>, <code>Up</code>, <code>Down</code>,
+ <code>Left</code>, <code>Right</code>, <code>PlayPause</code>, <code>Mute</code>, <code>VolumeUp</code>, <code>VolumeDown</code></p></li>
+<li><p>any Windows virtual-key code in hex, e.g. <code>0x74</code> (= F5) — see the
+ "Virtual-Key Codes" page in Microsoft docs for the full list</p></li>
+<li><p>a full combo such as <code>Ctrl+F5</code> or <code>Ctrl + Shift + T</code> — modifiers
+ typed here are combined with the <strong>Modifier</strong> dropdown selection</p>
+<p>If the value cannot be parsed, the remap is inactive and the button
+keeps its original function (a note is written to the mod's log,
+visible via "Show log" in Windhawk).</p></li>
+</ul>
+<ol>
+<li><p><strong>Modifier</strong> — keys held together with the main key, e.g. selecting
+<code>Ctrl</code> with key <code>F5</code> sends Ctrl+F5 (hard refresh in browsers).</p></li>
+<li><p><strong>Double-click action</strong> — optionally send a different key on
+double-click (e.g. single click = F5, double click = Ctrl+Shift+T).
+The double-click key/custom key/modifier fields work exactly like the
+single-click ones. Note: while this is enabled, the single-click
+action fires only after the system double-click interval passes
+without a second click, so it has a short delay; press-and-hold
+mirroring is also disabled for that button. When disabled (default),
+single clicks are instant.</p></li>
+</ol>
+<p>Changes are applied immediately after saving the settings — no restart
+needed.</p>
+<h2 id="mastertogglehotkey">Master toggle hotkey</h2>
+<p>An optional global keyboard shortcut that suspends/resumes all remaps at
+once — handy when the buttons' original functions are temporarily
+needed. Pick the modifiers and the key from the dropdowns; if the chosen
+combination is already taken by another application, the registration
+fails and a note is written to the mod's log — just pick a different
+combination. Every toggle shows a short on-screen indicator
+("Mouse remap: ON/OFF"); a confirmation sound can be enabled with the
+"Play a sound on toggle" option. The indicator scales with the screen
+and appears on the monitor under the cursor, so it stays readable on
+large / high-resolution displays. Remapping always starts active after
+the mod (re)starts.</p>
+<p><strong>Troubleshooting:</strong> if pressing the shortcut only produces a plain
+system beep and no on-screen indicator, the shortcut did not get
+registered. Open the mod's log (Show log in Windhawk) and look for a
+"RegisterHotKey failed" line — error 1409 means another application
+already owns that combination; pick a different one and save again.</p>
+<h2 id="gamemode">Game mode</h2>
+<p>When enabled, remapping is automatically suspended while the foreground
+window covers the entire screen — typical for games and fullscreen
+video. Note that this also applies to browsers in fullscreen (F11) mode.</p>
+<p>The fullscreen state is tracked efficiently: instead of being recomputed
+inside the mouse hook on every click, it is cached and only refreshed via
+window events (foreground change and window move/resize) while game mode
+is enabled, so the hook stays lightweight.</p>
+<h2 id="warningleftandrightbutton">⚠️ Warning: left and right button</h2>
+<p>Remapping the <strong>left button</strong> disables normal clicking system-wide while
+enabled — you will not be able to click anything with it, including the
+Windhawk window. Keep keyboard navigation in mind (Tab/Enter), or simply
+disable the mod from Windhawk using the keyboard if you lock yourself
+out. Remapping the <strong>right button</strong> similarly removes access to context
+menus (the keyboard Menu key still works). Both are disabled by default;
+enable them only if you know what you are doing.</p>
+<hr />
+<h1 id="mousebuttonremapperpolski">Mouse Button Remapper (polski)</h1>
+<p>Mod przemapowuje przyciski myszy na klawisze klawiatury, opcjonalnie z
+modyfikatorami (Ctrl, Shift, Alt, Win). Obsługiwane przyciski: <strong>górny
+boczny</strong> (Do przodu / XButton2), <strong>dolny boczny</strong> (Wstecz / XButton1),
+<strong>środkowy</strong> (klik kółka) oraz — z ostrzeżeniem poniżej — <strong>lewy</strong> i
+<strong>prawy</strong>. Mod działa jako „tool mod" w osobnym procesie i instaluje
+globalny hook myszy, więc działa we wszystkich aplikacjach bez
+wstrzykiwania się do powłoki ani innych programów.</p>
+<h2 id="zgodnomyszek">Zgodność myszek</h2>
+<p>Domyślnie w praktycznie każdej myszce dwa boczne przyciski są zgłaszane
+jako standardowe przyciski myszy — <strong>Do przodu</strong> (XButton2) i <strong>Wstecz</strong>
+(XButton1) — a środkowy jako klik kółka. Dokładnie te zdarzenia mod
+przechwytuje, więc na zwykłej myszce bez oprogramowania działa od razu.</p>
+<p>Jeśli jednak oprogramowanie myszki lub jej firmware przypisze przyciskowi
+<strong>funkcję multimedialną lub klawiaturową</strong> (np. „Refresh", „Play/Pause",
+„Wstecz przeglądarki"), takie naciśnięcie nie jest już wysyłane jako
+przycisk myszy — przychodzi jako komenda multimedialna/klawiatury, której
+hook myszy nie widzi, więc mod nie może go przemapować. Jeśli któryś
+przycisk nie jest przechwytywany, w oprogramowaniu myszki ustaw go z
+powrotem na zwykłe <strong>Do przodu</strong> / <strong>Wstecz</strong> / <strong>klik kółka</strong>, a klawisz
+przypisz tutaj w modzie. Krótko: niech myszka wysyła normalny przycisk, a
+przemapowaniem zajmie się mod — nie mapuj tego samego przycisku w obu
+miejscach naraz.</p>
+<h2 id="konfiguracja">Konfiguracja</h2>
+<p>Każdy przycisk ma własną sekcję:</p>
+<ol>
+<li><p><strong>Włączony</strong> — główny włącznik. Gdy odznaczony, przycisk działa tak,
+jak ustawił producent, a pozostałe pola są ignorowane. Dzięki temu
+można przemapować tylko jeden przycisk, a resztę zostawić.</p></li>
+<li><p><strong>Klawisz</strong> — klawisz wysyłany podczas trzymania przycisku, wybierany
+z listy (F1–F12, Enter, Esc, strzałki, klawisze multimedialne, …).
+Wciśnięcie klawisza odwzorowuje wciśnięcie przycisku: key-down przy
+naciśnięciu, key-up przy puszczeniu.</p></li>
+<li><p><strong>Klawisz niestandardowy</strong> — używany tylko, gdy <strong>Klawisz</strong> =
+<em>Niestandardowy (pole poniżej)</em>. Akceptuje:</p></li>
+</ol>
+<ul>
+<li><p><code>F1</code> … <code>F24</code>,</p></li>
+<li><p>pojedyncze litery i cyfry: <code>A</code> … <code>Z</code>, <code>0</code> … <code>9</code>,</p></li>
+<li><p>nazwy: <code>Enter</code>, <code>Esc</code>, <code>Tab</code>, <code>Space</code>, <code>Backspace</code>, <code>Delete</code>,
+ <code>Insert</code>, <code>Home</code>, <code>End</code>, <code>PageUp</code>, <code>PageDown</code>, <code>Up</code>, <code>Down</code>,
+ <code>Left</code>, <code>Right</code>, <code>PlayPause</code>, <code>Mute</code>, <code>VolumeUp</code>, <code>VolumeDown</code>,</p></li>
+<li><p>dowolny kod virtual-key w hex, np. <code>0x74</code> (= F5) — pełna lista na
+ stronie "Virtual-Key Codes" w dokumentacji Microsoftu,</p></li>
+<li><p>pełną kombinację, np. <code>Ctrl+F5</code> albo <code>Ctrl + Shift + T</code> —
+ modyfikatory wpisane tutaj sumują się z dropdownem <strong>Modyfikator</strong>.</p>
+<p>Jeśli wartości nie da się sparsować, bind jest nieaktywny i przycisk
+zachowuje oryginalną funkcję (informacja trafia do logu moda —
+"Show log" w Windhawk).</p></li>
+</ul>
+<ol>
+<li><p><strong>Modyfikator</strong> — klawisze trzymane razem z głównym klawiszem, np.
+<code>Ctrl</code> + klawisz <code>F5</code> wysyła Ctrl+F5 (twarde odświeżenie strony).</p></li>
+<li><p><strong>Akcja podwójnego kliknięcia</strong> — opcjonalnie inny klawisz przy
+dwukliku (np. pojedyncze kliknięcie = F5, podwójne = Ctrl+Shift+T).
+Pola klawisza/klawisza niestandardowego/modyfikatora dwukliku
+działają tak samo jak dla pojedynczego kliknięcia. Uwaga: gdy ta
+opcja jest włączona, akcja pojedynczego kliknięcia wykonuje się
+dopiero po upływie systemowego czasu dwukliku (krótkie opóźnienie),
+a odwzorowanie przytrzymania przycisku jest dla niego wyłączone.
+Gdy opcja jest wyłączona (domyślnie), pojedyncze kliknięcia działają
+natychmiast.</p></li>
+</ol>
+<p>Zmiany działają natychmiast po zapisaniu ustawień — bez restartu.</p>
+<h2 id="skrtwczaniawyczaniabindw">Skrót włączania/wyłączania bindów</h2>
+<p>Opcjonalny globalny skrót klawiszowy, który jednym naciśnięciem
+wstrzymuje/wznawia wszystkie bindy — przydatny, gdy chwilowo potrzebne
+są oryginalne funkcje przycisków. Modyfikatory i klawisz wybierasz z
+list — jeśli kombinacja jest już zajęta przez inny program, rejestracja
+się nie powiedzie, a informacja trafi do logu moda — wystarczy wybrać
+inną kombinację. Każde przełączenie pokazuje krótki wskaźnik na ekranie
+("Mouse remap: ON/OFF"); dźwięk potwierdzenia można włączyć opcją
+„Odtwarzaj dźwięk przy przełączeniu". Wskaźnik skaluje się do rozmiaru
+ekranu i pojawia się na monitorze pod kursorem, więc pozostaje czytelny
+na dużych ekranach i wysokiej rozdzielczości. Po (re)starcie moda bindy
+są zawsze aktywne.</p>
+<p><strong>Rozwiązywanie problemów:</strong> jeśli naciśnięcie skrótu daje tylko zwykły
+systemowy „ding" i wskaźnik się nie pokazuje, skrót nie został
+zarejestrowany. Otwórz log moda (Show log w Windhawk) i poszukaj linii
+"RegisterHotKey failed" — błąd 1409 oznacza, że kombinację zajmuje już
+inna aplikacja; wybierz inną i zapisz ponownie.</p>
+<h2 id="trybgry">Tryb gry</h2>
+<p>Gdy włączony, bindy są automatycznie wstrzymywane, dopóki okno na
+pierwszym planie zajmuje cały ekran — typowe dla gier i pełnoekranowego
+wideo. Uwaga: dotyczy to też przeglądarki w trybie pełnoekranowym (F11).</p>
+<p>Stan pełnego ekranu jest śledzony wydajnie: zamiast przeliczać go w haku
+myszy przy każdym kliknięciu, jest buforowany i odświeżany tylko przez
+zdarzenia okien (zmiana aktywnego okna oraz zmiana rozmiaru/pozycji),
+i tylko gdy tryb gry jest włączony — dzięki czemu hak pozostaje lekki.</p>
+<h2 id="ostrzeenielewyiprawyprzycisk">⚠️ Ostrzeżenie: lewy i prawy przycisk</h2>
+<p>Przemapowanie <strong>lewego przycisku</strong> blokuje normalne klikanie w całym
+systemie — nie klikniesz nim niczego, łącznie z oknem Windhawka. W razie
+zablokowania użyj nawigacji klawiaturą (Tab/Enter) albo wyłącz mod w
+Windhawku klawiaturą. Przemapowanie <strong>prawego przycisku</strong> odbiera dostęp
+do menu kontekstowych (działa jeszcze klawisz Menu na klawiaturze). Oba
+są domyślnie wyłączone — włączaj tylko świadomie.</p>]]></content>
+        <author>
+            <name>wygodad</name>
+            <uri>https://github.com/wygodad</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Tray hover expand 1.4.2]]></title>
+        <id>https://windhawk.net/mods/tray-hover-expand#ed888d43cc5bd73a43fd1f2a1c7acc67801f725b</id>
+        <link href="https://windhawk.net/mods/tray-hover-expand"/>
+        <updated>2026-06-15T14:14:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="trayhoverexpand">Tray hover expand</h1>
+<p><img src="https://i.imgur.com/qsNUNpj.png" alt="Demo" /></p>
+<p>Opens the hidden tray icons flyout (the "Show Hidden Icons" chevron) when you
+hover the cursor over it, instead of having to click. Optionally collapses it
+again once the cursor leaves the opened icons.</p>
+<p>It works through UI Automation, so it does not hook internal shell functions —
+it is relatively safe and resilient across Windows builds. It runs as a tool
+mod in a dedicated process and does not inject into the shell.</p>
+<h2 id="howitdiffersfromsimilarmods">How it differs from similar mods</h2>
+<ul>
+<li><em>Taskbar tray icons hide on hover</em> auto-hides the whole tray area and reveals
+it on hover.</li>
+<li><em>Show all taskbar notification icons</em> forces all hidden icons to always show.</li>
+<li>This mod keeps the standard Windows overflow flyout and simply opens it on
+hover (and optionally closes it when you move away).</li>
+</ul>
+<h2 id="howthechevronisdetected">How the chevron is detected</h2>
+<p>The "Show Hidden Icons" chevron has no language-independent unique identifier on
+Windows 11 (it shares AutomationId <code>SystemTrayIcon</code> with the clock, volume,
+battery, etc., and exposes no ExpandCollapse pattern). So detection is a hybrid:</p>
+<ol>
+<li>Match the button by name (the keyword list covers English and Polish by
+default and can be extended in the settings).</li>
+<li>If no name matches (other languages), fall back to the leftmost tray button
+with the configured AutomationId, which is normally the chevron.</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>For unsupported languages, add your locale's chevron name to the "Chevron name
+keywords" setting, or rely on the leftmost-tray-icon fallback.</li>
+<li>If auto-collapse does not work, the flyout window class name may differ on your
+build. Change it in the "Flyout window class" setting.</li>
+</ul>
+<hr />
+<h2 id="opispopolsku">Opis po polsku</h2>
+<p>Otwiera schowek ukrytych ikon zasobnika (strzałkę „Pokaż ukryte ikony") po
+najechaniu kursorem, bez konieczności klikania. Opcjonalnie zwija go z powrotem,
+gdy kursor opuści otwarte ikony.</p>
+<p>Mod działa przez UI Automation, więc nie hookuje wewnętrznych funkcji powłoki —
+jest stosunkowo bezpieczny i odporny na zmiany między kompilacjami Windows.
+Działa jako „tool mod" w osobnym procesie i nie wstrzykuje się do powłoki.</p>
+<h3 id="czymrnisiodpodobnychmodw">Czym różni się od podobnych modów</h3>
+<ul>
+<li><em>Taskbar tray icons hide on hover</em> automatycznie ukrywa cały obszar zasobnika
+i odsłania go po najechaniu.</li>
+<li><em>Show all taskbar notification icons</em> wymusza stałe wyświetlanie wszystkich
+ukrytych ikon.</li>
+<li>Ten mod zachowuje standardowy schowek Windows i po prostu otwiera go po
+najechaniu (a opcjonalnie zamyka po odjechaniu kursorem).</li>
+</ul>
+<h3 id="jakwykrywanajeststrzaka">Jak wykrywana jest strzałka</h3>
+<p>Strzałka „Pokaż ukryte ikony" nie ma w Windows 11 unikalnego, niezależnego od
+języka identyfikatora (dzieli AutomationId <code>SystemTrayIcon</code> z zegarem,
+głośnością, baterią itd. i nie udostępnia wzorca ExpandCollapse). Wykrywanie
+jest więc hybrydowe:</p>
+<ol>
+<li>Dopasowanie przycisku po nazwie (domyślna lista słów kluczowych obejmuje
+angielski i polski; można ją rozszerzyć w ustawieniach).</li>
+<li>Gdy nazwa nie pasuje (inne języki) — pierwszy od lewej przycisk zasobnika ze
+skonfigurowanym AutomationId, którym zwykle jest strzałka.</li>
+</ol>
+<h3 id="uwagi">Uwagi</h3>
+<ul>
+<li>Dla nieobsługiwanych języków dodaj nazwę strzałki w swoim języku do ustawienia
+„Słowa kluczowe nazwy strzałki" albo polegaj na powyższym mechanizmie zapasowym.</li>
+<li>Jeśli auto-zwijanie nie działa, nazwa klasy okna schowka może się różnić na
+Twojej kompilacji systemu. Zmień ją w ustawieniu „Klasa okna schowka".</li>
+</ul>]]></content>
+        <author>
+            <name>wygodad</name>
+            <uri>https://github.com/wygodad</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Unlock Office Files for Upload 0.3]]></title>
+        <id>https://windhawk.net/mods/unlock-office-file-upload#06beab5c4cba54e96b03ab52864709da6c2c1a33</id>
+        <link href="https://windhawk.net/mods/unlock-office-file-upload"/>
+        <updated>2026-06-15T13:43:19.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="unlockinuseofficefilesforupload">Unlock In-Use Office Files for Upload</h1>
+<p>When you try to upload or attach a <code>.docx</code>, <code>.xlsx</code>, <code>.pptx</code> (or their legacy
+variants) while the file is open in Word/Excel/PowerPoint, you get:</p>
+<blockquote>
+  <p><strong>This file is in use. Enter a new name or close the file that's open in
+another program.</strong></p>
+</blockquote>
+<p>This mod silently intercepts that failure in the uploading process (Chrome,
+Edge, Outlook, Teams, Discord, etc.), makes a temporary copy of the file, and
+redirects the open call to the copy. The OS deletes the copy automatically when
+the caller closes the handle (<code>FILE_FLAG_DELETE_ON_CLOSE</code>) — even on process
+crash or abnormal exit.</p>
+<p><strong>What you get:</strong> The uploader receives the last-saved version of the file with
+no prompts and no need to close Word first.</p>
+<h2 id="knownlimitations">Known Limitations</h2>
+<p><strong>Unsaved edits not included.</strong> The copy reflects the last <em>saved</em> state.
+Unsaved in-memory edits in Word are not captured — this is inherent to how
+Windows file locking works.</p>
+<p><strong>Deny-read locks not bypassed.</strong> The redirect only works when the existing
+lock permits shared reads (Word's usual <code>FILE_SHARE_READ</code> lock). Legacy
+formats (<code>.doc</code>, <code>.xls</code>, <code>.ppt</code>) held by some applications may deny all reads
+outright, in which case <code>CopyFileW</code> also fails and the mod re-surfaces the
+original sharing violation error.</p>
+<h2 id="scopenote">Scope Note</h2>
+<p>The mod injects into all processes (required since the uploader can be any
+app). <code>SearchIndexer.exe</code> and <code>explorer.exe</code> are excluded via <code>@exclude</code>.
+Session 0 (system service) processes are skipped at init time. The
+<code>CreateFileW</code> hook has near-zero overhead on the success path — it returns
+immediately when the original call succeeds. A <code>thread_local</code> reentrancy
+guard ensures that <code>CopyFileW</code>'s own internal <code>CreateFileW</code> calls do not
+re-enter the hook logic.</p>]]></content>
+        <author>
+            <name>Loerei</name>
+            <uri>https://github.com/loerei</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Antigravity IDE Portable 1.0.260614]]></title>
+        <id>https://windhawk.net/mods/antigravity-portable#7b625ccab8e0688bdd65265724b76a02b5e9728d</id>
+        <link href="https://windhawk.net/mods/antigravity-portable"/>
+        <updated>2026-06-15T13:39:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="antigravityideportable">Antigravity IDE Portable</h1>
+<p>Make Antigravity IDE portable by redirecting user data and extensions directories via hooking <code>GetCommandLineW</code>.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Uses <code>../data/</code> relative to the exe directory as the default data directory.</li>
+<li>Automatically converts relative paths to absolute paths to ensure the program recognizes them correctly.</li>
+<li>Keeps original parameters unchanged if <code>--user-data-dir</code> or <code>--extensions-dir</code> is already present.</li>
+<li>Detects and skips child processes (those with <code>--type=</code> or <code>--node-ipc</code> in their command line).</li>
+<li>Supports configuring the data directory in Windhawk settings.</li>
+</ul>
+<hr />
+<h1 id="antigravityide">Antigravity IDE 便携版</h1>
+<p>这个 Mod 为 Antigravity IDE 制作便携版。通过 Hook <code>GetCommandLineW</code> 在启动参数中注入 <code>--user-data-dir</code> 和 <code>--extensions-dir</code>。</p>
+<h2 id="">功能特性：</h2>
+<ul>
+<li>默认使用相对于 exe 所在目录的 <code>../data/</code> 作为数据目录。</li>
+<li>自动将相对路径转换为绝对路径，确保程序能够正确识别。</li>
+<li>如果原启动参数中已经包含了 <code>--user-data-dir</code> 或 <code>--extensions-dir</code>，则不会修改对应的参数。</li>
+<li>自动检测并跳过子进程（即启动参数中含有 <code>--type=</code> 或 <code>--node-ipc</code> 的进程）。</li>
+<li>支持在 Windhawk 设置中自定义数据目录。</li>
+</ul>]]></content>
+        <author>
+            <name>easyatm</name>
+            <uri>https://github.com/easyatm</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Common Controls Hook 1.0]]></title>
         <id>https://windhawk.net/mods/common-controls-hook#b02dade50ac82c10c15af1cccbd935ff314c0a53</id>
@@ -567,145 +982,6 @@ It does not currently support live/animated wallpapers (e.g., Wallpaper Engine, 
         <author>
             <name>Asteski</name>
             <uri>https://github.com/Asteski</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Nav DragOver Fix 1.1.9]]></title>
-        <id>https://windhawk.net/mods/explorer-nav-dragover-fix#e10c123d95f10be617ff01eb586b41851294c2fb</id>
-        <link href="https://windhawk.net/mods/explorer-nav-dragover-fix"/>
-        <updated>2026-06-01T20:34:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorernavdragoverfix">Explorer Nav DragOver Fix</h1>
-<p>Two fixes for File Explorer's drag-over behavior:</p>
-<ol>
-<li><p><strong>Stops the jump.</strong> When you drag a file or folder onto a root-level entry
-in the nav pane (drives, pinned folders, the "This PC" grouping), Explorer
-auto-expands that entry after a short hover delay -- and the auto-expand
-often scrolls the pane, sending the row you were aiming at off-screen.
-This mod pins the TreeView's first-visible item to its pre-expand position
-and keeps the drop highlight on the original parent row. Protection
-releases as soon as the cursor leaves the captured row, so deeper folders
-continue to behave normally.</p></li>
-<li><p><strong>Re-enables the mouse wheel.</strong> Windows normally swallows wheel input
-during drag-and-drop. This mod intercepts the wheel and forwards it to
-the Explorer navigation pane (left tree) and the main file list on the
-right (Details / ItemsView on Win11 25H2, and classic Large icons / List
-views via SysListView32). Scrolling prefers UI Automation so wheel messages
-are not sent to SHELLDLL_DefView during a drag. Disable the corresponding
-setting to fall back to native behavior.</p></li>
-</ol>
-<h2 id="demo">Demo</h2>
-<p><img src="https://raw.githubusercontent.com/tonythethompson/windhawk-mods/main/mods_assets/explorer-nav-dragover-fix-demo.gif" alt="Without Mod vs With Mod" /></p>
-<p>Left: default Explorer behavior. Right: with this mod enabled (stable hover
-expand and mouse-wheel scrolling during drag).</p>
-<p>The mod hooks <code>DoDragDrop</code> (to track drag generations across threads),
-subclasses each nav-pane <code>SysTreeView32</code>, and watches <code>EVENT_OBJECT_CREATE</code>
-on a dedicated helper thread to pick up new Explorer windows. No state is
-persisted between drags; everything is scoped to the active drag loop.</p>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>If you disable the mod and see a log line like <strong>"WinEvent helper thread did
-not exit within 10s"</strong>, an Explorer thread was wedged mid-callback (for
-example while subclassing a nav tree). The mod intentionally leaks that
-helper handle rather than calling <code>TerminateThread</code>, which would be unsafe.
-<strong>Restart File Explorer</strong> (or sign out) to clear the state. This is rare in
-normal use.</p>
-<h2 id="compatibility">Compatibility</h2>
-<ul>
-<li>File Explorer (<code>explorer.exe</code>) on Windows 11 (tested on 23H2 / 24H2).</li>
-<li>Architectures: x64, arm64.</li>
-<li>No effect on any other process.</li>
-</ul>]]></content>
-        <author>
-            <name>tonythethompson</name>
-            <uri>https://github.com/tonythethompson</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[File Explorer Reopen Closed Tab 1.0.0]]></title>
-        <id>https://windhawk.net/mods/file-explorer-reopen-closed-tab#29156016482a79a1c251b5e211ebbd1f0ec8d5dc</id>
-        <link href="https://windhawk.net/mods/file-explorer-reopen-closed-tab"/>
-        <updated>2026-06-01T19:39:47.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="fileexplorerreopenclosedtab">File Explorer Reopen Closed Tab</h1>
-<p>Press <code>Ctrl+Shift+T</code> in any active File Explorer window to reopen the last closed tab — just like in a browser.</p>
-<ul>
-<li>Restored tabs open directly in the existing Explorer window, not as a new window.</li>
-<li>If no Explorer window is open, nothing happens.</li>
-<li>Up to 50 tabs are remembered per session.</li>
-<li>History clears when all Explorer windows are closed.</li>
-</ul>]]></content>
-        <author>
-            <name>Armaninyow</name>
-            <uri>https://github.com/armaninyow</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disable Inactive Menubar Greying 1.0]]></title>
-        <id>https://windhawk.net/mods/disable-inactive-menubar-greying#56be4620179f43168964f39cd82179339b6bf8fe</id>
-        <link href="https://windhawk.net/mods/disable-inactive-menubar-greying"/>
-        <updated>2026-06-01T19:16:56.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="disableinactivemenubargreying">Disable Inactive Menubar Greying</h1>
-<p>This mod prevents the classic menubar text (File, Edit, View, etc.) in folder windows
-under the Classic theme from appearing greyed out when the window loses focus, 
-the way it was in Windows 95, before Windows 98.</p>
-<p><img src="https://i.imgur.com/FCEXTyt.png" alt="screenshot" /></p>
-<p><img src="https://i.imgur.com/XBVNN0v.png" alt="screenshot" /></p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[IME Native Mode Lock 0.1]]></title>
-        <id>https://windhawk.net/mods/ime-mode-lock#6f1478f3ddcca4a45d5a1930a2d500db8738a386</id>
-        <link href="https://windhawk.net/mods/ime-mode-lock"/>
-        <updated>2026-05-30T18:56:55.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="imenativemodelock">IME Native Mode Lock</h1>
-<p>Forces supported IMEs to stay in their native input mode, blocking
-both system-initiated and user-initiated mode switches.</p>
-<p>By default, Windows automatically switches input modes when changing
-window focus or switching between applications. This mod blocks that
-behavior, keeping your IME in its native mode at all times.</p>
-<h2 id="supportedimes">Supported IMEs</h2>
-<ul>
-<li><strong>Simplified Chinese</strong> (Microsoft Pinyin, etc.) — always stays in Chinese mode</li>
-<li>More languages can be added in future updates</li>
-</ul>
-<p><strong>Pair with</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — short-press
-Caps Lock to switch input languages, long-press for Caps Lock.</p>
-<hr />
-<p>强制支持的输入法保持在原生输入模式，同时阻止系统自动切换和用户主动切换。</p>
-<p>默认情况下，Windows 在切换窗口焦点或应用程序时会自动切换输入模式。
-此 mod 阻止该行为，始终保持输入法在原生输入模式。</p>
-<h2 id="">支持的输入法</h2>
-<ul>
-<li><strong>简体中文</strong>（微软拼音等）— 始终保持中文模式</li>
-<li>未来可添加更多语言支持</li>
-</ul>
-<p><strong>推荐搭配</strong> Caps IME Switcher (<code>caps-ime-switcher</code>) — 可使用 Caps Lock
-短按切换输入语言，长按触发大小写锁定，配合本 mod 体验更佳。</p>]]></content>
-        <author>
-            <name>ZeonXr</name>
-            <uri>https://github.com/ZeonXr</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Caps IME Switcher 0.7]]></title>
-        <id>https://windhawk.net/mods/caps-ime-switcher#8877ffddffed29cd23d442cb2a803d65cdfea9e3</id>
-        <link href="https://windhawk.net/mods/caps-ime-switcher"/>
-        <updated>2026-05-30T18:43:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="capsimeswitcher">Caps IME Switcher</h1>
-<p>Brings the macOS Caps Lock input source switching behavior to Windows.</p>
-<p>Short-press Caps Lock to switch to the next input language.
-Long-press Caps Lock to toggle Caps Lock on/off.</p>
-<p><strong>Pair with</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — auto-locks
-IMEs to their native mode. Best experience when used together.</p>
-<hr />
-<p>将 macOS 的 Caps Lock 输入法切换方式带到 Windows。</p>
-<p>短按 Caps Lock 切换下一个输入语言，长按触发大小写锁定。</p>
-<p><strong>推荐搭配</strong> IME Native Mode Lock (<code>ime-mode-lock</code>) — 可在切换输入法时
-自动锁定中文模式，两个 mod 配合使用体验最佳。</p>]]></content>
-        <author>
-            <name>ZeonXr</name>
-            <uri>https://github.com/ZeonXr</uri>
         </author>
     </entry>
 </feed>

@@ -481,6 +481,13 @@
         "github": "https://github.com/Lockframe",
         "homepages": []
     },
+    "https://github.com/loerei": {
+        "author": "Loerei",
+        "github": "https://github.com/loerei",
+        "homepages": [
+            "https://github.com/loerei/windhawk-unlock-office-file-upload"
+        ]
+    },
     "https://github.com/lolstijl": {
         "author": "lolstijl",
         "github": "https://github.com/lolstijl",
@@ -811,6 +818,11 @@
     "https://github.com/wrldspawn": {
         "author": "wrldspawn",
         "github": "https://github.com/wrldspawn",
+        "homepages": []
+    },
+    "https://github.com/wygodad": {
+        "author": "wygodad",
+        "github": "https://github.com/wygodad",
         "homepages": []
     },
     "https://github.com/xetrill": {
