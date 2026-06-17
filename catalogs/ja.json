@@ -2154,11 +2154,11 @@
                     2
                 ],
                 "ratingUsers": 3,
-                "updated": 1751147133000,
+                "updated": 1781634229000,
                 "users": 919
             },
             "metadata": {
-                "author": "anixx",
+                "author": "Anixx",
                 "description": "Fixes transparency glitches in Classic theme",
                 "github": "https://github.com/Anixx",
                 "include": [
@@ -2166,7 +2166,7 @@
                     "dllhost.exe"
                 ],
                 "name": "Classic theme transparency fix",
-                "version": "1.1"
+                "version": "1.2"
             }
         },
         "classic-theme-uifile-fix": {
@@ -4155,14 +4155,14 @@
                     1656
                 ],
                 "ratingUsers": 1802,
-                "updated": 1769882688000,
+                "updated": 1781641244000,
                 "users": 178764
             },
             "featured": true,
             "metadata": {
                 "author": "m417z",
                 "compilerOptions": "-lole32 -loleaut32 -lpropsys",
-                "description": "Optional improvements: show folder sizes, use MB/GB for large files (by default, all sizes are shown in KBs), use IEC terms (such as KiB instead of KB)",
+                "description": "Enhances file size display in Explorer details with folder sizes, human-readable units (MB/GB), and optional IEC notation (KiB/MiB)",
                 "exclude": [
                     "conhost.exe",
                     "Plex*.exe",
@@ -4170,7 +4170,10 @@
                     "LockApp.exe",
                     "SearchHost.exe",
                     "ShellExperienceHost.exe",
-                    "StartMenuExperienceHost.exe"
+                    "StartMenuExperienceHost.exe",
+                    "msedgewebview2.exe",
+                    "windhawk.exe",
+                    "*\\UI\\VSCodium.exe"
                 ],
                 "github": "https://github.com/m417z",
                 "homepage": "https://m417z.com/",
@@ -4179,7 +4182,7 @@
                 ],
                 "name": "Better file sizes in Explorer details",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.5"
+                "version": "1.5.1"
             }
         },
         "explorer-double-click-up": {
@@ -5412,6 +5415,38 @@
                 ],
                 "name": "Fix language indicator in Win10 taskbar under Win11 24H2+",
                 "version": "1.4.0"
+            }
+        },
+        "fix-missing-taskbar-icons": {
+            "details": {
+                "defaultSorting": 18,
+                "published": 1781639036000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781639036000,
+                "users": 2
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "therealgorgan",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lshcore -lversion",
+                "description": "On resume from sleep or hibernate, momentarily pulses the taskbar height by 1px and reverts it, forcing a re-layout that brings back icons that go missing on wake (Windows 11)",
+                "github": "https://github.com/therealgorgan",
+                "include": [
+                    "explorer.exe"
+                ],
+                "license": "GPL-3.0-or-later",
+                "name": "Fix missing taskbar icons after sleep",
+                "version": "2.0.0"
             }
         },
         "fix-qt-scrollbar-grippers": {
@@ -9241,7 +9276,7 @@
                     0
                 ],
                 "ratingUsers": 0,
-                "updated": 1780846084000,
+                "updated": 1781634178000,
                 "users": 102
             },
             "metadata": {
@@ -9256,7 +9291,7 @@
                     "explorer.exe"
                 ],
                 "name": "ExplorerFrame and menubar fixes fork",
-                "version": "2.0.0"
+                "version": "2.0.1"
             }
         },
         "ribbon-caption-icon-fix": {

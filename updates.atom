@@ -2,12 +2,82 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-15T19:47:35.000Z</updated>
+    <updated>2026-06-16T20:20:44.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Better file sizes in Explorer details 1.5.1]]></title>
+        <id>https://windhawk.net/mods/explorer-details-better-file-sizes#3379f54d9f26eff3b9b09528addff47bf6a87248</id>
+        <link href="https://windhawk.net/mods/explorer-details-better-file-sizes"/>
+        <updated>2026-06-16T20:20:44.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed the IEC terms option not working in some cases.</li>
+<li>Fixed slow file list loading with mapped network drives.</li>
+<li>Excluded msedgewebview2.exe to work around a reported incompatibility with Bitdefender which could cause the Start menu search to load indefinitely.</li>
+<li>Excluded Windhawk as an additional safety measure to allow disabling the mod if it's stuck on init.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Fix missing taskbar icons after sleep 2.0.0]]></title>
+        <id>https://windhawk.net/mods/fix-missing-taskbar-icons#b804f7b6f8902516a34c3af5dd7688e849d2e8fe</id>
+        <link href="https://windhawk.net/mods/fix-missing-taskbar-icons"/>
+        <updated>2026-06-16T19:43:56.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="fixmissingtaskbariconsaftersleep">Fix missing taskbar icons after sleep</h1>
+<p>Works around a Windows 11 bug where some taskbar icons go missing after the PC
+wakes from <strong>sleep or hibernate</strong>, normally requiring a manual <code>explorer.exe</code>
+restart.</p>
+<p>Instead of restarting explorer, this mod reproduces the exact refresh mechanism
+that the <em>Taskbar height and icon size</em> mod (m417z) uses: when triggered, it
+<strong>momentarily changes the taskbar height by 1 pixel and immediately reverts it</strong>.
+That tiny real change forces the taskbar's XAML layout to fully re-measure and
+re-render, which rebuilds the missing icons. A no-op message (which an earlier
+version tried) does <em>not</em> work — the layout has to actually change.</p>
+<ul>
+<li>In steady state the mod changes <strong>nothing</strong> — all of its hooks pass straight
+through to Windows, so your taskbar height, icon size, and dynamic icon
+scaling are untouched.</li>
+<li>On every resume it fires the 1px pulse a few times on a staggered schedule
+(configurable), to catch the taskbar whenever it settles into the broken state.</li>
+<li>Toggling the mod on triggers one pulse immediately, so the on/off switch
+doubles as a manual "refresh now" button for testing.</li>
+</ul>
+<p>This is a stripped-down fork of the <em>Taskbar height and icon size</em> mod: only the
+taskbar-height plumbing is kept (no icon-size, button-width, or search hooks).</p>
+<p>Only Windows 11 is supported.</p>]]></content>
+        <author>
+            <name>therealgorgan</name>
+            <uri>https://github.com/therealgorgan</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Classic theme transparency fix 1.2]]></title>
+        <id>https://windhawk.net/mods/classic-theme-transparency-fix#e7cf22e460b4514dc6dab1c2d897e8e7ebc3fbd3</id>
+        <link href="https://windhawk.net/mods/classic-theme-transparency-fix"/>
+        <updated>2026-06-16T18:23:49.000Z</updated>
+        <content type="html"><![CDATA[<p>Add a fix for Internet Download Manager</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 2.0.1]]></title>
+        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#7b38cda60dbdd9dad527334fc61be76dcfd1db12</id>
+        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
+        <updated>2026-06-16T18:22:58.000Z</updated>
+        <content type="html"><![CDATA[<p>remove redunant argument</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Folder Hover Menu 1.0.2]]></title>
         <id>https://windhawk.net/mods/explorer-folder-hover-menu#625c479f1d6f59a39cfde77301a4895444fdf429</id>
@@ -615,112 +685,6 @@ own auth files if requests start returning <code>401</code>.</p>]]></content>
         <author>
             <name>Salyts</name>
             <uri>https://github.com/Salyts</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MicroManager 1.0.0]]></title>
-        <id>https://windhawk.net/mods/micromanager#7f6a9d164aae1027702ac4603ff218928a53661b</id>
-        <link href="https://windhawk.net/mods/micromanager"/>
-        <updated>2026-06-13T17:28:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="micromanager">MicroManager</h1>
-<p><img src="https://i.imgur.com/yDHoq9N.png" alt="Screenshot" /></p>
-<p>A lightweight tray icon that shows a mini task manager popup with live CPU, GPU
-and RAM usage, plus the single top-consuming process for each.</p>
-<h2 id="howtouse">How to Use</h2>
-<ol>
-<li><strong>Left-click</strong> the tray icon to open the popup showing:</li>
-</ol>
-<ul>
-<li>Total CPU usage and the top CPU-consuming process</li>
-<li>Total GPU usage and the top GPU-consuming process</li>
-<li>Total RAM usage and the top RAM-consuming process</li>
-</ul>
-<ol>
-<li><strong>Click anywhere outside</strong> the popup (or press <strong>Esc</strong>) to close it</li>
-<li><strong>Hover</strong> the tray icon to see a live <code>CPU / GPU / RAM</code> summary tooltip</li>
-<li><strong>Right-click</strong> the tray icon for options</li>
-</ol>
-<h2 id="configuration">Configuration</h2>
-<p>Right-click the tray icon to change the refresh rate (0.3s / 0.5s / 1s / 3s).</p>
-<h2 id="changelog">Changelog</h2>
-<h3 id="v100">v1.0.0</h3>
-<ul>
-<li>Initial release.</li>
-<li>Left-click to see live CPU and GPU usage with the top process for each.</li>
-<li>Right-click for options. Update interval adjustable in Settings.</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Net-Toggle 2.1.0]]></title>
-        <id>https://windhawk.net/mods/net-toggle#962908f1a96bfd70d2e01f45873eaef3117aeef4</id>
-        <link href="https://windhawk.net/mods/net-toggle"/>
-        <updated>2026-06-13T09:27:12.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Add secondary (fallback) DNS server support</li>
-<li>New default check: real DNS query (fixes false "unreachable" on networks that block TCP/53) — fixes #4288</li>
-<li>New per-server check methods: UDP DNS / TCP 53 / DoT 853 / DoH 443</li>
-<li>New Orange icon state: primary down, fallback still up</li>
-<li>Tooltip shows per-server status</li>
-<li>Minor reliability fixes (DNS state reads, shutdown handle cleanup)</li>
-</ul>]]></content>
-        <author>
-            <name>BlackPaw</name>
-            <uri>https://github.com/BlackPaw21</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Saved Run Commands 1.0.0]]></title>
-        <id>https://windhawk.net/mods/saved-run-commands#3fea50c0b2dad77305ca50376a7683b232443903</id>
-        <link href="https://windhawk.net/mods/saved-run-commands"/>
-        <updated>2026-06-13T09:21:58.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="savedruncommands">Saved Run Commands</h1>
-<p>Adds a small button to the standard Windows Run dialog. The button opens a
-compact "Saved Commands" window. A double click on a saved command inserts it
-into the Run edit box and immediately executes it.
-The Saved Commands window can also save either the current Run command or a
-command typed directly into its own input field.
-Saved commands can be edited with the "Update selected" button.
-Multiple saved commands can be selected and deleted at once.
-Each saved command has a per-row "Run as administrator" checkbox.</p>
-<h2 id="screenshots">Screenshots</h2>
-<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28button%29.png" alt="Windows Run dialog with the Saved Run Commands button" /></p>
-<p><img src="https://raw.githubusercontent.com/communism420/Media-Host-For-My-Windhawk-Mods/refs/heads/main/photo%20saved%20run%20commands%20%28window%29.png" alt="Saved Commands window" /></p>
-<p>Notes:</p>
-<ul>
-<li>Commands are stored as one line per command in the mod storage folder.</li>
-<li>Elevated commands expand environment variables before a best-effort
-ShellExecute runas launch.</li>
-<li>The UI added by this mod is intentionally English-only.</li>
-</ul>]]></content>
-        <author>
-            <name>communism420</name>
-            <uri>https://github.com/communism420</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Explorer Context Menu Custom Items 1.0]]></title>
-        <id>https://windhawk.net/mods/explorer-context-menu-custom-items#19bc5c4ed26f7fae503df45a5415ab60fec6311e</id>
-        <link href="https://windhawk.net/mods/explorer-context-menu-custom-items"/>
-        <updated>2026-06-12T16:23:23.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="explorercontextmenucustomitems">Explorer Context Menu Custom Items</h1>
-<p>Easily add, filter, and manage custom shortcut actions inside the classic context menu (<strong>Show more options</strong>).</p>
-<h3 id="keyfeatures">Key Features:</h3>
-<ul>
-<li><strong>Dynamic Commands:</strong> Run any CLI tool or executable (like <code>whisperx</code>, <code>ffmpeg</code>, or <code>python</code>) directly on a highlighted file.</li>
-<li><strong>Extension Filtering:</strong> Restrict commands to specific formats (e.g., <code>.mp4, .mkv</code>) so your menu stays clean and relevant.</li>
-<li><strong>Folder Toggle:</strong> Choose whether specific shortcuts show up when right-clicking folders or folder backdrops.</li>
-</ul>
-<h3 id="howtousevariables">How to use variables:</h3>
-<ul>
-<li>Use <code>%1</code> in your command string to automatically pass the absolute file path of your selected file. It is recommended to use double quotes around it in your command settings (e.g., whisperx "%1") to handle spaces in file paths properly.</li>
-</ul>]]></content>
-        <author>
-            <name>Deepak</name>
-            <uri>https://github.com/deepak-raven</uri>
         </author>
     </entry>
 </feed>
