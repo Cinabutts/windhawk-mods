@@ -2154,19 +2154,22 @@
                     2
                 ],
                 "ratingUsers": 3,
-                "updated": 1781634229000,
+                "updated": 1781683725000,
                 "users": 907
             },
             "metadata": {
                 "author": "Anixx",
                 "description": "Fixes transparency glitches in Classic theme",
+                "exclude": [
+                    "UniGetUI.Avalonia.exe"
+                ],
                 "github": "https://github.com/Anixx",
                 "include": [
                     "*",
                     "dllhost.exe"
                 ],
                 "name": "Classic theme transparency fix",
-                "version": "1.2"
+                "version": "1.3"
             }
         },
         "classic-theme-uifile-fix": {
@@ -2445,7 +2448,7 @@
                     6
                 ],
                 "ratingUsers": 6,
-                "updated": 1781545389000,
+                "updated": 1781721309000,
                 "users": 183
             },
             "metadata": {
@@ -2459,7 +2462,7 @@
                 "license": "MIT",
                 "name": "Common Controls Hook",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.0.1"
+                "version": "1.0.2"
             }
         },
         "confirm-closing-multiple-explorer-tabs": {
@@ -6091,7 +6094,7 @@
                     399
                 ],
                 "ratingUsers": 464,
-                "updated": 1774816423000,
+                "updated": 1781729387000,
                 "users": 38981
             },
             "metadata": {
@@ -6105,7 +6108,7 @@
                 ],
                 "name": "Resource Redirect",
                 "twitter": "https://twitter.com/m417z",
-                "version": "1.2.5"
+                "version": "1.3"
             }
         },
         "icon16bitfix": {
@@ -7665,7 +7668,7 @@
                     3
                 ],
                 "ratingUsers": 3,
-                "updated": 1758924664000,
+                "updated": 1781714578000,
                 "users": 128
             },
             "metadata": {
@@ -7677,7 +7680,7 @@
                     "*"
                 ],
                 "name": "No Properties Icon",
-                "version": "1.0.2"
+                "version": "1.0.3"
             }
         },
         "no-run-icon": {
@@ -9172,6 +9175,35 @@
                 ],
                 "name": "Discord Transparency Resize Fix",
                 "version": "1.0.1"
+            }
+        },
+        "resource-aware-task-terminator": {
+            "details": {
+                "defaultSorting": 36,
+                "published": 1781718959000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781718959000,
+                "users": 4
+            },
+            "metadata": {
+                "author": "Math Shamenson",
+                "compilerOptions": "-lpsapi -lgdi32 -lcomctl32",
+                "description": "Terminate the active window process, a top resource offender, or a weighted resource-heavy app group with confirmation and sortable usage metrics.",
+                "github": "https://github.com/insane66613",
+                "include": [
+                    "windhawk.exe"
+                ],
+                "license": "MIT",
+                "name": "Resource-Aware Task Terminator",
+                "version": "1.0.0"
             }
         },
         "restore-autorun-icon-in-drive-properties": {
@@ -11025,6 +11057,42 @@
                 "version": "1.1.4"
             }
         },
+        "taskbar-multi-tray": {
+            "details": {
+                "defaultSorting": 80,
+                "published": 1781712958000,
+                "rating": 10,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "ratingUsers": 1,
+                "updated": 1781712958000,
+                "users": 8
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "EDM115",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lcomctl32",
+                "description": "Windows 11 taskbar tray/control-center visibility controls for all or selected monitors",
+                "donateUrl": "https://paypal.me/8EDM115",
+                "github": "https://github.com/EDM115",
+                "homepage": "https://edm115.dev/",
+                "include": [
+                    "explorer.exe",
+                    "ShellHost.exe"
+                ],
+                "license": "MIT",
+                "name": "Taskbar multi-tray",
+                "twitter": "https://twitter.com/_edm115",
+                "version": "1.2.2"
+            }
+        },
         "taskbar-multirow": {
             "details": {
                 "defaultSorting": 52929,
@@ -11673,6 +11741,37 @@
                 "name": "Taskbar tray system icon tweaks",
                 "twitter": "https://twitter.com/m417z",
                 "version": "1.3"
+            }
+        },
+        "taskbar-vd-switcher": {
+            "details": {
+                "defaultSorting": 9,
+                "published": 1781724626000,
+                "rating": 0,
+                "ratingBreakdown": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "ratingUsers": 0,
+                "updated": 1781724626000,
+                "users": 1
+            },
+            "metadata": {
+                "architecture": [
+                    "x86-64"
+                ],
+                "author": "sb4ssman",
+                "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion -luuid",
+                "description": "Injects clickable buttons into the taskbar — one per virtual desktop — with configurable grid arrangement for direct switching.",
+                "github": "https://github.com/sb4ssman",
+                "include": [
+                    "explorer.exe"
+                ],
+                "name": "Taskbar Virtual Desktop Switcher",
+                "version": "1.5"
             }
         },
         "taskbar-vertical": {
