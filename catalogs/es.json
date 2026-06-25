@@ -506,7 +506,7 @@
           14
         ],
         "ratingUsers": 16,
-        "updated": 1778343937000,
+        "updated": 1782335252000,
         "users": 580
       },
       "metadata": {
@@ -515,11 +515,11 @@
         "description": "Automatically switch between light and dark appearance/wallpapers/themes based on a schedule with hotkey and custom script support",
         "github": "https://github.com/tinodin",
         "include": [
-          "windhawk.exe"
+          "explorer.exe"
         ],
         "license": "GPL-3.0",
         "name": "Auto Theme Switcher",
-        "version": "1.3.1"
+        "version": "1.3.2"
       }
     },
     "auto-time-sync-on-startup": {
@@ -3575,7 +3575,7 @@
           11
         ],
         "ratingUsers": 13,
-        "updated": 1773497645000,
+        "updated": 1782336467000,
         "users": 574
       },
       "metadata": {
@@ -3587,7 +3587,7 @@
           "*"
         ],
         "name": "Disk Usage Bar in Drive Properties",
-        "version": "1.2"
+        "version": "1.2.1"
       }
     },
     "dot-hide": {
@@ -8329,6 +8329,33 @@
         "version": "1.0"
       }
     },
+    "one-key-layout-switcher": {
+      "details": {
+        "defaultSorting": 0,
+        "published": 1782335905000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1782335905000,
+        "users": 0
+      },
+      "metadata": {
+        "author": "Anixx",
+        "description": "Switch keyboard layout with a single key press (Win, Alt, or Menu key)",
+        "github": "https://github.com/Anixx",
+        "include": [
+          "dwm.exe"
+        ],
+        "name": "One Key Keyboard Layout Switcher",
+        "version": "1.0"
+      }
+    },
     "onenote-cursor-teleport-fix": {
       "details": {
         "defaultSorting": 150,
@@ -9290,7 +9317,7 @@
           1
         ],
         "ratingUsers": 2,
-        "updated": 1771093172000,
+        "updated": 1782335413000,
         "users": 63
       },
       "metadata": {
@@ -9302,7 +9329,7 @@
           "*"
         ],
         "name": "Restore AutoRun Icon in Drive Properties",
-        "version": "1.0"
+        "version": "1.0.1"
       }
     },
     "restore-button-pulse-anim": {
@@ -9375,7 +9402,7 @@
           2
         ],
         "ratingUsers": 2,
-        "updated": 1781634178000,
+        "updated": 1782369499000,
         "users": 107
       },
       "metadata": {
@@ -9384,13 +9411,13 @@
         ],
         "author": "Anixx",
         "compilerOptions": "-lcomctl32 -lgdi32 -luxtheme",
-        "description": "Fixes explorer problems: menu bar, listview redraw, classic background color",
+        "description": "Fixes explorer problems: menu bar, listview redraw, classic background color, Control Panel header/sidebar color for dark themes",
         "github": "https://github.com/Anixx",
         "include": [
           "explorer.exe"
         ],
         "name": "ExplorerFrame and menubar fixes fork",
-        "version": "2.0.1"
+        "version": "3.0.0"
       }
     },
     "ribbon-caption-icon-fix": {
@@ -10547,7 +10574,7 @@
           57
         ],
         "ratingUsers": 75,
-        "updated": 1769904058000,
+        "updated": 1782325693000,
         "users": 2968
       },
       "metadata": {
@@ -10564,7 +10591,7 @@
         ],
         "name": "Taskbar minimize/restore on scroll",
         "twitter": "https://twitter.com/m417z",
-        "version": "1.1.3"
+        "version": "1.1.4"
       }
     },
     "taskbar-classic-menu": {
@@ -11665,7 +11692,7 @@
           358
         ],
         "ratingUsers": 395,
-        "updated": 1777651418000,
+        "updated": 1782328623000,
         "users": 20775
       },
       "featured": true,
@@ -11683,7 +11710,7 @@
         ],
         "name": "Taskbar Thumbnail Reorder",
         "twitter": "https://twitter.com/m417z",
-        "version": "1.1.4"
+        "version": "1.1.5"
       }
     },
     "taskbar-thumbnail-size": {
@@ -14490,7 +14517,7 @@
           5
         ],
         "ratingUsers": 6,
-        "updated": 1774175059000,
+        "updated": 1782288435000,
         "users": 134
       },
       "metadata": {
@@ -14501,7 +14528,7 @@
           "winword.exe"
         ],
         "name": "Word PDF Lossless Export",
-        "version": "1.1.1"
+        "version": "1.2.0"
       }
     },
     "xs-discord-control-registered-games": {

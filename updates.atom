@@ -2,12 +2,118 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-23T22:56:32.000Z</updated>
+    <updated>2026-06-25T06:38:19.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 3.0.0]]></title>
+        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#e011233788cb0248cb78e4d2eb93692310dd7931</id>
+        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
+        <updated>2026-06-25T06:38:19.000Z</updated>
+        <content type="html"><![CDATA[<p>Add code from the mod Control Panel Color Fix version 1.0 because the version 1.0.1 breaks the compatibility with Classic theme and the author is not going to fix it.</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Disk Usage Bar in Drive Properties 1.2.1]]></title>
+        <id>https://windhawk.net/mods/disk-usage-bar-in-drive-properties#f1df18956cac038a20d04e9d08f371c6121e90ed</id>
+        <link href="https://windhawk.net/mods/disk-usage-bar-in-drive-properties"/>
+        <updated>2026-06-24T21:27:47.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>General code optimizations.</li>
+<li>Removed the supported OS versions list from the Readme, as it is unnecessary; the mod will function as long as the required debug symbols exist on Microsoft's servers.</li>
+</ul>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[One Key Keyboard Layout Switcher 1.0]]></title>
+        <id>https://windhawk.net/mods/one-key-layout-switcher#f689a0f9e31c38ef4df585bcc6a730539a9e335b</id>
+        <link href="https://windhawk.net/mods/one-key-layout-switcher"/>
+        <updated>2026-06-24T21:18:25.000Z</updated>
+        <content type="html"><![CDATA[<p>Switches keyboard layout with a single key press instead of a two-key combination.
+Intercepts keyboard events at the lowest possible user-mode level (WH<em>KEYBOARD</em>LL).</p>
+<p>This mod needs to hook into <code>dwm.exe</code> to work. Please navigate to Windhawk's
+Settings &gt; Advanced settings &gt; More advanced settings &gt; Process inclusion list,
+and make sure that <code>dwm.exe</code> is in the list.</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Restore AutoRun Icon in Drive Properties 1.0.1]]></title>
+        <id>https://windhawk.net/mods/restore-autorun-icon-in-drive-properties#b0195475999df8f6766269b86ed2cf8ec1f79f62</id>
+        <link href="https://windhawk.net/mods/restore-autorun-icon-in-drive-properties"/>
+        <updated>2026-06-24T21:10:13.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>General code optimizations.</li>
+<li>Removed the supported OS versions list from the Readme, as it is unnecessary; the mod will function as long as the required debug symbols exist on Microsoft's servers.</li>
+</ul>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Auto Theme Switcher 1.3.2]]></title>
+        <id>https://windhawk.net/mods/auto-theme-switcher#a5c9b87ba0824d826d6c1a95f6a497cb48d2dc66</id>
+        <link href="https://windhawk.net/mods/auto-theme-switcher"/>
+        <updated>2026-06-24T21:07:32.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fix applying lockscreen wallpaper by injecting into explorer.exe again and clearing lock screen cache</li>
+</ul>]]></content>
+        <author>
+            <name>tinodin</name>
+            <uri>https://github.com/tinodin</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Thumbnail Reorder 1.1.5]]></title>
+        <id>https://windhawk.net/mods/taskbar-thumbnail-reorder#2e421932847184af2d4b2ed99a7fb28782a92808</id>
+        <link href="https://windhawk.net/mods/taskbar-thumbnail-reorder"/>
+        <updated>2026-06-24T19:17:03.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed compatibility with recent Windows 11 versions.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar minimize/restore on scroll 1.1.4]]></title>
+        <id>https://windhawk.net/mods/taskbar-button-scroll#559c762c7ca4753a05cd6de592059685e85381eb</id>
+        <link href="https://windhawk.net/mods/taskbar-button-scroll"/>
+        <updated>2026-06-24T18:28:13.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Fixed compatibility with recent Windows 11 versions.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Word PDF Lossless Export 1.2.0]]></title>
+        <id>https://windhawk.net/mods/word-pdf-lossless-export#3960e3612980016d1d1cc3800c9899f2c88affdf</id>
+        <link href="https://windhawk.net/mods/word-pdf-lossless-export"/>
+        <updated>2026-06-24T08:07:15.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added an option to use pattern scanning for hooking. This provides an alternative for specific Office versions where Microsoft has not released PDB symbols.</li>
+</ul>]]></content>
+        <author>
+            <name>Joe Ye</name>
+            <uri>https://github.com/JoeYe-233</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Folder Hover Menu 1.2]]></title>
         <id>https://windhawk.net/mods/explorer-folder-hover-menu#3c6d25a49f8ecf6159e4c32e8ff3019a9d6c7b63</id>
@@ -307,161 +413,6 @@ mod by <strong>aubymori</strong>.</p>]]></content>
         <author>
             <name>Anixx</name>
             <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Classic theme transparency fix 1.4]]></title>
-        <id>https://windhawk.net/mods/classic-theme-transparency-fix#17a8f399f5a96614befd658e6f313fbc22dc5a14</id>
-        <link href="https://windhawk.net/mods/classic-theme-transparency-fix"/>
-        <updated>2026-06-22T05:42:14.000Z</updated>
-        <content type="html"><![CDATA[<p>Add workaround for all Avalonia applications</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fix language indicator in Win10 taskbar under Win11 24H2+ 1.5]]></title>
-        <id>https://windhawk.net/mods/fix-legacy-taskbar-tray-input-indicator#c58a338f6f0f8db737e8bca45a7156d16e2a0331</id>
-        <link href="https://windhawk.net/mods/fix-legacy-taskbar-tray-input-indicator"/>
-        <updated>2026-06-22T05:41:05.000Z</updated>
-        <content type="html"><![CDATA[<p>Remove flicker on hover</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Folder Hover Menu 1.1]]></title>
-        <id>https://windhawk.net/mods/explorer-folder-hover-menu#453bb94231c97af750e51e2584e73991074cb4fc</id>
-        <link href="https://windhawk.net/mods/explorer-folder-hover-menu"/>
-        <updated>2026-06-18T12:52:11.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added an option for rounded corners for the menu.</li>
-<li>Added options for customizing the button position.</li>
-<li>Added options for limiting the amount of shown items and loading time to reduce slow loading and avoid hangs.</li>
-<li>Added mouse wheel scrolling support.</li>
-<li>The default button size was changed from 18 to 20.</li>
-<li>Fixed the hover button not appearing sometimes.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VS Code Dark Non-client Frame 1.1]]></title>
-        <id>https://windhawk.net/mods/vscode-dark-nonclient-frame#0a5c79c7fac413ac4f1c98c1221331061b9e7df8</id>
-        <link href="https://windhawk.net/mods/vscode-dark-nonclient-frame"/>
-        <updated>2026-06-18T09:06:21.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><p>Swaps the before/after screenshot links in the README for <code>vscode-dark-nonclient-frame</code>.</p></li>
-<li><p>The images were accidentally reversed in the merged version. No code changes.</p></li>
-</ul>]]></content>
-        <author>
-            <name>v1b3s0</name>
-            <uri>https://github.com/v1b3s0</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hover Text Magnifier (macOS-style) 1.3.4]]></title>
-        <id>https://windhawk.net/mods/hover-text-magnifier#c38ae45e176d59ab0176e9ae39de93e3bf1a8400</id>
-        <link href="https://windhawk.net/mods/hover-text-magnifier"/>
-        <updated>2026-06-18T08:29:42.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>add shell32 linkage for CommandLineToArgvW</li>
-<li>pass immutable UIA request snapshots instead of reading live settings from the UIA thread</li>
-<li>reject stale UIA results by sequence, point, settings generation, and age</li>
-<li>remove the unload-time worker detach path and join the worker to avoid unloading the DLL under a live thread</li>
-<li>reduce repeated magnifier filter setup and non-erasing repaint invalidation</li>
-</ul>]]></content>
-        <author>
-            <name>Math Shamenson</name>
-            <uri>https://github.com/insane66613</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VS Code Dark Non-client Frame 1.0]]></title>
-        <id>https://windhawk.net/mods/vscode-dark-nonclient-frame#bc3d1c8d2415c4adb2a06b222c6e85883a07342e</id>
-        <link href="https://windhawk.net/mods/vscode-dark-nonclient-frame"/>
-        <updated>2026-06-18T08:13:56.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="vscodedarknonclientframe">VS Code Dark Non-client Frame</h1>
-<p>Forces Visual Studio Code's Windows non-client frame into immersive dark mode.</p>
-<p>This fixes the 2px light gray bottom edge that can appear when VS Code is maximized with the custom title bar in Windows light mode, especially with a hidden or transparent taskbar.</p>
-<p>Before:</p>
-<p><img src="https://i.imgur.com/DVrOPag.png" alt="Before" /></p>
-<p>After:</p>
-<p><img src="https://i.imgur.com/ldT3xJt.png" alt="After" /></p>
-<p>The mod targets only <code>Code.exe</code> by default. Users of VS Code Insiders, VSCodium, or renamed/portable builds can add the relevant executable name to the mod's custom include list.</p>
-<p>When the mod is disabled, it stops overriding VS Code's frame mode. Already affected windows may keep their current frame mode until VS Code applies a new value, for example after a theme or window state change.</p>]]></content>
-        <author>
-            <name>v1b3s0</name>
-            <uri>https://github.com/v1b3s0</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Resource Redirect 1.3]]></title>
-        <id>https://windhawk.net/mods/icon-resource-redirect#bc44726efe1559ff69f1b177b48aa0c3000367ed</id>
-        <link href="https://windhawk.net/mods/icon-resource-redirect"/>
-        <updated>2026-06-17T20:49:47.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added an option to to disable thumbnails in Explorer folders, making folders use a generic folder icon instead of showing a preview of their contents. Some icon themes may look better with this option enabled.</li>
-<li>Added the following themes: PaveVista, Pane8.1, Minecraft Axolotle, and 7 other Minecraft themes.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Taskbar Virtual Desktop Switcher 1.5]]></title>
-        <id>https://windhawk.net/mods/taskbar-vd-switcher#5e4d697db70f4e4ab70fabb8a82bde7abf198f58</id>
-        <link href="https://windhawk.net/mods/taskbar-vd-switcher"/>
-        <updated>2026-06-17T19:30:26.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="taskbarvirtualdesktopswitcher">Taskbar Virtual Desktop Switcher</h1>
-<p>Adds numbered buttons to the taskbar — one per virtual desktop. Click to switch directly.</p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/simple3.png" alt="Default tray placement — three numbered buttons, first active" /></p>
-<p>Buttons can be arranged into one or more rows with configurable fill order.</p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/simple4wmaster.png" alt="Four desktops with master button" /></p>
-<p>Works alongside other mods.</p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/vds-screenshot3.png" alt="Complex setup with other mods active" /></p>
-<p>The compact grid adapts to how many desktops you have.</p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/gridonrightwlowermaster.png" alt="Taller taskbar with right-side grid and lower master button" /></p>
-<p>The switcher can also sit near the Start button.</p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/left-of-start.png" alt="Left of Start button" /></p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/over-above-start.png" alt="Over Start, nudged above" /></p>
-<p><img src="https://raw.githubusercontent.com/sb4ssman/Windhawk-Mod-Lab/main/virtual-desktop-switcher/assets/right-of-start-hidden-start.png" alt="Right of Start with Start hidden" /></p>
-<h2 id="settings">Settings</h2>
-<ul>
-<li><strong>Position</strong> — system tray positions plus experimental Start-adjacent and Start-overlay positions</li>
-<li><strong>Start positions</strong> — place buttons left of Start, over Start, or in a reserved space to the right of Start</li>
-<li><strong>Size</strong> — button width × height in pixels; spacing between buttons</li>
-<li><strong>Grid mode</strong> — smart automatic layout, single row/column, fixed rows, fixed columns, or fixed grid</li>
-<li><strong>Smart layout</strong> — balanced, vertical pack, or horizontal pack behavior</li>
-<li><strong>Fill order</strong> — column-first or row-first button order</li>
-<li><strong>Short group alignment</strong> — when the last row/column is shorter, align it to start, center, or end</li>
-<li><strong>Active color</strong> — hex color for the current-desktop button (e.g. <code>#4488FF</code>)</li>
-<li><strong>Inactive color</strong> — hex color for other buttons (empty = system default)</li>
-<li><strong>Opacity</strong> — 0–100; lower values let the taskbar show through</li>
-<li><strong>Shine effect</strong> — subtle gradient highlight (applies when a color is set)</li>
-<li><strong>Label format</strong> — numbers, roman numerals, dots, or custom comma-separated labels</li>
-<li><strong>Padding</strong> — left and right margin around the button grid (px)</li>
-<li><strong>Text color</strong> — foreground color for active and inactive buttons</li>
-<li><strong>Font size</strong> — button label size in pt</li>
-<li><strong>Corner radius</strong> — rounded corners (px)</li>
-<li><strong>Active bold</strong> — bold the current desktop's label</li>
-<li><strong>Border</strong> — border color and thickness</li>
-<li><strong>Hide when single</strong> — hide the bar when only one desktop exists</li>
-<li><strong>Tooltips</strong> — hover a button to see the desktop name</li>
-<li><strong>Master button</strong> — optional extra button that opens Task View (Win+Tab) to preview, create, or close desktops</li>
-</ul>
-<h2 id="knownlimitations">Known limitations</h2>
-<ul>
-<li>Multi-monitor: only the primary taskbar gets buttons.</li>
-</ul>]]></content>
-        <author>
-            <name>sb4ssman</name>
-            <uri>https://github.com/sb4ssman</uri>
         </author>
     </entry>
 </feed>
