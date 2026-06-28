@@ -1,3 +1,13 @@
+## 1.3.1 ([Jun 27, 2026](https://github.com/ramensoftware/windhawk-mods/blob/85926525df30b8fca5c589f5bcb17b98839b4fc9/mods/taskbar-start-button-position.wh.cpp))
+
+* Improve search menu handling when the "Start menu on the left" option is enabled - search menu is no longer affected when opened outside of the start menu (Win+S or taskbar search button).
+
+## 1.3 ([Jun 27, 2026](https://github.com/ramensoftware/windhawk-mods/blob/912416791d3f7209475a3370335cf030283df833/mods/taskbar-start-button-position.wh.cpp))
+
+* Added an option to move the search and task view buttons to the left.
+* Fixed Start button context menu placement.
+* Various improvements for multiple monitors and other scenarios.
+
 ## 1.2.4 ([Oct 25, 2025](https://github.com/ramensoftware/windhawk-mods/blob/862ba36c9284acfd3cd617faffe37aea501db928/mods/taskbar-start-button-position.wh.cpp))
 
 * Reworked Start menu positioning:
