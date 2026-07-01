@@ -97,6 +97,38 @@
         "version": "1.1.0"
       }
     },
+    "adaptive-microphone-icon-visibility": {
+      "details": {
+        "defaultSorting": 54,
+        "published": 1782670689000,
+        "rating": 6,
+        "ratingBreakdown": [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "ratingUsers": 2,
+        "updated": 1782670689000,
+        "users": 9
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "Ikkecode",
+        "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
+        "description": "Hides the system tray microphone icon if only whitelisted applications have active access.",
+        "github": "https://github.com/ikkecode",
+        "include": [
+          "explorer.exe"
+        ],
+        "name": "Adaptive Microphone Icon Visibility",
+        "twitter": "https://twitter.com/ikkenand",
+        "version": "1.0"
+      }
+    },
     "add-virtual-folders-to-nav-top": {
       "details": {
         "defaultSorting": 3033,
@@ -566,7 +598,7 @@
           12
         ],
         "ratingUsers": 12,
-        "updated": 1779455086000,
+        "updated": 1782806006000,
         "users": 243
       },
       "metadata": {
@@ -578,7 +610,7 @@
           "explorer.exe"
         ],
         "name": "AutoScroll Win32",
-        "version": "1.0.1"
+        "version": "1.0.2"
       }
     },
     "balloon-sound-fix": {
@@ -809,18 +841,18 @@
           5
         ],
         "ratingUsers": 5,
-        "updated": 1782596122000,
+        "updated": 1782673250000,
         "users": 53
       },
       "metadata": {
         "author": "TomberWolf",
-        "description": "Removes the window border of selected apps/games and resizes them to the primary monitor's resolution (or a fixed size)",
+        "description": "Removes the window border of selected apps/games and resizes them to fill the monitor they're running on (or a fixed size)",
         "github": "https://github.com/TomberWolf",
         "include": [
           "windhawk.exe"
         ],
         "name": "Borderless Fullscreen",
-        "version": "1.1.0"
+        "version": "1.2.0"
       }
     },
     "caffeine": {
@@ -2326,7 +2358,7 @@
           5
         ],
         "ratingUsers": 6,
-        "updated": 1782592844000,
+        "updated": 1782849368000,
         "users": 52
       },
       "metadata": {
@@ -2341,7 +2373,7 @@
           "explorer.exe"
         ],
         "name": "Click on Empty Explorer",
-        "version": "2.1.1"
+        "version": "2.3.0"
       }
     },
     "clientedge-in-apps": {
@@ -7018,6 +7050,35 @@
         "version": "1.0.3"
       }
     },
+    "macos-minimize-animation": {
+      "details": {
+        "defaultSorting": 1422,
+        "published": 1782754453000,
+        "rating": 9,
+        "ratingBreakdown": [
+          1,
+          0,
+          0,
+          0,
+          14
+        ],
+        "ratingUsers": 15,
+        "updated": 1782754453000,
+        "users": 158
+      },
+      "metadata": {
+        "author": "Abdullah Masood",
+        "compilerOptions": "-ldwmapi -lgdi32",
+        "description": "Smooth macOS-style genie minimize and restore (open) animations for every window.",
+        "github": "https://github.com/Abdullah-Masood-05",
+        "include": [
+          "*"
+        ],
+        "license": "MIT",
+        "name": "MacOS Minimize Animation",
+        "version": "2.0.0"
+      }
+    },
     "magnifier-headless": {
       "details": {
         "defaultSorting": 1300,
@@ -10706,7 +10767,7 @@
           1583
         ],
         "ratingUsers": 1802,
-        "updated": 1777126546000,
+        "updated": 1782858536000,
         "users": 92303
       },
       "featured": true,
@@ -10724,7 +10785,7 @@
         ],
         "name": "Taskbar Clock Customization",
         "twitter": "https://twitter.com/m417z",
-        "version": "1.7.4"
+        "version": "1.8"
       }
     },
     "taskbar-content-presenter-injector": {
@@ -12182,20 +12243,20 @@
           7
         ],
         "ratingUsers": 12,
-        "updated": 1782593430000,
+        "updated": 1782764769000,
         "users": 180
       },
       "metadata": {
         "author": "Abdullah Masood",
         "compilerOptions": "-ldwmapi -lgdi32 -lole32 -lmsimg32",
-        "description": "Smooth crossfade transition when switching tabs (Processes, Performance, ...) in Task Manager.",
+        "description": "Smooth animated transition (crossfade or slide) when switching tabs (Processes, Performance, ...) in Task Manager.",
         "github": "https://github.com/Abdullah-Masood-05",
         "include": [
           "Taskmgr.exe"
         ],
         "license": "MIT",
         "name": "Task Manager Tab Slide Animation",
-        "version": "0.3.3"
+        "version": "0.4.1"
       }
     },
     "taskmgr-taller-tab": {
@@ -13200,6 +13261,41 @@
         "license": "MIT",
         "name": "VLC Discord Rich Presence",
         "version": "1.1.5"
+      }
+    },
+    "vmware-audio-fix": {
+      "details": {
+        "defaultSorting": 63,
+        "published": 1782754090000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1782754090000,
+        "users": 7
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "Starfield",
+        "description": "Corrige la distorsion audio dans les machines virtuelles VMware en utilisant des temporiseurs à haute résolution.",
+        "github": "https://github.com/steveji2021",
+        "include": [
+          "vmware-vmx.exe",
+          "vmware-vmx-debug.exe"
+        ],
+        "name": "Correction de distorsion audio VMware",
+        "version": "1.0"
+      },
+      "metadataEnglish": {
+        "description": "Fixes distorted audio in VMware virtual machines by setting high-resolution timers.",
+        "name": "VMware Audio Distortion Fix"
       }
     },
     "vmware-disable-upgrade-dialog": {

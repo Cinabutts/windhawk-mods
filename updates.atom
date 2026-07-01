@@ -2,12 +2,214 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-06-27T21:35:22.000Z</updated>
+    <updated>2026-06-30T22:28:56.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Clock Customization 1.8]]></title>
+        <id>https://windhawk.net/mods/taskbar-clock-customization#c016d1c9b8d23944d834dd41c1029f0d124ff858</id>
+        <link href="https://windhawk.net/mods/taskbar-clock-customization"/>
+        <updated>2026-06-30T22:28:56.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added new system performance metrics, contributed by <a href="https://github.com/yalov">yalov</a>:</li>
+<li>RAM metrics: <code>%ram_used%</code>, <code>%ram_total%</code>, <code>%ram_committed%</code>, <code>%ram_committed_used%</code>, and <code>%ram_committed_total%</code>.</li>
+<li>VRAM (Video RAM) metrics: <code>%vram%</code>, <code>%vram_used%</code>, <code>%vram_total%</code>, <code>%vram_shared%</code>, <code>%vram_shared_used%</code>, and <code>%vram_shared_total%</code>.</li>
+<li>Improved media information customization: Both the playing format and the idle format of <code>%media_info%</code> can now be configured with custom patterns.</li>
+<li>Added an option to customize the date locale.</li>
+<li>Added an option to customize the disk metrics format independently from the network metrics format.</li>
+<li>Added line height customization, useful when using newlines (<code>%newline%</code>).</li>
+<li>Added a justified text alignment option.</li>
+<li>Changed the behavior for multiple GPUs: instead of showing average metrics, the adapter with the most dedicated VRAM is now selected.</li>
+<li>Fixed system metrics being frozen on startup until the clock is refreshed (for up to a minute).</li>
+<li>Fixed compatibility with some ARM64 Windows 11 builds.</li>
+</ul>]]></content>
+        <author>
+            <name>m417z</name>
+            <uri>https://github.com/m417z</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Click on Empty Explorer 2.3.0]]></title>
+        <id>https://windhawk.net/mods/click-on-empty-explorer#ccde902c8764bffba2413670fe38bd4c923200c1</id>
+        <link href="https://windhawk.net/mods/click-on-empty-explorer"/>
+        <updated>2026-06-30T19:56:08.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li><strong>Paste action</strong> (Ctrl+V) — pastes into the current folder view</li>
+<li><strong>Custom Hotkey action</strong> — each trigger (double/middle/double-middle click) gets an independent key combo field supporting multiple modifiers (Ctrl, Shift, Alt, Win) and all common keys</li>
+<li>Detailed format instructions per custom hotkey field</li>
+</ul>]]></content>
+        <author>
+            <name>LiHua81</name>
+            <uri>https://github.com/LiHua81</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AutoScroll Win32 1.0.2]]></title>
+        <id>https://windhawk.net/mods/autoscroll-win32#10df87270e61881eaa75f976de21d0a3d9e58464</id>
+        <link href="https://windhawk.net/mods/autoscroll-win32"/>
+        <updated>2026-06-30T07:53:26.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>Fixed possible explorer.exe crash on startup</li>
+<li>Fixed inverted horizontal scrolling</li>
+</ol>]]></content>
+        <author>
+            <name>crazyboyybs</name>
+            <uri>https://github.com/crazyboyybs</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.4.1]]></title>
+        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#1e8d5224d6c438602744da41174e6c0427d2f3da</id>
+        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
+        <updated>2026-06-29T20:26:09.000Z</updated>
+        <content type="html"><![CDATA[<p>Documentation-only fix: the two readme demo GIFs (crossfade and slide) were pointing at filenames whose cached copies on the image proxy showed the wrong animation. This points them at fresh <code>-v2</code> filenames so the correct crossfade and slide demos are shown. No code changes.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MacOS Minimize Animation 2.0.0]]></title>
+        <id>https://windhawk.net/mods/macos-minimize-animation#4ec57cbfabddd7e1259a2f4de6d0cd8d27582ec4</id>
+        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
+        <updated>2026-06-29T17:34:13.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="macosminimizeanimation">MacOS Minimize Animation</h1>
+<p><img src="https://raw.githubusercontent.com/Abdullah-Masood-05/my-windhawk-mods-media/main/macos-minimize-animation.gif" alt="Demo" /></p>
+<p>Brings the classic macOS <strong>genie</strong> effect to Windows. When you minimize a window
+it warps and flows down into the taskbar; when you restore it, it flows back out.</p>
+<p>Eye candy for something you do a hundred times a day.</p>
+<h2 id="seeitinaction">See it in action</h2>
+<ul>
+<li>Compile the mod with the button on the left or with Ctrl+B.</li>
+<li>Enable the mod and open any normal window (Explorer, a browser, Notepad…).</li>
+<li>Minimize it with the title bar <code>[-]</code> button or <code>Win</code>+<code>Down</code> and watch it warp
+and pour into the taskbar.</li>
+<li>Restore it from the taskbar and watch the genie play in reverse.</li>
+<li>Tweak the <strong>Animation duration</strong> in the settings to taste.</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Real genie warp.</strong> The window is sliced into horizontal strips that curve and
+funnel toward the taskbar (the bottom flows in first), instead of just shrinking.</li>
+<li><strong>Actually smooth.</strong> Progress is driven by real elapsed time and every rendered
+frame is gated on the DWM compose cycle (<code>DwmFlush</code>), so each frame you render is
+exactly one frame you see - perfectly aligned with vsync at any duration you set.</li>
+<li><strong>Smoothstep easing</strong> instead of a linear ramp, so it eases in and out.</li>
+<li><strong>Clean edges and fade</strong> via a per-pixel-alpha layered surface.</li>
+<li><strong>Smart targeting.</strong> The mod learns where each app's taskbar icon is (from where
+your cursor was when you minimized) and aims the genie at that spot next time.</li>
+</ul>
+<h2 id="howitworks">How it works</h2>
+<p>The mod hooks <code>ShowWindow</code> and <code>DefWindowProcW</code> to catch minimize / restore
+requests. It snapshots the window, then on a dedicated high-priority thread it
+draws a transparent layered "ghost" window that warps the snapshot frame by frame
+into the taskbar, leaving the real window to minimize behind it without the
+system's own animation getting in the way.</p>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><strong>Animation duration</strong> - how long the effect lasts (50-2000 ms).</li>
+<li><strong>Animate window restore (open)</strong> - also play the reverse genie when restoring.</li>
+<li><strong>Animate app launch (experimental)</strong> - also play the genie when an application
+window first opens. <strong>Experimental and off by default</strong>: it may briefly flash the
+window before animating, may not catch borderless apps, and can occasionally fire
+on splash / dialog windows. Leave it off and the mod behaves exactly like plain
+minimize / restore.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Works on all top-level windows; child / tiny / hidden windows are skipped.</li>
+<li>DWM transitions are temporarily disabled on the animated window and restored
+afterwards, so the system's own minimize/restore animation doesn't fight ours.</li>
+<li>The genie currently targets the primary monitor's taskbar edge.</li>
+</ul>
+<h1 id="gettingstarted">Getting started</h1>
+<p>Check out the documentation
+<a href="https://github.com/ramensoftware/windhawk/wiki/Creating-a-new-mod">here</a>.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.4.0]]></title>
+        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#a2dc42dae82c5bfdd6bebb8cef79b93f091b9664</id>
+        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
+        <updated>2026-06-29T17:30:00.000Z</updated>
+        <content type="html"><![CDATA[<p>This version adds a selectable animation style alongside the existing crossfade:</p>
+<ul>
+<li><strong>Animation type</strong> setting - <strong>Crossfade</strong> (default, the previous behavior) or <strong>Slide</strong> (the old view slides out while the new one slides in; left/right, or up/down via <em>Slide vertically</em>).</li>
+<li>Both styles use the same no-visual-jump approach: the current view is frozen under a topmost, click-through overlay at mouse-down, so Task Manager switches the tab underneath it invisibly, and the animation always starts from the old frame.</li>
+<li>Robustness fix: if the window is moved or resized mid-animation, the overlay is now hidden immediately instead of lingering as a detached "ghost" copy at the old location.</li>
+</ul>
+<p>The readme demo now shows both the crossfade and slide animations.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VMware Audio Distortion Fix 1.0]]></title>
+        <id>https://windhawk.net/mods/vmware-audio-fix#6d68c5bf92732b90a067961d33b9381b88811b25</id>
+        <link href="https://windhawk.net/mods/vmware-audio-fix"/>
+        <updated>2026-06-29T17:28:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="vmwareaudiodistortionfix">VMware Audio Distortion Fix</h1>
+<h3 id="thisprojectisinspiredbyvmaudiobackhosthttpsgithubcomraymai97vmaudiobackhostthankstoraymai97">This project is inspired by <a href="https://github.com/Raymai97/VMAudioBackHost">VMAudioBackHost</a>. Thanks to Raymai97</h3>
+<p>Fixes distorted audio in VMware virtual machines by setting a high-resolution
+timer in the vmware-vmx.exe process.</p>
+<h2 id="background">Background</h2>
+<p>Windows 10 build 2004+ made timer resolution per-process. VMware virtual
+machines may experience distorted audio because the vmware-vmx.exe process
+uses the default low timer resolution (15.625 ms). This mod injects into
+vmware-vmx.exe and calls <code>NtSetTimerResolution</code> to set a high-resolution
+timer, fixing the audio stuttering/distortion.</p>
+<h2 id="usage">Usage</h2>
+<ol>
+<li>Install this mod via <a href="https://windhawk.net">Windhawk</a>.</li>
+<li>The mod will automatically inject into all running and future
+vmware-vmx.exe processes.</li>
+<li>Configure the desired timer resolution in the mod settings.</li>
+</ol>
+<p>The recommended setting is 1.0 ms, which provides smooth audio without
+significant impact on power consumption.</p>]]></content>
+        <author>
+            <name>Starfield</name>
+            <uri>https://github.com/steveji2021</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Borderless Fullscreen 1.2.0]]></title>
+        <id>https://windhawk.net/mods/borderless-fullscreen#8210aa6d68a6e2b57d5477f005cbd80a498a70cf</id>
+        <link href="https://windhawk.net/mods/borderless-fullscreen"/>
+        <updated>2026-06-28T19:00:50.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added multi-monitor support (The window remains on the monitor where it was opened)</li>
+</ul>]]></content>
+        <author>
+            <name>TomberWolf</name>
+            <uri>https://github.com/TomberWolf</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Adaptive Microphone Icon Visibility 1.0]]></title>
+        <id>https://windhawk.net/mods/adaptive-microphone-icon-visibility#0ba128210751d519899c9c5564c47a9aaf8460cb</id>
+        <link href="https://windhawk.net/mods/adaptive-microphone-icon-visibility"/>
+        <updated>2026-06-28T18:18:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="adaptivemicrophoneiconvisibility">Adaptive Microphone Icon Visibility</h1>
+<p>This mod hides the system tray microphone icon if only whitelisted applications
+(or no applications) have active access. If an unlisted application begins using
+the microphone, the icon is immediately shown to alert the user.</p>
+<p>Only Windows 11 is supported.</p>
+<h2 id="credits">Credits</h2>
+<p>Icon manipulation logic in this mod is based on the
+<a href="https://windhawk.net/mods/taskbar-tray-system-icon-tweaks">Taskbar tray system icon tweaks</a> mod by <strong>m417z</strong>.</p>]]></content>
+        <author>
+            <name>Ikkecode</name>
+            <uri>https://github.com/ikkecode</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Borderless Fullscreen 1.1.0]]></title>
         <id>https://windhawk.net/mods/borderless-fullscreen#c208c001106e00938f338cacf204cb1dfdf43528</id>
@@ -277,126 +479,6 @@ The mod has been tested on Windows 10 21H2, Windows 10 1809, Windows 11 23H2, Wi
         <author>
             <name>Anixx</name>
             <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ctrl+Backspace Fix for Win32 Text Boxes 1.0.1]]></title>
-        <id>https://windhawk.net/mods/ctrl-backspace-fix-for-win32-text-boxes#8816b488b2a762412178f53c1e8eef2b974516bf</id>
-        <link href="https://windhawk.net/mods/ctrl-backspace-fix-for-win32-text-boxes"/>
-        <updated>2026-06-25T20:04:32.000Z</updated>
-        <content type="html"><![CDATA[<p>Excluded the <code>Scintilla</code> control to resolve text corruption with Unicode characters that caused a crash in Notepad++.</p>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Lock Keys Notifier 1.0.1]]></title>
-        <id>https://windhawk.net/mods/lock-keys-notifier#be4c114ae4a7801eabd67c9cbf851c0754a1b8c0</id>
-        <link href="https://windhawk.net/mods/lock-keys-notifier"/>
-        <updated>2026-06-25T20:04:18.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Pre-warm GDI+ text pipeline at startup to fix cold-boot first-toast delay</li>
-</ul>]]></content>
-        <author>
-            <name>Havrlisan</name>
-            <uri>https://github.com/havrlisan</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.3.2]]></title>
-        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#78b0296b65dab926d11dbc5f063d7314ae204aaf</id>
-        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
-        <updated>2026-06-25T20:04:03.000Z</updated>
-        <content type="html"><![CDATA[<p>Lowers the default <strong>Change threshold</strong> from 18% to 2%, so more subtle tab switches animate out of the box. The setting remains user-adjustable (1–100%).</p>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.3.1]]></title>
-        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#abf43cf5f55c1d34f2ca6fcd7da315e8beaacd54</id>
-        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
-        <updated>2026-06-25T12:30:58.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li><strong>New "Change threshold" setting</strong> (default 18%) with pixel-sampling comparison, so clicking a process row, selecting, or live-graph ticks no longer trigger a spurious slide.</li>
-<li><strong>Performance sub-pages</strong> (CPU, Memory, Disk, Network/Ethernet, Wi-Fi, GPU) now slide too, not just the main left navigation.</li>
-<li><strong>Poll-until-rendered capture</strong> of the new view (up to 6 attempts) so tabs that draw their first frame late (Disk/Network/GPU) are reliably animated.</li>
-</ul>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Resource-Aware Task Terminator 1.0.1]]></title>
-        <id>https://windhawk.net/mods/resource-aware-task-terminator#28fb6f69a46487bfb9ae4ea21dd6411c1497c5fb</id>
-        <link href="https://windhawk.net/mods/resource-aware-task-terminator"/>
-        <updated>2026-06-25T11:53:15.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>PID reuse hardening with creation-time/path revalidation</li>
-<li>Safer protected-process handling</li>
-<li>Sortable chooser and result summary</li>
-<li>Compatibility-preserving settings keys</li>
-</ul>]]></content>
-        <author>
-            <name>Math Shamenson</name>
-            <uri>https://github.com/insane66613</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ExplorerFrame and menubar fixes fork 3.0.0]]></title>
-        <id>https://windhawk.net/mods/restore-folder-menubar-25h2#e011233788cb0248cb78e4d2eb93692310dd7931</id>
-        <link href="https://windhawk.net/mods/restore-folder-menubar-25h2"/>
-        <updated>2026-06-25T06:38:19.000Z</updated>
-        <content type="html"><![CDATA[<p>Add code from the mod Control Panel Color Fix version 1.0 because the version 1.0.1 breaks the compatibility with Classic theme and the author is not going to fix it.</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disk Usage Bar in Drive Properties 1.2.1]]></title>
-        <id>https://windhawk.net/mods/disk-usage-bar-in-drive-properties#f1df18956cac038a20d04e9d08f371c6121e90ed</id>
-        <link href="https://windhawk.net/mods/disk-usage-bar-in-drive-properties"/>
-        <updated>2026-06-24T21:27:47.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>General code optimizations.</li>
-<li>Removed the supported OS versions list from the Readme, as it is unnecessary; the mod will function as long as the required debug symbols exist on Microsoft's servers.</li>
-</ul>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[One Key Keyboard Layout Switcher 1.0]]></title>
-        <id>https://windhawk.net/mods/one-key-layout-switcher#f689a0f9e31c38ef4df585bcc6a730539a9e335b</id>
-        <link href="https://windhawk.net/mods/one-key-layout-switcher"/>
-        <updated>2026-06-24T21:18:25.000Z</updated>
-        <content type="html"><![CDATA[<p>Switches keyboard layout with a single key press instead of a two-key combination.
-Intercepts keyboard events at the lowest possible user-mode level (WH<em>KEYBOARD</em>LL).</p>
-<p>This mod needs to hook into <code>dwm.exe</code> to work. Please navigate to Windhawk's
-Settings &gt; Advanced settings &gt; More advanced settings &gt; Process inclusion list,
-and make sure that <code>dwm.exe</code> is in the list.</p>]]></content>
-        <author>
-            <name>Anixx</name>
-            <uri>https://github.com/Anixx</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Restore AutoRun Icon in Drive Properties 1.0.1]]></title>
-        <id>https://windhawk.net/mods/restore-autorun-icon-in-drive-properties#b0195475999df8f6766269b86ed2cf8ec1f79f62</id>
-        <link href="https://windhawk.net/mods/restore-autorun-icon-in-drive-properties"/>
-        <updated>2026-06-24T21:10:13.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>General code optimizations.</li>
-<li>Removed the supported OS versions list from the Readme, as it is unnecessary; the mod will function as long as the required debug symbols exist on Microsoft's servers.</li>
-</ul>]]></content>
-        <author>
-            <name>Kitsune</name>
-            <uri>https://github.com/AromaKitsune</uri>
         </author>
     </entry>
 </feed>

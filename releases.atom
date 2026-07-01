@@ -2,12 +2,121 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk New Mod Releases</title>
-    <updated>2026-06-27T21:35:22.000Z</updated>
+    <updated>2026-06-29T17:34:13.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>New mods in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[MacOS Minimize Animation 2.0.0]]></title>
+        <id>https://windhawk.net/mods/macos-minimize-animation#4ec57cbfabddd7e1259a2f4de6d0cd8d27582ec4</id>
+        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
+        <updated>2026-06-29T17:34:13.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="macosminimizeanimation">MacOS Minimize Animation</h1>
+<p><img src="https://raw.githubusercontent.com/Abdullah-Masood-05/my-windhawk-mods-media/main/macos-minimize-animation.gif" alt="Demo" /></p>
+<p>Brings the classic macOS <strong>genie</strong> effect to Windows. When you minimize a window
+it warps and flows down into the taskbar; when you restore it, it flows back out.</p>
+<p>Eye candy for something you do a hundred times a day.</p>
+<h2 id="seeitinaction">See it in action</h2>
+<ul>
+<li>Compile the mod with the button on the left or with Ctrl+B.</li>
+<li>Enable the mod and open any normal window (Explorer, a browser, Notepad…).</li>
+<li>Minimize it with the title bar <code>[-]</code> button or <code>Win</code>+<code>Down</code> and watch it warp
+and pour into the taskbar.</li>
+<li>Restore it from the taskbar and watch the genie play in reverse.</li>
+<li>Tweak the <strong>Animation duration</strong> in the settings to taste.</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Real genie warp.</strong> The window is sliced into horizontal strips that curve and
+funnel toward the taskbar (the bottom flows in first), instead of just shrinking.</li>
+<li><strong>Actually smooth.</strong> Progress is driven by real elapsed time and every rendered
+frame is gated on the DWM compose cycle (<code>DwmFlush</code>), so each frame you render is
+exactly one frame you see - perfectly aligned with vsync at any duration you set.</li>
+<li><strong>Smoothstep easing</strong> instead of a linear ramp, so it eases in and out.</li>
+<li><strong>Clean edges and fade</strong> via a per-pixel-alpha layered surface.</li>
+<li><strong>Smart targeting.</strong> The mod learns where each app's taskbar icon is (from where
+your cursor was when you minimized) and aims the genie at that spot next time.</li>
+</ul>
+<h2 id="howitworks">How it works</h2>
+<p>The mod hooks <code>ShowWindow</code> and <code>DefWindowProcW</code> to catch minimize / restore
+requests. It snapshots the window, then on a dedicated high-priority thread it
+draws a transparent layered "ghost" window that warps the snapshot frame by frame
+into the taskbar, leaving the real window to minimize behind it without the
+system's own animation getting in the way.</p>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><strong>Animation duration</strong> - how long the effect lasts (50-2000 ms).</li>
+<li><strong>Animate window restore (open)</strong> - also play the reverse genie when restoring.</li>
+<li><strong>Animate app launch (experimental)</strong> - also play the genie when an application
+window first opens. <strong>Experimental and off by default</strong>: it may briefly flash the
+window before animating, may not catch borderless apps, and can occasionally fire
+on splash / dialog windows. Leave it off and the mod behaves exactly like plain
+minimize / restore.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Works on all top-level windows; child / tiny / hidden windows are skipped.</li>
+<li>DWM transitions are temporarily disabled on the animated window and restored
+afterwards, so the system's own minimize/restore animation doesn't fight ours.</li>
+<li>The genie currently targets the primary monitor's taskbar edge.</li>
+</ul>
+<h1 id="gettingstarted">Getting started</h1>
+<p>Check out the documentation
+<a href="https://github.com/ramensoftware/windhawk/wiki/Creating-a-new-mod">here</a>.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VMware Audio Distortion Fix 1.0]]></title>
+        <id>https://windhawk.net/mods/vmware-audio-fix#6d68c5bf92732b90a067961d33b9381b88811b25</id>
+        <link href="https://windhawk.net/mods/vmware-audio-fix"/>
+        <updated>2026-06-29T17:28:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="vmwareaudiodistortionfix">VMware Audio Distortion Fix</h1>
+<h3 id="thisprojectisinspiredbyvmaudiobackhosthttpsgithubcomraymai97vmaudiobackhostthankstoraymai97">This project is inspired by <a href="https://github.com/Raymai97/VMAudioBackHost">VMAudioBackHost</a>. Thanks to Raymai97</h3>
+<p>Fixes distorted audio in VMware virtual machines by setting a high-resolution
+timer in the vmware-vmx.exe process.</p>
+<h2 id="background">Background</h2>
+<p>Windows 10 build 2004+ made timer resolution per-process. VMware virtual
+machines may experience distorted audio because the vmware-vmx.exe process
+uses the default low timer resolution (15.625 ms). This mod injects into
+vmware-vmx.exe and calls <code>NtSetTimerResolution</code> to set a high-resolution
+timer, fixing the audio stuttering/distortion.</p>
+<h2 id="usage">Usage</h2>
+<ol>
+<li>Install this mod via <a href="https://windhawk.net">Windhawk</a>.</li>
+<li>The mod will automatically inject into all running and future
+vmware-vmx.exe processes.</li>
+<li>Configure the desired timer resolution in the mod settings.</li>
+</ol>
+<p>The recommended setting is 1.0 ms, which provides smooth audio without
+significant impact on power consumption.</p>]]></content>
+        <author>
+            <name>Starfield</name>
+            <uri>https://github.com/steveji2021</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Adaptive Microphone Icon Visibility 1.0]]></title>
+        <id>https://windhawk.net/mods/adaptive-microphone-icon-visibility#0ba128210751d519899c9c5564c47a9aaf8460cb</id>
+        <link href="https://windhawk.net/mods/adaptive-microphone-icon-visibility"/>
+        <updated>2026-06-28T18:18:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="adaptivemicrophoneiconvisibility">Adaptive Microphone Icon Visibility</h1>
+<p>This mod hides the system tray microphone icon if only whitelisted applications
+(or no applications) have active access. If an unlisted application begins using
+the microphone, the icon is immediately shown to alert the user.</p>
+<p>Only Windows 11 is supported.</p>
+<h2 id="credits">Credits</h2>
+<p>Icon manipulation logic in this mod is based on the
+<a href="https://windhawk.net/mods/taskbar-tray-system-icon-tweaks">Taskbar tray system icon tweaks</a> mod by <strong>m417z</strong>.</p>]]></content>
+        <author>
+            <name>Ikkecode</name>
+            <uri>https://github.com/ikkecode</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Borderless Fullscreen 1.1.0]]></title>
         <id>https://windhawk.net/mods/borderless-fullscreen#c208c001106e00938f338cacf204cb1dfdf43528</id>
@@ -874,156 +983,6 @@ są domyślnie wyłączone — włączaj tylko świadomie.</p>]]></content>
         <author>
             <name>wygodad</name>
             <uri>https://github.com/wygodad</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tray hover expand 1.4.2]]></title>
-        <id>https://windhawk.net/mods/tray-hover-expand#ed888d43cc5bd73a43fd1f2a1c7acc67801f725b</id>
-        <link href="https://windhawk.net/mods/tray-hover-expand"/>
-        <updated>2026-06-15T14:14:50.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="trayhoverexpand">Tray hover expand</h1>
-<p><img src="https://i.imgur.com/qsNUNpj.png" alt="Demo" /></p>
-<p>Opens the hidden tray icons flyout (the "Show Hidden Icons" chevron) when you
-hover the cursor over it, instead of having to click. Optionally collapses it
-again once the cursor leaves the opened icons.</p>
-<p>It works through UI Automation, so it does not hook internal shell functions —
-it is relatively safe and resilient across Windows builds. It runs as a tool
-mod in a dedicated process and does not inject into the shell.</p>
-<h2 id="howitdiffersfromsimilarmods">How it differs from similar mods</h2>
-<ul>
-<li><em>Taskbar tray icons hide on hover</em> auto-hides the whole tray area and reveals
-it on hover.</li>
-<li><em>Show all taskbar notification icons</em> forces all hidden icons to always show.</li>
-<li>This mod keeps the standard Windows overflow flyout and simply opens it on
-hover (and optionally closes it when you move away).</li>
-</ul>
-<h2 id="howthechevronisdetected">How the chevron is detected</h2>
-<p>The "Show Hidden Icons" chevron has no language-independent unique identifier on
-Windows 11 (it shares AutomationId <code>SystemTrayIcon</code> with the clock, volume,
-battery, etc., and exposes no ExpandCollapse pattern). So detection is a hybrid:</p>
-<ol>
-<li>Match the button by name (the keyword list covers English and Polish by
-default and can be extended in the settings).</li>
-<li>If no name matches (other languages), fall back to the leftmost tray button
-with the configured AutomationId, which is normally the chevron.</li>
-</ol>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>For unsupported languages, add your locale's chevron name to the "Chevron name
-keywords" setting, or rely on the leftmost-tray-icon fallback.</li>
-<li>If auto-collapse does not work, the flyout window class name may differ on your
-build. Change it in the "Flyout window class" setting.</li>
-</ul>
-<hr />
-<h2 id="opispopolsku">Opis po polsku</h2>
-<p>Otwiera schowek ukrytych ikon zasobnika (strzałkę „Pokaż ukryte ikony") po
-najechaniu kursorem, bez konieczności klikania. Opcjonalnie zwija go z powrotem,
-gdy kursor opuści otwarte ikony.</p>
-<p>Mod działa przez UI Automation, więc nie hookuje wewnętrznych funkcji powłoki —
-jest stosunkowo bezpieczny i odporny na zmiany między kompilacjami Windows.
-Działa jako „tool mod" w osobnym procesie i nie wstrzykuje się do powłoki.</p>
-<h3 id="czymrnisiodpodobnychmodw">Czym różni się od podobnych modów</h3>
-<ul>
-<li><em>Taskbar tray icons hide on hover</em> automatycznie ukrywa cały obszar zasobnika
-i odsłania go po najechaniu.</li>
-<li><em>Show all taskbar notification icons</em> wymusza stałe wyświetlanie wszystkich
-ukrytych ikon.</li>
-<li>Ten mod zachowuje standardowy schowek Windows i po prostu otwiera go po
-najechaniu (a opcjonalnie zamyka po odjechaniu kursorem).</li>
-</ul>
-<h3 id="jakwykrywanajeststrzaka">Jak wykrywana jest strzałka</h3>
-<p>Strzałka „Pokaż ukryte ikony" nie ma w Windows 11 unikalnego, niezależnego od
-języka identyfikatora (dzieli AutomationId <code>SystemTrayIcon</code> z zegarem,
-głośnością, baterią itd. i nie udostępnia wzorca ExpandCollapse). Wykrywanie
-jest więc hybrydowe:</p>
-<ol>
-<li>Dopasowanie przycisku po nazwie (domyślna lista słów kluczowych obejmuje
-angielski i polski; można ją rozszerzyć w ustawieniach).</li>
-<li>Gdy nazwa nie pasuje (inne języki) — pierwszy od lewej przycisk zasobnika ze
-skonfigurowanym AutomationId, którym zwykle jest strzałka.</li>
-</ol>
-<h3 id="uwagi">Uwagi</h3>
-<ul>
-<li>Dla nieobsługiwanych języków dodaj nazwę strzałki w swoim języku do ustawienia
-„Słowa kluczowe nazwy strzałki" albo polegaj na powyższym mechanizmie zapasowym.</li>
-<li>Jeśli auto-zwijanie nie działa, nazwa klasy okna schowka może się różnić na
-Twojej kompilacji systemu. Zmień ją w ustawieniu „Klasa okna schowka".</li>
-</ul>]]></content>
-        <author>
-            <name>wygodad</name>
-            <uri>https://github.com/wygodad</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Unlock Office Files for Upload 0.3]]></title>
-        <id>https://windhawk.net/mods/unlock-office-file-upload#06beab5c4cba54e96b03ab52864709da6c2c1a33</id>
-        <link href="https://windhawk.net/mods/unlock-office-file-upload"/>
-        <updated>2026-06-15T13:43:19.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="unlockinuseofficefilesforupload">Unlock In-Use Office Files for Upload</h1>
-<p>When you try to upload or attach a <code>.docx</code>, <code>.xlsx</code>, <code>.pptx</code> (or their legacy
-variants) while the file is open in Word/Excel/PowerPoint, you get:</p>
-<blockquote>
-  <p><strong>This file is in use. Enter a new name or close the file that's open in
-another program.</strong></p>
-</blockquote>
-<p>This mod silently intercepts that failure in the uploading process (Chrome,
-Edge, Outlook, Teams, Discord, etc.), makes a temporary copy of the file, and
-redirects the open call to the copy. The OS deletes the copy automatically when
-the caller closes the handle (<code>FILE_FLAG_DELETE_ON_CLOSE</code>) — even on process
-crash or abnormal exit.</p>
-<p><strong>What you get:</strong> The uploader receives the last-saved version of the file with
-no prompts and no need to close Word first.</p>
-<h2 id="knownlimitations">Known Limitations</h2>
-<p><strong>Unsaved edits not included.</strong> The copy reflects the last <em>saved</em> state.
-Unsaved in-memory edits in Word are not captured — this is inherent to how
-Windows file locking works.</p>
-<p><strong>Deny-read locks not bypassed.</strong> The redirect only works when the existing
-lock permits shared reads (Word's usual <code>FILE_SHARE_READ</code> lock). Legacy
-formats (<code>.doc</code>, <code>.xls</code>, <code>.ppt</code>) held by some applications may deny all reads
-outright, in which case <code>CopyFileW</code> also fails and the mod re-surfaces the
-original sharing violation error.</p>
-<h2 id="scopenote">Scope Note</h2>
-<p>The mod injects into all processes (required since the uploader can be any
-app). <code>SearchIndexer.exe</code> and <code>explorer.exe</code> are excluded via <code>@exclude</code>.
-Session 0 (system service) processes are skipped at init time. The
-<code>CreateFileW</code> hook has near-zero overhead on the success path — it returns
-immediately when the original call succeeds. A <code>thread_local</code> reentrancy
-guard ensures that <code>CopyFileW</code>'s own internal <code>CreateFileW</code> calls do not
-re-enter the hook logic.</p>]]></content>
-        <author>
-            <name>Loerei</name>
-            <uri>https://github.com/loerei</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Antigravity IDE Portable 1.0.260614]]></title>
-        <id>https://windhawk.net/mods/antigravity-portable#7b625ccab8e0688bdd65265724b76a02b5e9728d</id>
-        <link href="https://windhawk.net/mods/antigravity-portable"/>
-        <updated>2026-06-15T13:39:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="antigravityideportable">Antigravity IDE Portable</h1>
-<p>Make Antigravity IDE portable by redirecting user data and extensions directories via hooking <code>GetCommandLineW</code>.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li>Uses <code>../data/</code> relative to the exe directory as the default data directory.</li>
-<li>Automatically converts relative paths to absolute paths to ensure the program recognizes them correctly.</li>
-<li>Keeps original parameters unchanged if <code>--user-data-dir</code> or <code>--extensions-dir</code> is already present.</li>
-<li>Detects and skips child processes (those with <code>--type=</code> or <code>--node-ipc</code> in their command line).</li>
-<li>Supports configuring the data directory in Windhawk settings.</li>
-</ul>
-<hr />
-<h1 id="antigravityide">Antigravity IDE 便携版</h1>
-<p>这个 Mod 为 Antigravity IDE 制作便携版。通过 Hook <code>GetCommandLineW</code> 在启动参数中注入 <code>--user-data-dir</code> 和 <code>--extensions-dir</code>。</p>
-<h2 id="">功能特性：</h2>
-<ul>
-<li>默认使用相对于 exe 所在目录的 <code>../data/</code> 作为数据目录。</li>
-<li>自动将相对路径转换为绝对路径，确保程序能够正确识别。</li>
-<li>如果原启动参数中已经包含了 <code>--user-data-dir</code> 或 <code>--extensions-dir</code>，则不会修改对应的参数。</li>
-<li>自动检测并跳过子进程（即启动参数中含有 <code>--type=</code> 或 <code>--node-ipc</code> 的进程）。</li>
-<li>支持在 Windhawk 设置中自定义数据目录。</li>
-</ul>]]></content>
-        <author>
-            <name>easyatm</name>
-            <uri>https://github.com/easyatm</uri>
         </author>
     </entry>
 </feed>
