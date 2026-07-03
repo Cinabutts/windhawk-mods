@@ -2,12 +2,258 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-07-01T22:56:12.000Z</updated>
+    <updated>2026-07-02T19:52:16.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Compact Start Menu 1.0.0]]></title>
+        <id>https://windhawk.net/mods/compact-start-menu#5b32bb24425ef9af3e7769665f667b8144352a20</id>
+        <link href="https://windhawk.net/mods/compact-start-menu"/>
+        <updated>2026-07-02T19:52:16.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="compactstartmenu">Compact Start Menu</h1>
+<p>This mod simplifies the Start Menu by directly adjusting All apps XAML sections.</p>
+<p>| All apps without header (default) | Pinned without header + Separator + All apps in List view |
+| :---: | :---: |
+| <img src="https://raw.githubusercontent.com/Asteski/windhawk-mods/main/img/compact-start-menu/1.png" alt="Default" /> | <img src="https://raw.githubusercontent.com/Asteski/windhawk-mods/main/img/compact-start-menu/2.png" alt="Pinned section and separator" /> |</p>
+<h3 id="features">Features:</h3>
+<ul>
+<li><strong>Shows "All apps":</strong> Keeps the app list visible.</li>
+<li><strong>Optional pinned section hiding:</strong> Can hide or show the section with pinned apps.</li>
+<li><strong>Optional recommended section hiding:</strong> Can hide or show the section with recent files.</li>
+<li><strong>Optional section separators:</strong> Can add thin separator lines between sections.</li>
+<li><strong>Optional section headers:</strong> Can hide pinned and recommended headers independently.</li>
+<li><strong>Hides group headers:</strong> Removes the visible All apps group headers in grid and list views.</li>
+<li><strong>Compacts grid view:</strong> Reduces group-header spacing in the All apps grid.</li>
+<li><strong>Optional top header:</strong> Can hide the All apps title/view row.</li>
+<li><strong>Optional category view hiding:</strong> Can hide the Category option from the view selector.</li>
+<li><strong>Hidden header icon gap:</strong> Can adjust the first icon row spacing when the top header is hidden.</li>
+<li><strong>Scrollbar modes:</strong> Can show, hide, or reveal the visual All apps scroll bar only while scrolling.</li>
+</ul>
+<h3 id="instructions">Instructions:</h3>
+<ul>
+<li>Enable the mod in Windhawk.</li>
+<li><strong>Restart StartMenuExperienceHost.exe</strong>, sign out/in, or restart your computer to apply changes.</li>
+</ul>]]></content>
+        <author>
+            <name>Asteski</name>
+            <uri>https://github.com/Asteski</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MacOS Minimize Animation 2.1.1]]></title>
+        <id>https://windhawk.net/mods/macos-minimize-animation#51bb09f1a2f997764267bc016299b00c3bda12cc</id>
+        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
+        <updated>2026-07-02T19:17:27.000Z</updated>
+        <content type="html"><![CDATA[<p>Follow-up to #4659 (merged while this final commit was being pushed) - two user-visible timing fixes, found by testing under CPU throttling (battery saver), where both artifacts become clearly visible:</p>
+<ul>
+<li><strong>Restores are hidden via <code>DWMWA_CLOAK</code> instead of <code>WS_EX_LAYERED</code> + alpha 0.</strong> Freshly adding the layered style makes DWM rebuild the window's redirection surface, and until that lands the bare window frame is composed for a few frames - a flash on every restore (previously masked by the very style leak #4659 fixed, since windows stayed layered forever). A cloaked window is not rendered at all (frame included), has no rebuild lag, and the restore path no longer touches window styles - structurally removing the layered-leak class there. The launch path keeps the layered mechanism (cloaking would collide with its wait-for-uncloak handling for Store apps), with the true pre-hide style threaded through as per #4659.</li>
+<li><strong>The real minimize is gated on the genie's first frame being composed.</strong> Previously the hook let the actual minimize run while the animation thread was still starting up, so the window vanished a few frames before the ghost appeared - a background flash in the gap. The hook now waits (capped at 200 ms; duplicated event handles so neither thread can touch a freed handle) until the animation thread has composed its first frame via <code>DwmFlush</code>, then performs the minimize invisibly underneath the ghost. Applies to every minimize entry point; on timeout the behavior is simply the previous one.</li>
+</ul>
+<p>Verified on a throttled machine: no frame flash on restore, no gap flash on minimize, and the rollback/unload guarantees from #4659 are preserved (all bail paths route through a single undo helper that matches the reveal to the hide).</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Remove UWP titlebars Lite 1.2.1]]></title>
+        <id>https://windhawk.net/mods/native-titlebars-uwp-lite#a6331a0a1240ac02de1b2e73e2109755bf8c816d</id>
+        <link href="https://windhawk.net/mods/native-titlebars-uwp-lite"/>
+        <updated>2026-07-02T19:09:08.000Z</updated>
+        <content type="html"><![CDATA[<p>Updated version number and screenshot in the mod description.</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MacOS Minimize Animation 2.1.0]]></title>
+        <id>https://windhawk.net/mods/macos-minimize-animation#1f0ba9081e3851d184748875cc71eb5f4d6ec1ae</id>
+        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
+        <updated>2026-07-02T18:04:11.000Z</updated>
+        <content type="html"><![CDATA[<p>Fixes the genie animation not playing for apps whose windows bypass the classic <code>ShowWindow</code> / <code>WM_SYSCOMMAND</code> paths:</p>
+<ul>
+<li><strong>New minimize hooks</strong>: <code>ShowWindowAsync</code>, <code>SetWindowPlacement</code>, and <code>CloseWindow</code> (which minimizes, despite its name). Apps with custom title bars - e.g. the Zed editor - minimize through these, so their own minimize button previously showed no animation while taskbar minimize worked. Also verified to fix minimize for Store/UWP apps such as the modern Media Player.</li>
+<li><strong>New launch path</strong>: <code>SetWindowPos</code> + <code>SWP_SHOWWINDOW</code> for frameworks that show their first window without <code>ShowWindow</code>, plus a bounded wait for DWM-cloaked (Store/UWP) windows to uncloak before snapshotting, so the launch genie doesn't warp a black frame.</li>
+<li><strong>Robustness</strong>: a one-genie-per-window guard - with several minimize entry points hooked, a single gesture could otherwise start two overlapping ghost animations. New hook paths also skip hidden/already-minimized windows (e.g. apps restoring a saved minimized session at startup).</li>
+</ul>
+<p>Existing behavior for classic Win32 windows is unchanged.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Desktop Companions 1.4.0]]></title>
+        <id>https://windhawk.net/mods/neko-cat#5b733b3fa2ccf48f105212d1495530276c87fb51</id>
+        <link href="https://windhawk.net/mods/neko-cat"/>
+        <updated>2026-07-02T17:51:38.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>feat:</strong> Added Neko Dog, context menus, and multi‑monitor improvements.</p>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Neko Dog:</strong> New desktop companion, selectable in settings or mixed with existing litters.  </li>
+<li><strong>Right‑Click Menu:</strong> Quickly change behaviors (Chase Mouse, Pace, Play With Window).  </li>
+<li><strong>Save Last Behavior:</strong> Companions now remember their active behavior after restart.  </li>
+</ul>
+<h3 id="improved">Improved</h3>
+<ul>
+<li><strong>Multi‑Monitor Bounds:</strong> Behaviors now align correctly to the monitor edges.  </li>
+<li><strong>Run Around Physics:</strong> Natural rest cycles (~45s play, ~15s nap) and realistic ball physics with angles/reflections.  </li>
+<li><strong>Leg Animations:</strong> Walking/running animations scale to actual distance traveled (improved overall animation).</li>
+<li><strong>Drag & Drop:</strong> Dropping a companion resumes their previous behavior (except Play With Window mode).  </li>
+<li><strong>Behavior Logic:</strong> Smoother movement and state transitions.  </li>
+<li><strong>Assets:</strong> Downloads now point to latest commit including Neko Dog assets.  </li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>Multi‑Monitor Bugs:</strong> Companions no longer go off‑screen or get stuck.  </li>
+<li><strong>Window Maximizing:</strong> Double‑clicking companions no longer maximizes underlying windows.  </li>
+<li><strong>Theme Switcher Leak:</strong> Cleaned up dynamic theme loading to prevent memory leaks.</li>
+</ul>]]></content>
+        <author>
+            <name>ciizerr</name>
+            <uri>https://github.com/ciizerr</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Remove UWP titlebars Lite 1.2]]></title>
+        <id>https://windhawk.net/mods/native-titlebars-uwp-lite#c3cfb1e122539801e373fb76a7c6c228ff6eaf30</id>
+        <link href="https://windhawk.net/mods/native-titlebars-uwp-lite"/>
+        <updated>2026-07-02T17:37:10.000Z</updated>
+        <content type="html"><![CDATA[<p>Improve the icon appearance and fix a bug when the icons were confused when two UWP apps were opened at the same time.</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Restart Explorer 1.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-restart-explorer#4a3c818d05d01eb973e6dc8242ac8d5edc084066</id>
+        <link href="https://windhawk.net/mods/taskbar-restart-explorer"/>
+        <updated>2026-07-02T16:27:10.000Z</updated>
+        <content type="html"><![CDATA[<p>Adds a Restart Explorer shortcut to the native rounded Windows 11 empty-taskbar
+context menu.</p>
+<p>This version hooks the taskbar settings context-menu build path in the actually
+loaded Taskbar.View.dll/ExplorerExtensions.dll module. It doesn't replace the
+classic popup menu, install global mouse hooks, or show a separate flyout.</p>
+<p>Demo:
+<img src="https://i.imgur.com/JrLPgxo.gif" alt="Taskbar Restart Explorer demo" /></p>
+<p>If the required symbols aren't available, the mod logs why and fails closed.</p>]]></content>
+        <author>
+            <name>Mgrmjp</name>
+            <uri>https://github.com/Mgrmjp</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Gather Windows To Monitor 0.1.0]]></title>
+        <id>https://windhawk.net/mods/gather-windows-to-monitor#c9b5f51600ef0346d22d7d229b640edaa215a837</id>
+        <link href="https://windhawk.net/mods/gather-windows-to-monitor"/>
+        <updated>2026-07-02T15:27:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="gatherwindowstomonitor">Gather Windows To Monitor</h1>
+<p>Global hotkeys gather visible application windows to a selected monitor work area.</p>
+<p>Configure hotkeys in Windhawk settings. Use strings such as <code>Ctrl+Alt+Shift+1</code>,
+<code>Ctrl+Win+M</code>, <code>F9</code>, or <code>None</code>.</p>
+<p>Skipped by default: minimized windows, fullscreen windows/games, hidden windows,
+tool windows, owned popups, desktop/taskbar/shell UI, cloaked UWP/helper windows,
+and untitled windows.</p>
+<p>Enable debug logging to see per-window skip reasons in the Windhawk log.</p>
+<p>Known limitations: monitor number hotkeys use Win32 monitor enumeration order, not
+the Windows Settings display number. Moving minimized windows without restoring is
+not attempted because it is not reliable for all apps.</p>]]></content>
+        <author>
+            <name>Fred</name>
+            <uri>https://github.com/fjdiazt</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dynamic Taskbar Transparency 0.3.8]]></title>
+        <id>https://windhawk.net/mods/dynamic-taskbar-transparency#2bdab8f5726d042025598ca446c44f4711c25f9b</id>
+        <link href="https://windhawk.net/mods/dynamic-taskbar-transparency"/>
+        <updated>2026-07-02T15:20:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="dynamictaskbartransparency">Dynamic Taskbar Transparency</h1>
+<p><img src="https://i.imgur.com/Ab7hMYp.gif" alt="Dynamic Taskbar Transparency demo" /></p>
+<p>This mod applies a TranslucentTB-like state machine to the Windows 11 taskbar.
+It keeps the taskbar clear on the desktop or when no maximized window is
+present, then restores or changes the taskbar appearance while Start, search,
+task view, notification/quick settings flyouts, tray flyouts, other shell
+interactions, or maximized windows are active.</p>
+<p>Version 0.3 edits the Windows 11 taskbar XAML background rectangles directly.
+It fades the rectangles with <code>Opacity</code> instead of applying a colored alpha
+overlay, and it can fall back to the captured existing style, clear the mod's
+local overrides for the Windows native/default style, clear, blur, or
+blur-backed acrylic.</p>
+<p>State detection is driven by shell/window events and uses heuristic window
+class/process-name matching for Start, search, task view, tray flyouts, and
+other shell surfaces. These heuristics can change between Windows 11 builds.</p>
+<p>Do not run this together with TranslucentTB or another tool that continuously
+writes the same taskbar background.</p>
+<p>Compared with taskbar-background-helper, this mod focuses on a TranslucentTB-
+style state machine: desktop/no-maximized-window, maximized windows, Start,
+search, task view, tray flyouts, notification/quick settings flyouts, and an
+optional catch-all for other shell surfaces can each choose their own
+appearance and fade duration. taskbar-background-helper is a lower-level
+background helper for always/maximized behavior and pairs well with Taskbar
+Styler; this mod adds per-shell-state switching and animation on top of the
+same general taskbar background use case.</p>]]></content>
+        <author>
+            <name>11581</name>
+            <uri>https://github.com/r1file</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Files 2 Folders 2.5]]></title>
+        <id>https://windhawk.net/mods/files-2-folders#04683525522c0a20295ae6cbe1d6360c1ab1e80c</id>
+        <link href="https://windhawk.net/mods/files-2-folders"/>
+        <updated>2026-07-02T14:56:13.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Adds an <strong>Operation</strong> segmented control (Move - fast / Move - safe / Copy) to the dialog, above the mode list. Picking one changes the operation for just that run without touching the <strong>Operation</strong> setting.</li>
+<li>Adds two optional aids for building nested subfolder paths in <strong>Fixed name</strong> mode (each with its own settings toggle, on by default):</li>
+<li>A live breadcrumb preview line under the box (e.g. typing <code>archive/incoming</code> shows <code>archive › incoming</code>).</li>
+<li>An <strong>Add level</strong> (<code>+</code>) button that appends a <code>\</code> separator and refocuses the box.</li>
+<li>Two new settings: <code>showNestedPreview</code>, <code>showAddLevelButton</code>.</li>
+</ul>]]></content>
+        <author>
+            <name>tria</name>
+            <uri>https://github.com/triatomic</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Custom Menu Height 1.1]]></title>
+        <id>https://windhawk.net/mods/custom-menu-height#9dc9145d6cb2577c40c716476cc086d3231c9ab1</id>
+        <link href="https://windhawk.net/mods/custom-menu-height"/>
+        <updated>2026-07-02T14:50:00.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Updated the context menu item height setting to handle specific values for default states:</li>
+<li><code>0</code>: Uses the default system value and keeps immersive menus.</li>
+<li><code>-1</code>: Uses the default system value and eradicates immersive menus system-wide.</li>
+<li>Added support for eradicating the immersive menu from the Windows Update system tray icon on Windows 10.</li>
+<li>Improved OS version detection required to eradicate immersive menus system-wide on Windows 10 and later.</li>
+</ul>]]></content>
+        <author>
+            <name>Kitsune</name>
+            <uri>https://github.com/AromaKitsune</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 7 Network Flyout Recreation 2.8.7]]></title>
+        <id>https://windhawk.net/mods/win7-network-flyout-recreation#704f940485ce058a0091a5038c31728c22a870f9</id>
+        <link href="https://windhawk.net/mods/win7-network-flyout-recreation"/>
+        <updated>2026-07-02T14:40:54.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>Added custom dark theme for the entire flyout UI</li>
+<li>Added support for German and Portuguese languages</li>
+<li>Implemented dark theme for password dialog and context menus</li>
+<li>Improved the UI layout with dynamic refresh button positioning</li>
+<li>Enhanced visual consistency with Windows 7 original design</li>
+</ul>]]></content>
+        <author>
+            <name>babamohammed</name>
+            <uri>https://github.com/babamohammed2022</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Windows 11 Settings Styler 1.0.1]]></title>
         <id>https://windhawk.net/mods/windows-11-settings-styler#44a6a55652401b83df91d79aa04c6091ddfbe55a</id>
@@ -190,295 +436,6 @@ significant impact on power consumption.</p>]]></content>
         <author>
             <name>Starfield</name>
             <uri>https://github.com/steveji2021</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Borderless Fullscreen 1.2.0]]></title>
-        <id>https://windhawk.net/mods/borderless-fullscreen#8210aa6d68a6e2b57d5477f005cbd80a498a70cf</id>
-        <link href="https://windhawk.net/mods/borderless-fullscreen"/>
-        <updated>2026-06-28T19:00:50.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added multi-monitor support (The window remains on the monitor where it was opened)</li>
-</ul>]]></content>
-        <author>
-            <name>TomberWolf</name>
-            <uri>https://github.com/TomberWolf</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Adaptive Microphone Icon Visibility 1.0]]></title>
-        <id>https://windhawk.net/mods/adaptive-microphone-icon-visibility#0ba128210751d519899c9c5564c47a9aaf8460cb</id>
-        <link href="https://windhawk.net/mods/adaptive-microphone-icon-visibility"/>
-        <updated>2026-06-28T18:18:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="adaptivemicrophoneiconvisibility">Adaptive Microphone Icon Visibility</h1>
-<p>This mod hides the system tray microphone icon if only whitelisted applications
-(or no applications) have active access. If an unlisted application begins using
-the microphone, the icon is immediately shown to alert the user.</p>
-<p>Only Windows 11 is supported.</p>
-<h2 id="credits">Credits</h2>
-<p>Icon manipulation logic in this mod is based on the
-<a href="https://windhawk.net/mods/taskbar-tray-system-icon-tweaks">Taskbar tray system icon tweaks</a> mod by <strong>m417z</strong>.</p>]]></content>
-        <author>
-            <name>Ikkecode</name>
-            <uri>https://github.com/ikkecode</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Borderless Fullscreen 1.1.0]]></title>
-        <id>https://windhawk.net/mods/borderless-fullscreen#c208c001106e00938f338cacf204cb1dfdf43528</id>
-        <link href="https://windhawk.net/mods/borderless-fullscreen"/>
-        <updated>2026-06-27T21:35:22.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="borderlessfullscreen">Borderless Fullscreen</h1>
-<p>Add an executable name (e.g. <code>game.exe</code>) to the target list and the app
-will automatically run without a title bar / border, stretched to fill
-the primary monitor's current resolution (multi monitor setup is planned
-for the next version).</p>
-<p>Optionally, set a fixed window size instead (the window will then be
-centered on the primary monitor) - useful for older games with a low
-native resolution.</p>
-<h2 id="howitworks">How it works</h2>
-<p>This mod runs in a separate, dedicated process and restores the original
-window style and size automatically if the app is removed from the
-target list, if the mod is disabled, or if the window is closed.</p>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>If a target doesn't react, double-check the <em>exact</em> process name in
-Task Manager's Details tab while it's running. Some launchers start a
-child process with a different executable name than expected.</li>
-</ul>]]></content>
-        <author>
-            <name>TomberWolf</name>
-            <uri>https://github.com/TomberWolf</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.3.3]]></title>
-        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#cc21e7ca1840bb5de5d5a8f2b08d27312555d29c</id>
-        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
-        <updated>2026-06-27T20:50:30.000Z</updated>
-        <content type="html"><![CDATA[<p>This version reworks the tab transition into a smooth crossfade between the old and new views — for both the main left navigation (Processes, Performance, App history, …) and the Performance sub-pages (CPU, Memory, Disk, Network/Ethernet, Wi-Fi, GPU).</p>
-<p>To avoid a visible jump, on mouse-down the current view is frozen under a topmost, click-through layered overlay; Task Manager switches the tab underneath it invisibly, and a worker thread then locates the content edge via UI Automation, captures the new view once it has rendered, and crossfades the overlay from the old frame to the new one.</p>
-<p>The demo GIF has been updated to show the new animation.</p>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Click on Empty Explorer 2.1.1]]></title>
-        <id>https://windhawk.net/mods/click-on-empty-explorer#17537dd9bf6b29f13a26dfe0cadf8eeecd76a86d</id>
-        <link href="https://windhawk.net/mods/click-on-empty-explorer"/>
-        <updated>2026-06-27T20:40:44.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="clickonemptyexplorer">Click on Empty Explorer</h1>
-<p>Configure what happens when you double click, middle click, or double middle click on
-empty space in File Explorer. Supports 12 different actions.</p>
-<h2 id="howitworks">How it works</h2>
-<p>This mod intercepts mouse clicks on the blank area of File Explorer's file list (where
-no file or folder is located) and performs the action you've configured.</p>
-<ul>
-<li><strong>Double left click</strong> — Windows natively detects double clicks. No delay at all.</li>
-<li><strong>Middle click</strong> — If only a single-click action is set (double middle click is
-disabled), the action fires instantly with no delay, just like left click.</li>
-<li><strong>Double middle click</strong> — Windows does not natively support double middle click, so
-the mod uses a timer-based detection. When you middle click, the mod waits for your
-system's double-click time (typically 500ms). If you middle click again within that
-window, it counts as a double click and fires the double-click action instead.</li>
-<li>If both single and double middle click are set: single click is delayed by the
-double-click detection window.</li>
-<li>If only double middle click is set: only double clicks trigger the action.</li>
-</ul>
-<h2 id="actions">Actions</h2>
-<ul>
-<li><strong>Go Up</strong> — Navigate to the parent folder</li>
-<li><strong>Go Back</strong> — Navigate back in history</li>
-<li><strong>Go Forward</strong> — Navigate forward in history</li>
-<li><strong>Refresh</strong> — Refresh the current view</li>
-<li><strong>New Tab</strong> — Open a new blank tab (Win11)</li>
-<li><strong>Duplicate Tab</strong> — Open the current folder in a new tab (Win11)</li>
-<li><strong>Close Tab</strong> — Close the current tab (Win11)</li>
-<li><strong>New Folder</strong> — Create a new folder in the current view</li>
-<li><strong>Copy Path</strong> — Copy the current folder path to clipboard</li>
-<li><strong>Go to Desktop</strong> — Navigate to the Desktop</li>
-<li><strong>Go to Home</strong> — Navigate to Quick Access / Home</li>
-<li><strong>None</strong> — Do nothing</li>
-</ul>
-<h2 id="windowsversionsupport">Windows version support</h2>
-<p>Requires Windows 10 or later. Tab-related actions (New Tab, Duplicate Tab, Close Tab)
-require Windows 11 for tabbed Explorer support.</p>]]></content>
-        <author>
-            <name>LiHua81</name>
-            <uri>https://github.com/LiHua81</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Disk Usage Bar Customizer 1.0.0]]></title>
-        <id>https://windhawk.net/mods/disk-usage-bar-customizer#fab14b0a0962e79179ca89a14f9f70481633371b</id>
-        <link href="https://windhawk.net/mods/disk-usage-bar-customizer"/>
-        <updated>2026-06-27T20:11:30.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="diskusagebarcustomizer">Disk Usage Bar Customizer</h1>
-<p>Customize everything about the disk usage bar from the This PC section in the File Explorer, including theme-aware colors, height, border and more.</p>
-<p>This is a fork of the original <a href="https://windhawk.net/mods/disk-usage-bar-color">Disk Usage Bar Color</a> mod made by <a href="https://github.com/dirtyrazkl">dirtyrazkl</a>.</p>
-<h2 id="customizationoptions">Customization options</h2>
-<h3 id="general">General</h3>
-<ul>
-<li>Show remaining space as progress instead of used space</li>
-<li>Custom warning percentage threshold</li>
-</ul>
-<h3 id="rendering">Rendering</h3>
-<ul>
-<li>Render using visual styles</li>
-<li>Render using dark mode parts when using visual styles</li>
-</ul>
-<h3 id="customrendering">Custom rendering</h3>
-<ul>
-<li>Use system's accent color for the normal progress color</li>
-<li>Render bar border</li>
-<li>Height factor</li>
-<li>Custom light &amp; dark mode colors</li>
-</ul>
-<h2 id="screenshots">Screenshots</h2>
-<h3 id="colorsadaptingtothesystemstheme">Colors adapting to the system's theme</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/light_mode_default.png" alt="System colors light mode" /></p>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/dark_mode_default.png" alt="System colors dark mode" /></p>
-<h3 id="accentcolorasthenormalprogresscolor">Accent color as the normal progress color</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/light_mode_accent.png" alt="Accent color light mode" /></p>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/dark_mode_accent.png" alt="Accent color dark mode" /></p>
-<h3 id="customcolors">Custom colors</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/custom_colors.png" alt="Custom colors" /></p>
-<h3 id="noborder">No border</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/custom_colors_no_border.png" alt="No border" /></p>
-<h3 id="customheight">Custom height</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/custom_height.png" alt="Custom height" /></p>
-<h3 id="customwarningthreshold">Custom warning threshold</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/custom_warning_threshold.png" alt="Custom warning threshold" /></p>
-<h3 id="showremainingspaceasprogressinsteadofusedspace">Show remaining space as progress instead of used space</h3>
-<p><img src="https://raw.githubusercontent.com/Valer100/my-windhawk-mods/refs/heads/main/disk-usage-bar-customizer/screenshots/remaining_space_as_progress.png" alt="Show remaining space as progress instead of used space" /></p>]]></content>
-        <author>
-            <name>Valer100</name>
-            <uri>https://github.com/Valer100</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Start button always on the left 1.3.1]]></title>
-        <id>https://windhawk.net/mods/taskbar-start-button-position#85926525df30b8fca5c589f5bcb17b98839b4fc9</id>
-        <link href="https://windhawk.net/mods/taskbar-start-button-position"/>
-        <updated>2026-06-27T19:31:34.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Improve search menu handling when the "Start menu on the left" option is enabled - search menu is no longer affected when opened outside of the start menu (Win+S or taskbar search button).</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Start button always on the left 1.3]]></title>
-        <id>https://windhawk.net/mods/taskbar-start-button-position#912416791d3f7209475a3370335cf030283df833</id>
-        <link href="https://windhawk.net/mods/taskbar-start-button-position"/>
-        <updated>2026-06-27T18:26:55.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added an option to move the search and task view buttons to the left.</li>
-<li>Fixed Start button context menu placement.</li>
-<li>Various improvements for multiple monitors and other scenarios.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Files 2 Folders 2.2]]></title>
-        <id>https://windhawk.net/mods/files-2-folders#fd63b735358811aff34f11c4ba5909f1b44688a4</id>
-        <link href="https://windhawk.net/mods/files-2-folders"/>
-        <updated>2026-06-27T14:19:31.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Add nested-subfolder support to the <strong>Fixed name</strong> mode. A <code>/</code> (or <code>\</code>) in the name is now treated as a path separator, so <code>test/1/2/3/name</code> creates <code>test\1\2\3\name</code> and moves the selection into the final <code>name</code> folder.</li>
-<li>Intermediate folders are always created/reused as a stable path; only the last segment follows the existing "Fixed name: reuse an existing folder" reuse/numbering rule.</li>
-<li>Empty segments (from leading, trailing, or doubled separators) are ignored. Other modes (by name, by extension, by date) are unchanged.</li>
-</ul>]]></content>
-        <author>
-            <name>tria</name>
-            <uri>https://github.com/triatomic</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Shell Flyout Positions 1.3]]></title>
-        <id>https://windhawk.net/mods/shell-flyout-positions#a9ed1f6989d728bc1fad2d5ad23f5d30117b64cf</id>
-        <link href="https://windhawk.net/mods/shell-flyout-positions"/>
-        <updated>2026-06-27T13:54:43.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>Added options to align the Start menu to the left, center, or right of the Start button.</li>
-<li>Added a "Windows default" option for the notification center, the action center, and the Start menu vertical alignment to reduce the impact for unused settings.</li>
-<li>Various improvements for multiple monitors, auto-hide, restore on unload, and other scenarios.</li>
-</ul>]]></content>
-        <author>
-            <name>m417z</name>
-            <uri>https://github.com/m417z</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 7 Network Flyout Recreation 2.8.4]]></title>
-        <id>https://windhawk.net/mods/win7-network-flyout-recreation#f7eabd22737735da3efb5507964ecd6832f79aa3</id>
-        <link href="https://windhawk.net/mods/win7-network-flyout-recreation"/>
-        <updated>2026-06-27T10:05:17.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="windows7networkflyoutrecreation">Windows 7 Network Flyout Recreation</h1>
-<p>This mod recreates the classic Windows 7 network flyout on Windows 10 and 11, replacing the modern flyout with a familiar, lightweight alternative.</p>
-<p><img src="https://raw.githubusercontent.com/babamohammed2022/babamohammed2022/main/ms.png" alt="Screenshot" />
-The mod has been tested on Windows 10 21H2, Windows 10 1809, Windows 11 23H2, Windows 11 24H2 and Windows 11 25H2.</p>
-<h2 id="features">Features</h2>
-<ul>
-<li><strong>Wi-Fi network list</strong>: Shows all available networks with live signal strength</li>
-<li><strong>Connect/Disconnect</strong>: Connect to secured and open networks with password support</li>
-<li><strong>Privacy mode</strong>: Hide real network names (shows as Network 1, Network 2…)</li>
-<li><strong>Windows 7 style tooltips</strong>: Full network info on hover (SSID, signal, security type)</li>
-<li><strong>Right-click context menu</strong>: Quick access to network status and properties</li>
-<li><strong>Keyboard navigation</strong>: Full Arrow keys, Enter, and Escape support</li>
-<li><strong>Auto-refresh</strong>: Periodically refreshes the network list at a configurable interval</li>
-<li><strong>Language support</strong>: English, Italian, Spanish, French, Russian, or auto-detect</li>
-<li><strong>DPI aware</strong>: Scales correctly on high-DPI and mixed-DPI setups</li>
-<li><strong>Rounded corners</strong>: Optional modern look for Windows 11 or Aero theme</li>
-</ul>
-<h2 id="requirements">Requirements</h2>
-<ul>
-<li><strong>Windows 10</strong> with the native taskbar</li>
-<li><strong>Windows 11</strong> with the Windows 10 taskbar (via <a href="https://github.com/valinet/ExplorerPatcher">ExplorerPatcher</a>)</li>
-<li>The network icon must be visible in the main system tray (overflow menu not supported)</li>
-</ul>
-<blockquote>
-  <p><strong>Note:</strong> This mod is unlikely to work with other taskbar mods (e.g. Retrobar) or heavily customized configurations.</p>
-</blockquote>
-<h2 id="knownlimitations">Known limitations</h2>
-<ul>
-<li><strong>Overflow menu</strong>: The network icon must be in the main system tray, not hidden in the overflow menu.</li>
-<li><strong>Auto-reconnect checkbox</strong>: May not work reliably on all setups. If the network doesn't reconnect automatically, try connecting manually.</li>
-</ul>
-<h2 id="hotkeys">Hotkeys</h2>
-<p>| Key | Action |
-|-----|--------|
-| <strong>Ctrl+H</strong> | Toggle network flyout (disabled by default) |</p>
-<h2 id="credits">Credits</h2>
-<ul>
-<li><strong>m417z</strong> — Code review</li>
-<li><strong>Anixx</strong> — Testing on Windows 11 23H2 and feedback</li>
-<li><strong>sebastian08dm08-cpu</strong> — Testing on Windows 10 1809</li>
-</ul>
-<p>If you encounter issues, please report them on the author of the mod.</p>]]></content>
-        <author>
-            <name>babamohammed</name>
-            <uri>https://github.com/babamohammed2022</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Lock Keys Notifier 1.1.0]]></title>
-        <id>https://windhawk.net/mods/lock-keys-notifier#00056305e81658b3ca6dda4c76f391593f3a17c1</id>
-        <link href="https://windhawk.net/mods/lock-keys-notifier"/>
-        <updated>2026-06-26T11:15:56.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>NEW: show notifications even if an elevated application is currently focused via a poll-timer (toggleable)</li>
-</ul>]]></content>
-        <author>
-            <name>Havrlisan</name>
-            <uri>https://github.com/havrlisan</uri>
         </author>
     </entry>
 </feed>

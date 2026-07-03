@@ -2549,6 +2549,37 @@
         "version": "1.0.2"
       }
     },
+    "compact-start-menu": {
+      "details": {
+        "defaultSorting": 9,
+        "published": 1783021936000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1783021936000,
+        "users": 1
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "Asteski",
+        "compilerOptions": "-lole32 -loleaut32 -lruntimeobject",
+        "description": "Cleans up the Windows 11 Start menu by showing only a compact, ungrouped All apps view.",
+        "github": "https://github.com/Asteski",
+        "include": [
+          "StartMenuExperienceHost.exe"
+        ],
+        "name": "Compact Start Menu",
+        "version": "1.0.0"
+      }
+    },
     "confirm-closing-multiple-explorer-tabs": {
       "details": {
         "defaultSorting": 3050,
@@ -2890,7 +2921,7 @@
           4
         ],
         "ratingUsers": 4,
-        "updated": 1782154255000,
+        "updated": 1783003800000,
         "users": 106
       },
       "metadata": {
@@ -2902,7 +2933,7 @@
           "*"
         ],
         "name": "Custom Menu Height",
-        "version": "1.0"
+        "version": "1.1"
       }
     },
     "custom-shutdown-dialog": {
@@ -3898,6 +3929,38 @@
         "license": "MIT",
         "name": "Dynamic Island for Windows",
         "version": "1.1.1"
+      }
+    },
+    "dynamic-taskbar-transparency": {
+      "details": {
+        "defaultSorting": 45,
+        "published": 1783005612000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1783005612000,
+        "users": 5
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "11581",
+        "compilerOptions": "-ldwmapi -lole32 -loleaut32 -lruntimeobject",
+        "description": "Dynamically changes the Windows 11 taskbar XAML background transparency for desktop, Start, search, tray flyouts, task view, and maximized windows.",
+        "github": "https://github.com/r1file",
+        "include": [
+          "explorer.exe"
+        ],
+        "license": "GPL-3.0",
+        "name": "Dynamic Taskbar Transparency",
+        "version": "0.3.8"
       }
     },
     "edge-hot-corner-desktop-switch": {
@@ -5345,7 +5408,7 @@
           6
         ],
         "ratingUsers": 9,
-        "updated": 1782569971000,
+        "updated": 1783004173000,
         "users": 151
       },
       "metadata": {
@@ -5357,7 +5420,7 @@
           "explorer.exe"
         ],
         "name": "Files 2 Folders",
-        "version": "2.2"
+        "version": "2.5"
       }
     },
     "firefox-border-fix": {
@@ -5818,6 +5881,34 @@
         "name": "Fully Customizable WinVer",
         "twitter": "https://x.com/ItsTauTvyDas",
         "version": "1.0.0"
+      }
+    },
+    "gather-windows-to-monitor": {
+      "details": {
+        "defaultSorting": 9,
+        "published": 1783006070000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1783006070000,
+        "users": 1
+      },
+      "metadata": {
+        "author": "Fred",
+        "compilerOptions": "-ldwmapi -lshell32",
+        "description": "Move eligible open windows to a chosen monitor with global hotkeys",
+        "github": "https://github.com/fjdiazt",
+        "include": [
+          "windhawk.exe"
+        ],
+        "name": "Gather Windows To Monitor",
+        "version": "0.1.0"
       }
     },
     "genie-minimize-animation": {
@@ -7060,7 +7151,7 @@
           41
         ],
         "ratingUsers": 47,
-        "updated": 1782754453000,
+        "updated": 1783019847000,
         "users": 1399
       },
       "metadata": {
@@ -7073,7 +7164,7 @@
         ],
         "license": "MIT",
         "name": "MacOS Minimize Animation",
-        "version": "2.0.0"
+        "version": "2.1.1"
       }
     },
     "magnifier-headless": {
@@ -7586,7 +7677,7 @@
           5
         ],
         "ratingUsers": 7,
-        "updated": 1779300155000,
+        "updated": 1783019348000,
         "users": 299
       },
       "metadata": {
@@ -7602,7 +7693,7 @@
           "explorer.exe"
         ],
         "name": "Remove UWP titlebars Lite",
-        "version": "1.1.0"
+        "version": "1.2.1"
       }
     },
     "neko-cat": {
@@ -7618,7 +7709,7 @@
           12
         ],
         "ratingUsers": 18,
-        "updated": 1780386919000,
+        "updated": 1783014698000,
         "users": 75
       },
       "metadata": {
@@ -7630,7 +7721,7 @@
           "windhawk.exe"
         ],
         "name": "Desktop Companions",
-        "version": "1.3.0"
+        "version": "1.4.0"
       }
     },
     "net-toggle": {
@@ -11616,6 +11707,37 @@
         "version": "1.0"
       }
     },
+    "taskbar-restart-explorer": {
+      "details": {
+        "defaultSorting": 36,
+        "published": 1783009630000,
+        "rating": 0,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ratingUsers": 0,
+        "updated": 1783009630000,
+        "users": 4
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "Mgrmjp",
+        "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lversion",
+        "description": "Adds a Restart Explorer shortcut to the native Windows 11 empty-taskbar context menu.",
+        "github": "https://github.com/Mgrmjp",
+        "include": [
+          "explorer.exe"
+        ],
+        "name": "Taskbar Restart Explorer",
+        "version": "1.0"
+      }
+    },
     "taskbar-scroll-actions": {
       "details": {
         "defaultSorting": 13356,
@@ -14000,7 +14122,7 @@
           2
         ],
         "ratingUsers": 2,
-        "updated": 1782554717000,
+        "updated": 1783003254000,
         "users": 87
       },
       "metadata": {
@@ -14015,7 +14137,7 @@
           "explorer.exe"
         ],
         "name": "Windows 7 Network Flyout Recreation",
-        "version": "2.8.4"
+        "version": "2.8.7"
       }
     },
     "win7-style-uac-dim": {
