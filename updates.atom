@@ -2,12 +2,248 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://windhawk.net/</id>
     <title>Windhawk Mod Updates</title>
-    <updated>2026-07-02T19:52:16.000Z</updated>
+    <updated>2026-07-04T14:38:44.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://windhawk.net/"/>
     <subtitle>Updates in the official collection of Windhawk mods</subtitle>
     <icon>https://windhawk.net/favicon.ico</icon>
     <rights>Ramen Software</rights>
+    <entry>
+        <title type="html"><![CDATA[Island Media Controls 0.9.27]]></title>
+        <id>https://windhawk.net/mods/island-media-controls#1f7614c178f23c0662bc8f677207cb9998bb9340</id>
+        <link href="https://windhawk.net/mods/island-media-controls"/>
+        <updated>2026-07-04T14:38:44.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="islandmediacontrols">Island Media Controls</h1>
+<p>Bring the current media session directly into the Windows 11 taskbar with a
+compact, theme-aware island built from native XAML. Unlike a floating Win32
+overlay, the island is inserted into the taskbar layout as a real XAML Grid, so
+it fits naturally alongside your taskbar and system tray items.</p>
+<h2 id="preview">Preview</h2>
+<p>| Dark mode | Light mode |
+| :---: | :---: |
+| <img src="https://raw.githubusercontent.com/usho-lear/island-media-controls/main/previews/dark-mode.gif" alt="Island Media Controls in dark mode" /> | <img src="https://raw.githubusercontent.com/usho-lear/island-media-controls/main/previews/light-mode.gif" alt="Island Media Controls in light mode" /> |</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Native taskbar integration:</strong> Choose from several system tray and taskbar
+positions without placing a separate always-on-top window over the taskbar.</li>
+<li><strong>Live media information:</strong> See album artwork, track title, and artist at a
+glance, with smooth transitions when the active media session changes.</li>
+<li><strong>Expanded player:</strong> Click the compact island to open a native XAML player
+with artwork, seekable playback progress, and previous, play/pause, and next
+controls.</li>
+<li><strong>Light and dark themes:</strong> Colors, text, surfaces, and controls automatically
+follow the Windows app theme.</li>
+<li><strong>Fluent visuals:</strong> Native Acrylic, rounded XAML geometry, album-art color
+accents, hover feedback, and display-synced animations keep interactions
+fluid and consistent with Windows 11.</li>
+<li><strong>Flexible customization:</strong> Adjust position, size, spacing, shadows, hover
+behavior, background material, expanded button style, and idle visibility.</li>
+<li><strong>Artwork effects:</strong> Add an optional album-art background wash and choose
+whether low-resolution video thumbnails use the original browser artwork,
+a mesh gradient, or an energy-flame visual.</li>
+</ul>]]></content>
+        <author>
+            <name>usho</name>
+            <uri>https://github.com/usho-lear</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Disable Inactive Menubar Greying 1.2]]></title>
+        <id>https://windhawk.net/mods/disable-inactive-menubar-greying#c31d06a195bfa0cf47cb700c22d23b5c68f78709</id>
+        <link href="https://windhawk.net/mods/disable-inactive-menubar-greying"/>
+        <updated>2026-07-04T11:02:59.000Z</updated>
+        <content type="html"><![CDATA[<p>Remove unwanted effects, simplify code, remove a memory leak</p>]]></content>
+        <author>
+            <name>Anixx</name>
+            <uri>https://github.com/Anixx</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MacOS Minimize Animation 2.2.0]]></title>
+        <id>https://windhawk.net/mods/macos-minimize-animation#01929c0699e86e614c42934ca6aab388e1068647</id>
+        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
+        <updated>2026-07-04T11:01:25.000Z</updated>
+        <content type="html"><![CDATA[<p>Adds an experimental <strong>Multi-monitor support</strong> setting (off by default), as requested by a user on the mod page.</p>
+<p>When enabled, the genie plays on the monitor the window is on and flows into that monitor's taskbar edge, instead of always targeting the primary monitor. Works with negative virtual-screen coordinates (monitors left of / above the primary).</p>
+<p>Also fixes, when the option is enabled, the taskbar-hover detection for icon-position learning: the previous primary-only work-area test matched every cursor position on a secondary monitor, so a plain title-bar minimize there mislearned the cursor X as the taskbar icon position. It now checks the work area of the monitor the cursor is on.</p>
+<p>With the setting off, behavior is unchanged from v2.1.1.</p>]]></content>
+        <author>
+            <name>Abdullah Masood</name>
+            <uri>https://github.com/Abdullah-Masood-05</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taskbar Fluent Media Player 1.5.0]]></title>
+        <id>https://windhawk.net/mods/taskbar-fluent-media-player#145b63f3d04a7f9c04353a6ac87a2d9a4314103a</id>
+        <link href="https://windhawk.net/mods/taskbar-fluent-media-player"/>
+        <updated>2026-07-04T11:00:48.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
+<ul>
+<li><strong>Context Menu Settings</strong> section</li>
+<li>Configurable item list — choose which items appear in the context menu and in what order</li>
+<li><strong>Repeat style</strong> — submenu (Repeat off / Repeat all / Repeat one) or a single toggle button that cycles through modes and reflects the current state in its label</li>
+<li><strong>Shuffle style</strong> — submenu (Shuffle off / Shuffle on) or a toggle button with live on/off label</li>
+<li><strong>Context menu icon style</strong> — pick Fluent Icons or MDL2 Assets (Outline/Filled), or inherit from Media Buttons Style</li>
+<li><strong>Context menu icon color and opacity</strong> — independent from player button color settings</li>
+<li><strong>"Show Open Windhawk button"</strong> toggle — the separator above it hides automatically when both it and Restart Player are off</li>
+<li><strong>"Nothing" option</strong> in Media buttons order and Context menu items lists — useful as an empty placeholder slot</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Idle auto-hide timer now ticks independently of media events — timeout values above 1 second now work correctly <a href="https://github.com/Salyts/Taskbar-Fluent-Media-Player/issues/5">#5</a></li>
+<li>Player no longer disappears when <strong>Hide when no media</strong> is disabled and <strong>Idle auto-hide</strong> is set to 0</li>
+<li>When title or artist placeholder text is empty, the scroll-view container now collapses properly — a single visible line is displayed without the hidden element reserving space</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Visualizer idle bar height</strong> is now specified in pixels (0–15 px) instead of percentage — default changed from 15% to 3 px</li>
+<li>Bar width minimum is now 0 (hides bars entirely) instead of 1</li>
+<li><code>ExtractAlbumPalette</code> now uses the internal <code>DecodeImageToBGRA</code> helper instead of the WinRT <code>BitmapDecoder</code> pipeline</li>
+</ul>]]></content>
+        <author>
+            <name>Salyts</name>
+            <uri>https://github.com/Salyts</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Monitor Rounded Edges 1.0]]></title>
+        <id>https://windhawk.net/mods/monitor-rounded-edges#9abd14f057189eb058eab8901042511d5cfef0d2</id>
+        <link href="https://windhawk.net/mods/monitor-rounded-edges"/>
+        <updated>2026-07-03T13:35:55.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="monitorroundededges">Monitor Rounded Edges</h1>
+<p>Applies smooth, anti-aliased rounded corners to all connected monitors using Direct2D.</p>
+<p><img src="https://raw.githubusercontent.com/crazyboyybs/assets/refs/heads/main/Monitor%20Rounded%20Edges%201.png" alt="Monitor Rounded Edges" />
+<img src="https://raw.githubusercontent.com/crazyboyybs/assets/refs/heads/main/Monitor%20Rounded%20Edges%202.png" alt="Monitor Rounded Edges" /></p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Two corner styles -- Circle (classic arc) and Squircle (smooth superellipse).</li>
+<li>Inner accent border -- optional outline with configurable thickness and alpha color (#AARRGGBB).</li>
+<li>Fullscreen awareness -- uses SHQueryUserNotificationState to reliably detect fullscreen games.</li>
+<li>Minimal CPU overhead -- a continuous polling timer (750 ms) is only active when "Hide in
+Fullscreen" is enabled. "Dynamic Inner Border" uses a brief transition timer (5 checks over
+1.5 s) after each foreground change to catch delayed fullscreen detection, then stops
+automatically. With neither feature active, only a lightweight WinEvent hook runs.</li>
+<li>Multi-monitor support -- each monitor gets its own independent set of corner overlays.</li>
+<li>Single tool process -- the rendering process is only created once; reopening Windhawk from the
+system tray does not spawn additional instances.</li>
+</ul>
+<h2 id="squirclestyle">Squircle style</h2>
+<p>The squircle uses a cubic Bezier with separate control points interpolated toward the inner arc
+center (k=0.70). This produces:</p>
+<ul>
+<li>Tangents parallel to the screen edges at both endpoints (no kink, smooth transition)</li>
+<li>Slightly more diagonal coverage than a circular arc at the same radius</li>
+<li>A softer, more organic corner appearance compared to a circle</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<p>| Setting | Description |
+|---|---|
+| Corner Radius | Rounding radius in pixels (1-500). |
+| Corner Style | circle = standard arc; squircle = smooth superellipse. |
+| Background Color | Hex fill color of the corners (#RRGGBB). |
+| Inner Border Thickness | Width of the inner accent line in pixels (0 = disabled). |
+| Inner Border Color | Hex color of the inner line, with alpha support (#AARRGGBB). |
+| Dynamic Inner Border | Hides only the inner border in fullscreen; keeps the rounding. |
+| Hide in Fullscreen | Hides everything in fullscreen apps and games. |</p>
+<h2 id="notes">Notes</h2>
+<p>The taskbar and Start menu may briefly appear above the corner overlays when they receive focus
+(e.g. opening Start, the Action Center, or right-clicking the desktop). The corners return to the
+top of the Z-order as soon as those elements lose focus.</p>
+<p>Fullscreen detection via <code>SHQueryUserNotificationState</code> is <strong>system-wide</strong>, not per-monitor: a
+fullscreen app on one monitor will affect the corners on all monitors. Additionally, <code>QUNS_BUSY</code>
+and <code>QUNS_PRESENTATION_MODE</code> can be set by non-game apps (e.g. Windows Presentation Mode or apps
+that request it), which may trigger hide/dynamic-border behavior unexpectedly.</p>
+<hr />
+<h1 id="bordasarredondadasdomonitor">Bordas Arredondadas do Monitor</h1>
+<p>Aplica cantos arredondados suaves em todos os monitores conectados via Direct2D.</p>
+<h2 id="recursos">Recursos</h2>
+<ul>
+<li>Dois estilos de canto -- Circulo (arco classico) e Squircle (superelipse suave).</li>
+<li>Borda interna de destaque -- contorno opcional com espessura e cor com alpha (#AARRGGBB).</li>
+<li>Deteccao de tela cheia -- usa SHQueryUserNotificationState para detectar jogos em fullscreen.</li>
+<li>Overhead minimo de CPU -- o timer de polling continuo (750 ms) so e ativado quando "Ocultar em
+Tela Cheia" esta ligado. "Borda Interna Dinamica" usa um timer de transicao curto (5 checks em
+1,5 s) apos cada troca de foco para capturar deteccoes atrasadas, e para automaticamente. Com
+nenhum recurso ativo, apenas o WinEvent hook leve permanece em execucao.</li>
+<li>Suporte a multiplos monitores -- cada monitor tem seu proprio conjunto independente de overlays.</li>
+<li>Processo unico -- o processo de renderizacao e criado uma unica vez; reabrir o Windhawk pela
+bandeja do sistema nao cria instancias adicionais.</li>
+</ul>
+<h2 id="estilosquircle">Estilo Squircle</h2>
+<p>O squircle usa uma curva de Bezier cubica com pontos de controle interpolados em direcao ao centro
+interno do arco (k=0,70). Isso produz:</p>
+<ul>
+<li>Tangentes paralelas as bordas da tela em ambos os extremos (sem kink, transicao suave)</li>
+<li>Cobertura diagonal ligeiramente maior do que um arco circular no mesmo raio</li>
+<li>Uma aparencia de canto mais suave e organica em comparacao ao circulo</li>
+</ul>
+<h2 id="configuracoes">Configuracoes</h2>
+<p>| Configuracao | Descricao |
+|---|---|
+| Raio do Arredondamento | Raio do arredondamento em pixels (1-500). |
+| Estilo do Canto | circle = arco padrao; squircle = superelipse suave. |
+| Cor do Fundo | Cor de preenchimento dos cantos em hex (#RRGGBB). |
+| Espessura da Linha Interna | Espessura da borda interna em pixels (0 para desativar). |
+| Cor da Linha Interna | Cor da linha interna em hex, com suporte a alpha (#AARRGGBB). |
+| Borda Interna Dinamica | Oculta apenas a borda interna em tela cheia, mantém o arredondamento. |
+| Ocultar em Tela Cheia | Oculta tudo em jogos e aplicativos em tela cheia. |</p>
+<h2 id="observacoes">Observacoes</h2>
+<p>A barra de tarefas e o menu Iniciar podem aparecer sobre as bordas arredondadas enquanto estao
+em foco (ex: ao abrir o Iniciar, a Central de Acoes ou ao clicar com o botao direito na area de
+trabalho). As bordas voltam ao topo da ordem Z assim que esses elementos perdem o foco.</p>
+<p>A deteccao de tela cheia via <code>SHQueryUserNotificationState</code> e <strong>global</strong> (nao por monitor): um
+app em fullscreen em um monitor afeta as bordas de todos os monitores. Alem disso, <code>QUNS_BUSY</code> e
+<code>QUNS_PRESENTATION_MODE</code> podem ser ativados por apps que nao sao jogos (ex: Modo de Apresentacao
+do Windows), o que pode disparar o comportamento de ocultar/borda dinamica inesperadamente.</p>
+<hr />
+<h1 id="bordesredondeadosdelmonitor">Bordes Redondeados del Monitor</h1>
+<p>Aplica esquinas redondeadas suaves en todos los monitores conectados via Direct2D.</p>
+<h2 id="caracteristicas">Caracteristicas</h2>
+<ul>
+<li>Dos estilos de esquina -- Circulo (arco clasico) y Squircle (superelipse suave).</li>
+<li>Borde interior de acento -- contorno opcional con grosor y color con alpha (#AARRGGBB).</li>
+<li>Deteccion de pantalla completa -- usa SHQueryUserNotificationState para detectar juegos en fullscreen.</li>
+<li>Overhead minimo de CPU -- el temporizador de polling continuo (750 ms) solo esta activo cuando
+"Ocultar en Pantalla Completa" esta habilitado. "Borde Interior Dinamico" usa un temporizador de
+transicion breve (5 verificaciones en 1,5 s) tras cada cambio de foco para detectar cambios
+tardios, y se detiene automaticamente. Sin ninguna funcion activa, solo el WinEvent hook ligero
+permanece en ejecucion.</li>
+<li>Soporte multi-monitor -- cada monitor tiene su propio conjunto independiente de overlays.</li>
+<li>Proceso unico -- el proceso de renderizado se crea una sola vez; reabrir Windhawk desde la
+bandeja del sistema no crea instancias adicionales.</li>
+</ul>
+<h2 id="estilosquircle-1">Estilo Squircle</h2>
+<p>El squircle usa una curva de Bezier cubica con puntos de control interpolados hacia el centro
+interno del arco (k=0,70). Esto produce:</p>
+<ul>
+<li>Tangentes paralelas a los bordes de la pantalla en ambos extremos (sin kink, transicion suave)</li>
+<li>Cobertura diagonal ligeramente mayor que un arco circular al mismo radio</li>
+<li>Una apariencia de esquina mas suave y organica comparada con el circulo</li>
+</ul>
+<h2 id="configuracion">Configuracion</h2>
+<p>| Configuracion | Descripcion |
+|---|---|
+| Radio de las Esquinas | Radio de redondeo en pixeles (1-500). |
+| Estilo de Esquina | circle = arco estandar; squircle = superelipse suave. |
+| Color de Fondo | Color de relleno de las esquinas en hex (#RRGGBB). |
+| Grosor del Borde Interior | Grosor del borde interior en pixeles (0 para desactivar). |
+| Color del Borde Interior | Color del borde interior en hex, con soporte de alpha (#AARRGGBB). |
+| Borde Interior Dinamico | Oculta solo el borde interior en pantalla completa, mantiene el redondeo. |
+| Ocultar en Pantalla Completa | Oculta todo en juegos y aplicaciones a pantalla completa. |</p>
+<h2 id="notas">Notas</h2>
+<p>La barra de tareas y el menu Inicio pueden aparecer sobre las esquinas redondeadas mientras
+reciben foco (ej: al abrir Inicio, el Centro de Notificaciones o al hacer clic derecho en el
+escritorio). Las esquinas vuelven al frente del orden Z en cuanto esos elementos pierden el foco.</p>
+<p>La deteccion de pantalla completa via <code>SHQueryUserNotificationState</code> es <strong>global</strong> (no por
+monitor): una app en pantalla completa en un monitor afecta las esquinas de todos los monitores.
+Ademas, <code>QUNS_BUSY</code> y <code>QUNS_PRESENTATION_MODE</code> pueden ser activados por apps que no son juegos
+(ej: Modo de Presentacion de Windows), lo que puede disparar el comportamiento de ocultar/borde
+dinamico de forma inesperada.</p>]]></content>
+        <author>
+            <name>crazyboyybs</name>
+            <uri>https://github.com/crazyboyybs</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Compact Start Menu 1.0.0]]></title>
         <id>https://windhawk.net/mods/compact-start-menu#5b32bb24425ef9af3e7769665f667b8144352a20</id>
@@ -303,139 +539,6 @@ same general taskbar background use case.</p>]]></content>
         <author>
             <name>LiHua81</name>
             <uri>https://github.com/LiHua81</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[AutoScroll Win32 1.0.2]]></title>
-        <id>https://windhawk.net/mods/autoscroll-win32#10df87270e61881eaa75f976de21d0a3d9e58464</id>
-        <link href="https://windhawk.net/mods/autoscroll-win32"/>
-        <updated>2026-06-30T07:53:26.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>Fixed possible explorer.exe crash on startup</li>
-<li>Fixed inverted horizontal scrolling</li>
-</ol>]]></content>
-        <author>
-            <name>crazyboyybs</name>
-            <uri>https://github.com/crazyboyybs</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.4.1]]></title>
-        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#1e8d5224d6c438602744da41174e6c0427d2f3da</id>
-        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
-        <updated>2026-06-29T20:26:09.000Z</updated>
-        <content type="html"><![CDATA[<p>Documentation-only fix: the two readme demo GIFs (crossfade and slide) were pointing at filenames whose cached copies on the image proxy showed the wrong animation. This points them at fresh <code>-v2</code> filenames so the correct crossfade and slide demos are shown. No code changes.</p>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MacOS Minimize Animation 2.0.0]]></title>
-        <id>https://windhawk.net/mods/macos-minimize-animation#4ec57cbfabddd7e1259a2f4de6d0cd8d27582ec4</id>
-        <link href="https://windhawk.net/mods/macos-minimize-animation"/>
-        <updated>2026-06-29T17:34:13.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="macosminimizeanimation">MacOS Minimize Animation</h1>
-<p><img src="https://raw.githubusercontent.com/Abdullah-Masood-05/my-windhawk-mods-media/main/macos-minimize-animation.gif" alt="Demo" /></p>
-<p>Brings the classic macOS <strong>genie</strong> effect to Windows. When you minimize a window
-it warps and flows down into the taskbar; when you restore it, it flows back out.</p>
-<p>Eye candy for something you do a hundred times a day.</p>
-<h2 id="seeitinaction">See it in action</h2>
-<ul>
-<li>Compile the mod with the button on the left or with Ctrl+B.</li>
-<li>Enable the mod and open any normal window (Explorer, a browser, Notepad…).</li>
-<li>Minimize it with the title bar <code>[-]</code> button or <code>Win</code>+<code>Down</code> and watch it warp
-and pour into the taskbar.</li>
-<li>Restore it from the taskbar and watch the genie play in reverse.</li>
-<li>Tweak the <strong>Animation duration</strong> in the settings to taste.</li>
-</ul>
-<h2 id="features">Features</h2>
-<ul>
-<li><strong>Real genie warp.</strong> The window is sliced into horizontal strips that curve and
-funnel toward the taskbar (the bottom flows in first), instead of just shrinking.</li>
-<li><strong>Actually smooth.</strong> Progress is driven by real elapsed time and every rendered
-frame is gated on the DWM compose cycle (<code>DwmFlush</code>), so each frame you render is
-exactly one frame you see - perfectly aligned with vsync at any duration you set.</li>
-<li><strong>Smoothstep easing</strong> instead of a linear ramp, so it eases in and out.</li>
-<li><strong>Clean edges and fade</strong> via a per-pixel-alpha layered surface.</li>
-<li><strong>Smart targeting.</strong> The mod learns where each app's taskbar icon is (from where
-your cursor was when you minimized) and aims the genie at that spot next time.</li>
-</ul>
-<h2 id="howitworks">How it works</h2>
-<p>The mod hooks <code>ShowWindow</code> and <code>DefWindowProcW</code> to catch minimize / restore
-requests. It snapshots the window, then on a dedicated high-priority thread it
-draws a transparent layered "ghost" window that warps the snapshot frame by frame
-into the taskbar, leaving the real window to minimize behind it without the
-system's own animation getting in the way.</p>
-<h2 id="settings">Settings</h2>
-<ul>
-<li><strong>Animation duration</strong> - how long the effect lasts (50-2000 ms).</li>
-<li><strong>Animate window restore (open)</strong> - also play the reverse genie when restoring.</li>
-<li><strong>Animate app launch (experimental)</strong> - also play the genie when an application
-window first opens. <strong>Experimental and off by default</strong>: it may briefly flash the
-window before animating, may not catch borderless apps, and can occasionally fire
-on splash / dialog windows. Leave it off and the mod behaves exactly like plain
-minimize / restore.</li>
-</ul>
-<h2 id="notes">Notes</h2>
-<ul>
-<li>Works on all top-level windows; child / tiny / hidden windows are skipped.</li>
-<li>DWM transitions are temporarily disabled on the animated window and restored
-afterwards, so the system's own minimize/restore animation doesn't fight ours.</li>
-<li>The genie currently targets the primary monitor's taskbar edge.</li>
-</ul>
-<h1 id="gettingstarted">Getting started</h1>
-<p>Check out the documentation
-<a href="https://github.com/ramensoftware/windhawk/wiki/Creating-a-new-mod">here</a>.</p>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Task Manager Tab Slide Animation 0.4.0]]></title>
-        <id>https://windhawk.net/mods/taskmgr-tab-slide-animation#a2dc42dae82c5bfdd6bebb8cef79b93f091b9664</id>
-        <link href="https://windhawk.net/mods/taskmgr-tab-slide-animation"/>
-        <updated>2026-06-29T17:30:00.000Z</updated>
-        <content type="html"><![CDATA[<p>This version adds a selectable animation style alongside the existing crossfade:</p>
-<ul>
-<li><strong>Animation type</strong> setting - <strong>Crossfade</strong> (default, the previous behavior) or <strong>Slide</strong> (the old view slides out while the new one slides in; left/right, or up/down via <em>Slide vertically</em>).</li>
-<li>Both styles use the same no-visual-jump approach: the current view is frozen under a topmost, click-through overlay at mouse-down, so Task Manager switches the tab underneath it invisibly, and the animation always starts from the old frame.</li>
-<li>Robustness fix: if the window is moved or resized mid-animation, the overlay is now hidden immediately instead of lingering as a detached "ghost" copy at the old location.</li>
-</ul>
-<p>The readme demo now shows both the crossfade and slide animations.</p>]]></content>
-        <author>
-            <name>Abdullah Masood</name>
-            <uri>https://github.com/Abdullah-Masood-05</uri>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VMware Audio Distortion Fix 1.0]]></title>
-        <id>https://windhawk.net/mods/vmware-audio-fix#6d68c5bf92732b90a067961d33b9381b88811b25</id>
-        <link href="https://windhawk.net/mods/vmware-audio-fix"/>
-        <updated>2026-06-29T17:28:10.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="vmwareaudiodistortionfix">VMware Audio Distortion Fix</h1>
-<h3 id="thisprojectisinspiredbyvmaudiobackhosthttpsgithubcomraymai97vmaudiobackhostthankstoraymai97">This project is inspired by <a href="https://github.com/Raymai97/VMAudioBackHost">VMAudioBackHost</a>. Thanks to Raymai97</h3>
-<p>Fixes distorted audio in VMware virtual machines by setting a high-resolution
-timer in the vmware-vmx.exe process.</p>
-<h2 id="background">Background</h2>
-<p>Windows 10 build 2004+ made timer resolution per-process. VMware virtual
-machines may experience distorted audio because the vmware-vmx.exe process
-uses the default low timer resolution (15.625 ms). This mod injects into
-vmware-vmx.exe and calls <code>NtSetTimerResolution</code> to set a high-resolution
-timer, fixing the audio stuttering/distortion.</p>
-<h2 id="usage">Usage</h2>
-<ol>
-<li>Install this mod via <a href="https://windhawk.net">Windhawk</a>.</li>
-<li>The mod will automatically inject into all running and future
-vmware-vmx.exe processes.</li>
-<li>Configure the desired timer resolution in the mod settings.</li>
-</ol>
-<p>The recommended setting is 1.0 ms, which provides smooth audio without
-significant impact on power consumption.</p>]]></content>
-        <author>
-            <name>Starfield</name>
-            <uri>https://github.com/steveji2021</uri>
         </author>
     </entry>
 </feed>

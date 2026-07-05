@@ -3264,7 +3264,7 @@
           1
         ],
         "ratingUsers": 1,
-        "updated": 1782107030000,
+        "updated": 1783162979000,
         "users": 16
       },
       "metadata": {
@@ -3276,7 +3276,7 @@
           "explorer.exe"
         ],
         "name": "Disable Inactive Menubar Greying",
-        "version": "1.1"
+        "version": "1.2"
       }
     },
     "disable-ms-teams-hotkey": {
@@ -6558,6 +6558,38 @@
         "version": "1.0.0"
       }
     },
+    "island-media-controls": {
+      "details": {
+        "defaultSorting": 99,
+        "published": 1783175924000,
+        "rating": 9,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "ratingUsers": 2,
+        "updated": 1783175924000,
+        "users": 11
+      },
+      "metadata": {
+        "architecture": [
+          "x86-64"
+        ],
+        "author": "usho",
+        "compilerOptions": "-lole32 -loleaut32 -lruntimeobject -lwindowsapp -luuid -luser32 -lshell32 -lgdi32 -lmsimg32 -lshlwapi -lwindowscodecs -ldwmapi -luiautomationcore",
+        "description": "Dynamic island-like media controls for the Windows 11 taskbar.",
+        "github": "https://github.com/usho-lear",
+        "include": [
+          "explorer.exe"
+        ],
+        "license": "MIT",
+        "name": "Island Media Controls",
+        "version": "0.9.27"
+      }
+    },
     "isretailready-false": {
       "details": {
         "defaultSorting": 54,
@@ -7165,7 +7197,7 @@
           61
         ],
         "ratingUsers": 75,
-        "updated": 1783019847000,
+        "updated": 1783162885000,
         "users": 2973
       },
       "metadata": {
@@ -7178,7 +7210,7 @@
         ],
         "license": "MIT",
         "name": "MacOS Minimize Animation",
-        "version": "2.1.1"
+        "version": "2.2.0"
       }
     },
     "magnifier-headless": {
@@ -7440,6 +7472,34 @@
         ],
         "name": "Modernize Folder Picker Dialog",
         "version": "1.0.0"
+      }
+    },
+    "monitor-rounded-edges": {
+      "details": {
+        "defaultSorting": 160,
+        "published": 1783085755000,
+        "rating": 10,
+        "ratingBreakdown": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        "ratingUsers": 2,
+        "updated": 1783085755000,
+        "users": 16
+      },
+      "metadata": {
+        "author": "crazyboyybs",
+        "compilerOptions": "-lUser32 -lGdi32 -ld2d1 -lShell32 -lOle32",
+        "description": "Applies smooth, anti-aliased rounded corners to all monitors via Direct2D. Supports circular and squircle (superellipse) styles, with an optional inner accent border and fullscreen awareness.",
+        "github": "https://github.com/crazyboyybs",
+        "include": [
+          "windhawk.exe"
+        ],
+        "name": "Monitor Rounded Edges",
+        "version": "1.0"
       }
     },
     "monitor-sleep-button": {
@@ -11135,7 +11195,7 @@
           126
         ],
         "ratingUsers": 134,
-        "updated": 1782129442000,
+        "updated": 1783162848000,
         "users": 3195
       },
       "metadata": {
@@ -11147,7 +11207,7 @@
           "explorer.exe"
         ],
         "name": "Taskbar Fluent Media Player",
-        "version": "1.4.0"
+        "version": "1.5.0"
       }
     },
     "taskbar-grouping": {
